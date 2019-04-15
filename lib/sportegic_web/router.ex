@@ -17,6 +17,8 @@ defmodule SportegicWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/user", UserController, only: [:new, :create, :index]
+    resources "/organisation", OrganisationController, only: [:new, :create, :index]
   end
 
   # Other scopes may use custom stacks.

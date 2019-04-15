@@ -2,22 +2,41 @@ import "@fortawesome/fontawesome-pro/js/all";
 import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
-
-// Import local files
-//
-// Local files can be imported directly using relative paths, for example:
+import User from "./user"
+import Organisation from "./organisation"
 // import socket from "./socket"
 
+switch ( window.location.pathname.split("/")[1] ) {
+    case "user":
+        User.load_register_js();
+        break;
+    case "/organisation/new":
+        Organisation.loadjs();
+        break;
+    default:
+        break;
+}
 
-// COMPONENT INITIALIZATION
 document.addEventListener('DOMContentLoaded', function () {
-    var elem = document.getElementById("enDropdown");
+    document.addEventListener('invalid', (function(){
+        return function(e){
+            //prevent the browser from showing default error bubble/ hint
+            e.preventDefault();
+        };
+    })(), true);
+
+    setup_navigation();
+});
+
+function setup_navigation (){
+    let elem = document.getElementById("enDropdown");
     M.Dropdown.init(elem, {
         coverTrigger: false
     });
 
-    var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, {});
+    let elems = document.querySelectorAll('.collapsible');
+    M.Collapsible.init(elems, {});
+
+}
 
 
-});

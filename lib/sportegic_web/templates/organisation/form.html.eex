@@ -1,0 +1,19 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= label f, :name %>
+      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", autofocus: "true"]%>
+      <%= error_tag f, :name %>
+      <span class="helper-text" data-error="PLease provide full account name"></span>
+    </div>
+    <div class="input-field col s12">
+      <%= label f, :display %>
+      <%= text_input f, :display, [class: "validate", required: "true"] %>
+      <%= error_tag f, :display %>
+      <span class="helper-text" data-error="A short name commonly used"></span>
+    </div>
+    <div>
+      <%= submit "Create", [class: "btn waves-effect waves-light blue"] %>
+    </div>  
+  </div>
+<% end %>
