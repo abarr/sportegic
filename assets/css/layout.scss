@@ -1,0 +1,36 @@
+.nav-wrapper{
+    padding-left: 20px;
+    line-height: 100px;
+}
+.li-custom{
+    width: 120px;
+    border-left: 1px solid #f4f4f4;
+}
+.li-dropdown-custom{
+    border: 1px solid #f4f4f4;
+}
+.side-custom{
+    width: 200px;
+    line-height: 100px;
+}
+.nav-custom {
+    border-bottom: 2px solid #f4f4f4;
+    height: 100px;  
+    }
+main {
+    padding-left: 300px;
+}
+.sidenav-fixed{
+    margin-top: 100px;     
+}
+.sidenav-custom{
+    border-right: 2px solid #f4f4f4;
+}
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+.padding-collapsible-header{
+    padding-left: 32px !important;
+}

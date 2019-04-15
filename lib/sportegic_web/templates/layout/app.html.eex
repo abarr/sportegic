@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sportegic</title>
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+  </head>
+  <body>
+    <header>
+      <div class="row nav-custom">
+        <div class="navbar-fixed">
+          <nav class="white z-depth-0">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo grey-text lighten-2">Rebels</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fal fa-inbox-in  fa-fw"></i> Inbox</a></li>
+                  <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fas fa-user-circle fa-lg fa-fw"></i> Andrew</a></li>
+                  <li>
+                    <!-- Dropdown Trigger -->
+                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='dropdown1'>En</a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content z-depth-0'>
+                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Es</a></li>
+                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Fr</a></li>
+                    </ul>
+                  
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div> 
+      </div>
+      <%# SIDE NAV %>
+      <ul id="slide-out" class="collapsible sidenav sidenav-fixed z-depth-0 sidenav-custom ">
+        <li class="active"><a class="grey-text lighten-2" href="#!"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
+        <li><a class="grey-text lighten-2" href="#!"><i class="fal fa-user-astronaut fa-lg fa-fw"></i> People</a></li>
+        <li><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
+        <li><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
+        
+        <li>
+          <a id="" class="collapsible-header grey-text lighten-2 padding-collapsible-header" href="#!"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration</a>
+          <div class="collapsible-body">
+                <a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a>
+          </div>
+        
+        </li>
+        
+      </ul>
+    
+      
+        
+    </header>
+    <main role="main">
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>">
+      var elems = document.getElementsByClassName("collapsible");
+      console.log('Collapsible elements: ', elems)
+      M.Collapsible.init(elems, {});
+    
+    </script>
+  </body>
+</html>
