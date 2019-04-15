@@ -1,7 +1,7 @@
 defmodule SportegicWeb.UserView do
   use SportegicWeb, :view
 
-  def error_tag_sportegic(%{errors: errors = [_|_]} = form, field) do
+  def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
     if error = errors[field] do
       {msg, _} = error
       content_tag(:span, "", [{:data, [error: msg]}, class: "helper-text "])
@@ -16,18 +16,25 @@ defmodule SportegicWeb.UserView do
 
   def error_tag_sportegic(field) do
     case field do
-      :email    -> content_tag(:span, "", [{:data, [error: "Please enter a valid email"]}, class: "helper-text"])
-      :password -> content_tag(:span, "", [{:data, [error: "Please enter a password"]}, class: "helper-text"])
-      _         -> content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
-    end  
+      :email ->
+        content_tag(:span, "", [
+          {:data, [error: "Please enter a valid email"]},
+          class: "helper-text"
+        ])
+
+      :password ->
+        content_tag(:span, "", [{:data, [error: "Please enter a password"]}, class: "helper-text"])
+
+      _ ->
+        content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
+    end
   end
 
-  def set_field_class(%{errors: errors = [_|_]} = form, field) do
-    if form.errors[field] do
+  def set_field_class(%{errors: errors = [_ | _]}, field) do
+    if errors[field] do
       "invalid validate"
     end
   end
+
   def set_field_class(_form, _field), do: "valid validate"
-
-
 end

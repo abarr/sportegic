@@ -1,0 +1,44 @@
+
+  <table class="email-wrapper" width="400px" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+          <!-- Email Body -->
+          <tr>
+            <td class="email-body" width="100%">
+              <table class="email-body_inner" align="center" cellpadding="0" cellspacing="0">
+                <!-- Body content -->
+                <tr>
+                  <td class="content-cell">
+                    <h1>Verify your Email Address</h1>
+                    <p>We need you to verify your email address to complete setting up your account.</p>
+                    <!-- Action -->
+                    <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="center">
+                          <div>
+                            <a href="<%= assigns[:url] %>" class="">Verify Email</a>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    <p>Thanks,<br>The Sportegic Team</p>
+                    <!-- Sub copy -->
+                    <table class="body-sub">
+                      <tr>
+                        <td>
+                          <p class="sub">If you’re having trouble clicking the button, copy and paste the URL below into your web browser.
+                          </p>
+                          <p class="sub"><a href="#"><%= assigns[:url] %></a></p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>

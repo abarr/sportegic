@@ -5,9 +5,9 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisations do
     create table(:organisations) do
       add :name, :string
       add :display, :string
+      add :prefix, :string
 
       timestamps()
     end
-
   end
 end

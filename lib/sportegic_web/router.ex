@@ -13,11 +13,22 @@ defmodule SportegicWeb.Router do
     plug :accepts, ["json"]
   end
 
+  if Mix.env() == :dev || :staging do
+    scope "/dev" do
+      pipe_through [:browser]
+
+      forward "/mailbox", Plug.Swoosh.MailboxPreview, base_path: "/dev/mailbox"
+    end
+  end
+
   scope "/", SportegicWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+
     resources "/user", UserController, only: [:new, :create, :index]
+    get "/verification", UserController, :verification
+
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
   end
 

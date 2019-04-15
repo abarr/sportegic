@@ -2,11 +2,12 @@ defmodule Sportegic.Accounts.Organisation do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Accounts.User
+  alias Sportegic.Accounts.{User, OrganisationPrefix}
 
   schema "organisations" do
-    field :display, :string
-    field :name, :string
+    field(:display, :string)
+    field(:name, :string)
+    field(:prefix, OrganisationPrefix)
 
     many_to_many(:users, User, join_through: "organisations_users")
 
@@ -16,7 +17,7 @@ defmodule Sportegic.Accounts.Organisation do
   @doc false
   def changeset(organisation, attrs) do
     organisation
-    |> cast(attrs, [:name, :display])
-    |> validate_required([:name, :display])
+    |> cast(attrs, [:name, :display, :prefix])
+    |> validate_required([:name, :display, :prefix])
   end
 end

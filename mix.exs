@@ -45,8 +45,8 @@ defmodule Sportegic.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:triplex, "~> 1.3.0-rc.1"},
-      {:argon2_elixir, "~> 2.0"}
-
+      {:argon2_elixir, "~> 2.0"},
+      {:phoenix_swoosh, "~> 0.2"}
     ]
   end
 
