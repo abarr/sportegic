@@ -25,6 +25,7 @@ main {
 }
 .sidenav-custom{
     border-right: 2px solid #f4f4f4;
+    border-top: 0px solid #f4f4f4;
 }
 @media only screen and (max-width : 992px) {
     header, main, footer {
@@ -33,4 +34,10 @@ main {
 }
 .padding-collapsible-header{
     padding-left: 32px !important;
+}
+.padding-collapsible-body{
+    padding-left: 48px !important;
+}
+.margin-right-icon {
+    margin-top: 15px;
 }

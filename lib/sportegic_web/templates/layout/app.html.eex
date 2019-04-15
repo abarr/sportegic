@@ -42,9 +42,9 @@
         <li><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
         
         <li>
-          <a id="" class="collapsible-header grey-text lighten-2 padding-collapsible-header" href="#!"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration</a>
+          <a id="" class="collapsible-header grey-text lighten-2 padding-collapsible-header " href="#!"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration <i class="right far fa-chevron-down fa-fw margin-right-icon "></i></a>
           <div class="collapsible-body">
-                <a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a>
+                <a class="grey-text lighten-2 padding-collapsible-body" href="#!"><i class="far fa-chevron-right fa-xs fa-fw"></i> Users</a>
           </div>
         
         </li>
