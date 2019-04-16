@@ -7,6 +7,7 @@ defmodule SportegicWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug SportegicWeb.Plugs.Session
   end
 
   pipeline :api do
@@ -24,10 +25,14 @@ defmodule SportegicWeb.Router do
   scope "/", SportegicWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", DashboardController, :index
 
     resources "/user", UserController, only: [:new, :create, :index]
     get "/verification", UserController, :verification
+
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    get "/logout", SessionController, :delete
 
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
   end

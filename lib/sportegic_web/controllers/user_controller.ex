@@ -4,7 +4,7 @@ defmodule SportegicWeb.UserController do
   alias Sportegic.Accounts
   alias Sportegic.Accounts.User
   alias Sportegic.Communication
-  alias Sportegic.Communication.{Token}
+  alias Sportegic.Communication.Token
 
   plug :put_layout, "accounts.html"
 
@@ -27,9 +27,11 @@ defmodule SportegicWeb.UserController do
     with {:ok, user_id} <- Token.verify_token(token),
          {:ok, user} <- Accounts.get_user(user_id),
          {:ok, _user} <- Accounts.update_user(user, %{verified: true}) do
-      redirect(conn, to: Routes.page_path(conn, :index))
+      conn
+      |> put_flash(:success, "Your email is verified. Please test your login!")
+      |> redirect(to: Routes.session_path(conn, :new))
     else
-      {:error, error} ->
+      {:error, _error} ->
         conn
         |> render("resend_verification.html")
     end

@@ -7,11 +7,11 @@
       </div>
       <div class="input-field col s12">
         <%= label f, :password %>
-        <%= text_input f, :password, [class: set_field_class(f, :password), type: "password", required: "true"] %>
+        <%= password_input f, :password, [class: set_field_class(f, :password), required: "true"] %>
         <%= error_tag_sportegic f, :password %>
       </div>
     </div>
   <div>
-    <%= submit "Create", [class: "btn waves-effect waves-light blue"] %>
+    <%= submit "REGISTER", [class: "btn waves-effect waves-light blue z-depth-0"] %>
   </div>
 <% end %>

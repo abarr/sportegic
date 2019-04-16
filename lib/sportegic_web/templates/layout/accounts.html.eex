@@ -9,12 +9,49 @@
   </head>
   <body>
     <header>
-    <%# Put in a BRAND %>
+      <%= if get_flash(@conn, :danger) do %>
+        <div class="row container">
+          <div class="col s12 l6 offset-l3">
+            <div class="card">
+              <div class="card-content red lighten-2 white-text center-align">
+                <p>
+                  <%= get_flash(@conn, :danger) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>  
+      <% end %>
+      <%= if get_flash(@conn, :success) do %>
+        <div class="row container">
+          <div class="col s12 l6 offset-l3">
+            <div class="card">
+              <div class="card-content green lighten-2 white-text center-align">
+                <p>
+                  <%= get_flash(@conn, :success) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>            
+      <% end %>
+      <%= if get_flash(@conn, :info) do %>
+        <div class="row container">
+          <div class="col s12 l6 offset-l3">
+            <div class="card">
+              <div class="card-content blue lighten-2 white-text center-align">
+                <p>
+                  <%= get_flash(@conn, :info) %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>            
+      <% end %>
     </header>
     <main role="main">
       <%= render @view_module, @view_template, assigns %>
     </main>
-    
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>">
     </script>
   </body>

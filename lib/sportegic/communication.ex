@@ -28,12 +28,9 @@ defmodule Sportegic.Communication do
     |> subject(subject)
     |> render_body(email_template, %{url: url})
     |> Mailer.deliver()
-    |> IO.inspect()
   end
 
   defp generate_verification_url(conn, user) do
-    IO.inspect(user)
-
     if Mix.env() == :dev do
       "http://" <> conn.host <> ":4000/verification?token=" <> Token.generate_token(user)
     else

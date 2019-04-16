@@ -39,8 +39,11 @@ defmodule SportegicWeb.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
+    # session expires after 20 minutes
+    max_age: 60 * 20 * 3,
     key: "_sportegic_key",
-    signing_salt: "5yXFzBwU"
+    signing_salt: "5yXFzBwU",
+    encryption_salt: "iwegfhiugfiegfp*&^&&^^6ojhslHA"
 
   plug SportegicWeb.Router
 end

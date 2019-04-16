@@ -1,4 +1,4 @@
-defmodule SportegicWeb.UserView do
+defmodule SportegicWeb.SessionView do
   use SportegicWeb, :view
 
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
