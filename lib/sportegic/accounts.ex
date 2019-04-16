@@ -2,6 +2,7 @@ defmodule Sportegic.Accounts do
   import Ecto.Query, warn: false
 
   alias Sportegic.Repo
+  alias Sportegic.Accounts
   alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers}
 
   def list_users do
@@ -43,9 +44,15 @@ defmodule Sportegic.Accounts do
     Repo.all(Organisation)
   end
 
+  def list_organisations_by_user(user_id) do
+    {:ok, user} = Accounts.get_user(user_id)
+    organisations = Repo.all(Ecto.assoc(user, :organisations))
+    {:ok, organisations}
+  end
+
   def get_organisation!(id), do: Repo.get!(Organisation, id)
 
-  def create_organisation(attrs \\ %{}) do
+  def create_organisation(attrs) do
     %Organisation{}
     |> Organisation.changeset(attrs)
     |> Repo.insert()
@@ -72,9 +79,12 @@ defmodule Sportegic.Accounts do
   def get_organisations_users!(id), do: Repo.get!(OrganisationsUsers, id)
 
   def create_organisations_users(attrs \\ %{}) do
-    %OrganisationsUsers{}
-    |> OrganisationsUsers.changeset(attrs)
-    |> Repo.insert()
+    orgs_users =
+      %OrganisationsUsers{}
+      |> OrganisationsUsers.changeset(attrs)
+      |> Repo.insert()
+
+    {:ok, orgs_users}
   end
 
   def update_organisations_users(%OrganisationsUsers{} = organisations_users, attrs) do

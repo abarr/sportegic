@@ -3,8 +3,8 @@ defmodule Sportegic.Accounts.OrganisationsUsers do
   import Ecto.Changeset
 
   schema "organisations_users" do
-    field :user_id, :id
-    field :organisation_id, :id
+    field(:user_id, :id)
+    field(:organisation_id, :id)
 
     timestamps()
   end
@@ -14,6 +14,5 @@ defmodule Sportegic.Accounts.OrganisationsUsers do
     organisations_users
     |> cast(attrs, [:user_id, :organisation_id])
     |> validate_required([:user_id, :organisation_id])
-
   end
 end

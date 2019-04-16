@@ -16,6 +16,8 @@ defmodule Sportegic.Accounts.Organisation do
 
   @doc false
   def changeset(organisation, attrs) do
+    attrs = Map.put(attrs, "prefix", attrs["display"])
+
     organisation
     |> cast(attrs, [:name, :display, :prefix])
     |> validate_required([:name, :display, :prefix])

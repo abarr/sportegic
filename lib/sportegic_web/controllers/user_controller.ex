@@ -29,7 +29,7 @@ defmodule SportegicWeb.UserController do
     render(conn, "request_reset.html")
   end
 
-  def send_reset(conn, %{"email" => email} = params) do
+  def send_reset(conn, %{"email" => email}) do
     with {:ok, user} <- Accounts.get_user_by_email(email),
          {:ok, _id} <- Communication.generate_email(conn, user, "new_password") do
       render(conn, "confirmation.html")
@@ -57,7 +57,7 @@ defmodule SportegicWeb.UserController do
     render(conn, "request_verification.html")
   end
 
-  def send_verification(conn, %{"email" => email} = params) do
+  def send_verification(conn, %{"email" => email}) do
     with {:ok, user} <- Accounts.get_user_by_email(email),
          {:ok, _id} <- Communication.generate_email(conn, user, "verification") do
       render(conn, "confirmation.html")

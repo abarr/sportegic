@@ -17,12 +17,10 @@ defmodule SportegicWeb.SessionController do
         |> render("new.html")
 
       {:ok, %{verified: false}} ->
-        IO.puts("HERE")
-
         conn
         |> put_flash(
           :danger,
-          "Your email has not been verified. If you no longer have the email, or it has expired please request below"
+          "Your email has not been verified. If you no longer have the email, or it has expired please use link below"
         )
         |> render("new.html")
 
@@ -35,7 +33,7 @@ defmodule SportegicWeb.SessionController do
             |> assign(:current_user, user)
             |> put_session(:user_id, user.id)
             |> configure_session(renew: true)
-            |> redirect(to: Routes.dashboard_path(conn, :index))
+            |> redirect(to: Routes.organisation_path(conn, :index))
 
           {:error, _error_msg} ->
             conn
