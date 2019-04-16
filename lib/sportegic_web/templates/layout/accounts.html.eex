@@ -12,7 +12,7 @@
       <%= if get_flash(@conn, :danger) do %>
         <div class="row container">
           <div class="col s12 l6 offset-l3">
-            <div class="card">
+            <div class="card z-depth-0">
               <div class="card-content red lighten-2 white-text center-align">
                 <p>
                   <%= get_flash(@conn, :danger) %>
@@ -25,7 +25,7 @@
       <%= if get_flash(@conn, :success) do %>
         <div class="row container">
           <div class="col s12 l6 offset-l3">
-            <div class="card">
+            <div class="card z-depth-0">
               <div class="card-content green lighten-2 white-text center-align">
                 <p>
                   <%= get_flash(@conn, :success) %>
@@ -38,7 +38,7 @@
       <%= if get_flash(@conn, :info) do %>
         <div class="row container">
           <div class="col s12 l6 offset-l3">
-            <div class="card">
+            <div class="card z-depth-0">
               <div class="card-content blue lighten-2 white-text center-align">
                 <p>
                   <%= get_flash(@conn, :info) %>

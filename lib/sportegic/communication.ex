@@ -11,13 +11,13 @@ defmodule Sportegic.Communication do
 
   @reply_email "do_not_reply@sportegic.com"
 
-  def generate_verification_email(conn, user) do
+  def generate_email(conn, user, type) do
     send_email(
-      generate_verification_url(conn, user),
+      generate_url(conn, user, type),
       user.email,
-      "verification_email.html",
+      type <> ".html",
       @reply_email,
-      "Sportegic Email Verification"
+      "Sportegic"
     )
   end
 
@@ -30,11 +30,11 @@ defmodule Sportegic.Communication do
     |> Mailer.deliver()
   end
 
-  defp generate_verification_url(conn, user) do
+  defp generate_url(conn, user, type) do
     if Mix.env() == :dev do
-      "http://" <> conn.host <> ":4000/verification?token=" <> Token.generate_token(user)
+      "http://" <> conn.host <> ":4000/" <> type <> "?token=" <> Token.generate_token(user)
     else
-      "https://" <> conn.host <> "/verification?token=" <> Token.generate_token(user)
+      "https://" <> conn.host <> "/" <> type <> "?token=" <> Token.generate_token(user)
     end
   end
 end

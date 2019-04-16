@@ -16,6 +16,16 @@ defmodule SportegicWeb.SessionController do
         |> put_flash(:danger, "Either your email or password is incorrect. Please try again!")
         |> render("new.html")
 
+      {:ok, %{verified: false}} ->
+        IO.puts("HERE")
+
+        conn
+        |> put_flash(
+          :danger,
+          "Your email has not been verified. If you no longer have the email, or it has expired please request below"
+        )
+        |> render("new.html")
+
       {:ok, user} ->
         case Accounts.authenticate_session(user, params["password"]) do
           {:ok, user} ->

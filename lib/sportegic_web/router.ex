@@ -28,7 +28,13 @@ defmodule SportegicWeb.Router do
     get "/", DashboardController, :index
 
     resources "/user", UserController, only: [:new, :create, :index]
+    get "/request_verification", UserController, :request_verification
+    get "/send_verification", UserController, :send_verification
     get "/verification", UserController, :verification
+    get "/request_reset", UserController, :request_reset
+    get "/send_reset", UserController, :send_reset
+    get "/new_password", UserController, :new_password
+    get "/update_password", UserController, :update_password
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create

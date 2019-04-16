@@ -24,6 +24,10 @@
                     </div>
                 <% end %>
             </div>
+            <div class="card-action">
+                <a class="grey-text lighten-2 " href="/request_verification">verify Email</a>
+                <a class="grey-text lighten-2 right" href="request_reset">reset password</a>
+            </div>
         </div>
     </div>
 </div>
