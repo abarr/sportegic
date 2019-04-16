@@ -6,7 +6,7 @@ import User from "./user"
 import Organisation from "./organisation"
 // import socket from "./socket"
 
-switch ( window.location.pathname.split("/")[1] ) {
+switch (window.location.pathname.split("/")[1]) {
     case "user":
         User.load_register_js();
         break;
@@ -18,8 +18,8 @@ switch ( window.location.pathname.split("/")[1] ) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('invalid', (function(){
-        return function(e){
+    document.addEventListener('invalid', (function () {
+        return function (e) {
             //prevent the browser from showing default error bubble/ hint
             e.preventDefault();
         };
@@ -28,9 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
     setup_navigation();
 });
 
-function setup_navigation (){
-    let elem = document.getElementById("enDropdown");
-    M.Dropdown.init(elem, {
+function setup_navigation() {
+    let elem1 = document.getElementById("enDropdown");
+    let elem2 = document.getElementById("profile");
+    M.Dropdown.init(elem1, {
+        coverTrigger: false
+    });
+    M.Dropdown.init(elem2, {
         coverTrigger: false
     });
 

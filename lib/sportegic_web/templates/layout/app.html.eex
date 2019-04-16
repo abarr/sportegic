@@ -16,10 +16,19 @@
                 <a href="#" class="brand-logo grey-text lighten-2">Rebels</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fal fa-inbox-in  fa-fw"></i> Inbox</a></li>
-                  <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fas fa-user-circle fa-lg fa-fw"></i> Andrew</a></li>
                   <li>
                     <!-- Dropdown Trigger -->
-                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='dropdown1'>En</a>
+                    <a id="profile" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='profileDropdown'><i class="fas fa-user-circle fa-lg fa-fw"></i> Andrew <i class="far fa-chevron-down fa-fw"></i></a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='profileDropdown' class='dropdown-content z-depth-0'>
+                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
+                    </ul>
+                  
+                  </li>
+                  <li>
+                    <!-- Dropdown Trigger -->
+                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language center-align' href='#' data-target='dropdown1'>En </a>
 
                     <!-- Dropdown Structure -->
                     <ul id='dropdown1' class='dropdown-content z-depth-0'>
