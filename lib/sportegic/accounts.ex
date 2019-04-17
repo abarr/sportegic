@@ -4,7 +4,7 @@ defmodule Sportegic.Accounts do
   alias Sportegic.Repo
   alias Sportegic.Accounts
   alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers}
-
+  
   def list_users do
     Repo.all(User)
   end
@@ -53,9 +53,15 @@ defmodule Sportegic.Accounts do
   def get_organisation!(id), do: Repo.get!(Organisation, id)
 
   def create_organisation(attrs) do
-    %Organisation{}
+    {:ok, org } = %Organisation{}
     |> Organisation.changeset(attrs)
     |> Repo.insert()
+    
+    # Create a tenant based on org prefix
+    resp = Triplex.create(org.prefix)
+    IO.inspect(resp)
+    {:ok, org }
+    
   end
 
   def update_organisation(%Organisation{} = organisation, attrs) do
@@ -106,11 +112,4 @@ defmodule Sportegic.Accounts do
     Argon2.check_pass(user, password)
   end
 
-  # def create_session(attrs \\ %{}) do
-  #   raise "TODO"
-  # end
-
-  # def delete_session(%Session{} = session) do
-  #   raise "TODO"
-  # end
 end

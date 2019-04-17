@@ -41,6 +41,7 @@ defmodule SportegicWeb.Router do
     get "/logout", SessionController, :delete
 
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
+    resources "/profile", ProfileController, except: [:index, :delete]
   end
 
   # Other scopes may use custom stacks.

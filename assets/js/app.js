@@ -6,16 +6,6 @@ import User from "./user"
 import Organisation from "./organisation"
 // import socket from "./socket"
 
-switch (window.location.pathname.split("/")[1]) {
-    case "user":
-        User.load_register_js();
-        break;
-    case "/organisation/new":
-        Organisation.loadjs();
-        break;
-    default:
-        break;
-}
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('invalid', (function () {
@@ -35,13 +25,16 @@ function setup_navigation() {
         coverTrigger: false
     });
     M.Dropdown.init(elem2, {
-        coverTrigger: false
+        coverTrigger: false,
+        hover: false,
+        constrainWidth: false,
+        alignment: 'right',
+        closeOnClick: false
+        
     });
 
     let elems = document.querySelectorAll('.collapsible');
     M.Collapsible.init(elems, {});
-
-   
 
 }
 

@@ -1,0 +1,33 @@
+<h1>Show Profile</h1>
+
+<ul>
+
+  <li>
+    <strong>Firstname:</strong>
+    <%= @profile.firstname %>
+  </li>
+
+  <li>
+    <strong>Lastname:</strong>
+    <%= @profile.lastname %>
+  </li>
+
+  <li>
+    <strong>Mobile:</strong>
+    <%= @profile.mobile %>
+  </li>
+
+  <li>
+    <strong>Timezone:</strong>
+    <%= @profile.timezone %>
+  </li>
+
+  <li>
+    <strong>Complete:</strong>
+    <%= @profile.complete %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.profile_path(@conn, :edit, @profile) %></span>
+

@@ -13,15 +13,17 @@
         <div class="navbar-fixed">
           <nav class="white z-depth-0">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo grey-text lighten-2">Rebels</a>
+                <a href="#" class="brand-logo grey-text lighten-2"><%= organisation_name(@conn.assigns.organisation) %></a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fal fa-inbox-in  fa-fw"></i> Inbox</a></li>
                   <li>
                     <!-- Dropdown Trigger -->
-                    <a id="profile" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='profileDropdown'><i class="fas fa-user-circle fa-lg fa-fw"></i> Andrew <i class="far fa-chevron-down fa-fw"></i></a>
+                    <a id="profile" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='profileDropdown'><i class="fas fa-user-circle fa-lg fa-fw"></i> <%= @profile.firstname %> <i class="far fa-chevron-down fa-fw"></i></a>
 
                     <!-- Dropdown Structure -->
                     <ul id='profileDropdown' class='dropdown-content z-depth-0'>
+                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
+                      <li class="divider li-dropdown-custom z-depth-0" ></li>
                       <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
                     </ul>
                   
