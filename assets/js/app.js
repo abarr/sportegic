@@ -41,6 +41,8 @@ function setup_navigation() {
     let elems = document.querySelectorAll('.collapsible');
     M.Collapsible.init(elems, {});
 
+   
+
 }
 
 

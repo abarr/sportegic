@@ -15,7 +15,7 @@
                             <%= text_input f, :email , [ class: set_field_class(f, :email), required: "true", type: "email"]%>
                             <%= error_tag_sportegic f, :email %>
                         </div>
-                        <div>
+                        <div class="input-field col s12">
                             <%= submit "request", [class: "btn waves-effect waves-light blue z-depth-0"] %>
                         </div>
                     <% end %>

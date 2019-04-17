@@ -2,9 +2,11 @@
     <div class="col s12 l6 offset-l3">
         <div class="card z-depth-0 card-register">
             <div class="card-content">
-                <div class="card-title center-align">
+                <div class="card-title center-align ">
+               
                     <h5>SPORTEGIC </h5>
                     <h6>LOGIN</h6>
+                    
                 </div>
                 <%= form_for @conn, Routes.session_path(@conn, :create), [as: :session, method: :post], fn f -> %>
                     <div class="row">
@@ -19,17 +21,27 @@
                             <%= error_tag_sportegic f, :password %>
                         </div>
                         </div>
+                         
                     <div>
                         <%= submit "Login", [class: "btn waves-effect waves-light blue z-depth-0"] %>
-                    </div>
                 <% end %>
+                        
+        </div>
+    </div> 
+    <div class="card-action">
+        <div class="row">
+            <div class="col s4 center-align">
+                <a href="user/new" class="btn-floating btn-large waves-effect waves-light green lighten-2"><i class="fal fa-user-plus fa-lg fa-fw"></i></a>
             </div>
-            <div class="card-action">
-                <a class="grey-text lighten-2 " href="/request_verification">verify Email</a>
-                <a class="grey-text lighten-2 right" href="request_reset">reset password</a>
+            <div class="col s4 center-align">
+                <a href="request_reset" class="btn-floating btn-large waves-effect waves-light blue lighten-2"><i class="far fa-key fa-lg fa-fw"></i></a>
+            </div>
+            <div class="col s4 center-align">
+                <a href="request_verification" class="btn-floating btn-large waves-effect waves-light red lighten-2"><i class="fal fa-envelope-open-text fa-lg fa-fw"></i></a>
             </div>
         </div>
-    </div>
+    </div>       
+    
 </div>
 
 
