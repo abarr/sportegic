@@ -12,9 +12,11 @@ defmodule Sportegic.Profiles do
 
   #  Get profile using user_id from con
   def get_profile(user_id, org) do
-    profile = Profile
-    |> where([p], p.user_id == ^user_id )
-    |> Repo.one(prefix: org)
+    profile =
+      Profile
+      |> where([p], p.user_id == ^user_id)
+      |> Repo.one(prefix: org)
+
     {:ok, profile}
   end
 

@@ -22,6 +22,9 @@
 
                     <!-- Dropdown Structure -->
                     <ul id='profileDropdown' class='dropdown-content z-depth-0'>
+                      <%= if Enum.count(@conn.assigns.current_user.organisations) > 1 do %>
+                        <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
+                      <% end %>
                       <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
                       <li class="divider li-dropdown-custom z-depth-0" ></li>
                       <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
