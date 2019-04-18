@@ -45,7 +45,7 @@ defmodule SportegicWeb.SessionController do
 
   def delete(conn, _params) do
     conn
-    |> delete_session(:user_id)
+    |> configure_session(drop: true)
     |> put_flash(:info, "You have logged out successfully!")
     |> redirect(to: Routes.session_path(conn, :new))
   end

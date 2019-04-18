@@ -13,19 +13,29 @@ defmodule SportegicWeb.OrganisationController do
     with {:ok, organisations} = Accounts.list_organisations_by_user(user.id) do
       case Enum.count(organisations) do
         # If this user is not associated with any orgs 
-        0 -> 
+        0 ->
           redirect(conn, to: Routes.organisation_path(conn, :new))
+
         # If this Ueser is associated with only one org
-        1 -> 
+        1 ->
           {:ok, org} = Enum.fetch(organisations, 0)
+
           conn
           |> clear_flash()
           |> put_session(:organisation, org.prefix)
           |> redirect(to: Routes.dashboard_path(conn, :index))
+
         # Many orgs - choose from list
-        _ -> render(conn, "index.html", organisations: organisations)
+        _ ->
+          render(conn, "index.html", organisations: organisations)
       end
     end
+  end
+
+  def set_organisation(conn, %{"org" => org_prefix}) do
+    conn
+    |> put_session(:organisation, org_prefix)
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   def new(conn, _params) do
@@ -40,6 +50,7 @@ defmodule SportegicWeb.OrganisationController do
          {:ok, _orgs_users} <-
            Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}) do
       conn
+      |> put_session(:organisation, org.prefix)
       |> put_flash(:info, "Organisation created successfully.")
       |> redirect(to: Routes.organisation_path(conn, :index))
     else

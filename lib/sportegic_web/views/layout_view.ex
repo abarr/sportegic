@@ -2,10 +2,17 @@ defmodule SportegicWeb.LayoutView do
   use SportegicWeb, :view
 
   def organisation_name(org) do
-    org
-    |> String.split("_")
-    |> Enum.map(&String.capitalize/1)
-    |> Enum.join(" ")
+    IO.inspect(org)
+
+    case String.contains?(org, "_") do
+      true ->
+        org
+        |> String.split("_")
+        |> Enum.map(&String.capitalize/1)
+        |> Enum.join(" ")
+
+      _ ->
+        String.capitalize(org)
+    end
   end
-  
 end

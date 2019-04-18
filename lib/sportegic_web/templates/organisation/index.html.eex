@@ -5,24 +5,27 @@
                 <div class="card-title center-align">
                     <h5>SPORTEGIC</h5>
                     <h6>SELECT YOUR ORGANISATION</h6>
-                    
                 </div>
-                <ul class="collection">
-                  
-                <%= for organisation <- @organisations do %>
-                  
-                    <%= link organisation.name, to: Routes.dashboard_path(@conn, :index), class: "collection-item" %>
-                 
-                <% end %> 
-                 </ul>
-                 
-                
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="collection">
+                            <%= for organisation <- @organisations do %>
+                                <a href="/set_organisation?org=<%= organisation.prefix %>" class="collection-item">
+                                    <%= organisation.name %>
+                                </a>
+                            <% end %> 
+                        </ul>       
+                    </div>
+                </div>
             </div>
             <div class="card-action">
-                <a class="grey-text lighten-2 " href="/request_verification">
-                  <span><%= link "New Organisation", to: Routes.organisation_path(@conn, :new) %></span>
-                </a>
-                
+                <div class="row">
+                <div class="col s4"></div>
+                <div class="col s4"></div>
+                    <div class="col s4 center-align">
+                        <a href="organisation/new" class="btn-floating btn-large waves-effect waves-light red lighten-2"><i class="fas fa-plus fa-lg fa-fw"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

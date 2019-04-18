@@ -41,6 +41,8 @@ defmodule SportegicWeb.Router do
     get "/logout", SessionController, :delete
 
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
+    get "/set_organisation", OrganisationController, :set_organisation
+
     resources "/profile", ProfileController, except: [:index, :delete]
   end
 
