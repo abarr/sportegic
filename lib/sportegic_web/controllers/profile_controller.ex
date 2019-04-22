@@ -2,7 +2,7 @@ defmodule SportegicWeb.ProfileController do
   use SportegicWeb, :controller
 
   alias Sportegic.Profiles
-  alias Sportegic.Profiles.Profile
+  alias Sportegic.Profiles.{Profile}
 
   plug SportegicWeb.Plugs.Authenticate
 
@@ -13,13 +13,24 @@ defmodule SportegicWeb.ProfileController do
 
   def new(conn, _params, _org) do
     changeset = Profiles.change_profile(%Profile{})
-    render(conn, "new.html", changeset: changeset, layout: {SportegicWeb.LayoutView, "accounts.html"})
+
+    render(conn, "new.html",
+      changeset: changeset,
+      layout: {SportegicWeb.LayoutView, "accounts.html"}
+    )
   end
 
   def create(conn, %{"profile" => profile_params}, org) do
-    profile_params = Map.put(profile_params, "user_id", Integer.to_string(conn.assigns.current_user.id))
+    profile_params =
+      Map.put(profile_params, "user_id", Integer.to_string(conn.assigns.current_user.id))
+
     case Profiles.create_profile(profile_params, org) do
-      {:ok, _profile} ->
+      {:ok, profile} ->
+        cond do
+          profile.id == 1 ->
+            Profiles.update_profile(profile, %{role_id: 1}, org)
+        end
+
         conn
         |> redirect(to: Routes.dashboard_path(conn, :index))
 
@@ -52,5 +63,4 @@ defmodule SportegicWeb.ProfileController do
         render(conn, "edit.html", profile: profile, changeset: changeset)
     end
   end
-  
 end

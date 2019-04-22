@@ -2,8 +2,6 @@ defmodule SportegicWeb.LayoutView do
   use SportegicWeb, :view
 
   def organisation_name(org) do
-    IO.inspect(org)
-
     case String.contains?(org, "_") do
       true ->
         org

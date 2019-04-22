@@ -68,7 +68,10 @@ defmodule Sportegic.Accounts do
 
     # Create a tenant based on org prefix
     resp = Triplex.create(org.prefix)
-    IO.inspect(resp)
+    IO.inspect(resp, label: "RESPONSE FROM TRIPLEX")
+
+    # Add defaults roles to Tenant DB
+
     {:ok, org}
   end
 

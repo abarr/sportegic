@@ -25,7 +25,7 @@ defmodule SportegicWeb.Router do
   scope "/", SportegicWeb do
     pipe_through :browser
 
-    get "/", DashboardController, :index
+    get "/dashboard", DashboardController, :index
 
     resources "/user", UserController, only: [:new, :create, :index]
     get "/request_verification", UserController, :request_verification
@@ -44,6 +44,8 @@ defmodule SportegicWeb.Router do
     get "/set_organisation", OrganisationController, :set_organisation
 
     resources "/profile", ProfileController, except: [:index, :delete]
+
+    resources "/role", RoleController
   end
 
   # Other scopes may use custom stacks.

@@ -49,9 +49,9 @@
         </div>            
       <% end %>
     </header>
-    <main role="main">
+    <main-section role="main">
       <%= render @view_module, @view_template, assigns %>
-    </main>
+    </main-section>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>">
     </script>
   </body>

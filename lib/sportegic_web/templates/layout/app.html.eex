@@ -6,39 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Sportegic</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
-  <body>
+  <body >
     <header>
       <div class="row nav-custom">
-        <div class="navbar-fixed">
+      <div class="col s12 remove-right-padding">   
+          <div class="nav-wrapper hide-on-large-only ">
+            <div class="row ">
+                  <div class="col s12 center-align">
+                    <a href="#" data-target="slide-out" class="left small-screen-menu-triggers  sidenav-trigger  grey-text"><i class="fas fa-bars fa-2x fa-fw"></i></a>
+                    <a href="#" class="small-screen-logo center-align grey-text lighten-2"><%= organisation_name(@conn.assigns.organisation) %></a>
+                    <a id="profile" class='right small-screen-menu-triggers sidenav-trigger dropdown-trigger grey-text lighten-2 center-align' href='#' data-target='profileDropdown'><i class="material-icons ">account_circle</i> </a>
+                    <!-- Profile Dropdown Structure -->
+                    <ul id='profileDropdown' class='dropdown-content'>
+                      <%= if Enum.count(@conn.assigns.current_user.organisations) > 1 do %>
+                        <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
+                      <% end %>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
+                      <li class="divider li-dropdown-custom" ></li>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
+                    </ul>
+                  </div>
+                </div>
+          
+          </div>
+
           <nav class="white z-depth-0">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo grey-text lighten-2"><%= organisation_name(@conn.assigns.organisation) %></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li><a class="grey-text lighten-2 li-custom center-align" href="#"><i class="fal fa-inbox-in  fa-fw"></i> Inbox</a></li>
-                  <li>
-                    <!-- Dropdown Trigger -->
-                    <a id="profile" class='dropdown-trigger grey-text lighten-2 li-custom center-align' href='#' data-target='profileDropdown'><i class="fas fa-user-circle fa-lg fa-fw"></i> <%= @profile.firstname %> <i class="far fa-chevron-down fa-fw"></i></a>
 
-                    <!-- Dropdown Structure -->
-                    <ul id='profileDropdown' class='dropdown-content z-depth-0'>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li><a href="" class="valign-wrapper grey-text lighten-2"> <i class="material-icons left"> inbox</i> Inbox</i></a></li>
+                  <!-- Profile Dropdown Trigger -->
+                  <li class="">
+                    <a id="profile-large" class='li-custom dropdown-trigger grey-text lighten-2 valign-wrapper' href='#' data-target='profileDropdownLarge'>
+                    <i class="material-icons left">account_circle</i> 
+                    <%= @conn.assigns.profile.firstname %> 
+                    <i class="material-icons right">expand_more</i> 
+                    </a>
+                    <!-- Profile Dropdown Structure -->
+                    <ul id='profileDropdownLarge' class='dropdown-content '>
                       <%= if Enum.count(@conn.assigns.current_user.organisations) > 1 do %>
-                        <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
+                        <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
                       <% end %>
-                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
                       <li class="divider li-dropdown-custom z-depth-0" ></li>
-                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
                     </ul>
                   
                   </li>
                   <li>
-                    <!-- Dropdown Trigger -->
-                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language center-align' href='#' data-target='dropdown1'>En </a>
-
-                    <!-- Dropdown Structure -->
-                    <ul id='dropdown1' class='dropdown-content z-depth-0'>
-                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Es</a></li>
-                      <li class="z-depth-0"><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Fr</a></li>
+                    <!-- Lang Dropdown Trigger -->
+                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language  grey lighten-5' href='#' data-target='lang'>En</a>
+                    <!-- Lang Dropdown Structure -->
+                    <ul id='lang' class='dropdown-content'>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Es</a></li>
+                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Fr</a></li>
                     </ul>
                   
                   </li>
@@ -46,31 +69,36 @@
               </div>
             </nav>
           </div>
-        </div> 
+        
       </div>
       <%# SIDE NAV %>
-      <ul id="slide-out" class="collapsible sidenav sidenav-fixed z-depth-0 sidenav-custom ">
-        <li class="active"><a class="grey-text lighten-2" href="#!"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
-        <li><a class="grey-text lighten-2" href="#!"><i class="fal fa-user-astronaut fa-lg fa-fw"></i> People</a></li>
-        <li><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
-        <li><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
-        
-        <li>
-          <a id="" class="collapsible-header grey-text lighten-2 padding-collapsible-header " href="#!"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration <i class="right far fa-chevron-down fa-fw margin-right-icon "></i></a>
-          <div class="collapsible-body">
-                <a class="grey-text lighten-2 padding-collapsible-body" href="#!"><i class="far fa-chevron-right fa-xs fa-fw"></i> Users</a>
-          </div>
-        
+      <ul id="slide-out" class="sidenav sidenav-fixed z-depth-0 sidenav-custom ">
+        <li class="logo">
+          <a href="/dashboard" class=" grey-text lighten-2"><h4><%= organisation_name(@conn.assigns.organisation) %></h4></a>
         </li>
+        <li class="menu" id="dashboard"><a class="grey-text lighten-2" href="/dashboard"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
+        <li class="menu" id="people"><a class="grey-text lighten-2" href="#!"><i class="fal fa-user-astronaut fa-lg fa-fw"></i> People</a></li>
+        <li class="menu" id="note"><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
+        <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
+        
+        <li class="">
+          <ul class="collapsible collapsible-accordion ">
+            <li >
+              <a id="administration"  class="collapsible-header grey-text lighten-2 padding-collapsible-header"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration<i class="material-icons right">expand_more</i></a>
+              <div class="collapsible-body">
+                <ul>
+                  <li ><a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role"><i class="far fa-chevron-right fa-xs fa-fw"></i> Roles</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>  
         
       </ul>
-    
-      
-        
+    </div>
+    </div>  
     </header>
-    <main role="main" class="main">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <main role="main" class="grey-text lighten-2">
       <%= render @view_module, @view_template, assigns %>
     </main>
 

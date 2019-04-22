@@ -11,7 +11,6 @@ defmodule SportegicWeb.Plugs.Authenticate do
       conn
     else
       conn
-      |> put_flash(:info, "Please login to visit this page.")
       |> redirect(to: Helpers.session_path(conn, :new))
       |> halt()
     end

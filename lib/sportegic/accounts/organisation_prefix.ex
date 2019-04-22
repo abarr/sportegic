@@ -3,8 +3,6 @@ defmodule Sportegic.Accounts.OrganisationPrefix do
   def type, do: :string
 
   def cast(prefix) when is_binary(prefix) do
-    IO.inspect(prefix)
-
     prefix =
       prefix
       |> String.trim()

@@ -3,7 +3,7 @@ defmodule SportegicWeb.OrganisationController do
 
   alias Sportegic.Accounts
   alias Sportegic.Accounts.Organisation
-
+  alias Sportegic.Profiles
   plug :put_layout, "accounts.html"
 
   plug SportegicWeb.Plugs.Authenticate
@@ -48,7 +48,8 @@ defmodule SportegicWeb.OrganisationController do
 
     with {:ok, org} <- Accounts.create_organisation(organisation_params),
          {:ok, _orgs_users} <-
-           Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}) do
+           Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),
+         {:ok, _roles} <- Profiles.create_roles(org.prefix) do
       conn
       |> put_session(:organisation, org.prefix)
       |> put_flash(:info, "Organisation created successfully.")

@@ -12,9 +12,6 @@ defmodule SportegicWeb.DashboardController do
 
   def index(conn, _params, org) do
     # Is there a profile for the user?
-    IO.inspect(org, label: "ORG")
-    IO.inspect(conn.assigns.current_user.id, label: "ID")
-
     case Profiles.get_profile(conn.assigns.current_user.id, org) do
       {:ok, nil} ->
         conn
@@ -26,8 +23,5 @@ defmodule SportegicWeb.DashboardController do
       resp ->
         IO.inspect(resp, label: "Dashboard Index resp")
     end
-
-    # if yes add profile to assigns
-    # If no redirect to new profile page (pre-fill email)
   end
 end

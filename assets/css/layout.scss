@@ -1,11 +1,22 @@
+header, main {
+      padding-left: 300px;
+    }
+    @media only screen and (max-width : 992px) {
+      header, main {
+        padding-left: 0;
+    }     
+}
+
 .nav-wrapper{
-    padding-left: 20px;
+    // padding-left: 20px;
     line-height: 100px;
 }
 .li-custom{
-    width: 140px;
+    min-width: 150px;
     border-left: 2px solid #f4f4f4;
+    text-decoration: none !important;
 }
+
 .li-language{
     border-left: 2px solid #f4f4f4;
 }
@@ -13,28 +24,35 @@
     border: 1px solid #f4f4f4;
 }
 .side-custom{
-    width: 200px;
+    // width: 200px;
     line-height: 100px;
 }
 .nav-custom {
     border-bottom: 2px solid #f4f4f4;
     height: 100px;  
-    }
-.main {
-    padding-left: 300px;
+    margin-bottom: 10px;
 }
-.sidenav-fixed{
-    margin-top: 100px;     
+.remove-right-padding{
+    padding-right: 0px !important; 
+}
+.side-nav-trigger{
+    line-height: 0px;
+}
+
+
+.small-screen-menu-triggers{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.small-screen-logo{
+    font-size: 28px;
+    padding-bottom: 15px;
 }
 .sidenav-custom{
     border-right: 2px solid #f4f4f4;
     border-top: 0px solid #f4f4f4;
 }
-@media only screen and (max-width : 992px) {
-    header, main, footer {
-        padding-left: 0;
-    }
-}
+
 .padding-collapsible-header{
     padding-left: 32px !important;
 }
@@ -47,4 +65,16 @@
 
 .card-register{
     border: 2px solid #f4f4f4;
+}
+
+.heading {
+    padding-top: 0px; 
+    padding-bottom: 0px;
+    margin-left: 5px;
+    margin-top: 0px;
+}
+.logo{
+    height: 100px;
+    padding-top: 22px;
+    border-bottom: 1px solid #f4f4f4;
 }
