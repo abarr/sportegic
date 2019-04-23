@@ -32,10 +32,10 @@
           
           </div>
 
-          <nav class="white z-depth-0">
-            <div class="nav-wrapper">
+          <nav class="white z-depth-0 hide-on-med-and-down">
+            <div class="nav-wrapper ">
 
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <ul id="nav-mobile" class="right">
                   <li><a href="" class="valign-wrapper grey-text lighten-2"> <i class="material-icons left"> inbox</i> Inbox</i></a></li>
                   <!-- Profile Dropdown Trigger -->
                   <li class="">

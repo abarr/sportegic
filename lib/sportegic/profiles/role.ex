@@ -5,7 +5,7 @@ defmodule Sportegic.Profiles.Role do
 
   schema "roles" do
     field(:name, :string)
-    field(:display, :string)
+    field(:description, :string)
     has_many(:profile, Profile)
 
     timestamps()
@@ -14,7 +14,7 @@ defmodule Sportegic.Profiles.Role do
   @doc false
   def changeset(role, attrs) do
     role
-    |> cast(attrs, [:name, :display])
-    |> validate_required([:name, :display])
+    |> cast(attrs, [:name, :description])
+    |> validate_required([:name, :description])
   end
 end

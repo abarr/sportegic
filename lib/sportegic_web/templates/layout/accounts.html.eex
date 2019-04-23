@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
-    <header>
+    <header-section>
       <%= if get_flash(@conn, :danger) do %>
         <div class="row container">
           <div class="col s12 l6 offset-l3">
@@ -48,7 +48,7 @@
           </div>
         </div>            
       <% end %>
-    </header>
+    </header-section>
     <main-section role="main">
       <%= render @view_module, @view_template, assigns %>
     </main-section>

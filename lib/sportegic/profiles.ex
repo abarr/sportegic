@@ -1,8 +1,12 @@
 defmodule Sportegic.Profiles do
   import Ecto.Query, warn: false
+  alias __MODULE__
   alias Sportegic.Repo
-
-  alias Sportegic.Profiles.{Profile, Role, Seeds}
+  alias Sportegic.Profiles.Profile
+  alias Sportegic.Profiles.Category
+  alias Sportegic.Profiles.Permission
+  alias Sportegic.Profiles.Role
+  alias Sportegic.Profiles.Seeds
 
   def list_profiles(org) do
     Repo.all(Profile, prefix: org)
@@ -32,10 +36,6 @@ defmodule Sportegic.Profiles do
     |> Repo.update(prefix: org)
   end
 
-  def delete_profile(%Profile{} = profile, org) do
-    Repo.delete(profile, prefix: org)
-  end
-
   def change_profile(%Profile{} = profile) do
     Profile.changeset(profile, %{})
   end
@@ -52,7 +52,7 @@ defmodule Sportegic.Profiles do
     |> Repo.insert(prefix: org)
   end
 
-  def create_roles(org) do
+  def create_default_roles(org) do
     roles = Seeds.get_default_roles_list()
     list = Enum.map(roles, &create_role(&1, org))
     {:ok, list}
@@ -70,5 +70,54 @@ defmodule Sportegic.Profiles do
 
   def change_role(%Role{} = role) do
     Role.changeset(role, %{})
+  end
+
+  def list_categories(org) do
+    Repo.all(Category, prefix: org)
+  end
+
+  def get_category!(id), do: Repo.get!(Category, id)
+
+  def create_category(attrs \\ %{}, org) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def create_default_categories(org) do
+    categories = Seeds.get_default_permission_categories()
+    list = Enum.map(categories, &create_category(&1, org))
+    {:ok, list}
+  end
+
+  def change_category(%Category{} = category) do
+    Category.changeset(category, %{})
+  end
+
+  def list_permissions(org) do
+    Repo.all(Permission, prefix: org)
+  end
+
+  def get_permission!(id, org), do: Repo.get!(Permission, id, org)
+
+  def create_permission(attrs \\ %{}, org) do
+    %Permission{}
+    |> Permission.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def create_default_permissions(org) do
+    permissions = Seeds.get_default_permissions_list()
+    categories = Profiles.list_categories(org)
+
+    for category <- categories do
+      Enum.map(permissions, fn permission ->
+        attrs = Map.put(permission, :category_id, category.id)
+        IO.inspect(attrs, label: "PERMISSION MAP:")
+        create_permission(attrs, org)
+      end)
+    end
+
+    {:ok, []}
   end
 end
