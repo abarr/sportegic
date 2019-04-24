@@ -28,4 +28,11 @@ defmodule SportegicWeb.RoleView do
         end
     end
   end
+
+  def disable_if_owner(role_id) do
+    case role_id do
+      1 -> 'disabled: "true"'
+      _ -> nil
+    end
+  end
 end

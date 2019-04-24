@@ -34,6 +34,7 @@ defmodule SportegicWeb.RoleController do
     with {:ok, role} <- Profiles.create_role(role, org),
          {:ok, _role_perissions} <- Profiles.create_role_permissions(role.id, permissions, org) do
       conn
+      |> put_flash(:success, "Your new Role has been successfully created.")
       |> redirect(to: Routes.role_path(conn, :index))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -51,11 +52,21 @@ defmodule SportegicWeb.RoleController do
     changeset = Profiles.change_role(role)
     permissions = Profiles.list_permissions(org)
 
-    render(conn, "edit.html",
-      role: role,
-      changeset: changeset,
-      permissions: permissions
-    )
+    case role.id do
+      1 ->
+        roles = Profiles.list_roles(org)
+
+        conn
+        |> put_flash(:info, "The Owner Role cannot be edited.")
+        |> render("index.html", roles: roles)
+
+      _ ->
+        render(conn, "edit.html",
+          role: role,
+          changeset: changeset,
+          permissions: permissions
+        )
+    end
   end
 
   def update(conn, %{"id" => id, "role" => params} = data, org) do
@@ -70,9 +81,9 @@ defmodule SportegicWeb.RoleController do
       |> Profiles.list_permissions(org)
 
     case Profiles.update_role(role, role_params, permissions, org) do
-      {:ok, role} ->
+      {:ok, _role} ->
         conn
-        |> put_flash(:info, "Role updated successfully.")
+        |> put_flash(:success, "Role updated successfully.")
         |> redirect(to: Routes.role_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->

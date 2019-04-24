@@ -2,6 +2,28 @@
 
 <div class="row page">
   <div class="col s12">
+  <%= if get_flash(@conn, :info) do %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel z-depth-0 blue lighten-3 white-text center-align">
+              
+                  <%= get_flash(@conn, :info) %>
+              
+            </div>
+          </div>
+        </div>  
+    <% end %>
+    <%= if get_flash(@conn, :success) do %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel z-depth-0 green lighten-3 white-text center-align">
+              
+                  <%= get_flash(@conn, :success) %>
+              
+            </div>
+          </div>
+        </div>  
+    <% end %>
     <div class="section heading">
       <h5 class="heading grey-text lighten-2">Roles</h5>
     </div>
@@ -22,7 +44,13 @@
           <tr>
             <td> <%= role.name %>  </td>
             <td> <%= role.description %> </td>
-            <td class="center-align"> <%= link "Edit", to: Routes.role_path(@conn, :edit, role) %> </td>
+            <td class="center-align"> 
+              <%= if(role.id != 1) do %>  
+                <%= link "Edit", to: Routes.role_path(@conn, :edit, role) %> 
+              <% else %>
+                Edit
+              <% end %>
+            </td>
           </tr>
           <% end %>
         </tbody>
