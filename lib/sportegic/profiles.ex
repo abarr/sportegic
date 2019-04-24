@@ -1,5 +1,6 @@
 defmodule Sportegic.Profiles do
   import Ecto.Query, warn: false
+  
   alias __MODULE__
   alias Sportegic.Repo
   alias Sportegic.Profiles.Profile
@@ -95,7 +96,16 @@ defmodule Sportegic.Profiles do
   end
 
   def list_permissions(org) do
-    Repo.all(Permission, prefix: org)
+    query = from p in Permission, 
+    join: c in Category, 
+    on: p.category_id == c.id, 
+    select: %{permission_id: p.id, name: p.name, category: c.name, category_id: c.id }
+    
+    query
+    |> Repo.all(prefix: org)
+    |> Enum.group_by(fn p -> p.category end)
+    |> Enum.map(fn {k, v} -> {k, Enum.map(v, &Map.delete(&1, :category))} end)
+    |> Map.new
   end
 
   def get_permission!(id, org), do: Repo.get!(Permission, id, org)

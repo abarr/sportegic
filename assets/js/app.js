@@ -5,6 +5,7 @@ import M from "./materialize";
 import Navigation from "./navigation"
 import User from "./user"
 import Organisation from "./organisation"
+import Role from "./role";
 // import socket from "./socket"
 
 
@@ -17,5 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })(), true);
 
     Navigation.init_page_elements();
+    Role.setup_role_form();
 
 });

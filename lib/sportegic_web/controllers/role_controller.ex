@@ -16,12 +16,14 @@ defmodule SportegicWeb.RoleController do
     render(conn, "index.html", roles: roles)
   end
 
-  def new(conn, _params, _org) do
+  def new(conn, _params, org) do
     changeset = Profiles.change_role(%Role{})
-    render(conn, "new.html", changeset: changeset)
+    permissions = Profiles.list_permissions(org)
+    render(conn, "new.html", changeset: changeset, permissions: permissions)
   end
 
-  def create(conn, %{"role" => role_params}, org) do
+  def create(conn, %{"role" => role_params} = params, org) do
+    IO.inspect(params)
     case Profiles.create_role(role_params, org) do
       {:ok, role} ->
         conn

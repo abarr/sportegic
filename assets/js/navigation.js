@@ -54,10 +54,14 @@ let Navigation = {
         // This ensures lable are moved when fields are pre-filed (e.g. forms with errors)
         M.updateTextFields();
 
-        var fabs = document.querySelectorAll('.fixed-action-btn');
+        let fabs = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(fabs, {
             direction: 'left'
         });
+
+        let brand = document.getElementById("fourteen");
+        M.CharacterCounter.init(brand);
+
 
     }
 }
