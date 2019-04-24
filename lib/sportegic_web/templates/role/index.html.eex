@@ -9,7 +9,7 @@
   </div>
   <div class="row page">
     <div class="col s12">
-      <table>
+      <table class="highlight">
         <thead>
           <tr>
               <th>Name</th>
@@ -22,7 +22,7 @@
           <tr>
             <td> <%= role.name %>  </td>
             <td> <%= role.description %> </td>
-            <td></td>
+            <td class="center-align"> <%= link "Edit", to: Routes.role_path(@conn, :edit, role) %> </td>
           </tr>
           <% end %>
         </tbody>

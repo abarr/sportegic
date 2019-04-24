@@ -128,4 +128,61 @@ defmodule Sportegic.ProfilesTest do
       assert %Ecto.Changeset{} = Profiles.change_permission(permission)
     end
   end
+
+  describe "roles_permissions" do
+    alias Sportegic.Profiles.RolesPermissions
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def roles_permissions_fixture(attrs \\ %{}) do
+      {:ok, roles_permissions} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Profiles.create_roles_permissions()
+
+      roles_permissions
+    end
+
+    test "list_roles_permissions/0 returns all roles_permissions" do
+      roles_permissions = roles_permissions_fixture()
+      assert Profiles.list_roles_permissions() == [roles_permissions]
+    end
+
+    test "get_roles_permissions!/1 returns the roles_permissions with given id" do
+      roles_permissions = roles_permissions_fixture()
+      assert Profiles.get_roles_permissions!(roles_permissions.id) == roles_permissions
+    end
+
+    test "create_roles_permissions/1 with valid data creates a roles_permissions" do
+      assert {:ok, %RolesPermissions{} = roles_permissions} = Profiles.create_roles_permissions(@valid_attrs)
+    end
+
+    test "create_roles_permissions/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Profiles.create_roles_permissions(@invalid_attrs)
+    end
+
+    test "update_roles_permissions/2 with valid data updates the roles_permissions" do
+      roles_permissions = roles_permissions_fixture()
+      assert {:ok, %RolesPermissions{} = roles_permissions} = Profiles.update_roles_permissions(roles_permissions, @update_attrs)
+    end
+
+    test "update_roles_permissions/2 with invalid data returns error changeset" do
+      roles_permissions = roles_permissions_fixture()
+      assert {:error, %Ecto.Changeset{}} = Profiles.update_roles_permissions(roles_permissions, @invalid_attrs)
+      assert roles_permissions == Profiles.get_roles_permissions!(roles_permissions.id)
+    end
+
+    test "delete_roles_permissions/1 deletes the roles_permissions" do
+      roles_permissions = roles_permissions_fixture()
+      assert {:ok, %RolesPermissions{}} = Profiles.delete_roles_permissions(roles_permissions)
+      assert_raise Ecto.NoResultsError, fn -> Profiles.get_roles_permissions!(roles_permissions.id) end
+    end
+
+    test "change_roles_permissions/1 returns a roles_permissions changeset" do
+      roles_permissions = roles_permissions_fixture()
+      assert %Ecto.Changeset{} = Profiles.change_roles_permissions(roles_permissions)
+    end
+  end
 end

@@ -1,6 +1,6 @@
 defmodule Sportegic.Profiles do
   import Ecto.Query, warn: false
-  
+
   alias __MODULE__
   alias Sportegic.Repo
   alias Sportegic.Profiles.Profile
@@ -8,6 +8,7 @@ defmodule Sportegic.Profiles do
   alias Sportegic.Profiles.Permission
   alias Sportegic.Profiles.Role
   alias Sportegic.Profiles.Seeds
+  alias Sportegic.Profiles.RolesPermissions
 
   def list_profiles(org) do
     Repo.all(Profile, prefix: org)
@@ -45,7 +46,11 @@ defmodule Sportegic.Profiles do
     Repo.all(Role, prefix: org)
   end
 
-  def get_role!(id, org), do: Repo.get!(Role, id, prefix: org)
+  def get_role!(id, org) do
+    Role
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload(:permissions)
+  end
 
   def create_role(attrs \\ %{}, org) do
     %Role{}
@@ -59,9 +64,21 @@ defmodule Sportegic.Profiles do
     {:ok, list}
   end
 
-  def update_role(%Role{} = role, attrs, org) do
+  def update_role(%Role{} = role, attrs, permissions, org) do
+    # role
+    # |> IO.inspect()
+    # |> Ecto.Changeset.change(attrs)
+    # |> IO.inspect()
+    # |> Ecto.Changeset.put_assoc(:permissions, permissions, [])
+    # |> IO.inspect()
+    # |> Repo.update(prefix: org)
+
     role
+    |> IO.inspect()
     |> Role.changeset(attrs)
+    |> IO.inspect()
+    |> Ecto.Changeset.put_assoc(:permissions, permissions, [])
+    |> IO.inspect()
     |> Repo.update(prefix: org)
   end
 
@@ -96,16 +113,24 @@ defmodule Sportegic.Profiles do
   end
 
   def list_permissions(org) do
-    query = from p in Permission, 
-    join: c in Category, 
-    on: p.category_id == c.id, 
-    select: %{permission_id: p.id, name: p.name, category: c.name, category_id: c.id }
-    
+    query =
+      from(p in Permission,
+        join: c in Category,
+        on: p.category_id == c.id,
+        select: %{permission_id: p.id, name: p.name, category: c.name}
+      )
+
     query
     |> Repo.all(prefix: org)
     |> Enum.group_by(fn p -> p.category end)
     |> Enum.map(fn {k, v} -> {k, Enum.map(v, &Map.delete(&1, :category))} end)
-    |> Map.new
+    |> Map.new()
+  end
+
+  def list_permissions(ids, org) do
+    Permission
+    |> where([p], p.id in ^ids)
+    |> Repo.all(prefix: org)
   end
 
   def get_permission!(id, org), do: Repo.get!(Permission, id, org)
@@ -123,11 +148,50 @@ defmodule Sportegic.Profiles do
     for category <- categories do
       Enum.map(permissions, fn permission ->
         attrs = Map.put(permission, :category_id, category.id)
-        IO.inspect(attrs, label: "PERMISSION MAP:")
         create_permission(attrs, org)
       end)
     end
 
     {:ok, []}
+  end
+
+  def list_roles_permissions(id, org) do
+    query =
+      from(rp in RolesPermissions,
+        join: p in Permission,
+        on: rp.permission_id == p.id and rp.role_id == ^id,
+        join: c in Category,
+        on: p.category_id == c.id,
+        select: %{permission_id: p.id}
+      )
+
+    query
+    |> Repo.all(prefix: org)
+    |> Enum.map(fn %{permission_id: v} -> v end)
+  end
+
+  def get_roles_permissions!(id, org), do: Repo.get!(RolesPermissions, id, prefix: org)
+
+  def create_roles_permissions(attrs \\ %{}, org) do
+    %RolesPermissions{}
+    |> RolesPermissions.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def create_role_permissions(role_id, permissions, org) do
+    Enum.map(permissions, fn v ->
+      attrs = Map.new([{:role_id, role_id}, {:permission_id, String.to_integer(v)}])
+      create_roles_permissions(attrs, org)
+    end)
+
+    {:ok, []}
+  end
+
+  def delete_roles_permissions(%RolesPermissions{} = roles_permissions, org) do
+    Repo.delete(roles_permissions, prefix: org)
+  end
+
+  def change_roles_permissions(%RolesPermissions{} = roles_permissions) do
+    RolesPermissions.changeset(roles_permissions, %{})
   end
 end
