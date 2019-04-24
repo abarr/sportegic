@@ -31,7 +31,7 @@
       <%= Enum.map(@permissions[key], fn(p) -> %>
         <div class="col s12 m2 l2">
           <label for= '<%= field_name_as_string("role" <> " " <> Integer.to_string(p.permission_id)) %>' >
-            <%= checkbox f, field_name_as_atom(Integer.to_string(p.permission_id)) , [type: "checkbox"] %>
+            <%= checkbox f, field_name_as_atom(Integer.to_string(p.permission_id)) , [type: "checkbox", data: [field: p.name]] %>
             <span><%= p.name %></span>
           </label>
         </div>
