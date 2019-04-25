@@ -1,7 +1,7 @@
 defmodule SportegicWeb.DashboardController do
   use SportegicWeb, :controller
 
-  alias Sportegic.Profiles
+  alias Sportegic.Users
 
   plug SportegicWeb.Plugs.Authenticate
 
@@ -12,13 +12,13 @@ defmodule SportegicWeb.DashboardController do
 
   def index(conn, _params, org) do
     # Is there a profile for the user?
-    case Profiles.get_profile(conn.assigns.current_user.id, org) do
+    case Users.get_user(conn.assigns.current_user.id, org) do
       {:ok, nil} ->
         conn
-        |> redirect(to: Routes.profile_path(conn, :new))
+        |> redirect(to: Routes.org_user_path(conn, :new))
 
-      {:ok, profile} ->
-        render(conn, "index.html", profile: profile)
+      {:ok, user} ->
+        render(conn, "index.html", user: user)
 
       resp ->
         IO.inspect(resp, label: "Dashboard Index resp")

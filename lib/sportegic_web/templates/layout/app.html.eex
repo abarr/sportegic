@@ -41,7 +41,7 @@
                   <li class="">
                     <a id="profile-large" class='li-custom dropdown-trigger grey-text lighten-2 valign-wrapper' href='#' data-target='profileDropdownLarge'>
                     <i class="material-icons left">account_circle</i> 
-                    <%= @conn.assigns.profile.firstname %> 
+                    <%= @conn.assigns.user.firstname %> 
                     <i class="material-icons right">expand_more</i> 
                     </a>
                     <!-- Profile Dropdown Structure -->

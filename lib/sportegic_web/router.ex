@@ -43,7 +43,7 @@ defmodule SportegicWeb.Router do
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
     get "/set_organisation", OrganisationController, :set_organisation
 
-    resources "/profile", ProfileController, except: [:index, :delete]
+    resources "/org_user", OrgUserController, except: [:index, :delete]
 
     resources "/role", RoleController
   end

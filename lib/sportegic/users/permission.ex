@@ -1,10 +1,10 @@
-defmodule Sportegic.Profiles.Permission do
+defmodule Sportegic.Users.Permission do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Profiles.Category
-  alias Sportegic.Profiles.Role
-  alias Sportegic.Profiles.RolesPermissions
+  alias Sportegic.Users.Category
+  alias Sportegic.Users.Role
+  alias Sportegic.Users.RolesPermissions
 
   schema "permissions" do
     field(:name, :string)

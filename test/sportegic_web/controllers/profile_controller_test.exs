@@ -1,10 +1,22 @@
 defmodule SportegicWeb.ProfileControllerTest do
   use SportegicWeb.ConnCase
 
-  alias Sportegic.Profiles
+  alias Sportegic.Users
 
-  @create_attrs %{complete: true, firstname: "some firstname", lastname: "some lastname", mobile: "some mobile", timezone: "some timezone"}
-  @update_attrs %{complete: false, firstname: "some updated firstname", lastname: "some updated lastname", mobile: "some updated mobile", timezone: "some updated timezone"}
+  @create_attrs %{
+    complete: true,
+    firstname: "some firstname",
+    lastname: "some lastname",
+    mobile: "some mobile",
+    timezone: "some timezone"
+  }
+  @update_attrs %{
+    complete: false,
+    firstname: "some updated firstname",
+    lastname: "some updated lastname",
+    mobile: "some updated mobile",
+    timezone: "some updated timezone"
+  }
   @invalid_attrs %{complete: nil, firstname: nil, lastname: nil, mobile: nil, timezone: nil}
 
   def fixture(:profile) do
@@ -75,6 +87,7 @@ defmodule SportegicWeb.ProfileControllerTest do
     test "deletes chosen profile", %{conn: conn, profile: profile} do
       conn = delete(conn, Routes.profile_path(conn, :delete, profile))
       assert redirected_to(conn) == Routes.profile_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.profile_path(conn, :show, profile))
       end

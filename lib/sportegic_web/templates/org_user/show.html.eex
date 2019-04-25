@@ -4,30 +4,30 @@
 
   <li>
     <strong>Firstname:</strong>
-    <%= @profile.firstname %>
+    <%= @user.firstname %>
   </li>
 
   <li>
     <strong>Lastname:</strong>
-    <%= @profile.lastname %>
+    <%= @user.lastname %>
   </li>
 
   <li>
     <strong>Mobile:</strong>
-    <%= @profile.mobile %>
+    <%= @user.mobile %>
   </li>
 
   <li>
     <strong>Timezone:</strong>
-    <%= @profile.timezone %>
+    <%= @user.timezone %>
   </li>
 
   <li>
     <strong>Complete:</strong>
-    <%= @profile.complete %>
+    <%= @user.complete %>
   </li>
 
 </ul>
 
-<span><%= link "Edit", to: Routes.profile_path(@conn, :edit, @profile) %></span>
+<span><%= link "Edit", to: Routes.org_user_path(@conn, :edit, @user) %></span>
 

@@ -2,7 +2,7 @@ defmodule SportegicWeb.Plugs.Session do
   import Plug.Conn
 
   alias Sportegic.Accounts
-  alias Sportegic.Profiles
+  alias Sportegic.Users
 
   def init(opts), do: opts
 
@@ -24,15 +24,15 @@ defmodule SportegicWeb.Plugs.Session do
             |> assign(:organisation, nil)
 
           org ->
-            case Profiles.get_profile(user.id, org) do
+            case Users.get_user(user.id, org) do
               {:ok, nil} ->
                 conn
                 |> assign(:current_user, user)
                 |> assign(:organisation, org)
 
-              {:ok, profile} ->
+              {:ok, org_user} ->
                 conn
-                |> assign(:profile, profile)
+                |> assign(:user, org_user)
                 |> assign(:current_user, user)
                 |> assign(:organisation, org)
             end

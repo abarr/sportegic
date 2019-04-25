@@ -1,4 +1,4 @@
-defmodule Sportegic.Profiles.Seeds do
+defmodule Sportegic.Users.Seeds do
   def get_default_roles_list() do
     [
       %{

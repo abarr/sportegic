@@ -1,13 +1,25 @@
-defmodule Sportegic.ProfilesTest do
+defmodule Sportegic.UsersTest do
   use Sportegic.DataCase
 
-  alias Sportegic.Profiles
+  alias Sportegic.Users
 
   describe "profiles" do
-    alias Sportegic.Profiles.Profile
+    alias Sportegic.Users.User
 
-    @valid_attrs %{complete: true, firstname: "some firstname", lastname: "some lastname", mobile: "some mobile", timezone: "some timezone"}
-    @update_attrs %{complete: false, firstname: "some updated firstname", lastname: "some updated lastname", mobile: "some updated mobile", timezone: "some updated timezone"}
+    @valid_attrs %{
+      complete: true,
+      firstname: "some firstname",
+      lastname: "some lastname",
+      mobile: "some mobile",
+      timezone: "some timezone"
+    }
+    @update_attrs %{
+      complete: false,
+      firstname: "some updated firstname",
+      lastname: "some updated lastname",
+      mobile: "some updated mobile",
+      timezone: "some updated timezone"
+    }
     @invalid_attrs %{complete: nil, firstname: nil, lastname: nil, mobile: nil, timezone: nil}
 
     def profile_fixture(attrs \\ %{}) do
@@ -71,7 +83,7 @@ defmodule Sportegic.ProfilesTest do
   end
 
   describe "permissions" do
-    alias Sportegic.Profiles.Permission
+    alias Sportegic.Users.Permission
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}
@@ -107,7 +119,10 @@ defmodule Sportegic.ProfilesTest do
 
     test "update_permission/2 with valid data updates the permission" do
       permission = permission_fixture()
-      assert {:ok, %Permission{} = permission} = Profiles.update_permission(permission, @update_attrs)
+
+      assert {:ok, %Permission{} = permission} =
+               Profiles.update_permission(permission, @update_attrs)
+
       assert permission.name == "some updated name"
     end
 
@@ -120,17 +135,17 @@ defmodule Sportegic.ProfilesTest do
     test "delete_permission/1 deletes the permission" do
       permission = permission_fixture()
       assert {:ok, %Permission{}} = Profiles.delete_permission(permission)
-      assert_raise Ecto.NoResultsError, fn -> Profiles.get_permission!(permission.id) end
+      assert_raise Ecto.NoResultsError, fn -> Users.get_permission!(permission.id) end
     end
 
     test "change_permission/1 returns a permission changeset" do
       permission = permission_fixture()
-      assert %Ecto.Changeset{} = Profiles.change_permission(permission)
+      assert %Ecto.Changeset{} = Users.change_permission(permission)
     end
   end
 
   describe "roles_permissions" do
-    alias Sportegic.Profiles.RolesPermissions
+    alias Sportegic.Users.RolesPermissions
 
     @valid_attrs %{}
     @update_attrs %{}
@@ -156,7 +171,8 @@ defmodule Sportegic.ProfilesTest do
     end
 
     test "create_roles_permissions/1 with valid data creates a roles_permissions" do
-      assert {:ok, %RolesPermissions{} = roles_permissions} = Profiles.create_roles_permissions(@valid_attrs)
+      assert {:ok, %RolesPermissions{} = roles_permissions} =
+               Profiles.create_roles_permissions(@valid_attrs)
     end
 
     test "create_roles_permissions/1 with invalid data returns error changeset" do
@@ -165,19 +181,27 @@ defmodule Sportegic.ProfilesTest do
 
     test "update_roles_permissions/2 with valid data updates the roles_permissions" do
       roles_permissions = roles_permissions_fixture()
-      assert {:ok, %RolesPermissions{} = roles_permissions} = Profiles.update_roles_permissions(roles_permissions, @update_attrs)
+
+      assert {:ok, %RolesPermissions{} = roles_permissions} =
+               Profiles.update_roles_permissions(roles_permissions, @update_attrs)
     end
 
     test "update_roles_permissions/2 with invalid data returns error changeset" do
       roles_permissions = roles_permissions_fixture()
-      assert {:error, %Ecto.Changeset{}} = Profiles.update_roles_permissions(roles_permissions, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Profiles.update_roles_permissions(roles_permissions, @invalid_attrs)
+
       assert roles_permissions == Profiles.get_roles_permissions!(roles_permissions.id)
     end
 
     test "delete_roles_permissions/1 deletes the roles_permissions" do
       roles_permissions = roles_permissions_fixture()
       assert {:ok, %RolesPermissions{}} = Profiles.delete_roles_permissions(roles_permissions)
-      assert_raise Ecto.NoResultsError, fn -> Profiles.get_roles_permissions!(roles_permissions.id) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Profiles.get_roles_permissions!(roles_permissions.id)
+      end
     end
 
     test "change_roles_permissions/1 returns a roles_permissions changeset" do

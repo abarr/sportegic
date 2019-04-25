@@ -1,9 +1,9 @@
-defmodule Sportegic.Profiles.RolesPermissions do
+defmodule Sportegic.Users.RolesPermissions do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Profiles.Role
-  alias Sportegic.Profiles.Permission
+  alias Sportegic.Users.Role
+  alias Sportegic.Users.Permission
 
   schema "roles_permissions" do
     belongs_to(:role, Role)

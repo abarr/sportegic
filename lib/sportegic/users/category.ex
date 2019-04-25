@@ -1,8 +1,8 @@
-defmodule Sportegic.Profiles.Category do
+defmodule Sportegic.Users.Category do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Profiles.Permission
+  alias Sportegic.Users.Permission
 
   schema "categories" do
     field(:name, :string)

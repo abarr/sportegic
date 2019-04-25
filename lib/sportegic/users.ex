@@ -1,45 +1,45 @@
-defmodule Sportegic.Profiles do
+defmodule Sportegic.Users do
   import Ecto.Query, warn: false
 
   alias __MODULE__
   alias Sportegic.Repo
-  alias Sportegic.Profiles.Profile
-  alias Sportegic.Profiles.Category
-  alias Sportegic.Profiles.Permission
-  alias Sportegic.Profiles.Role
-  alias Sportegic.Profiles.Seeds
-  alias Sportegic.Profiles.RolesPermissions
+  alias Sportegic.Users.User
+  alias Sportegic.Users.Category
+  alias Sportegic.Users.Permission
+  alias Sportegic.Users.Role
+  alias Sportegic.Users.Seeds
+  alias Sportegic.Users.RolesPermissions
 
-  def list_profiles(org) do
-    Repo.all(Profile, prefix: org)
+  def list_users(org) do
+    Repo.all(User, prefix: org)
   end
 
-  def get_profile!(id, org), do: Repo.get!(Profile, id, prefix: org)
+  def get_user!(id, org), do: Repo.get!(User, id, prefix: org)
 
   #  Get profile using user_id from con
-  def get_profile(user_id, org) do
+  def get_user(user_id, org) do
     profile =
-      Profile
+      User
       |> where([p], p.user_id == ^user_id)
       |> Repo.one(prefix: org)
 
     {:ok, profile}
   end
 
-  def create_profile(attrs \\ %{}, org) do
-    %Profile{}
-    |> Profile.changeset(attrs)
+  def create_user(attrs \\ %{}, org) do
+    %User{}
+    |> User.changeset(attrs)
     |> Repo.insert(prefix: org)
   end
 
-  def update_profile(%Profile{} = profile, attrs, org) do
+  def update_user(%User{} = profile, attrs, org) do
     profile
-    |> Profile.changeset(attrs)
+    |> User.changeset(attrs)
     |> Repo.update(prefix: org)
   end
 
-  def change_profile(%Profile{} = profile) do
-    Profile.changeset(profile, %{})
+  def change_user(%User{} = profile) do
+    User.changeset(profile, %{})
   end
 
   def list_roles(org) do
@@ -65,20 +65,9 @@ defmodule Sportegic.Profiles do
   end
 
   def update_role(%Role{} = role, attrs, permissions, org) do
-    # role
-    # |> IO.inspect()
-    # |> Ecto.Changeset.change(attrs)
-    # |> IO.inspect()
-    # |> Ecto.Changeset.put_assoc(:permissions, permissions, [])
-    # |> IO.inspect()
-    # |> Repo.update(prefix: org)
-
     role
-    |> IO.inspect()
     |> Role.changeset(attrs)
-    |> IO.inspect()
     |> Ecto.Changeset.put_assoc(:permissions, permissions, [])
-    |> IO.inspect()
     |> Repo.update(prefix: org)
   end
 
@@ -143,7 +132,7 @@ defmodule Sportegic.Profiles do
 
   def create_default_permissions(org) do
     permissions = Seeds.get_default_permissions_list()
-    categories = Profiles.list_categories(org)
+    categories = Users.list_categories(org)
 
     for category <- categories do
       Enum.map(permissions, fn permission ->
