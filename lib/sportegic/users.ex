@@ -10,11 +10,14 @@ defmodule Sportegic.Users do
   alias Sportegic.Users.Seeds
   alias Sportegic.Users.RolesPermissions
 
-  def list_users(org) do
-    Repo.all(User, prefix: org)
-  end
-
   def get_user!(id, org), do: Repo.get!(User, id, prefix: org)
+
+  def list_users(org) do
+    User
+    |> Repo.all(prefix: org)
+    |> Repo.preload(:role)
+    |> IO.inspect()
+  end
 
   #  Get profile using user_id from con
   def get_user(user_id, org) do

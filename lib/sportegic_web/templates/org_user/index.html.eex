@@ -1,0 +1,83 @@
+<div class="row page">
+    <div class="col s12">
+    <%= if get_flash(@conn, :info) do %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel z-depth-0 blue lighten-3 white-text center-align">
+              
+                  <%= get_flash(@conn, :info) %>
+              
+            </div>
+          </div>
+        </div>  
+    <% end %>
+    <%= if get_flash(@conn, :success) do %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel z-depth-0 green lighten-3 white-text center-align">
+              
+                  <%= get_flash(@conn, :success) %>
+              
+            </div>
+          </div>
+        </div>  
+    <% end %>
+        <div class="section heading">
+            <h5 class="heading grey-text lighten-2">Users</h5>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <div class="row page">
+        <div class="row ">
+          <div class="col s12">
+            <div class="row search-row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">filter_list</i>
+                <input type="text" id="autocomplete-input" class="autocomplete grey-text lighten-2">
+                <label for="autocomplete-input">Filter Users </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+              <table class="highlight responsive-table">
+                <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Role</th>
+                      <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%= for user <- @org_users do %>
+                  <tr>
+                    <td> <%= user.firstname <> " " <> user.lastname %>  </td>
+                    <td> <%= user.mobile %> </td>
+                    <td> <%= user.role.name %> </td>
+                    <td class="center-align"> 
+                      
+                    </td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table> 
+          </div>
+        </div>
+    </div>  
+</div>
+
+<div>
+    <div class="fixed-action-btn">
+      <%# <a  class="btn-floating btn-large blue" href="/org_user/invitation">
+          <i class="large material-icons">add</i>
+      </a> %>
+
+      <%= link to: Routes.org_user_path(@conn, :invitation), class: "btn-floating btn-large blue" do %>
+        <i class="large material-icons">add</i>
+      <% end %>
+      
+      
+    </div>
+</div>

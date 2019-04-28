@@ -18,7 +18,7 @@ let Navigation = {
         M.Dropdown.init(profile_dropdown_large, {
             coverTrigger: false,
             hover: false,
-            constrainWidth: false,
+            constrainWidth: true,
             alignment: 'right'
 
 
@@ -45,7 +45,7 @@ let Navigation = {
         [].forEach.call(menuItems, el => {
             if (el.id == page) {
                 el.classList += " active";
-                if (["role"].includes(page)) {
+                if (["role", "org_user"].includes(page)) {
                     document.getElementById("administration").click();
                 }
             }
@@ -62,7 +62,13 @@ let Navigation = {
         let brand = document.getElementById("fourteen");
         M.CharacterCounter.init(brand);
 
+        let role_dropdown = document.getElementById('invite-role-select');
+        M.FormSelect.init(role_dropdown, {});
 
+        let role_dropdown_input = document.getElementsByClassName("select-dropdown");
+        [].forEach.call(role_dropdown_input, function (el) {
+            el.classList += " grey-text lighten-2"
+        });
     }
 }
 export default Navigation

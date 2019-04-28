@@ -2,13 +2,18 @@ defmodule SportegicWeb.OrgUserController do
   use SportegicWeb, :controller
 
   alias Sportegic.Users
-  alias Sportegic.Users.{User}
+  alias Sportegic.Users.{User, Role}
 
   plug SportegicWeb.Plugs.Authenticate
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.organisation]
     apply(__MODULE__, action_name(conn), args)
+  end
+
+  def index(conn, _params, org) do
+    org_users = Users.list_users(org)
+    render(conn, "index.html", org_users: org_users)
   end
 
   def new(conn, _params, _org) do
@@ -18,6 +23,15 @@ defmodule SportegicWeb.OrgUserController do
       changeset: changeset,
       layout: {SportegicWeb.LayoutView, "accounts.html"}
     )
+  end
+
+  def invitation(conn, _params, org) do
+    roles =
+      Users.list_roles(org)
+      |> Enum.map(fn role -> [key: role.name, value: role.id] end)
+
+    roles = [[key: "Choose a Role", value: ""] | roles]
+    render(conn, "invitation.html", roles: roles)
   end
 
   def create(conn, %{"user" => user_params}, org) do
