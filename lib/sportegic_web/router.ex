@@ -27,6 +27,7 @@ defmodule SportegicWeb.Router do
 
     get "/dashboard", DashboardController, :index
 
+    get "/rsvp", AccountController, :rsvp
     get "/request_verification", AccountController, :request_verification
     get "/send_verification", AccountController, :send_verification
     get "/verification", AccountController, :verification

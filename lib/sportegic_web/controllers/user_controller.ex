@@ -28,22 +28,24 @@ defmodule SportegicWeb.UserController do
   end
 
   def invitation(conn, _params, org) do
-    
     roles =
       Users.list_roles(org)
       |> Enum.map(fn role -> [key: role.name, value: role.id] end)
+
     roles = [[key: "Choose a Role", value: ""] | roles]
 
     render(conn, "invitation.html", roles: roles)
   end
 
   def create_invitation(conn, %{"email" => email, "role" => role_id}, org) do
-    with {:ok, _invitation} <- Users.create_invitation(%{email: email, role_id: role_id}, org) do
+    with {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id}, org),
+         {:ok, _id} <- Communication.generate_email(conn, invitation, "invitation") do
       users = Users.list_users(org)
       invitations = Users.list_invitations(org)
+
       conn
       |> put_flash(:succss, "Invitation seccessuly sent")
-      |> render("index.html", users: users, invitations: invitations)  
+      |> render("index.html", users: users, invitations: invitations)
     end
   end
 

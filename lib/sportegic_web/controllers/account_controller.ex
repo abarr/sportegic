@@ -15,6 +15,9 @@ defmodule SportegicWeb.AccountController do
     render(conn, "new.html", changeset: changeset)
   end
 
+  def rsvp(conn, _params) do
+  end
+
   def create(conn, %{"user" => user_params}) do
     with {:ok, user} <- Accounts.create_user(user_params),
          {:ok, _id} <- Communication.generate_email(conn, user, "verification") do
