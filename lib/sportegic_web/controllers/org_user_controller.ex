@@ -14,7 +14,8 @@ defmodule SportegicWeb.OrgUserController do
 
   def index(conn, _params, org) do
     org_users = Users.list_users(org)
-    render(conn, "index.html", org_users: org_users)
+    invitations = Users.list_invitations(org)
+    render(conn, "index.html", org_users: org_users, invitations: invitations)
   end
 
   def new(conn, _params, _org) do
@@ -37,11 +38,13 @@ defmodule SportegicWeb.OrgUserController do
   end
 
   def create_invitation(conn, %{"email" => email, "role" => role_id}, org) do
-    
-    users = Users.list_users(org)
-    conn
-    |> put_flash(:succss, "Invitation seccessuly sent")
-    |> render("index.html", org_users: users)
+    with {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id}, org) do
+      users = Users.list_users(org)
+      invitations = Users.list_invitations(org)
+      conn
+      |> put_flash(:succss, "Invitation seccessuly sent")
+      |> render("index.html", org_users: users, invitations: invitations)  
+    end
   end
 
   def create(conn, %{"user" => user_params}, org) do

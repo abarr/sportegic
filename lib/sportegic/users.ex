@@ -189,7 +189,9 @@ defmodule Sportegic.Users do
   end
 
   def list_invitations(org) do
-    Repo.all(Invitation, prefix: org)
+    Invitation
+    |> Repo.all( prefix: org)
+    |> Repo.preload(:role)
   end
 
   def get_invitation!(id, org), do: Repo.get!(Invitation, id, prefix: org)

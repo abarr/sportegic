@@ -43,8 +43,8 @@ defmodule SportegicWeb.Router do
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
     get "/set_organisation", OrganisationController, :set_organisation
 
-    get "/invitation", OrgUserController, :invitation
-    post "/invitation", OrgUserController, :create_invitation
+    get "/org_user/invitation", OrgUserController, :invitation
+    post "/org_user/invitation", OrgUserController, :create_invitation
     resources "/org_user", OrgUserController
 
     resources "/role", RoleController

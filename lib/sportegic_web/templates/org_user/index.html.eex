@@ -33,8 +33,8 @@
             <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">filter_list</i>
-                <input type="text" id="autocomplete-input" class="autocomplete grey-text lighten-2">
-                <label for="autocomplete-input">Filter Users </label>
+                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2">
+                <label for="autocompleteInput">Filter Users </label>
               </div>
             </div>
           </div>
@@ -42,8 +42,8 @@
 
 
         <div class="row">
-          <div class="col s3">
-            <ul class="tabs tabs-fixed-width z-depth-0 ">
+          <div class="col s12 m10 l5">
+            <ul class="tabs  z-depth-0 ">
               <li class="tab"><a class="active" href="#users">Users</a></li>
               <li class="tab"><a  href="#invitations">Invitations</a></li>
             </ul>
@@ -53,7 +53,7 @@
         
         <div  id="users" class="row">
           <div class="col s12">
-              <table class="highlight responsive-table">
+              <table class="highlight " id="userTable">
                 <thead>
                   <tr>
                       <th>Name</th>
@@ -80,17 +80,26 @@
 
         <div  id="invitations" class="row">
           <div class="col s12">
-              <table class="highlight responsive-table">
+              <table class="highlight ">
                 <thead>
                   <tr>
-                      <th>Name</th>
-                      <th>Mobile</th>
+                      <th>email</th>
                       <th>Role</th>
+                      <th>Sent</th>
                       <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                
+                  <%= for invite <- @invitations do %>
+                  <tr>
+                    <td> <%= invite.email %>  </td>
+                    <td> <%= invite.role.name %> </td>
+                    <td> <%= invite.inserted_at %> </td>
+                    <td class="center-align"> 
+                      
+                    </td>
+                  </tr>
+                  <% end %>
                 </tbody>
               </table> 
           </div>
@@ -114,3 +123,27 @@
       
     </div>
 </div>
+
+<script>
+function userFilter() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("autocompleteInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("userTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
