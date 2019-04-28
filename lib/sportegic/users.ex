@@ -4,6 +4,7 @@ defmodule Sportegic.Users do
   alias __MODULE__
   alias Sportegic.Repo
   alias Sportegic.Users.User
+  alias Sportegic.Users.Invitation
   alias Sportegic.Users.Category
   alias Sportegic.Users.Permission
   alias Sportegic.Users.Role
@@ -185,5 +186,31 @@ defmodule Sportegic.Users do
 
   def change_roles_permissions(%RolesPermissions{} = roles_permissions) do
     RolesPermissions.changeset(roles_permissions, %{})
+  end
+
+  def list_invitations(org) do
+    Repo.all(Invitation, prefix: org)
+  end
+
+  def get_invitation!(id, org), do: Repo.get!(Invitation, id, prefix: org)
+
+  def create_invitation(attrs \\ %{}, org) do
+    %Invitation{}
+    |> Invitation.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def update_invitation(%Invitation{} = invitation, attrs, org) do
+    invitation
+    |> Invitation.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  def delete_invitation(%Invitation{} = invitation, org) do
+    Repo.delete(invitation, prefix: org)
+  end
+
+  def change_invitation(%Invitation{} = invitation) do
+    Invitation.changeset(invitation, %{})
   end
 end

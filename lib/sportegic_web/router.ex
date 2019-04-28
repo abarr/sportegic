@@ -27,7 +27,6 @@ defmodule SportegicWeb.Router do
 
     get "/dashboard", DashboardController, :index
 
-    get "/invitation", UserController, :invitation
     get "/request_verification", UserController, :request_verification
     get "/send_verification", UserController, :send_verification
     get "/verification", UserController, :verification
@@ -44,7 +43,8 @@ defmodule SportegicWeb.Router do
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
     get "/set_organisation", OrganisationController, :set_organisation
 
-    get "/org_user/invitation", OrgUserController, :invitation
+    get "/invitation", OrgUserController, :invitation
+    post "/invitation", OrgUserController, :create_invitation
     resources "/org_user", OrgUserController
 
     resources "/role", RoleController

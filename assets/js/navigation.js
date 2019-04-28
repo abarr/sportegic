@@ -69,6 +69,12 @@ let Navigation = {
         [].forEach.call(role_dropdown_input, function (el) {
             el.classList += " grey-text lighten-2"
         });
+
+        let tabs = document.querySelector(".tabs");
+        console.log(tabs)
+        let instances = M.Tabs.init(tabs, {});
+        console.log(instances)
+
     }
 }
 export default Navigation

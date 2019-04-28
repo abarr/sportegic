@@ -74,10 +74,6 @@ defmodule SportegicWeb.UserController do
     end
   end
 
-  def invitation(conn, _params, org) do
-    render(conn, "confirmation.html")
-  end
-
   def index(conn, _params) do
     case List.keyfind(conn.req_headers, "referer", 0) do
       {"referer", ref} ->

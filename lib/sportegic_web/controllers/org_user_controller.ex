@@ -2,7 +2,8 @@ defmodule SportegicWeb.OrgUserController do
   use SportegicWeb, :controller
 
   alias Sportegic.Users
-  alias Sportegic.Users.{User, Role}
+  alias Sportegic.Users.User
+  alias Sportegic.Users.Invitation
 
   plug SportegicWeb.Plugs.Authenticate
 
@@ -26,12 +27,21 @@ defmodule SportegicWeb.OrgUserController do
   end
 
   def invitation(conn, _params, org) do
+    
     roles =
       Users.list_roles(org)
       |> Enum.map(fn role -> [key: role.name, value: role.id] end)
-
     roles = [[key: "Choose a Role", value: ""] | roles]
+
     render(conn, "invitation.html", roles: roles)
+  end
+
+  def create_invitation(conn, %{"email" => email, "role" => role_id}, org) do
+    
+    users = Users.list_users(org)
+    conn
+    |> put_flash(:succss, "Invitation seccessuly sent")
+    |> render("index.html", org_users: users)
   end
 
   def create(conn, %{"user" => user_params}, org) do

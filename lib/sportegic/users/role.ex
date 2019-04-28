@@ -2,6 +2,7 @@ defmodule Sportegic.Users.Role do
   use Ecto.Schema
   import Ecto.Changeset
   alias Sportegic.Users.User
+  alias Sportegic.Users.Invitation
   alias Sportegic.Users.Permission
   alias Sportegic.Users.RolesPermissions
 
@@ -9,6 +10,7 @@ defmodule Sportegic.Users.Role do
     field(:name, :string)
     field(:description, :string)
     has_many(:users, User)
+    has_many(:invitations, Invitation)
 
     many_to_many(:permissions, Permission,
       join_through: RolesPermissions,
