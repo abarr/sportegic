@@ -22,6 +22,12 @@ defmodule SportegicWeb.UserView do
           class: "helper-text"
         ])
 
+      :select ->
+        content_tag(:span, "", [
+          {:data, [error: "Please choose a Role"]},
+          class: "helper-text"
+        ])
+
       :password ->
         content_tag(:span, "", [{:data, [error: "Please enter a password"]}, class: "helper-text"])
 

@@ -27,14 +27,14 @@ defmodule SportegicWeb.Router do
 
     get "/dashboard", DashboardController, :index
 
-    get "/request_verification", UserController, :request_verification
-    get "/send_verification", UserController, :send_verification
-    get "/verification", UserController, :verification
-    get "/request_reset", UserController, :request_reset
-    get "/send_reset", UserController, :send_reset
-    get "/new_password", UserController, :new_password
-    get "/update_password", UserController, :update_password
-    resources "/user", UserController, only: [:new, :create, :index]
+    get "/request_verification", AccountController, :request_verification
+    get "/send_verification", AccountController, :send_verification
+    get "/verification", AccountController, :verification
+    get "/request_reset", AccountController, :request_reset
+    get "/send_reset", AccountController, :send_reset
+    get "/new_password", AccountController, :new_password
+    get "/update_password", AccountController, :update_password
+    resources "/account", AccountController, only: [:new, :create, :index]
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
@@ -43,9 +43,9 @@ defmodule SportegicWeb.Router do
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
     get "/set_organisation", OrganisationController, :set_organisation
 
-    get "/org_user/invitation", OrgUserController, :invitation
-    post "/org_user/invitation", OrgUserController, :create_invitation
-    resources "/org_user", OrgUserController
+    get "/user/invitation", UserController, :invitation
+    post "/user/invitation", UserController, :create_invitation
+    resources "/user", UserController
 
     resources "/role", RoleController
   end

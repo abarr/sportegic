@@ -1,4 +1,4 @@
-defmodule SportegicWeb.OrgUserView do
+defmodule SportegicWeb.AccountView do
   use SportegicWeb, :view
 
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
@@ -19,12 +19,6 @@ defmodule SportegicWeb.OrgUserView do
       :email ->
         content_tag(:span, "", [
           {:data, [error: "Please enter a valid email"]},
-          class: "helper-text"
-        ])
-
-      :select ->
-        content_tag(:span, "", [
-          {:data, [error: "Please choose a Role"]},
           class: "helper-text"
         ])
 

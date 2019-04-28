@@ -1,17 +1,18 @@
 <div class="row container ">
     <div class="col s12 l6 offset-l3">
-    <div class="card z-depth-0 card-register">
-        <div class="card-content">
-            <div class="card-title center-align">
-                <h5>SPORTEGIC </h5>
-                <h6>REGISTER USER ACCOUNT</h6>
-            </div>
-             <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+        <div class="card z-depth-0 card-register">
+            <div class="card-content">
+                <div class="card-title center-align">
+                    <h5>SPORTEGIC </h5>
+                    <h6>CREATE YOUR PROFILE</h6>
+                </div>
+                    <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>  
+
+                </div>
         </div>
     </div>
-       
-    </div>
 </div>
+
 
 
 

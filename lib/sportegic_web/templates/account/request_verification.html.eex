@@ -4,11 +4,11 @@
         <div class="card-content">
             <div class="card-title center-align">
                 <h5>SPORTEGIC </h5>
-                <h6>REQUEST PASSWORD RESET</h6>
+                <h6>REQUEST VERIFICATION EMAIL</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                   <%= form_for @conn, Routes.user_path(@conn, :send_reset), [method: :get], fn f -> %>
+                   <%= form_for @conn, Routes.account_path(@conn, :send_verification), [method: :get], fn f -> %>
                     <div class="row">
                         <div class="input-field col s12">
                             <%= label f, :email %>

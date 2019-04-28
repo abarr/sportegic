@@ -15,7 +15,7 @@ defmodule SportegicWeb.DashboardController do
     case Users.get_user(conn.assigns.current_user.id, org) do
       {:ok, nil} ->
         conn
-        |> redirect(to: Routes.org_user_path(conn, :new))
+        |> redirect(to: Routes.user_path(conn, :new))
 
       {:ok, user} ->
         render(conn, "index.html", user: user)

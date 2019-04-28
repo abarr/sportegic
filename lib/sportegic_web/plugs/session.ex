@@ -14,26 +14,26 @@ defmodule SportegicWeb.Plugs.Session do
         conn
         |> assign(:current_user, nil)
 
-      {:ok, user} ->
-        user = %{user | password_hash: "REMOVED"}
+      {:ok, account} ->
+        account = %{account | password_hash: "REMOVED"}
 
         case get_session(conn, :organisation) do
           nil ->
             conn
-            |> assign(:current_user, user)
+            |> assign(:current_user, account)
             |> assign(:organisation, nil)
 
           org ->
-            case Users.get_user(user.id, org) do
+            case Users.get_user(account.id, org) do
               {:ok, nil} ->
                 conn
-                |> assign(:current_user, user)
+                |> assign(:current_user, account)
                 |> assign(:organisation, org)
 
-              {:ok, org_user} ->
+              {:ok, user} ->
                 conn
-                |> assign(:user, org_user)
-                |> assign(:current_user, user)
+                |> assign(:user, user)
+                |> assign(:current_user, account)
                 |> assign(:organisation, org)
             end
         end

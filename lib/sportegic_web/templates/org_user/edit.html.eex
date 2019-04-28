@@ -1,4 +1,0 @@
-<h1>Edit Profile</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.org_user_path(@conn, :update, @profile)) %>
-

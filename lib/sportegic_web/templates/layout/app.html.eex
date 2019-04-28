@@ -87,7 +87,7 @@
               <div class="collapsible-body">
                 <ul>
                   <li ><a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role"><i class="far fa-chevron-right fa-xs fa-fw"></i> Roles</a></li>
-                  <li ><a id="org_user" class="menu grey-text lighten-2 padding-collapsible-body" href="/org_user"><i class="far fa-chevron-right fa-xs fa-fw"></i> Users</a></li>
+                  <li ><a id="user" class="menu grey-text lighten-2 padding-collapsible-body" href="/user"><i class="far fa-chevron-right fa-xs fa-fw"></i> Users</a></li>
                 </ul>
               </div>
             </li>
