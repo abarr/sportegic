@@ -2,8 +2,9 @@ defmodule Sportegic.Accounts do
   import Ecto.Query, warn: false
 
   alias Sportegic.Repo
+  alias Sportegic.Users
   alias Sportegic.Accounts
-  alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers}
+  alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers, Rsvp}
 
   def list_users do
     Repo.all(User)
@@ -60,6 +61,11 @@ defmodule Sportegic.Accounts do
 
   def get_organisation!(id), do: Repo.get!(Organisation, id)
 
+  def get_organisation_by_prefix(prefix) do
+    Organisation
+    |> Repo.get_by(prefix: prefix)
+  end
+
   def create_organisation(attrs) do
     {:ok, org} =
       %Organisation{}
@@ -69,9 +75,6 @@ defmodule Sportegic.Accounts do
     # Create a tenant based on org prefix
     resp = Triplex.create(org.prefix)
     IO.inspect(resp, label: "RESPONSE FROM TRIPLEX")
-
-    # Add defaults roles to Tenant DB
-
     {:ok, org}
   end
 
@@ -122,4 +125,11 @@ defmodule Sportegic.Accounts do
   def authenticate_session(user, password) do
     Argon2.check_pass(user, password)
   end
+
+  # RSVP
+  def change_rsvp(%Rsvp{} = rsvp) do
+    Rsvp.changeset(rsvp, %{})
+  end
+
+  
 end

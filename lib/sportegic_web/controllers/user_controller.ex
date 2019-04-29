@@ -3,7 +3,7 @@ defmodule SportegicWeb.UserController do
 
   alias Sportegic.Users
   alias Sportegic.Users.User
-  # alias Sportegic.Users.Invitation
+  alias Sportegic.Communication
 
   plug SportegicWeb.Plugs.Authenticate
 
@@ -38,8 +38,8 @@ defmodule SportegicWeb.UserController do
   end
 
   def create_invitation(conn, %{"email" => email, "role" => role_id}, org) do
-    with {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id}, org),
-         {:ok, _id} <- Communication.generate_email(conn, invitation, "invitation") do
+    with {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id, org_name: org}, org),
+         {:ok, _id} <- Communication.email_with_token(conn, invitation, email, "rsvp") do
       users = Users.list_users(org)
       invitations = Users.list_invitations(org)
 

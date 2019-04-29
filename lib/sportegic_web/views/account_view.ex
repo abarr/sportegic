@@ -37,4 +37,5 @@ defmodule SportegicWeb.AccountView do
   end
 
   def set_field_class(_form, _field), do: " validate"
+
 end

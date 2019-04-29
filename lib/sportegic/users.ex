@@ -17,7 +17,6 @@ defmodule Sportegic.Users do
     User
     |> Repo.all(prefix: org)
     |> Repo.preload(:role)
-    |> IO.inspect()
   end
 
   #  Get profile using user_id from con
@@ -54,6 +53,11 @@ defmodule Sportegic.Users do
     Role
     |> Repo.get!(id, prefix: org)
     |> Repo.preload(:permissions)
+  end
+
+  def get_role_by_name(name, org) do
+    Role
+    |> Repo.get_by([name: name], prefix: org)
   end
 
   def create_role(attrs \\ %{}, org) do
@@ -194,7 +198,17 @@ defmodule Sportegic.Users do
     |> Repo.preload(:role)
   end
 
-  def get_invitation!(id, org), do: Repo.get!(Invitation, id, prefix: org)
+  def get_invitation!(id, org) do 
+    Invitation
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload(:role)
+  end
+
+  def get_invitation_by_email(email, org) do
+    Invitation
+    |> where([i], i.email == ^email)
+    |> Repo.one(prefix: org)
+  end
 
   def create_invitation(attrs \\ %{}, org) do
     %Invitation{}

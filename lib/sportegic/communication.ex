@@ -11,10 +11,10 @@ defmodule Sportegic.Communication do
 
   @reply_email "do_not_reply@sportegic.com"
 
-  def generate_email(conn, user, type) do
+  def email_with_token(conn, entity, email, type) do
     send_email(
-      generate_url(conn, user, type),
-      user.email,
+      generate_url(conn, entity, type),
+      email,
       type <> ".html",
       @reply_email,
       "Sportegic"
@@ -30,11 +30,11 @@ defmodule Sportegic.Communication do
     |> Mailer.deliver()
   end
 
-  defp generate_url(conn, user, type) do
+  defp generate_url(conn, entity, type) do
     if Mix.env() == :dev do
-      "http://" <> conn.host <> ":4000/" <> type <> "?token=" <> Token.generate_token(user)
+      "http://" <> conn.host <> ":4000/" <> type <> "?token=" <> Token.generate_token(entity)
     else
-      "https://" <> conn.host <> "/" <> type <> "?token=" <> Token.generate_token(user)
+      "https://" <> conn.host <> "/" <> type <> "?token=" <> Token.generate_token(entity)
     end
   end
 end

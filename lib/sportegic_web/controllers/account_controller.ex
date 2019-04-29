@@ -2,7 +2,8 @@ defmodule SportegicWeb.AccountController do
   use SportegicWeb, :controller
 
   alias Sportegic.Accounts
-  alias Sportegic.Accounts.User
+  alias Sportegic.Accounts.{User, Rsvp}
+  alias Sportegic.Users
   alias Sportegic.Communication
   alias Sportegic.Communication.Token
 
@@ -15,12 +16,49 @@ defmodule SportegicWeb.AccountController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def rsvp(conn, _params) do
+  def rsvp(conn, %{"token" => token}) do
+    with {:ok, key} <- Token.verify_token(token) do
+      [org, invite_id] = key |> String.split(":")
+      invitation = Users.get_invitation!(invite_id, org)
+      roles = Users.list_roles(org)
+      changeset = %Rsvp{}
+      |> Accounts.change_rsvp()
+      |> Ecto.Changeset.put_change( :email, invitation.email )
+      |> Ecto.Changeset.put_change( :role_id, invitation.role_id )
+      |> Ecto.Changeset.put_change( :org, readify(invitation.org_name) )
+      
+      conn
+      |> render("rsvp.html", changeset: changeset, invitation: invitation)
+    end
+  end
+
+  def create_from_rsvp(conn, %{"rsvp" => rsvp }) do
+    
+    { _old, rsvp} = Map.get_and_update(rsvp, "org", fn v -> {v, prefixify(v)} end)
+    rsvp = Map.put(rsvp, "verified", "true")
+    org = Accounts.get_organisation_by_prefix(rsvp["org"])
+    role = Users.get_role_by_name(rsvp["role_id"], org.prefix)
+    {user_params, params} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
+    
+    with {:ok, account} <- Accounts.create_user(rsvp),
+        {:ok, _realtionship} <- Accounts.create_organisations_users(%{user_id: account.id, organisation_id: org.id}) do
+        
+      user_params = user_params |> Map.put("role_id", Integer.to_string(role.id)) |> Map.put("user_id", Integer.to_string(account.id))
+      case Users.create_user(user_params, org.prefix) do
+        {:ok, _user} ->
+          conn
+          |> redirect(to: Routes.session_path(conn, :new))
+        {:error, changeset} ->
+          IO.inspect(changeset)
+          
+          render(conn, "rsvp.html", changeset: changeset)
+      end
+    end  
   end
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, user} <- Accounts.create_user(user_params),
-         {:ok, _id} <- Communication.generate_email(conn, user, "verification") do
+         {:ok, _id} <- Communication.email_with_token(conn, user, user.email, "verification") do
       redirect(conn, to: Routes.account_path(conn, :index))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -34,7 +72,7 @@ defmodule SportegicWeb.AccountController do
 
   def send_reset(conn, %{"email" => email}) do
     with {:ok, user} <- Accounts.get_user_by_email(email),
-         {:ok, _id} <- Communication.generate_email(conn, user, "new_password") do
+         {:ok, _id} <- Communication.email_with_token(conn, user, user.email, "new_password") do
       render(conn, "confirmation.html")
     end
   end
@@ -62,7 +100,7 @@ defmodule SportegicWeb.AccountController do
 
   def send_verification(conn, %{"email" => email}) do
     with {:ok, user} <- Accounts.get_user_by_email(email),
-         {:ok, _id} <- Communication.generate_email(conn, user, "verification") do
+         {:ok, _id} <- Communication.email_with_token(conn, user, user.email, "verification") do
       render(conn, "confirmation.html")
     end
   end
@@ -88,5 +126,21 @@ defmodule SportegicWeb.AccountController do
       _ ->
         render(conn, "index.html")
     end
+  end
+
+  defp readify(org) do
+    org
+    |> String.replace("_", " ")
+    |> String.split(" ")
+    |> Enum.map(&String.capitalize/1)
+    |> Enum.join(" ")
+  end
+
+  defp prefixify(org) do
+    org
+    |> String.split(" ")
+    |> Enum.map(&String.downcase/1)
+    |> Enum.join(" ")
+    |> String.replace(" ", "_")
   end
 end
