@@ -194,6 +194,8 @@ defmodule Sportegic.Users do
 
   def list_invitations(org) do
     Invitation
+    |> order_by([i], [desc: i.inserted_at])
+    |> where([i], i.completed == false)
     |> Repo.all( prefix: org)
     |> Repo.preload(:role)
   end

@@ -33,7 +33,6 @@ defmodule SportegicWeb.UserController do
       |> Enum.map(fn role -> [key: role.name, value: role.id] end)
 
     roles = [[key: "Choose a Role", value: ""] | roles]
-
     render(conn, "invitation.html", roles: roles)
   end
 

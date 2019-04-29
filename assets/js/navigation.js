@@ -71,9 +71,8 @@ let Navigation = {
         });
 
         let tabs = document.querySelector(".tabs");
-        console.log(tabs)
         let instances = M.Tabs.init(tabs, {});
-        console.log(instances)
+        
 
     }
 }

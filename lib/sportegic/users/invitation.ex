@@ -7,6 +7,7 @@ defmodule Sportegic.Users.Invitation do
   schema "invitations" do
     field :email, :string
     field :org_name, :string
+    field :completed, :boolean, default: false
     belongs_to :role, Role
 
     timestamps()
@@ -15,7 +16,7 @@ defmodule Sportegic.Users.Invitation do
   @doc false
   def changeset(invitation, attrs) do
     invitation
-    |> cast(attrs, [:email, :org_name, :role_id])
+    |> cast(attrs, [:email, :org_name, :role_id, :completed])
     |> validate_required([:email, :org_name, :role_id])
   end
 end

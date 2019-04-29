@@ -2,7 +2,6 @@ defmodule Sportegic.Accounts do
   import Ecto.Query, warn: false
 
   alias Sportegic.Repo
-  alias Sportegic.Users
   alias Sportegic.Accounts
   alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers, Rsvp}
 

@@ -5,7 +5,7 @@ defmodule Sportegic.MixProject do
     [
       app: :sportegic,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -33,11 +33,11 @@ defmodule Sportegic.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.0-rc"},
+      {:phoenix, "~> 1.4.3"},
       {:phoenix_pubsub, "~> 1.1.2"},
-      {:phoenix_ecto, "~> 3.5"},
-      {:ecto, "~> 3.0-rc", override: true},
-      {:ecto_sql, "~> 3.0-rc", override: true},
+      {:phoenix_ecto, "~> 4.0"},
+      {:ecto, "~> 3.1.2"},
+      {:ecto_sql, "~> 3.1.1"},
       {:postgrex, ">= 0.0.0-rc"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2-rc", only: :dev},

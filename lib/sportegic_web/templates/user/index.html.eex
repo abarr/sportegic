@@ -30,13 +30,13 @@
     <div class="row page">
         <div class="row ">
           <div class="col s12">
-            <div class="row search-row">
+            <%# <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">filter_list</i>
-                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2">
+                <input type="text" id="autocompleteInput" onkeyup="userFilter()" class="autocomplete grey-text lighten-2">
                 <label for="autocompleteInput">Filter Users </label>
               </div>
-            </div>
+            </div> %>
           </div>
         </div>
 
@@ -45,14 +45,23 @@
           <div class="col s12 m10 l5">
             <ul class="tabs  z-depth-0 ">
               <li class="tab"><a class="active" href="#users">Users</a></li>
-              <li class="tab"><a  href="#invitations">Invitations</a></li>
+              <li class="tab"><a  href="#invitations">Active Invitations</a></li>
             </ul>
           </div>
-          
         </div>
         
         <div  id="users" class="row">
           <div class="col s12">
+
+            <div class="row search-row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">filter_list</i>
+                <input type="text" id="autocompleteInput" onkeyup="userFilter()" class="autocomplete grey-text lighten-2">
+                <label for="autocompleteInput">Filter Users </label>
+              </div>
+            </div>
+
+
               <table class="highlight " id="userTable">
                 <thead>
                   <tr>
@@ -80,7 +89,18 @@
 
         <div  id="invitations" class="row">
           <div class="col s12">
-              <table class="highlight ">
+
+              <div class="row search-row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">filter_list</i>
+                <input type="text" id="autocompleteInputInvitation" onkeyup="invitationFilter()" class="autocomplete grey-text lighten-2">
+                <label for="autocompleteInputInvitation">Filter Invitations </label>
+              </div>
+            </div>
+
+
+
+              <table id="invitationTable" class="highlight ">
                 <thead>
                   <tr>
                       <th>email</th>
@@ -129,6 +149,28 @@ function userFilter() {
   input = document.getElementById("autocompleteInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("userTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function invitationFilter() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("autocompleteInputInvitation");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("invitationTable");
   tr = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query

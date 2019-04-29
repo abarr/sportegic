@@ -20,7 +20,8 @@ defmodule SportegicWeb.AccountController do
     with {:ok, key} <- Token.verify_token(token) do
       [org, invite_id] = key |> String.split(":")
       invitation = Users.get_invitation!(invite_id, org)
-      roles = Users.list_roles(org)
+      resp = Users.update_invitation(invitation, %{ completed: true } ,org)
+      IO.inspect(resp)
       changeset = %Rsvp{}
       |> Accounts.change_rsvp()
       |> Ecto.Changeset.put_change( :email, invitation.email )
@@ -33,12 +34,11 @@ defmodule SportegicWeb.AccountController do
   end
 
   def create_from_rsvp(conn, %{"rsvp" => rsvp }) do
-    
     { _old, rsvp} = Map.get_and_update(rsvp, "org", fn v -> {v, prefixify(v)} end)
     rsvp = Map.put(rsvp, "verified", "true")
     org = Accounts.get_organisation_by_prefix(rsvp["org"])
     role = Users.get_role_by_name(rsvp["role_id"], org.prefix)
-    {user_params, params} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
+    {user_params, _params} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
     
     with {:ok, account} <- Accounts.create_user(rsvp),
         {:ok, _realtionship} <- Accounts.create_organisations_users(%{user_id: account.id, organisation_id: org.id}) do
