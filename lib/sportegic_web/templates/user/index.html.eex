@@ -4,9 +4,7 @@
         <div class="row">
           <div class="col s12">
             <div class="card-panel z-depth-0 blue lighten-3 white-text center-align">
-              
-                  <%= get_flash(@conn, :info) %>
-              
+                <%= get_flash(@conn, :info) %>
             </div>
           </div>
         </div>  
@@ -15,9 +13,7 @@
         <div class="row">
           <div class="col s12">
             <div class="card-panel z-depth-0 green lighten-3 white-text center-align">
-              
                   <%= get_flash(@conn, :success) %>
-              
             </div>
           </div>
         </div>  
@@ -68,7 +64,7 @@
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Role</th>
-                      <th>Action</th>
+                      <th class="right-align">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,8 +73,14 @@
                     <td> <%= user.firstname <> " " <> user.lastname %>  </td>
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
-                    <td class="center-align"> 
-                      
+                    <td class="right-align"> 
+                    <%= if(user.id != 1) do %>  
+                      <%= if(user.disabled != true) do %>
+                        <%= link "Disable User", to: Routes.user_path(@conn, :disable, user) %>
+                      <% else %>
+                        <%= link "Enable User", to: Routes.user_path(@conn, :enable, user) %> 
+                      <% end %>
+                    <% end %>
                     </td>
                   </tr>
                   <% end %>

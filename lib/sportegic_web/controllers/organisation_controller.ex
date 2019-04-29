@@ -14,7 +14,12 @@ defmodule SportegicWeb.OrganisationController do
       case Enum.count(organisations) do
         # If this user is not associated with any orgs 
         0 ->
-          redirect(conn, to: Routes.organisation_path(conn, :new))
+          conn
+          |> put_flash(
+            :danger,
+            "You are not associated with an organisation. If you create an Organisation it may incur a cost. If you expected to login to an Organisation please contact the Account Administrator."
+          )
+          |> redirect(to: Routes.organisation_path(conn, :new))
 
         # If this Ueser is associated with only one org
         1 ->

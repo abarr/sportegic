@@ -61,8 +61,11 @@ defmodule Sportegic.Accounts do
   def get_organisation!(id), do: Repo.get!(Organisation, id)
 
   def get_organisation_by_prefix(prefix) do
-    Organisation
-    |> Repo.get_by(prefix: prefix)
+    org =
+      Organisation
+      |> Repo.get_by(prefix: prefix)
+
+    {:ok, org}
   end
 
   def create_organisation(attrs) do
@@ -95,7 +98,16 @@ defmodule Sportegic.Accounts do
     Repo.all(OrganisationsUsers)
   end
 
-  def get_organisations_users!(id), do: Repo.get!(OrganisationsUsers, id)
+  def get_organisations_users(user_id, org_id) do
+    [org_user] =
+      OrganisationsUsers
+      |> where([ou], ou.user_id == ^user_id)
+      |> where([ou], ou.organisation_id == ^org_id)
+      |> Repo.all()
+      |> IO.inspect()
+
+    {:ok, org_user}
+  end
 
   def create_organisations_users(attrs \\ %{}) do
     orgs_users =
@@ -129,6 +141,4 @@ defmodule Sportegic.Accounts do
   def change_rsvp(%Rsvp{} = rsvp) do
     Rsvp.changeset(rsvp, %{})
   end
-
-  
 end

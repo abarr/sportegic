@@ -21,12 +21,14 @@ defmodule Sportegic.Users do
 
   #  Get profile using user_id from con
   def get_user(user_id, org) do
-    profile =
+    [user] =
       User
-      |> where([p], p.user_id == ^user_id)
-      |> Repo.one(prefix: org)
+      |> where([u], u.user_id == ^user_id)
+      |> Repo.all(prefix: org)
+      |> Repo.preload(role: [:permissions])
+      |> IO.inspect()
 
-    {:ok, profile}
+    {:ok, user}
   end
 
   def create_user(attrs \\ %{}, org) do
@@ -35,8 +37,8 @@ defmodule Sportegic.Users do
     |> Repo.insert(prefix: org)
   end
 
-  def update_user(%User{} = profile, attrs, org) do
-    profile
+  def update_user(%User{} = user, attrs, org) do
+    user
     |> User.changeset(attrs)
     |> Repo.update(prefix: org)
   end
@@ -194,13 +196,13 @@ defmodule Sportegic.Users do
 
   def list_invitations(org) do
     Invitation
-    |> order_by([i], [desc: i.inserted_at])
+    |> order_by([i], desc: i.inserted_at)
     |> where([i], i.completed == false)
-    |> Repo.all( prefix: org)
+    |> Repo.all(prefix: org)
     |> Repo.preload(:role)
   end
 
-  def get_invitation!(id, org) do 
+  def get_invitation!(id, org) do
     Invitation
     |> Repo.get!(id, prefix: org)
     |> Repo.preload(:role)

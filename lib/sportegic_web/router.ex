@@ -45,6 +45,8 @@ defmodule SportegicWeb.Router do
     resources "/organisation", OrganisationController, only: [:new, :create, :index]
     get "/set_organisation", OrganisationController, :set_organisation
 
+    get "/user/:id/disable", UserController, :disable
+    get "/user/:id/enable", UserController, :enable
     get "/user/invitation", UserController, :invitation
     post "/user/invitation", UserController, :create_invitation
     resources "/user", UserController

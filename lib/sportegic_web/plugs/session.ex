@@ -33,6 +33,7 @@ defmodule SportegicWeb.Plugs.Session do
               {:ok, user} ->
                 conn
                 |> assign(:user, user)
+                |> assign(:permissions, Enum.map(user.role.permissions, fn p -> p.name end))
                 |> assign(:current_user, account)
                 |> assign(:organisation, org)
             end
