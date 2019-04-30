@@ -21,7 +21,6 @@ defmodule SportegicWeb.AccountController do
       [org, invite_id] = key |> String.split(":")
       invitation = Users.get_invitation!(invite_id, org)
       resp = Users.update_invitation(invitation, %{completed: true}, org)
-      IO.inspect(resp)
 
       changeset =
         %Rsvp{}

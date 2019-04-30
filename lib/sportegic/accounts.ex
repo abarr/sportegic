@@ -104,7 +104,6 @@ defmodule Sportegic.Accounts do
       |> where([ou], ou.user_id == ^user_id)
       |> where([ou], ou.organisation_id == ^org_id)
       |> Repo.all()
-      |> IO.inspect()
 
     {:ok, org_user}
   end

@@ -11,8 +11,6 @@ defmodule SportegicWeb.DashboardController do
   end
 
   def index(conn, _params, org) do
-    IO.inspect(conn.assigns)
-
     case Users.get_user(conn.assigns.current_user.id, org) do
       {:ok, nil} ->
         conn

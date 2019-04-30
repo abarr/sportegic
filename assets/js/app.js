@@ -6,10 +6,15 @@ import Navigation from "./navigation"
 import User from "./user"
 import Organisation from "./organisation"
 import Role from "./role";
-// import socket from "./socket"
+import socket from "./socket"
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+
+
+
     //prevent the browser from showing default error bubble/ hint
     document.addEventListener('invalid', (function () {
         return function (e) {
@@ -19,5 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Navigation.init_page_elements();
     Role.setup_role_form();
+
+    let sportegic_socket = socket.connect_socket();
+    if (window.location.pathname == "/rsvp") { User.verify_mobile(sportegic_socket) };
 
 });

@@ -7,7 +7,7 @@ defmodule Sportegic.Communication do
 
   import Swoosh.Email
 
-  alias Sportegic.Communication.{Mailer, Token. TwilioVerification}
+  alias Sportegic.Communication.{Mailer, Token, TwilioVerification}
 
   @reply_email "do_not_reply@sportegic.com"
 
@@ -28,6 +28,16 @@ defmodule Sportegic.Communication do
     |> subject(subject)
     |> render_body(email_template, %{url: url})
     |> Mailer.deliver()
+  end
+
+  def send_verification_code(mobile) do
+    mobile
+    |> TwilioVerification.send()
+  end
+
+  def check_verification_code(mobile, code) do
+    mobile
+    |> TwilioVerification.check(code)
   end
 
   defp generate_url(conn, entity, type) do
