@@ -27,6 +27,11 @@ config :phoenix, :json_library, Jason
 
 config :triplex, repo: Sportegic.Repo
 
+config :sportegic, Sportegic.Communication.TwilioVerification,
+  base_url: "https://verify.twilio.com/v2/Services/VA4cb85cee4a011aaf5c4d29edc2399cfd/",
+  twilio_api_key: "ACac7881bb3aa9f0bf4ccf9207cb0525cd",
+  twilio_secret_key: "4cd12ff8f4bbc19ab529f67f55d28e9d"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

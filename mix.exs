@@ -47,7 +47,9 @@ defmodule Sportegic.MixProject do
       {:triplex, "~> 1.3.0-rc.1"},
       {:argon2_elixir, "~> 2.0"},
       {:phoenix_swoosh, "~> 0.2"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:tesla, "~> 1.2.0"},
+      {:hackney, "~> 1.14.0"}
     ]
   end
 

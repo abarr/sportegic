@@ -7,7 +7,7 @@ defmodule Sportegic.Communication do
 
   import Swoosh.Email
 
-  alias Sportegic.Communication.{Mailer, Token}
+  alias Sportegic.Communication.{Mailer, Token. TwilioVerification}
 
   @reply_email "do_not_reply@sportegic.com"
 
