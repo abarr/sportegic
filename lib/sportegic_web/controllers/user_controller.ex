@@ -4,7 +4,6 @@ defmodule SportegicWeb.UserController do
   alias Sportegic.Users
   alias Sportegic.Users.User
   alias Sportegic.Accounts
-  alias Sportegic.Accounts.OrganisationsUsers
   alias Sportegic.Communication
 
   plug SportegicWeb.Plugs.Authenticate
@@ -96,7 +95,7 @@ defmodule SportegicWeb.UserController do
 
   def disable(conn, %{"id" => id}, org) do
     with {:ok, user} <- Users.get_user(id, org),
-         {:ok, updated_user} <- Users.update_user(user, %{disabled: true}, org),
+         {:ok, _updated_user} <- Users.update_user(user, %{disabled: true}, org),
          {:ok, organisation} <- Accounts.get_organisation_by_prefix(org),
          {:ok, orgs_user} <- Accounts.get_organisations_users(user.id, organisation.id),
          {:ok, _success} <- Accounts.delete_organisations_users(orgs_user) do

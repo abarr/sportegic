@@ -26,14 +26,14 @@ defmodule Sportegic.UsersTest do
       {:ok, profile} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Profiles.create_profile()
+        |> Users.create_profile()
 
       profile
     end
 
     test "list_profiles/0 returns all profiles" do
       profile = profile_fixture()
-      assert Profiles.list_profiles() == [profile]
+      assert Users.list_profiles() == [profile]
     end
 
     test "get_profile!/1 returns the profile with given id" do
@@ -100,7 +100,7 @@ defmodule Sportegic.UsersTest do
 
     test "list_permissions/0 returns all permissions" do
       permission = permission_fixture()
-      assert Profiles.list_permissions() == [permission]
+      assert Users.list_permissions_and_category() == [permission]
     end
 
     test "get_permission!/1 returns the permission with given id" do

@@ -21,13 +21,9 @@ defmodule Sportegic.Users do
 
   #  Get profile using user_id from con
   def get_user(user_id, org) do
-    [user] =
+    user =
       User
-      |> where([u], u.user_id == ^user_id)
-      |> Repo.all(prefix: org)
-      |> Repo.preload(role: [:permissions])
-      |> IO.inspect()
-
+      |> Repo.get_by([user_id: user_id], prefix: org)
     {:ok, user}
   end
 
@@ -74,6 +70,12 @@ defmodule Sportegic.Users do
     {:ok, list}
   end
 
+  def create_default_owner_permissions(org) do
+    list = Users.list_permissions(org)
+    |> Enum.map( &create_roles_permissions(%{permission_id: &1.id, role_id: 1 }, org))
+    {:ok, list}
+  end
+
   def update_role(%Role{} = role, attrs, permissions, org) do
     role
     |> Role.changeset(attrs)
@@ -111,7 +113,7 @@ defmodule Sportegic.Users do
     Category.changeset(category, %{})
   end
 
-  def list_permissions(org) do
+  def list_permissions_and_category(org) do
     query =
       from(p in Permission,
         join: c in Category,
@@ -124,6 +126,11 @@ defmodule Sportegic.Users do
     |> Enum.group_by(fn p -> p.category end)
     |> Enum.map(fn {k, v} -> {k, Enum.map(v, &Map.delete(&1, :category))} end)
     |> Map.new()
+  end
+
+  def list_permissions(org) do
+    Permission
+    |> Repo.all(prefix: org)
   end
 
   def list_permissions(ids, org) do
@@ -167,6 +174,13 @@ defmodule Sportegic.Users do
     query
     |> Repo.all(prefix: org)
     |> Enum.map(fn %{permission_id: v} -> v end)
+  end
+
+  def get_roles_permissions(id, org) do
+      RolesPermissions
+      |> where([rp], rp.role_id == ^id)
+      |> Repo.all(prefix: org)
+      |> Repo.preload(permission: [:category])
   end
 
   def get_roles_permissions!(id, org), do: Repo.get!(RolesPermissions, id, prefix: org)

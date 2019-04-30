@@ -39,7 +39,7 @@ defmodule Sportegic.MixProject do
       {:ecto, "~> 3.1.2"},
       {:ecto_sql, "~> 3.1.1"},
       {:postgrex, ">= 0.0.0-rc"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 2.13"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},

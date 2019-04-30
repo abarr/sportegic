@@ -18,7 +18,7 @@ defmodule SportegicWeb.RoleController do
 
   def new(conn, _params, org) do
     changeset = Users.change_role(%Role{})
-    permissions = Users.list_permissions(org)
+    permissions = Users.list_permissions_and_category(org)
     render(conn, "new.html", changeset: changeset, permissions: permissions, role_permissions: [])
   end
 
@@ -50,7 +50,7 @@ defmodule SportegicWeb.RoleController do
   def edit(conn, %{"id" => id}, org) do
     role = Users.get_role!(id, org)
     changeset = Users.change_role(role)
-    permissions = Users.list_permissions(org)
+    permissions = Users.list_permissions_and_category(org)
 
     case role.id do
       1 ->
@@ -87,7 +87,7 @@ defmodule SportegicWeb.RoleController do
         |> redirect(to: Routes.role_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        permissions = Users.list_permissions(org)
+        permissions = Users.list_permissions_and_category(org)
         render(conn, "edit.html", role: role, changeset: changeset, permissions: permissions)
     end
   end

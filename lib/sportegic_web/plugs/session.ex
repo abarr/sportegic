@@ -31,9 +31,15 @@ defmodule SportegicWeb.Plugs.Session do
                 |> assign(:organisation, org)
 
               {:ok, user} ->
+                roles_permissions  = Users.get_roles_permissions(user.role_id, org)
                 conn
                 |> assign(:user, user)
-                |> assign(:permissions, Enum.map(user.role.permissions, fn p -> p.name end))
+                |> assign(:permissions, Enum.map(roles_permissions, fn rp -> 
+                  rp.permission.name
+                  |> String.downcase
+                  |> String.replace_suffix("", ":" <> rp.permission.category.key)
+                
+                  end)) 
                 |> assign(:current_user, account)
                 |> assign(:organisation, org)
             end

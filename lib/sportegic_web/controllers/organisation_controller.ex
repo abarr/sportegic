@@ -52,11 +52,11 @@ defmodule SportegicWeb.OrganisationController do
     user_id = conn.assigns.current_user.id
 
     with {:ok, org} <- Accounts.create_organisation(organisation_params),
-         {:ok, _orgs_users} <-
-           Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),
+         {:ok, _orgs_users} <- Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),
          {:ok, _roles} <- Users.create_default_roles(org.prefix),
          {:ok, _cats} <- Users.create_default_categories(org.prefix),
-         {:ok, _perm} <- Users.create_default_permissions(org.prefix) do
+         {:ok, _perm} <- Users.create_default_permissions(org.prefix),
+         {:ok, _role_permissions} <- Users.create_default_owner_permissions(org.prefix) do
       conn
       |> put_session(:organisation, org.prefix)
       |> put_flash(:info, "Organisation created successfully.")
