@@ -74,13 +74,17 @@
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
                     <td class="right-align"> 
-                    <%= if(user.id != 1) do %>  
+                    
                       <%= if(user.disabled != true) do %>
-                        <%= link "Disable User", to: Routes.user_path(@conn, :disable, user) %>
+                        <%= if(user.id == 1 or user.id == @conn.assigns.user.id) do %>  
+                          <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3 disabled" %>
+                        <% else %>
+                          <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3" %>
+                        <% end %>
                       <% else %>
-                        <%= link "Enable User", to: Routes.user_path(@conn, :enable, user) %> 
+                        <%= link "Enable User", to: Routes.user_path(@conn, :enable, user), class: "btn-flat waves-effect white-text green lighten-3" %> 
                       <% end %>
-                    <% end %>
+                    
                     </td>
                   </tr>
                   <% end %>

@@ -53,6 +53,7 @@ defmodule SportegicWeb.AccountController do
       case Users.create_user(user_params, org.prefix) do
         {:ok, _user} ->
           conn
+          |> put_flash(:success, "Your account has been created. Time to test your login!")
           |> redirect(to: Routes.session_path(conn, :new))
 
         {:error, changeset} ->
