@@ -64,7 +64,7 @@
                       <th>Name</th>
                       <th>Mobile</th>
                       <th>Role</th>
-                      <th class="right-align">Action</th>
+                      <th class="left-align">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,7 @@
                     <td> <%= user.firstname <> " " <> user.lastname %>  </td>
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
-                    <td class="right-align"> 
+                    <td class="left-align"> 
                     
                       <%= if(user.disabled != true) do %>
                         <%= if(user.id == 1 or user.id == @conn.assigns.user.id) do %>  

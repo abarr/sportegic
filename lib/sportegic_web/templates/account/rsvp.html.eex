@@ -43,7 +43,7 @@
                             <%= label f, :mobile_no %>
                             <%= text_input f, :mobile_no, [ class: "validate", required: "true"] %>
                             <%= error_tag f, :mobile_no %>
-                            <span class="helper-text" data-error="Please provide your mobile number"></span>
+                            <span class="helper-text" data-error="Please provide a valid mobile number"></span>
                         </div>
                         <%= hidden_input f, :mobile, [id: "mobile"] %>
                         <div id="send" class="input-field col s3 right-align">

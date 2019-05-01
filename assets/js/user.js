@@ -4,13 +4,22 @@ let User = {
 
         let channel = socket.channel('mobile:', {});
 
+        var country, code_input, mobile_no
+        if (document.getElementById("rsvp_country")) {
+            country = document.getElementById("rsvp_country");
+            mobile_no = document.getElementById("rsvp_mobile_no");
+            code_input = document.getElementById("rsvp_code");
+        } else {
+            country = document.getElementById("user_country");
+            mobile_no = document.getElementById("user_mobile_no");
+            code_input = document.getElementById("user_code");
+        }
+
         let verify = document.getElementById("verify");
         let send = document.getElementById("send");
         let valid = document.getElementById("valid");
-        let country = document.getElementById("rsvp_country");
-        let mobile_no = document.getElementById("rsvp_mobile_no");
+
         let code = document.getElementById("code");
-        let code_input = document.getElementById("rsvp_code");
         let check = document.getElementById("check");
         let mobile = document.getElementById("mobile");
         let submit = document.getElementById("submit");
@@ -57,7 +66,9 @@ let User = {
                 country.classList += " invalid"
                 mobile_no.classList += " invalid"
                 verify.innerHTML = "Send";
-                send.removeAttribute("disabled");
+                verify.removeAttribute("disabled");
+                code.setAttribute("hidden", "true");
+                check.setAttribute("hidden", "true");
             }
         });
 
@@ -66,11 +77,14 @@ let User = {
                 code.setAttribute("hidden", "true");
                 check.setAttribute("hidden", "true");
 
+                country.setAttribute("disabled", "true")
+                mobile_no.setAttribute("disabled", "true")
+
                 send.setAttribute("hidden", "true");
                 valid.removeAttribute("hidden");
                 submit.removeAttribute("disabled");
-            }else{
-                code.classList += " invalid"
+            } else {
+                code_input.classList += " invalid"
             }
         });
 

@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
     Role.setup_role_form();
 
     let sportegic_socket = socket.connect_socket();
-    if (window.location.pathname == "/rsvp") { User.verify_mobile(sportegic_socket) };
+    if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") { User.verify_mobile(sportegic_socket) };
 
 });
