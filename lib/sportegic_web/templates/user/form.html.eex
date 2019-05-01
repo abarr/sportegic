@@ -50,6 +50,6 @@
   </div>
   
   <div>
-    <%= submit "Create", [class: "btn waves-effect waves-light blue"] %>
+    <%= submit "Create", [id: "submit", class: "btn waves-effect waves-light blue", disabled: true] %>
   </div>
 <% end %>
