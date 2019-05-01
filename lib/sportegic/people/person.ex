@@ -3,13 +3,13 @@ defmodule Sportegic.People.Person do
   import Ecto.Changeset
 
   schema "people" do
-    field :dob, :date
-    field :email, :string
-    field :firstname, :string
-    field :lastname, :string
-    field :middlenames, :string
-    field :mobile, :string
-    field :preferred_name, :string
+    field(:dob, :date)
+    field(:email, :string)
+    field(:firstname, :string)
+    field(:lastname, :string)
+    field(:middle_names, :string)
+    field(:mobile, :string)
+    field(:preferred_name, :string)
 
     timestamps()
   end
@@ -17,7 +17,15 @@ defmodule Sportegic.People.Person do
   @doc false
   def changeset(person, attrs) do
     person
-    |> cast(attrs, [:firstname, :middlenames, :lastname, :dob, :email, :mobile, :preferred_name])
-    |> validate_required([:firstname, :middlenames, :lastname, :dob, :email, :mobile, :preferred_name])
+    |> cast(attrs, [:firstname, :middle_names, :lastname, :dob, :email, :mobile, :preferred_name])
+    |> validate_required([
+      :firstname,
+      :middle_names,
+      :lastname,
+      :dob,
+      :email,
+      :mobile,
+      :preferred_name
+    ])
   end
 end

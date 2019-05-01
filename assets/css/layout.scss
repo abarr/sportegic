@@ -7,8 +7,17 @@ header, main {
     }     
 }
 
+.datepicker-date-display{
+    background-color: gray;
+}
 
+.datepicker-table td.is-selected{
+    background-color: gray;
+}
 
+.datepicker-cancel, .datepicker-done{
+    color: gray;
+}
 .nav-wrapper{
     // padding-left: 20px;
     line-height: 100px;

@@ -45,7 +45,7 @@ let Navigation = {
         [].forEach.call(menuItems, el => {
             if (el.id == page) {
                 el.classList += " active";
-                if (["role", "user", "profile"].includes(page)) {
+                if (["role", "user", "my_profile"].includes(page)) {
                     document.getElementById("administration").click();
                 }
             }
@@ -72,7 +72,12 @@ let Navigation = {
 
         let tabs = document.querySelector(".tabs");
         let instances = M.Tabs.init(tabs, {});
-        
+
+        let dob = document.getElementById("person_dob");
+        M.Datepicker.init(dob, {
+            format: 'dd-mm-yyyy',
+            yearRange: 40
+        })
 
     }
 }

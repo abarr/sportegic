@@ -21,52 +21,34 @@
             </div>  
         <% end %>
         <div class="section heading">
-            <h5 class="heading grey-text lighten-2">Dashboard</h5>
+            <h5 class="heading grey-text lighten-2">People</h5>
         </div>
         <div class="divider"></div>
     </div>
     <div class="row">
         <div class="col s12">
 
-
+        <div class="row search-row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2">
+                <label for="autocompleteInput">Search People </label>
+              </div>
+            </div>
 
         </div>
     </div>  
 </div>
 
-<table hidden="true">
-  <thead>
-    <tr>
-      <th>Firstname</th>
-      <th>Middlenames</th>
-      <th>Lastname</th>
-      <th>Dob</th>
-      <th>Email</th>
-      <th>Mobile</th>
-      <th>Preferred name</th>
+<div>
+    <div class="fixed-action-btn">
+      
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for person <- @people do %>
-    <tr>
-      <td><%= person.firstname %></td>
-      <td><%= person.middlenames %></td>
-      <td><%= person.lastname %></td>
-      <td><%= person.dob %></td>
-      <td><%= person.email %></td>
-      <td><%= person.mobile %></td>
-      <td><%= person.preferred_name %></td>
-
-      <td>
-        <%= link "Show", to: Routes.person_path(@conn, :show, person) %>
-        <%= link "Edit", to: Routes.person_path(@conn, :edit, person) %>
-        <%= link "Delete", to: Routes.person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"] %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
+      <%= link to: Routes.person_path(@conn, :new), class: "btn-floating btn-large blue" do %>
+        <i class="large material-icons">add</i>
+      <% end %>
+      
+      
+    </div>
+</div>
 

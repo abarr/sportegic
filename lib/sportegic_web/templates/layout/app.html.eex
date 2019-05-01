@@ -76,7 +76,11 @@
           <a href="/dashboard" class=" grey-text lighten-2"><h4><%= organisation_name(@conn.assigns.organisation) %></h4></a>
         </li>
         <li class="menu" id="dashboard"><a class="grey-text lighten-2" href="/dashboard"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
-        <li class="menu" id="people"><a class="grey-text lighten-2" href="#!"><i class="fal fa-user-astronaut fa-lg fa-fw"></i> People</a></li>
+        <li class="menu" id="person">
+          <%= link to: Routes.person_path(@conn, :index), class: "grey-text lighten-2" do %>
+            <i class="fal fa-user-astronaut fa-lg fa-fw"></i> People
+          <% end %>
+          </li>
         <%# <li class="menu" id="note"><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
         <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li> %>
         

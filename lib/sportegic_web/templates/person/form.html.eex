@@ -1,39 +1,59 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+  <div class="page">
+    <div class="row page">
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :firstname %>
+          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text"]%>
+          <%= error_tag f, :firstname %>
+          <span class="helper-text" data-error="Please provide your first name"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :middle_names %>
+          <%= text_input f, :middle_names, [ class: "validate", required: "true", type: "text"]%>
+          <%= error_tag f, :middle_names %>
+          <span class="helper-text" data-error="Please provide your middle names"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :lastname %>
+          <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text"]%>
+          <%= error_tag f, :lastname %>
+          <span class="helper-text" data-error="Please provide your last name"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :preferred_name %>
+          <%= text_input f, :preferred_name, [ class: "validate", required: "true", type: "text"]%>
+          <%= error_tag f, :preferred_name %>
+          <span class="helper-text" data-error="Please provide your preferred name"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :dob %>
+          <%= text_input f, :dob, [ class: "validate datepicker", required: "true", type: "text"]%>
+          <%= error_tag f, :dob %>
+          <span class="helper-text" data-error="Please provide your Date of Birth"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1"> 
+          <%= label f, :email %>
+          <%= text_input f, :email, [ class: "validate", required: "true", type: "text"]%>
+          <%= error_tag f, :email %>
+          <span class="helper-text" data-error="Please provide a valid email"></span>
+        </div>
+        <div class="input-field col s12 l10 offset-l1">
+          <%= label f, :mobile %>
+          <%= text_input f, :mobile, [ class: "validate", required: "true"] %>
+          <%= error_tag f, :mobile %>
+          <span class="helper-text" data-error="Please provide your mobile number"></span>
+        </div>
     </div>
-  <% end %>
-
-  <%= label f, :firstname %>
-  <%= text_input f, :firstname %>
-  <%= error_tag f, :firstname %>
-
-  <%= label f, :middlenames %>
-  <%= text_input f, :middlenames %>
-  <%= error_tag f, :middlenames %>
-
-  <%= label f, :lastname %>
-  <%= text_input f, :lastname %>
-  <%= error_tag f, :lastname %>
-
-  <%= label f, :dob %>
-  <%= date_select f, :dob %>
-  <%= error_tag f, :dob %>
-
-  <%= label f, :email %>
-  <%= text_input f, :email %>
-  <%= error_tag f, :email %>
-
-  <%= label f, :mobile %>
-  <%= text_input f, :mobile %>
-  <%= error_tag f, :mobile %>
-
-  <%= label f, :preferred_name %>
-  <%= text_input f, :preferred_name %>
-  <%= error_tag f, :preferred_name %>
-
-  <div>
-    <%= submit "Save" %>
+    <div>
+      <div class="fixed-action-btn">
+        <button type="submit" class="btn-floating btn-large blue">
+          <i class="large material-icons">more_horiz</i>
+        </button>
+        <ul>
+          <li><a class="btn-floating red lighten-2" href="/role"><i class="material-icons">arrow_back</i></a></li>
+          <li><button class="btn-floating green lighten-2" type="submit" href="#" ><i class="material-icons">save</i></button></li>
+        </ul>
+      </div>
+    </div>
   </div>
 <% end %>

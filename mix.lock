@@ -1,7 +1,7 @@
 %{
   "argon2_elixir": {:hex, :argon2_elixir, "2.0.2", "71c0752ad38e0903140f466b465eb6f4278b16aef18ca5410d1a7cfc04a50aca", [:make, :mix], [{:comeonin, "~> 5.1", [hex: :comeonin, optional: false]}, {:elixir_make, "~> 0.4", [hex: :elixir_make, optional: false]}]},
   "bcrypt_elixir": {:hex, :bcrypt_elixir, "2.0.2", "0ffbb490f34dee442d486b9f5f13e6a8f872f79d8ad92041c66a114ad0329df3", [:make, :mix], [{:comeonin, "~> 5.1", [hex: :comeonin, repo: "hexpm", optional: false]}, {:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm"},
-  "bodyguard": {:hex, :bodyguard, "2.2.3", "489bd7557870b649cdc478b99e29ba02892b9c618ed927ef6db85ab5dc0fd4c8", [:mix], [{:plug, "~> 1.0", [hex: :plug, repo: "hexpm", optional: false]}], "hexpm"},
+  "bodyguard": {:hex, :bodyguard, "2.2.3", "489bd7557870b649cdc478b99e29ba02892b9c618ed927ef6db85ab5dc0fd4c8", [:mix], [{:plug, "~> 1.0", [hex: :plug, optional: false]}]},
   "certifi": {:hex, :certifi, "2.4.2", "75424ff0f3baaccfd34b1214184b6ef616d89e420b258bb0a5ea7d7bc628f7f0", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, optional: false]}]},
   "combine": {:hex, :combine, "0.10.0", "eff8224eeb56498a2af13011d142c5e7997a80c8f5b97c499f84c841032e429f", [:mix], []},
   "comeonin": {:hex, :comeonin, "5.1.1", "0abd6bae41acc01c369bb3eafe46399f301bf4e1bacebafdb89252bbb8a1a32d", [:mix], []},

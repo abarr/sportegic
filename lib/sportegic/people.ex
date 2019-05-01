@@ -8,17 +8,19 @@ defmodule Sportegic.People do
 
   alias Sportegic.People.Person
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
+
   @doc """
   Returns the list of people.
 
   ## Examples
 
-      iex> list_people()
+      iex> list_people(org)
       [%Person{}, ...]
 
   """
-  def list_people do
-    Repo.all(Person)
+  def list_people(org) do
+    Repo.all(Person, prefix: org)
   end
 
   @doc """
@@ -28,14 +30,14 @@ defmodule Sportegic.People do
 
   ## Examples
 
-      iex> get_person!(123)
+      iex> get_person!(123, org)
       %Person{}
 
-      iex> get_person!(456)
+      iex> get_person!(456, org)
       ** (Ecto.NoResultsError)
 
   """
-  def get_person!(id), do: Repo.get!(Person, id)
+  def get_person!(id, org), do: Repo.get!(Person, id, prefix: org)
 
   @doc """
   Creates a person.
@@ -49,10 +51,10 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_person(attrs \\ %{}) do
+  def create_person(attrs \\ %{}, org) do
     %Person{}
     |> Person.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(prefix: org)
   end
 
   @doc """
@@ -67,10 +69,10 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_person(%Person{} = person, attrs) do
+  def update_person(%Person{} = person, attrs, org) do
     person
     |> Person.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update(prefix: org)
   end
 
   @doc """
@@ -85,8 +87,8 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_person(%Person{} = person) do
-    Repo.delete(person)
+  def delete_person(%Person{} = person, org) do
+    Repo.delete(person, prefix: org)
   end
 
   @doc """
