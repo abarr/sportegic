@@ -52,8 +52,9 @@
                             </a>
                         </div>
                         <div id="valid" class="input-field col s3 right-align" hidden="true">
-                            <a id="verify" class="btn-floating green lighten-2 z-depth=0" >
-                            <i class="material-icons">check_circle</i>
+                            <a id="verify" class="btn green lighten-2 z-depth=0" >
+                            Verified! 
+                            <i class="material-icons right">insert_emoticon</i>
                             </a>
                         </div>
                         <div id="code" class="input-field col s9" hidden="true">

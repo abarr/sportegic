@@ -34,11 +34,12 @@ let User = {
         });
 
         channel.on("send_verification", payload => {
-            if (payload.status == "pending" && payload.response == 201) {
+            if (payload.status == "ok") {
                 mobile.value = payload.mobile;
                 code.removeAttribute("hidden");
                 check.removeAttribute("hidden");
                 verify.innerHTML = "Resend";
+                verify.removeAttribute("disabled");
                 send.removeAttribute("disabled");
 
                 check.addEventListener("click", e => {
@@ -49,9 +50,14 @@ let User = {
                             mobile: mobile_no.value
                         });
                         check.value = "Sent ...";
-                        check.setAttribute("disbaled", "true");
+                        check.setAttribute("disabled", "true");
                     }
                 });
+            } else {
+                country.classList += " invalid"
+                mobile_no.classList += " invalid"
+                verify.innerHTML = "Send";
+                send.removeAttribute("disabled");
             }
         });
 
@@ -62,10 +68,9 @@ let User = {
 
                 send.setAttribute("hidden", "true");
                 valid.removeAttribute("hidden");
-                submit.removeAttribute("disbaled");
-
-
-
+                submit.removeAttribute("disabled");
+            }else{
+                code.classList += " invalid"
             }
         });
 
