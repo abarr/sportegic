@@ -77,8 +77,8 @@
         </li>
         <li class="menu" id="dashboard"><a class="grey-text lighten-2" href="/dashboard"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
         <li class="menu" id="people"><a class="grey-text lighten-2" href="#!"><i class="fal fa-user-astronaut fa-lg fa-fw"></i> People</a></li>
-        <li class="menu" id="note"><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
-        <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
+        <%# <li class="menu" id="note"><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
+        <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li> %>
         
         <li class="">
           <ul class="collapsible collapsible-accordion ">
@@ -86,8 +86,25 @@
               <a id="administration"  class="collapsible-header grey-text lighten-2 padding-collapsible-header"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration<i class="material-icons right">expand_more</i></a>
               <div class="collapsible-body">
                 <ul>
-                  <li ><a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role"><i class="far fa-chevron-right fa-xs fa-fw"></i> Roles</a></li>
-                  <li ><a id="user" class="menu grey-text lighten-2 padding-collapsible-body" href="/user"><i class="far fa-chevron-right fa-xs fa-fw"></i> Users</a></li>
+                  <%= if Enum.member?(@conn.assigns.permissions, "view:role_permissions")  do %>
+                  <li >
+                    <a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role">
+                      <i class="far fa-chevron-right fa-xs fa-fw"></i> Roles
+                    </a>
+                  </li>
+                  <% end %>
+                  <%= if Enum.member?(@conn.assigns.permissions, "view:user_permissions")  do %>
+                  <li >
+                    <a id="user" class="menu grey-text lighten-2 padding-collapsible-body" href="/user">
+                      <i class="far fa-chevron-right fa-xs fa-fw"></i> Users
+                    </a>
+                  </li>
+                  <% end %>
+                  <li >
+                    <a id="my_profile" class="menu grey-text lighten-2 padding-collapsible-body" href="#">
+                      <i class="far fa-chevron-right fa-xs fa-fw"></i> My profile
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>

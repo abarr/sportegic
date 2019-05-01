@@ -11,6 +11,8 @@ defmodule Sportegic.Users do
   alias Sportegic.Users.Seeds
   alias Sportegic.Users.RolesPermissions
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
+
   def get_user!(id, org), do: Repo.get!(User, id, prefix: org)
 
   def list_users(org) do

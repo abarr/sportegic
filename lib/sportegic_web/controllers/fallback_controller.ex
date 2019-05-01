@@ -1,7 +1,9 @@
 defmodule SportegicWeb.FallbackController do
   use SportegicWeb, :controller
 
-  def call(_conn, args) do
-    IO.inspect(args, label: "ERROR IN FALLBACK")
+  def call(conn,  {:error, :unauthorized}) do
+    conn
+    |> put_flash(:danger, "You are not authorised to enter this section of the site!")
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 end

@@ -45,7 +45,7 @@ let Navigation = {
         [].forEach.call(menuItems, el => {
             if (el.id == page) {
                 el.classList += " active";
-                if (["role", "user"].includes(page)) {
+                if (["role", "user", "profile"].includes(page)) {
                     document.getElementById("administration").click();
                 }
             }

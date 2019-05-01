@@ -20,7 +20,7 @@ defmodule SportegicWeb.AccountController do
     with {:ok, key} <- Token.verify_token(token) do
       [org, invite_id] = key |> String.split(":")
       invitation = Users.get_invitation!(invite_id, org)
-      resp = Users.update_invitation(invitation, %{completed: true}, org)
+      _resp = Users.update_invitation(invitation, %{completed: true}, org)
 
       changeset =
         %Rsvp{}

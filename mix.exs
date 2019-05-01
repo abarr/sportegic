@@ -49,7 +49,8 @@ defmodule Sportegic.MixProject do
       {:phoenix_swoosh, "~> 0.2"},
       {:timex, "~> 3.0"},
       {:tesla, "~> 1.2.0"},
-      {:hackney, "~> 1.14.0"}
+      {:hackney, "~> 1.14.0"},
+      {:bodyguard, "~> 2.2"}
     ]
   end
 

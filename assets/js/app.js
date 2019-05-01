@@ -12,8 +12,15 @@ import socket from "./socket"
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
-
+    // Javascript to enable a close icon on any flash messages
+    if(document.getElementById("alert_close")){
+        let close = document.getElementById("alert_close");
+        close.addEventListener("click", e => {
+            let card = document.getElementsByClassName("scale-transition")
+            card[0].classList += " scale-out";
+            card[0].parentElement.removeChild(card[0]);
+        });
+    }
 
     //prevent the browser from showing default error bubble/ hint
     document.addEventListener('invalid', (function () {

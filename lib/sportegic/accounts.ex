@@ -5,6 +5,8 @@ defmodule Sportegic.Accounts do
   alias Sportegic.Accounts
   alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers, Rsvp}
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
+
   def list_users do
     Repo.all(User)
   end
