@@ -27,6 +27,7 @@ defmodule SportegicWeb.Plugs.Session do
             case Users.get_user(account.id, org) do
               {:ok, nil} ->
                 conn
+                |> assign(:permissions, [])
                 |> assign(:current_user, account)
                 |> assign(:organisation, org)
 

@@ -15,6 +15,10 @@ defmodule SportegicWeb.MobileChannel do
   def handle_in("send_verification", %{"country" => country, "mobile" => mobile}, socket) do
     country = String.trim(country)
     mobile = sanitize_mobile(mobile)
+    
+    if(Mix.env() == :dev) do
+      IO.puts("DEV")
+    end
 
     {:ok, %Tesla.Env{status: status} = response} =
       mobile

@@ -1,0 +1,43 @@
+<h1>Show Person</h1>
+
+<ul>
+
+  <li>
+    <strong>Firstname:</strong>
+    <%= @person.firstname %>
+  </li>
+
+  <li>
+    <strong>Middlenames:</strong>
+    <%= @person.middlenames %>
+  </li>
+
+  <li>
+    <strong>Lastname:</strong>
+    <%= @person.lastname %>
+  </li>
+
+  <li>
+    <strong>Dob:</strong>
+    <%= @person.dob %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @person.email %>
+  </li>
+
+  <li>
+    <strong>Mobile:</strong>
+    <%= @person.mobile %>
+  </li>
+
+  <li>
+    <strong>Preferred name:</strong>
+    <%= @person.preferred_name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.person_path(@conn, :edit, @person) %></span>
+<span><%= link "Back", to: Routes.person_path(@conn, :index) %></span>

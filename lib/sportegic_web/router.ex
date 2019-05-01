@@ -52,6 +52,8 @@ defmodule SportegicWeb.Router do
     resources "/user", UserController
 
     resources "/role", RoleController
+
+    resources "/person", PersonController
   end
 
   # Other scopes may use custom stacks.

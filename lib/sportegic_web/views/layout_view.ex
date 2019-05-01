@@ -1,7 +1,6 @@
 defmodule SportegicWeb.LayoutView do
   use SportegicWeb, :view
 
-  alias Sportegic.Users
 
   def organisation_name(org) do
     case String.contains?(org, "_") do

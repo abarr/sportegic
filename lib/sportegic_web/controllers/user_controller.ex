@@ -56,8 +56,7 @@ defmodule SportegicWeb.UserController do
     end
   end
 
-  def create(conn, %{"user" => user_params}, org, permissions) do
-    with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions) do
+  def create(conn, %{"user" => user_params}, org, _permissions) do
       user_params = Map.put(user_params, "user_id", Integer.to_string(conn.assigns.current_user.id))
 
       case Users.create_user(user_params, org) do
@@ -73,7 +72,6 @@ defmodule SportegicWeb.UserController do
         {:error, %Ecto.Changeset{} = changeset} ->
           render(conn, "new.html", changeset: changeset)
       end
-    end
   end
 
   def show(conn, %{"id" => id}, org, permissions) do
