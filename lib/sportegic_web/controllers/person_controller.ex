@@ -13,8 +13,7 @@ defmodule SportegicWeb.PersonController do
   end
 
   def index(conn, _params, org, _permissions) do
-    people = People.list_people(org)
-    render(conn, "index.html", people: people)
+    render(conn, "index.html")
   end
 
   def new(conn, _params, _org, permissions) do

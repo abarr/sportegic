@@ -1,8 +1,11 @@
-defmodule SportegicWeb.UserSocket do
+defmodule SportegicWeb.Socket do
   use Phoenix.Socket
 
+  alias Sportegic.Users
+  
   ## Channels
   channel "mobile:*", SportegicWeb.MobileChannel
+  channel "people_search:*", SportegicWeb.PeopleSearchChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -15,8 +18,31 @@ defmodule SportegicWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
+  def connect(%{"token" => "undefined"}, socket, _connect_info) do
     {:ok, socket}
+  end
+  
+  def connect(%{"token" => token, "org" => org }, socket, _connect_info) do
+    case Phoenix.Token.verify(socket, "replace_with_key", token, max_age: 1_209_600) do
+      {:ok, account_id} ->
+        {:ok, user} = Users.get_user(account_id, org)
+        roles_permissions = Users.get_roles_permissions(user.role_id, org)
+        
+        socket = socket
+        |> assign(:permissions, Enum.map(roles_permissions, fn rp -> 
+          rp.permission.name
+          |> String.downcase
+          |> String.replace_suffix("", ":" <> rp.permission.category.key) 
+        end)) 
+        |> assign(:user_id, user.id)
+        |> assign(:organisation, org)
+
+        {:ok, socket}
+
+      {:error, _reason} ->
+        :error
+    end
+   
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
@@ -30,4 +56,5 @@ defmodule SportegicWeb.UserSocket do
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil
+
 end

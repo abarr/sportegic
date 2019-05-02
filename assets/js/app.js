@@ -6,6 +6,7 @@ import flatpickr from 'flatpickr'
 
 import Navigation from "./navigation"
 import User from "./user"
+import People from "./people"
 import Organisation from "./organisation"
 import Role from "./role";
 import Calendar from "./calendar.js"
@@ -15,6 +16,8 @@ import socket from "./socket"
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    let sportegic_socket = socket.connect_socket();
 
     // Javascript to enable a close icon on any flash messages
     if(document.getElementById("alert_close")){
@@ -41,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);
 
-    let sportegic_socket = socket.connect_socket();
+    
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") { User.verify_mobile(sportegic_socket) };
+    if (window.location.pathname == "/person") { People.realtime_search(sportegic_socket) };
 
 });

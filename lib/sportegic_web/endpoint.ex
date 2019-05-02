@@ -1,7 +1,7 @@
 defmodule SportegicWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :sportegic
 
-  socket "/socket", SportegicWeb.UserSocket,
+  socket "/socket", SportegicWeb.Socket,
     websocket: true,
     longpoll: false
 

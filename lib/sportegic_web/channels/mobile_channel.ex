@@ -19,10 +19,6 @@ defmodule SportegicWeb.MobileChannel do
       country = String.trim(country)
       mobile = sanitize_mobile(mobile)
 
-      if(Mix.env() == :dev) do
-        IO.puts("DEV")
-      end
-
       {:ok, %Tesla.Env{status: status} = response} =
         mobile
         |> String.replace_prefix("", country)
@@ -32,14 +28,10 @@ defmodule SportegicWeb.MobileChannel do
         201 ->
           %Tesla.Env{body: %{"to" => to}} = response
           push(socket, "send_verification", %{status: "ok", mobile: to})
-          IO.inspect(response, label: "SUCCESS ===========================>")
-
         _ ->
           push(socket, "send_verification", %{status: "error"})
-          IO.inspect(response, label: "ERROR ===========================>")
       end
     end
-
     {:noreply, socket}
   end
 
@@ -59,11 +51,10 @@ defmodule SportegicWeb.MobileChannel do
       case [status, state] do
         [200, "approved"] ->
           push(socket, "check_code", %{status: "ok"})
-          IO.inspect(response, label: "SUCCESS ===========================>")
-
+         
         _ ->
           push(socket, "check_code", %{status: "error"})
-          IO.inspect(response, label: "ERROR ===========================>")
+         
       end
     end
 

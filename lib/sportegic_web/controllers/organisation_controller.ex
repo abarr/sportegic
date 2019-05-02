@@ -16,7 +16,7 @@ defmodule SportegicWeb.OrganisationController do
         0 ->
           conn
           |> put_flash(
-            :danger,
+            :info,
             "You are not associated with an organisation. If you create an Organisation it may incur a cost. If you expected to login to an Organisation please contact the Account Administrator."
           )
           |> redirect(to: Routes.organisation_path(conn, :new))
