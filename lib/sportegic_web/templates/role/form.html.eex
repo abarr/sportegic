@@ -4,14 +4,14 @@
     <div class="input-field col s12 m6 l6"> 
       <i class="material-icons prefix">looks_one</i>
       <%= label f, :name %>
-      <%= text_input f, :name, [ class: "validate", required: "true", type: "text"]%>
+      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
       <%= error_tag f, :name %>
       <span class="helper-text" data-error="Please provide a name for your new role"></span>
     </div>
     <div class="input-field col s12 m6 l6"> 
       <i class="material-icons prefix">looks_two</i>
       <%= label f, :description %>
-      <%= text_input f, :description, [ class: "validate", required: "true", type: "text"] %>
+      <%= text_input f, :description, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :description %>
       <span class="helper-text" data-error="Please provide a brief description to help others"></span>
     </div>

@@ -2,13 +2,13 @@
   <div class="row">
     <div class="input-field col s12">
       <%= label f, :name %>
-      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", autofocus: "true"]%>
+      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", autofocus: "true", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
       <%= error_tag f, :name %>
       <span class="helper-text" data-error="Please provide full account name"></span>
     </div>
     <div class="input-field col s12">
       <%= label f, :display, [for: "fourteen"] %>
-      <%= text_input f, :display, [class: "validate", required: "true", data: [length: "14"], id: "fourteen", maxlength: "14"] %>
+      <%= text_input f, :display, [class: "validate", required: "true", data: [length: "14"], id: "fourteen", maxlength: "14", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :display %>
       <span class="helper-text" data-error="A short name commonly used"></span>
     </div>

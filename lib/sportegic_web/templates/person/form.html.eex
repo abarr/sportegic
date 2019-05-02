@@ -3,42 +3,42 @@
     <div class="row page">
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :firstname, "First Name" %>
-          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text"]%>
+          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag f, :firstname %>
           <span class="helper-text" data-error="Please provide your first name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :middle_names, "Middle Names" %>
-          <%= text_input f, :middle_names, [ class: "validate", type: "text"]%>
+          <%= text_input f, :middle_names, [ class: "validate", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$" ]%>
           <%= error_tag f, :middle_names %>
           <span class="helper-text" data-error="Please provide your middle names"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :lastname, "Last Name" %>
-          <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text"]%>
+          <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag f, :lastname %>
           <span class="helper-text" data-error="Please provide your last name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :preferred_name, "Preferred Name or Nickname" %>
-          <%= text_input f, :preferred_name, [ class: "validate",  type: "text"]%>
+          <%= text_input f, :preferred_name, [ class: "validate",  type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag f, :preferred_name %>
           <span class="helper-text" data-error="Please provide your preferred name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :dob, "Date of Birth"%>
+          <%= label f, :dob, "Date of Birth" %>
           <%= text_input f, :dob, [  type: "date"]%>
           <%= error_tag f, :dob, "helper-text red-text"  %>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :email %>
-          <%= text_input f, :email, [ class: "validate", required: "true", type: "text"]%>
+          <%= text_input f, :email, [ class: "validate", required: "true", type: "email"]%>
           <%= error_tag f, :email %>
           <span class="helper-text" data-error="Please provide a valid email"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1">
-          <%= label f, :mobile %>
-          <%= text_input f, :mobile, [ class: "validate", required: "true"] %>
+          <%= label f, :mobile, "Mobile/Cell with country code e.g.+61 XXXXXXXXXX" %>
+          <%= text_input f, :mobile, [ class: "validate", pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
           <%= error_tag f, :mobile %>
           <span class="helper-text" data-error="Please provide your mobile number"></span>
         </div>
