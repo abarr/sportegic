@@ -22,10 +22,10 @@ defmodule Sportegic.People.Person do
       :firstname,
       :middle_names,
       :lastname,
-      :dob,
       :email,
       :mobile,
       :preferred_name
     ])
+    |> validate_required(:dob, message: "Please provide a Date of Birth")
   end
 end

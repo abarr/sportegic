@@ -2,34 +2,33 @@
   <div class="page">
     <div class="row page">
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :firstname %>
+          <%= label f, :firstname, "First Name" %>
           <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text"]%>
           <%= error_tag f, :firstname %>
           <span class="helper-text" data-error="Please provide your first name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :middle_names %>
-          <%= text_input f, :middle_names, [ class: "validate", required: "true", type: "text"]%>
+          <%= label f, :middle_names, "Middle Names" %>
+          <%= text_input f, :middle_names, [ class: "validate", type: "text"]%>
           <%= error_tag f, :middle_names %>
           <span class="helper-text" data-error="Please provide your middle names"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :lastname %>
+          <%= label f, :lastname, "Last Name" %>
           <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text"]%>
           <%= error_tag f, :lastname %>
           <span class="helper-text" data-error="Please provide your last name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :preferred_name %>
-          <%= text_input f, :preferred_name, [ class: "validate", required: "true", type: "text"]%>
+          <%= label f, :preferred_name, "Preferred Name or Nickname" %>
+          <%= text_input f, :preferred_name, [ class: "validate",  type: "text"]%>
           <%= error_tag f, :preferred_name %>
           <span class="helper-text" data-error="Please provide your preferred name"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
-          <%= label f, :dob %>
-          <%= text_input f, :dob, [ class: "validate datepicker", required: "true", type: "text"]%>
-          <%= error_tag f, :dob %>
-          <span class="helper-text" data-error="Please provide your Date of Birth"></span>
+          <%= label f, :dob, "Date of Birth"%>
+          <%= text_input f, :dob, [  type: "date"]%>
+          <%= error_tag f, :dob, "helper-text red-text"  %>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :email %>
@@ -46,12 +45,11 @@
     </div>
     <div>
       <div class="fixed-action-btn">
-        <button type="submit" class="btn-floating btn-large blue">
-          <i class="large material-icons">more_horiz</i>
+        <button type="submit" class="btn-floating btn-large green">
+          <i class="large material-icons">save</i>
         </button>
         <ul>
-          <li><a class="btn-floating red lighten-2" href="/role"><i class="material-icons">arrow_back</i></a></li>
-          <li><button class="btn-floating green lighten-2" type="submit" href="#" ><i class="material-icons">save</i></button></li>
+          <li><a class="btn-floating red lighten-2" href="/person"><i class="material-icons">arrow_back</i></a></li>
         </ul>
       </div>
     </div>

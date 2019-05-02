@@ -1,43 +1,111 @@
-<h1>Show Person</h1>
+<div class="row page">
+    <div class="col s12">
+        <%= if get_flash(@conn, :danger) do %>
+            <div id="danger" class="row scale-transition">
+            <div class="col s12">
+                <div class="card-panel z-depth-0 red lighten-3 white-text center-align">
+                    <%= get_flash(@conn, :danger) %>
+                     <i id="alert_close" class="material-icons right">clear</i>
+                </div>
+            </div>
+            </div>  
+        <% end %>
+        <%= if get_flash(@conn, :success) do %>
+            <div id="success" class="row scale-transition">
+            <div class="col s12">
+                <div class="card-panel z-depth-0 green lighten-3 white-text center-align">
+                    <%= get_flash(@conn, :success) %>
+                    <i id="alert_close" class="material-icons right">clear</i>
+                </div>
+            </div>
+            </div>  
+        <% end %>
+        <div class="section heading">
+            <h5 class="heading grey-text lighten-2">Profile</h5>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <div class="row page">
+        <div class="col s12">
+          <div class="row page">
+            <%#  Left col %>
+            <div class="col s12 l2 hide-on-med-only">
+              <div class="card white">
+                <div class="card-image ">
+                  <img src="https://ui-avatars.com/api/?name=Andrew+Barr&size=200"></img>
+                </div>     
+              </div>
+            </div>
+            <%# Middle col %>
+            <div class="col s12 m8 l7 ">
+              <ul class="collection with-header">
+                <li class="collection-header">
+                  <h5>
+                    <%= @person.firstname <> " " <> @person.middle_names  <> " " <> @person.lastname <> " (" <> @person.preferred_name <> ")"%>
+                  </h5>
+                </li>
+                <li class="collection-item valign-wrapper">
+                  <i class="material-icons left">alternate_email</i>
+                  <h6 class="truncate"><%= @person.email %></h6>
+                </li>
+                <li class="collection-item valign-wrapper">
+                  <i class="material-icons left">cake</i>
+                  <h6 class="truncate"6><%= readable_date(@person.dob) %></h6>
+                </li>
+                <li class="collection-item valign-wrapper">
+                  <i class="material-icons left">phone_iphone</i>
+                  <h6 class="truncate"6><%= @person.mobile %></h6>
+                  
+                </li>
+              </ul>
+            </div>
+            <%# Right col %>
+            <div class="col s12 m4 l3">
+              <div class="collection">
+                <div class="collection-item"><h5>Information</h5></div>
+                  <a href="#!" class="collection-item grey-text lighten-2">
+                    <i class="fal fa-file fa-fw fa-lg"></i> Documents
+                  </a>
+                  <a href="#!" class="collection-item grey-text lighten-2">
+                  <i class="fal fa-passport fa-fw fa-lg"></i> Visas
+                  </a>
+                  <a href="#!" class="collection-item grey-text lighten-2">
+                  <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
+                  </a>
+                  <a href="#!" class="collection-item grey-text lighten-2">
+                  <i class="fal fa-car-side fa-fw fa-lg"></i> Vehicles
+                  </a>
+              </div> 
+            </div>
+        </div> 
+    </div>  <%# End of Row   %>
+    <div class="row page">
+        <div class="col s12">
+          <div class="row page">
+            <div class="col s12 ">
+              <div class="section heading">
+                  <h5 class="heading grey-text lighten-2">Notes</h5>
+              </div>
+              <div class="divider"></div>
+            </div>
+        </div> 
+    </div>
+</div>
 
-<ul>
 
-  <li>
-    <strong>Firstname:</strong>
-    <%= @person.firstname %>
-  </li>
+<div>
+    <div class="fixed-action-btn">
+      
 
-  <li>
-    <strong>Middlenames:</strong>
-    <%= @person.middlenames %>
-  </li>
+      <%= link to: Routes.person_path(@conn, :edit, @person), class: "btn-floating btn-large  grey lighten-1" do %>
+        <i class="large material-icons">edit</i>
+      <% end %>
+      <ul>
+          <li><a class="btn-floating red " href="/person"><i class="material-icons">arrow_back</i></a></li>
+          <li><a class="btn-floating blue" href="/person/new"><i class="material-icons">add</i></a></li>
+        </ul>
+      
+      
+    </div>
+</div>
 
-  <li>
-    <strong>Lastname:</strong>
-    <%= @person.lastname %>
-  </li>
-
-  <li>
-    <strong>Dob:</strong>
-    <%= @person.dob %>
-  </li>
-
-  <li>
-    <strong>Email:</strong>
-    <%= @person.email %>
-  </li>
-
-  <li>
-    <strong>Mobile:</strong>
-    <%= @person.mobile %>
-  </li>
-
-  <li>
-    <strong>Preferred name:</strong>
-    <%= @person.preferred_name %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.person_path(@conn, :edit, @person) %></span>
-<span><%= link "Back", to: Routes.person_path(@conn, :index) %></span>

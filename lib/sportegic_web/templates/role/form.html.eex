@@ -47,12 +47,11 @@
 
   <div>
     <div class="fixed-action-btn">
-      <button type="submit" class="btn-floating btn-large blue">
-        <i class="large material-icons">more_horiz</i>
+      <button type="submit" class="btn-floating btn-large green">
+        <i class="large material-icons">save</i>
       </button>
       <ul>
         <li><a class="btn-floating red lighten-2" href="/role"><i class="material-icons">arrow_back</i></a></li>
-        <li><button class="btn-floating green lighten-2" type="submit" href="#" ><i class="material-icons">save</i></button></li>
       </ul>
     </div>
   </div>

@@ -75,3 +75,5 @@ config :sportegic, Sportegic.Repo,
   pool_size: 10
 
 config :sportegic, Sportegic.Communication.Mailer, adapter: Swoosh.Adapters.Local
+
+

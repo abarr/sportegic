@@ -2,10 +2,14 @@ import "@fortawesome/fontawesome-pro/js/all";
 import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
+import flatpickr from 'flatpickr'
+
 import Navigation from "./navigation"
 import User from "./user"
 import Organisation from "./organisation"
 import Role from "./role";
+import Calendar from "./calendar.js"
+
 import socket from "./socket"
 
 
@@ -31,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Navigation.init_page_elements();
     Role.setup_role_form();
+
+    // Attach Flatpickr to form inputs
+    Calendar.attachFlatpickrDOB(flatpickr);
+    // Calendar.attachFlatpickrExpiry(flatpickr);
+    // Calendar.attachFlatpickrDueDate(flatpickr);
 
     let sportegic_socket = socket.connect_socket();
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") { User.verify_mobile(sportegic_socket) };
