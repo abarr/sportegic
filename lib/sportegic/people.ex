@@ -19,6 +19,12 @@ defmodule Sportegic.People do
       [%Person{}, ...]
 
   """
+  def list_people(search, org) do
+    Person
+    |> Person.search(search)
+    |> Repo.all(prefix: org)
+  end
+
   def list_people(org) do
     Repo.all(Person, prefix: org)
   end

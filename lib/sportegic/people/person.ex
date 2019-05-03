@@ -1,5 +1,7 @@
 defmodule Sportegic.People.Person do
   use Ecto.Schema
+
+  import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
   schema "people" do
@@ -20,12 +22,21 @@ defmodule Sportegic.People.Person do
     |> cast(attrs, [:firstname, :middle_names, :lastname, :dob, :email, :mobile, :preferred_name])
     |> validate_required([
       :firstname,
-      :middle_names,
       :lastname,
       :email,
-      :mobile,
-      :preferred_name
+      :mobile
     ])
     |> validate_required(:dob, message: "Please provide a Date of Birth")
+  end
+
+  def search(people, search_term) do
+    wildcard = "%#{search_term}%"
+
+    from(person in people,
+      where: ilike(person.firstname, ^wildcard),
+      or_where: ilike(person.lastname, ^wildcard),
+      or_where: ilike(person.preferred_name, ^wildcard),
+      select: %{id: person.id, firstname: person.firstname, lastname: person.lastname}
+    )
   end
 end

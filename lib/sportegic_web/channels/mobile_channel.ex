@@ -28,10 +28,12 @@ defmodule SportegicWeb.MobileChannel do
         201 ->
           %Tesla.Env{body: %{"to" => to}} = response
           push(socket, "send_verification", %{status: "ok", mobile: to})
+
         _ ->
           push(socket, "send_verification", %{status: "error"})
       end
     end
+
     {:noreply, socket}
   end
 
@@ -43,7 +45,7 @@ defmodule SportegicWeb.MobileChannel do
       mobile = sanitize_mobile(mobile)
       code = sanitize_mobile(code)
 
-      {:ok, %Tesla.Env{body: %{"status" => state}, status: status} = response} =
+      {:ok, %Tesla.Env{body: %{"status" => state}, status: status}} =
         mobile
         |> String.replace_prefix("", country)
         |> Communication.check_verification_code(code)
@@ -51,10 +53,9 @@ defmodule SportegicWeb.MobileChannel do
       case [status, state] do
         [200, "approved"] ->
           push(socket, "check_code", %{status: "ok"})
-         
+
         _ ->
           push(socket, "check_code", %{status: "error"})
-         
       end
     end
 

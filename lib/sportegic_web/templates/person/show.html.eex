@@ -30,7 +30,7 @@
           <div class="row page">
             <%#  Left col %>
             <div class="col s12 l2 hide-on-med-only">
-              <div class="card white">
+              <div class="card white z-depth-0">
                 <div class="card-image ">
                   <img src= '<%= "https://ui-avatars.com/api/?name=" <> @person.firstname <> "+" <> @person.lastname <> "&size=200&background=fff& color=757575" %>' > </img>
                 </div>     
@@ -41,20 +41,20 @@
               <ul class="collection with-header">
                 <li class="collection-header">
                   <h5>
-                    <%= @person.firstname <> " " <> @person.middle_names  <> " " <> @person.lastname <> " (" <> @person.preferred_name <> ")"%>
+                    <%= @person.firstname <> " " <> @person.lastname <> " (" <> @person.preferred_name <> ")"%>
                   </h5>
                 </li>
                 <li class="collection-item valign-wrapper">
-                  <i class="material-icons left">alternate_email</i>
-                  <h6 class="truncate"><%= @person.email %></h6>
+                  <i class="fal fa-at fa-fw fa-lg"></i>&nbsp
+                   <span class="truncate"><%= @person.email %></span>
                 </li>
                 <li class="collection-item valign-wrapper">
-                  <i class="material-icons left">cake</i>
-                  <h6 class="truncate"6><%= readable_date(@person.dob) %></h6>
+                  <i class="fal fa-birthday-cake fa-fw fa-lg"></i>&nbsp
+                   <span class="truncate"><%= readable_date(@person.dob) %></span>
                 </li>
                 <li class="collection-item valign-wrapper">
-                  <i class="material-icons left">phone_iphone</i>
-                  <h6 class="truncate"6><%= @person.mobile %></h6>
+                  <i class="fal fa-mobile-android fa-fw fa-lg"></i>&nbsp
+                  <span class="truncate"6><%= @person.mobile %></span>
                   
                 </li>
               </ul>

@@ -12,7 +12,7 @@ defmodule SportegicWeb.PersonController do
     apply(__MODULE__, action_name(conn), args)
   end
 
-  def index(conn, _params, org, _permissions) do
+  def index(conn, _params, _org, _permissions) do
     render(conn, "index.html")
   end
 

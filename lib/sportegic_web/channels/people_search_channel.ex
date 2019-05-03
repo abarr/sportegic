@@ -1,8 +1,10 @@
 defmodule SportegicWeb.PeopleSearchChannel do
   use SportegicWeb, :channel
 
-  def join("people_search:" <> id, %{"token" => token}, socket) do
-    if authorized?(id, socket.assigns.user_id) do
+  alias Sportegic.People
+
+  def join("people_search:", %{"token" => token}, socket) do
+    if authorized?(token, socket.assigns.user_id) do
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -11,22 +13,37 @@ defmodule SportegicWeb.PeopleSearchChannel do
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
-  def handle_in("ping", payload, socket) do
-    broadcast!(socket, "ping:#{socket.assigns.user_id}", payload)
-    {:noreply, socket}
-  end
+  def handle_in("search", %{"search_value" => value, "token" => token, "org" => org}, socket) do
+    # [%{firstname: "", lastname: "", id: 1}, %{...}]
+    payload =
+      People.list_people(value, org)
+      |> Enum.map(fn x ->
+        %{(x.firstname <> " " <> x.lastname) => nil}
+      end)
+      |> Enum.reduce(&Map.merge/2)
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (people_search:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    ids =
+      People.list_people(value, org)
+      |> Enum.map(fn x ->
+        %{(x.firstname <> " " <> x.lastname) => "/person/" <> Integer.to_string(x.id)}
+      end)
+      |> Enum.reduce(&Map.merge/2)
+
+    broadcast!(socket, "search:#{token}", %{payload: payload, ids: ids})
     {:noreply, socket}
   end
 
   # Add authorization logic here as required.
   defp authorized?(token, socket) do
-    # check if user is active 
-    # check permissions
-    true
+    case Phoenix.Token.verify(SportegicWeb.Endpoint, "replace_with_key", token, max_age: 86400) do
+      {:ok, user_id} ->
+        case user_id === socket.assigns.user_id do
+          true -> true
+          _ -> false
+        end
+
+      _ ->
+        false
+    end
   end
 end
