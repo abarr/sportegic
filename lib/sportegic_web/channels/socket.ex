@@ -34,7 +34,7 @@ defmodule SportegicWeb.Socket do
           |> String.downcase
           |> String.replace_suffix("", ":" <> rp.permission.category.key) 
         end)) 
-        |> assign(:user_id, user.id)
+        |> assign(:account_id, account_id)
         |> assign(:organisation, org)
 
         {:ok, socket}

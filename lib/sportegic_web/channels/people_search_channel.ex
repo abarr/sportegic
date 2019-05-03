@@ -4,7 +4,7 @@ defmodule SportegicWeb.PeopleSearchChannel do
   alias Sportegic.People
 
   def join("people_search:", %{"token" => token}, socket) do
-    if authorized?(token, socket.assigns.user_id) do
+    if authorized?(token, socket.assigns.account_id) do
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -34,10 +34,10 @@ defmodule SportegicWeb.PeopleSearchChannel do
   end
 
   # Add authorization logic here as required.
-  defp authorized?(token, socket) do
+  defp authorized?(token, id) do
     case Phoenix.Token.verify(SportegicWeb.Endpoint, "replace_with_key", token, max_age: 86400) do
-      {:ok, user_id} ->
-        case user_id === socket.assigns.user_id do
+      {:ok, account_id} ->
+        case account_id === id do
           true -> true
           _ -> false
         end
