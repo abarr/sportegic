@@ -63,6 +63,17 @@ defmodule Sportegic.LookupTypes do
     {:ok, list}
   end
 
+  def create_default_lookup_types(org) do
+    list =
+      Seeds.get_default_document_types()
+      |> Enum.concat(Seeds.get_default_visa_types())
+      |> Enum.concat(Seeds.get_default_insurance_types())
+      |> Enum.concat(Seeds.get_default_vehicle_types())
+      |> Enum.map(&create_type(&1, org))
+
+    {:ok, list}
+  end
+
   @doc """
   Updates a lookup.
 

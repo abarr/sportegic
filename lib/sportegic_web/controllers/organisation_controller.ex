@@ -57,6 +57,7 @@ defmodule SportegicWeb.OrganisationController do
          {:ok, _orgs_users} <-
            Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),
          {:ok, _lookup_types} <- LookupTypes.create_default_lookups(org.prefix),
+         {:ok, _lookups} <- LookupTypes.create_default_lookup_types(org.prefix),
          {:ok, _roles} <- Users.create_default_roles(org.prefix),
          {:ok, _cats} <- Users.create_default_categories(org.prefix),
          {:ok, _perm} <- Users.create_default_permissions(org.prefix),
