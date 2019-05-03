@@ -53,6 +53,8 @@ defmodule SportegicWeb.Router do
 
     resources "/role", RoleController
 
+    resources "/lookup", LookupController
+
     resources "/person", PersonController
   end
 

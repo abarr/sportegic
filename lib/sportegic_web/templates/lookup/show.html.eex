@@ -1,0 +1,13 @@
+<h1>Show Lookup</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @lookup.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.lookup_path(@conn, :edit, @lookup) %></span>
+<span><%= link "Back", to: Routes.lookup_path(@conn, :index) %></span>
