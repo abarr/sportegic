@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "bc2-staging",
+    "private_key_id": "e73c581e44913cc3df2212b6afab36a5758d7187",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDsvgR8YkM5pO5g\nvK6VuufnHhIex1TUicJHka9DFEHfwCiYfDc6xp6HTwfZtbPvhTDHFWjr0wOmAa3F\n8tYkkdgYX2OWmVvdeWB4DogiYrrJsKkx0dWb74F5iEbbM57hXIJjybXJR15OqN9c\nfa/WxPN40mqjXqjXPuBNo1EHuqmWhan4Os5Sz3VycTFtxU5jg7wMKTV1DzoyMpmm\ngJZUpeS+30T1zcaNCYePiUo1yzaLPY7ROUzF6giS5wtFjVcvAUToa2wjAJIeqrIf\n5JbJULgCItim5c94Z5NoloFCr1t7Pj1xOfJlWz34tYwhwLerMvN1hcAa9o/WdREZ\nJlzAFMQPAgMBAAECggEABvnV4s28Tk9mUCJ9DWyRf5aIpo5T5evqD7LArBFnvi5z\nbnLW1pWrkHR4C54LyinDKIZcPy2f30wyTLoOgf6OLePPAm87oFnLdEBTgJoE1L8m\nOffryCumVrVOS1S3vELPHZXEWKtDw6yrrh6f3VkcwAyaKMFJG7JUAl4vaJk6wR9A\nQvR8JGqnLYBRvS03Z+QGPLCiz128RiUkeZsieVL8HWn/89hBTxGPTgV5o2h0MpuH\nlED1NwpWZjmqtKyGdtnuFXQ4WVMttcJDrRYM4PctC1tEQgRq0fFlYiRYiti/dBO1\njOSGLMs/2/ReMnDm5l6O/3HtXfdSyIRqggi46DrA0QKBgQD4SywaXdRALGV8ExmG\ntNuwCD3kF8wM3zYH9EsHVYIe1677G5O93pSyKAuG2eULi3Q4l4asz3saEftLsFML\nYhf39qUeFRosuUg3viTa5OJwEJkncnFYxMfP4jHmY4Jn8GjmwKEVEw4yUS5+8/am\nC3/ecCZaD0w2+uLF4+c6+9M+uQKBgQD0FxAvAfbjIj/PULeHDlivhecEsEpbUn+T\nX47sTjYP0j7yGz6FT6nfMKXDYiBRo1YxZG1hs6CF80w4a0V1F8+lCAXbIwpXzZ6G\nc6eqNMH44c9QMRq2ZBeM1AO5cTJkEZg9iaPHZbbKKryGkA0BD7xEzj6Zu8CW3bXT\nnEEQ+P/1BwKBgQCCMgDNTpgmkmEgv28qKJnt41R4z1WrBjxxzVKuZNMXUyeo+pvs\n+tLj3IW2z3kAJb7qkeIHqcA2OmmYFbxmAqjo2Edaz9vqybkpqaXvtgdalgmJGsR+\ntKjFxClAUrulvvVy0l1lDJnsHo+P+GNETFFflVU28kCXr9TLyaaNUlFB2QKBgQCG\n2vcmAX/VnWaDs6SyCUsWLnSkMoHiUoIJehIMnGlh9FayjDrOjGTd2pK6j8wrToKg\nZ0vHXuahGvpRcXK+bplaJESX/ZQJTqD2x48qiltgleFj/L01Z7dbJwenvNKKVu41\nkYXa9Gc46sOd1JharcbmfMw5Q3Hz6Co872dDaU6AoQKBgQDj5/W3f7BIlaPdLjM+\nDmtnWEl9LTdwoiR6MnHCaTAs4ClMQdIFL1UOFjR2tT5wib68+ziOh6sa/GEoTPOj\nW/SAWxhWGunPK95NSUiNATpY/9kK2S9ZOKhqBr8FdBcY8sHX8TLynCRKKc2KK5Fn\n+VazsvjzZUCTwJYXd8qW+b/L1w==\n-----END PRIVATE KEY-----\n",
+    "client_email": "proxy-user@bc2-staging.iam.gserviceaccount.com",
+    "client_id": "115771737005697884130",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/proxy-user%40bc2-staging.iam.gserviceaccount.com"
+  }
+  

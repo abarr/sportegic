@@ -76,4 +76,10 @@ config :sportegic, Sportegic.Repo,
 
 config :sportegic, Sportegic.Communication.Mailer, adapter: Swoosh.Adapters.Local
 
+config :arc,
+  storage: Arc.Storage.Local
+
+config :goth,
+  json: "./rel/deployment/gcp_access/key.json" |> Path.expand() |> File.read!()
+
 

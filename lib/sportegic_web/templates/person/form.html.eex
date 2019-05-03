@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action,[multipart: true], fn f -> %>
   <div class="page">
     <div class="row page">
         <div class="input-field col s12 l10 offset-l1"> 
@@ -25,10 +25,17 @@
           <%= error_tag f, :preferred_name %>
           <span class="helper-text" data-error="Please provide your preferred name"></span>
         </div>
-        <div class="input-field col s12 l10 offset-l1"> 
+        <div class="input-field col s12 l2 offset-l1"> 
           <%= label f, :dob, "Date of Birth" %>
           <%= text_input f, :dob, [  type: "date"]%>
           <%= error_tag f, :dob, "helper-text red-text"  %>
+        </div>
+        <div class="input-field  col s12 l2 ">
+            <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >Upload Profile Image
+             <i class="fas fa-camera fa-lg fa-fw"></i>
+            </a>
+             
+             <div style='height: 0px;width:0px; overflow:hidden;'> <%= file_input f, :profile_image, [class: "file-path validate",  onchange: "updateScreen()"] %></div>
         </div>
         <div class="input-field col s12 l10 offset-l1"> 
           <%= label f, :email %>
@@ -37,11 +44,12 @@
           <span class="helper-text" data-error="Please provide a valid email"></span>
         </div>
         <div class="input-field col s12 l10 offset-l1">
-          <%= label f, :mobile, "Mobile/Cell with country code e.g.+61 XXXXXXXXXX" %>
+          <%= label f, :mobile, "Mobile/Cell with country code" %>
           <%= text_input f, :mobile, [ class: "validate", pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
           <%= error_tag f, :mobile %>
           <span class="helper-text" data-error="Please provide your mobile number"></span>
         </div>
+        
     </div>
     <div>
       <div class="fixed-action-btn">
@@ -55,3 +63,15 @@
     </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+ function getFile(){
+   document.getElementById("person_profile_image").click();
+ }
+
+ function updateScreen(){
+   let path = document.getElementById("person_profile_image").value
+   let file = path.substring(path.lastIndexOf('\\')+1);
+   document.getElementById("uploadButton").innerHTML = file;
+ }
+ </script >

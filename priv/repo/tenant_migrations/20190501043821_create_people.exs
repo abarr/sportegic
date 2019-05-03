@@ -10,6 +10,7 @@ defmodule Sportegic.Repo.Migrations.CreatePeople do
       add(:email, :string)
       add(:mobile, :string)
       add(:preferred_name, :string)
+      add(:profile_image, :string)
 
       timestamps()
     end
