@@ -24,8 +24,6 @@ defmodule SportegicWeb.PersonController do
   end
 
   def create(conn, %{"person" => person_params}, org, permissions) do
-    IO.inspect(person_params, label: "PERSON ===========================================>")
-
     with :ok <- Bodyguard.permit(People, "create:people_permissions", :person, permissions) do
       case People.create_person(person_params, org) do
         {:ok, person} ->
@@ -34,7 +32,6 @@ defmodule SportegicWeb.PersonController do
           |> redirect(to: Routes.person_path(conn, :show, person))
 
         {:error, %Ecto.Changeset{} = changeset} ->
-          IO.inspect(changeset)
           render(conn, "new.html", changeset: changeset)
       end
     end
@@ -49,13 +46,11 @@ defmodule SportegicWeb.PersonController do
     with :ok <- Bodyguard.permit(People, "edit:people_permissions", :person, permissions) do
       person = People.get_person!(id, org)
       changeset = People.change_person(person)
-      IO.inspect(changeset, label: "EMPTY CHANGESET")
       render(conn, "edit.html", person: person, changeset: changeset)
     end
   end
 
   def update(conn, %{"id" => id, "person" => person_params}, org, permissions) do
-    IO.inspect(person_params, label: "PERSON ===========================================>")
     with :ok <- Bodyguard.permit(People, "edit:people_permissions", :person, permissions) do
       person = People.get_person!(id, org)
 

@@ -1,6 +1,7 @@
 let Navigation = {
 
     init_page_elements() {
+        console.log("Set up menu")
 
         let lang_dropdown = document.getElementById("enDropdown");
         let profile_dropdown = document.getElementById("profile");
@@ -35,8 +36,13 @@ let Navigation = {
 
         // Set menu active state
         let page = window.location.pathname.split('/')[1];
+        console.log(page)
+        console.log(window.location.pathname)
         let active = document.getElementsByClassName("active");
+        console.log(page)
         let menuItems = document.getElementsByClassName("menu");
+        console.log(page)
+        console.log(menuItems);
 
         [].forEach.call(active, function (el) {
             el.classList.remove("active");
@@ -45,6 +51,7 @@ let Navigation = {
         [].forEach.call(menuItems, el => {
             if (el.id == page) {
                 el.classList += " active";
+                console.log(page)
                 if (["role", "user", "my_profile", "lookup"].includes(page)) {
                     document.getElementById("administration").click();
                 }

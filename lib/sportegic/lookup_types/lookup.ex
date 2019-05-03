@@ -2,9 +2,12 @@ defmodule Sportegic.LookupTypes.Lookup do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Sportegic.LookupTypes.Type
+
   schema "lookups" do
-    field :name, :string
-    field :description, :string
+    field(:name, :string)
+    field(:description, :string)
+    has_many(:types, Type)
 
     timestamps()
   end

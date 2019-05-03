@@ -8,6 +8,7 @@ defmodule Sportegic.LookupTypes do
 
   alias Sportegic.LookupTypes.Lookup
   alias Sportegic.LookupTypes.Seeds
+  alias Sportegic.LookupTypes.Type
 
   @doc """
   Returns the list of lookups.
@@ -53,7 +54,7 @@ defmodule Sportegic.LookupTypes do
   def create_lookup(attrs \\ %{}, org) do
     %Lookup{}
     |> Lookup.changeset(attrs)
-    |> Repo.insert( prefix: org)
+    |> Repo.insert(prefix: org)
   end
 
   def create_default_lookups(org) do
@@ -107,5 +108,107 @@ defmodule Sportegic.LookupTypes do
   """
   def change_lookup(%Lookup{} = lookup) do
     Lookup.changeset(lookup, %{})
+  end
+
+  @doc """
+  Returns the list of types.
+
+  ## Examples
+
+      iex> list_types()
+      [%Type{}, ...]
+
+  """
+  def list_types(lookup, org) do
+    Type
+    |> where([t], t.lookup_id == ^lookup.id)
+    |> Repo.all(prefix: org)
+  end
+
+  @doc """
+  Gets a single type.
+
+  Raises `Ecto.NoResultsError` if the Type does not exist.
+
+  ## Examples
+
+      iex> get_type!(123)
+      %Type{}
+
+      iex> get_type!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_type!(lookup, id, org) do
+    IO.puts("IN GET TYPE")
+
+    Type
+    |> where([t], t.lookup_id == ^lookup.id)
+    |> Repo.get!(id, prefix: org)
+  end
+
+  @doc """
+  Creates a type.
+
+  ## Examples
+
+      iex> create_type(%{field: value})
+      {:ok, %Type{}}
+
+      iex> create_type(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_type(attrs \\ %{}, org) do
+    %Type{}
+    |> Type.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  @doc """
+  Updates a type.
+
+  ## Examples
+
+      iex> update_type(type, %{field: new_value})
+      {:ok, %Type{}}
+
+      iex> update_type(type, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_type(%Type{} = type, attrs, org) do
+    type
+    |> Type.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  @doc """
+  Deletes a Type.
+
+  ## Examples
+
+      iex> delete_type(type)
+      {:ok, %Type{}}
+
+      iex> delete_type(type)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_type(%Type{} = type, org) do
+    Repo.delete(type, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking type changes.
+
+  ## Examples
+
+      iex> change_type(type)
+      %Ecto.Changeset{source: %Type{}}
+
+  """
+  def change_type(%Type{} = type) do
+    Type.changeset(type, %{})
   end
 end

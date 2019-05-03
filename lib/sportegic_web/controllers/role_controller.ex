@@ -13,7 +13,7 @@ defmodule SportegicWeb.RoleController do
   end
 
   def index(conn, _params, org, permissions) do
-    with :ok <- Bodyguard.permit(Users, "view:role_permissions", :role, permissions) do  
+    with :ok <- Bodyguard.permit(Users, "view:role_permissions", :role, permissions) do
       roles = Users.list_roles(org)
       render(conn, "index.html", roles: roles)
     end
@@ -23,13 +23,22 @@ defmodule SportegicWeb.RoleController do
     with :ok <- Bodyguard.permit(Users, "create:role_permissions", :role, permissions) do
       changeset = Users.change_role(%Role{})
       permissions = Users.list_permissions_and_category(org)
-      render(conn, "new.html", changeset: changeset, permissions: permissions, role_permissions: [])
+      IO.inspect(conn.assigns.permissions)
+
+      render(conn, "new.html",
+        changeset: changeset,
+        permissions_cats: permissions,
+        role_permissions: []
+      )
     end
   end
 
-  def create(conn, %{"role" => role_params}, org, permissions) do
+  def create(conn, %{"role" => role_params} = params, org, permissions) do
+    # Set View people true always
+    role_params = Map.put(role_params, "5", "true")
+
     with :ok <- Bodyguard.permit(Users, "create:role_permissions", :role, permissions) do
-    {role, permissions} = Map.split(role_params, ["name", "description"])
+      {role, permissions} = Map.split(role_params, ["name", "description"])
 
       permissions =
         permissions
@@ -38,7 +47,7 @@ defmodule SportegicWeb.RoleController do
         |> Map.keys()
 
       with {:ok, role} <- Users.create_role(role, org),
-          {:ok, _role_perissions} <- Users.create_role_permissions(role.id, permissions, org) do
+           {:ok, _role_perissions} <- Users.create_role_permissions(role.id, permissions, org) do
         conn
         |> put_flash(:success, "Your new Role has been successfully created.")
         |> redirect(to: Routes.role_path(conn, :index))

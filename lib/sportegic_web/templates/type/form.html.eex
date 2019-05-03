@@ -1,0 +1,27 @@
+<%= form_for @changeset, @action, fn f -> %>
+<div class="page">
+ <div class="row">
+    <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
+      <%= label f, :name, "Type name" %>
+      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+      <%= error_tag f, :name %>
+      <span class="helper-text" data-error="Please provide a name for your new Type"></span>
+    </div>
+  <div>
+    <div class="fixed-action-btn">
+      <button type="submit" class="btn-floating btn-large green">
+        <i class="large material-icons">save</i>
+      </button>
+      <ul>
+        <li>
+          <%= link to: Routes.lookup_type_path(@conn, :index, @lookup), class: "btn-floating red lighten-2" do %>
+            <i class="material-icons">arrow_back</i>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+<% end %>

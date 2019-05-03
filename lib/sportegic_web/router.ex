@@ -53,7 +53,9 @@ defmodule SportegicWeb.Router do
 
     resources "/role", RoleController
 
-    resources "/lookup", LookupController
+    resources "/lookup", LookupController, only: [:index] do
+      resources "/type", TypeController
+    end
 
     resources "/person", PersonController
   end

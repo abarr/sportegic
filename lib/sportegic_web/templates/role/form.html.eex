@@ -22,13 +22,12 @@
       <div class="divider"></div>
     </div>
   </div>
-
-   <%= Enum.map(Map.keys(@permissions), fn(key) -> %>
+   <%= Enum.map(Map.keys(@permissions_cats), fn(key) -> %>
     <div class="row permission-row" id='<%= field_name_as_string("row_all_" <> key) %>'>
       <div class="col s12 m2 l2">
         <div class="h6"><%= key %></div>
       </div>
-      <%= Enum.map(@permissions[key], fn(p) -> %>
+      <%= Enum.map(@permissions_cats[key], fn(p) -> %>
         <div class="col s12 m2 l2">
           <label for= '<%= field_name_as_string("role" <> " " <> Integer.to_string(p.permission_id)) %>' >
             <%= checkbox f, field_name_as_atom(Integer.to_string(p.permission_id)) , [type: "checkbox", data: [field: p.name], value: get_permission_state(p.permission_id, assigns[:role])] %>

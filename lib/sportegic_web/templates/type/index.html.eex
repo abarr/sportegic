@@ -23,7 +23,7 @@
             </div>  
         <% end %>
     <div class="section heading">
-      <h5 class="heading grey-text lighten-2">Lookup Data</h5>
+      <h5 class="heading grey-text lighten-2"> <%= @lookup.name %> - Types </h5>
     </div>
     <div class="divider"></div>
   </div>
@@ -33,17 +33,15 @@
         <thead>
           <tr>
               <th>Name</th>
-              <th>Description</th>
               <th class="right-align">Action</th>
           </tr>
         </thead>
         <tbody>
-        <%= for lookup <- @lookups do %>
+        <%= for type <- @types do %>
           <tr>
-            <td> <%= lookup.name %>  </td>
-            <td> <%= lookup.description %>  </td>
+            <td> <%= type.name %>  </td>
             <td class="right-align"> 
-                <%= link "Select", to: Routes.lookup_type_path(@conn, :index, lookup) %> 
+                <%= link "Edit", to: Routes.lookup_type_path(@conn, :edit, @lookup, type ) %>
             </td>
           </tr>
           <% end %>
@@ -54,4 +52,13 @@
   </div>
 </div>
 
-
+<div>
+    <div class="fixed-action-btn">
+      <%= link to: Routes.lookup_type_path(@conn, :new, @lookup), class: "btn-floating btn-large blue"  do %>
+          <i class="large material-icons">add</i>
+      <% end %>
+      <ul>
+        <li><a class="btn-floating red lighten-2" href="/lookup"><i class="material-icons">arrow_back</i></a></li>
+      </ul>
+    </div>
+</div>

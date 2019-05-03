@@ -1,5 +1,0 @@
-<h1>New Lookup</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.lookup_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.lookup_path(@conn, :index) %></span>

@@ -5,7 +5,6 @@ defmodule Sportegic.People.Person do
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
-  
   schema "people" do
     field(:dob, :date)
     field(:email, :string)
@@ -21,13 +20,9 @@ defmodule Sportegic.People.Person do
 
   @doc false
   def changeset(person, attrs) do
-    IO.inspect(person, label: "CHANGESET ========================================>")
-    IO.inspect(attrs)
     person
     |> cast(attrs, [:firstname, :middle_names, :lastname, :dob, :email, :mobile, :preferred_name])
-    |> IO.inspect( label: "BEFORE CAST")
     |> cast_attachments(attrs, [:profile_image])
-    |> IO.inspect( label: "AFTER CAST")
     |> validate_required([
       :firstname,
       :lastname,
@@ -35,7 +30,6 @@ defmodule Sportegic.People.Person do
       :mobile
     ])
     |> validate_required(:dob, message: "Please provide a Date of Birth")
-    |> IO.inspect
   end
 
   def search(people, search_term) do

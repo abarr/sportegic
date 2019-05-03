@@ -97,6 +97,11 @@
               <a id="administration"  class="collapsible-header grey-text lighten-2 padding-collapsible-header"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration<i class="material-icons right">expand_more</i></a>
               <div class="collapsible-body">
                 <ul>
+                  <li >
+                    <a id="my_profile" class="menu grey-text lighten-2 padding-collapsible-body" href="#">
+                      <i class="far fa-chevron-right fa-xs fa-fw"></i> My profile
+                    </a>
+                  </li>
                   <%= if Enum.member?(@conn.assigns.permissions, "view:role_permissions")  do %>
                   <li >
                     <a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role">
@@ -118,11 +123,7 @@
                     </a>
                   </li>
                   <%# <% end %> 
-                  <li >
-                    <a id="my_profile" class="menu grey-text lighten-2 padding-collapsible-body" href="#">
-                      <i class="far fa-chevron-right fa-xs fa-fw"></i> My profile
-                    </a>
-                  </li>
+                  
                 </ul>
               </div>
             </li>
