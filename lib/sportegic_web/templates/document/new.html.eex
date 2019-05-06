@@ -1,0 +1,17 @@
+
+
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <h5 class="heading grey-text lighten-2">Create New Document for <%= @person.firstname <> " " <> @person.lastname %></h5>
+    </div>
+    <div class="divider"></div>
+  </div>
+  <div class="row page">
+    <div class="col s12">
+        <%= render "form.html", Map.put(assigns, :action, Routes.person_document_path(@conn, :create, @person)) %>
+    </div>
+  </div>
+</div>
+
+

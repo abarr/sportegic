@@ -8,13 +8,7 @@ let Calendar = {
         });
     },
 
-    attachFlatpickrExpiry(flatpickr) {
-        const expiry_date = flatpickr('#expiry', {
-            altInput: true,
-            altFormat: "F j, Y",
-            dateFormat: "Y-m-d"
-        }); 
-    },
+
 
     attachFlatpickrDueDate(flatpickr) {
         const expiry_date = flatpickr('#dueDate', {
@@ -23,7 +17,7 @@ let Calendar = {
             dateFormat: "Y-m-d",
             minDate: "today",
             maxDate: new Date().fp_incr(365)
-        }); 
+        });
     }
 }
 

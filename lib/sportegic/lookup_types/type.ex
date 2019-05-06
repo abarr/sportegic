@@ -3,10 +3,13 @@ defmodule Sportegic.LookupTypes.Type do
   import Ecto.Changeset
 
   alias Sportegic.LookupTypes.Lookup
+  alias Sportegic.People.Document
 
   schema "types" do
     field(:name, :string)
     belongs_to(:lookup, Lookup)
+
+    has_many(:document, Document)
 
     timestamps()
   end

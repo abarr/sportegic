@@ -1,5 +1,15 @@
 let User = {
 
+    setupUserForm(M) {
+        let role_dropdown = document.getElementById('invite-role-select');
+        M.FormSelect.init(role_dropdown, {});
+
+        let role_dropdown_input = document.getElementsByClassName("select-dropdown");
+        [].forEach.call(role_dropdown_input, function (el) {
+            el.classList += " grey-text lighten-2"
+        });
+
+    },
     verify_mobile(socket) {
 
         let channel = socket.channel('mobile:', {});

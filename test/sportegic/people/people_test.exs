@@ -73,4 +73,71 @@ defmodule Sportegic.PeopleTest do
       assert %Ecto.Changeset{} = People.change_person(person)
     end
   end
+
+  describe "documents" do
+    alias Sportegic.People.Document
+
+    @valid_attrs %{additional_info: "some additional_info", expiry_date: ~D[2010-04-17], file: "some file", issuer: "some issuer", number: "some number"}
+    @update_attrs %{additional_info: "some updated additional_info", expiry_date: ~D[2011-05-18], file: "some updated file", issuer: "some updated issuer", number: "some updated number"}
+    @invalid_attrs %{additional_info: nil, expiry_date: nil, file: nil, issuer: nil, number: nil}
+
+    def document_fixture(attrs \\ %{}) do
+      {:ok, document} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> People.create_document()
+
+      document
+    end
+
+    test "list_documents/0 returns all documents" do
+      document = document_fixture()
+      assert People.list_documents() == [document]
+    end
+
+    test "get_document!/1 returns the document with given id" do
+      document = document_fixture()
+      assert People.get_document!(document.id) == document
+    end
+
+    test "create_document/1 with valid data creates a document" do
+      assert {:ok, %Document{} = document} = People.create_document(@valid_attrs)
+      assert document.additional_info == "some additional_info"
+      assert document.expiry_date == ~D[2010-04-17]
+      assert document.file == "some file"
+      assert document.issuer == "some issuer"
+      assert document.number == "some number"
+    end
+
+    test "create_document/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = People.create_document(@invalid_attrs)
+    end
+
+    test "update_document/2 with valid data updates the document" do
+      document = document_fixture()
+      assert {:ok, %Document{} = document} = People.update_document(document, @update_attrs)
+      assert document.additional_info == "some updated additional_info"
+      assert document.expiry_date == ~D[2011-05-18]
+      assert document.file == "some updated file"
+      assert document.issuer == "some updated issuer"
+      assert document.number == "some updated number"
+    end
+
+    test "update_document/2 with invalid data returns error changeset" do
+      document = document_fixture()
+      assert {:error, %Ecto.Changeset{}} = People.update_document(document, @invalid_attrs)
+      assert document == People.get_document!(document.id)
+    end
+
+    test "delete_document/1 deletes the document" do
+      document = document_fixture()
+      assert {:ok, %Document{}} = People.delete_document(document)
+      assert_raise Ecto.NoResultsError, fn -> People.get_document!(document.id) end
+    end
+
+    test "change_document/1 returns a document changeset" do
+      document = document_fixture()
+      assert %Ecto.Changeset{} = People.change_document(document)
+    end
+  end
 end

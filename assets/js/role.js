@@ -1,6 +1,6 @@
 let Role = {
 
-    setup_role_form() {
+    setupRoleForm() {
         let all_checkboxes = document.querySelectorAll("input[type=checkbox]");
 
         [].forEach.call(all_checkboxes, function (el) {

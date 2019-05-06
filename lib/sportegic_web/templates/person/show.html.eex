@@ -70,9 +70,9 @@
             <div class="col s12 m4 l3">
               <div class="collection">
                 <div class="collection-item"><h5>Information</h5></div>
-                  <a href="#!" class="collection-item grey-text lighten-2">
+                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
-                  </a>
+                  <% end %>
                   <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-passport fa-fw fa-lg"></i> Visas
                   </a>

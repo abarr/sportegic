@@ -23,7 +23,6 @@ defmodule SportegicWeb.RoleController do
     with :ok <- Bodyguard.permit(Users, "create:role_permissions", :role, permissions) do
       changeset = Users.change_role(%Role{})
       permissions = Users.list_permissions_and_category(org)
-      IO.inspect(conn.assigns.permissions)
 
       render(conn, "new.html",
         changeset: changeset,
@@ -33,7 +32,7 @@ defmodule SportegicWeb.RoleController do
     end
   end
 
-  def create(conn, %{"role" => role_params} = params, org, permissions) do
+  def create(conn, %{"role" => role_params}, org, permissions) do
     # Set View people true always
     role_params = Map.put(role_params, "5", "true")
 

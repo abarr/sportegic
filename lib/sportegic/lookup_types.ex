@@ -39,6 +39,10 @@ defmodule Sportegic.LookupTypes do
   """
   def get_lookup!(id, org), do: Repo.get!(Lookup, id, prefix: org)
 
+  def get_lookup_by_name!(name, org) when is_binary(name) do
+    Repo.get_by!(Lookup, [name: name], prefix: org)
+  end
+
   @doc """
   Creates a lookup.
 
@@ -134,6 +138,7 @@ defmodule Sportegic.LookupTypes do
     Type
     |> where([t], t.lookup_id == ^lookup.id)
     |> Repo.all(prefix: org)
+    |> Repo.preload(:lookup)
   end
 
   @doc """

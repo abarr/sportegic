@@ -1,7 +1,22 @@
-let Navigation = {
+let Elements = {
 
-    init_page_elements() {
-        console.log("Set up menu")
+    initLayoutTemplate(M) {
+        // Javascript to enable a close icon on any flash messages
+        if (document.getElementById("alert_close")) {
+            let close = document.getElementById("alert_close");
+            close.addEventListener("click", e => {
+                let card = document.getElementsByClassName("scale-transition")
+                card[0].classList += " scale-out";
+                card[0].parentElement.removeChild(card[0]);
+            });
+        }
+
+        //prevent the browser from showing default error bubble/ hint
+        document.addEventListener('invalid', (function () {
+            return function (e) {
+                e.preventDefault();
+            };
+        })(), true);
 
         let lang_dropdown = document.getElementById("enDropdown");
         let profile_dropdown = document.getElementById("profile");
@@ -36,13 +51,8 @@ let Navigation = {
 
         // Set menu active state
         let page = window.location.pathname.split('/')[1];
-        console.log(page)
-        console.log(window.location.pathname)
         let active = document.getElementsByClassName("active");
-        console.log(page)
         let menuItems = document.getElementsByClassName("menu");
-        console.log(page)
-        console.log(menuItems);
 
         [].forEach.call(active, function (el) {
             el.classList.remove("active");
@@ -58,34 +68,26 @@ let Navigation = {
             }
         });
 
-        // This ensures lable are moved when fields are pre-filed (e.g. forms with errors)
-        M.updateTextFields();
-
         let fabs = document.querySelectorAll('.fixed-action-btn');
         M.FloatingActionButton.init(fabs, {
             direction: 'left'
         });
 
+
         let brand = document.getElementById("fourteen");
         M.CharacterCounter.init(brand);
 
-        let role_dropdown = document.getElementById('invite-role-select');
-        M.FormSelect.init(role_dropdown, {});
-
-        let role_dropdown_input = document.getElementsByClassName("select-dropdown");
-        [].forEach.call(role_dropdown_input, function (el) {
-            el.classList += " grey-text lighten-2"
-        });
-
         let tabs = document.querySelector(".tabs");
         let instances = M.Tabs.init(tabs, {});
-
-        let dob = document.getElementById("person_dob");
-        M.Datepicker.init(dob, {
-            format: 'dd-mm-yyyy',
-            yearRange: 40
-        })
-
+    },
+    attachFlatpickrDOB(flatpickr) {
+        const dob = flatpickr('#person_dob', {
+            altInput: true,
+            altFormat: "j F , Y",
+            dateFormat: "Y-m-d"
+        });
     }
+
 }
-export default Navigation
+
+export default Elements

@@ -57,7 +57,9 @@ defmodule SportegicWeb.Router do
       resources "/type", TypeController
     end
 
-    resources "/person", PersonController
+    resources "/person", PersonController do
+      resources "/document", DocumentController, except: [:show]
+    end
   end
 
   # Other scopes may use custom stacks.
