@@ -49,14 +49,11 @@
             <td><%= document.number %></td>
             <td><%= readable_date(document.expiry_date) %></td>
             <td><%= document.issuer %></td>
-            <td><%= link document.file.file_name, to: display_document_link(document), target: "_blank" %></td>
+            <td></td>
             <td class="truncate"><%= document.additional_info %></td>
              <td class="right-align"> 
                 <%= link "Edit", to: Routes.person_document_path(@conn, :edit, @person, document ) %>
             </td>
-
-
-
           </tr>
           <% end %>
         </tbody>

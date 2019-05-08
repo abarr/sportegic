@@ -4,6 +4,7 @@ import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
 import flatpickr from 'flatpickr'
+
 // CUSTOM
 import Elements from "./elements"
 import User from "./user"
@@ -15,7 +16,10 @@ import Document from "./document"
 import socket from "./socket"
 
 
+
 document.addEventListener('DOMContentLoaded', function () {
+
+
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
     Calendar.attachFlatpickrDOB(flatpickr);

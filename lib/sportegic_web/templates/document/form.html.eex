@@ -36,12 +36,26 @@
       </div>
     </div>
 
-    <div class="input-field  col s12 m10 offset-m1 l10 offset-l1">
-      <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >Upload copy or image of document
-        <i class="fas fa-camera fa-lg fa-fw"></i>
-      </a>   
-      <div style='height: 0px;width:0px; overflow:hidden;'> 
-        <%= file_input f, :file, [class: "file-path validate",  onchange: "updateScreen()"] %>
+    <div class="row">
+      <div class="input-field  col s12 m10 offset-m1 l10 offset-l1">
+        <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >
+        Add Attachment
+          <i class="fas fa-camera fa-lg fa-fw"></i>
+        </a>  
+
+        <%= inputs_for f, :attachments, fn fa -> %>
+          <div style='height: 0px;width:0px; overflow:hidden;'> 
+            <%= file_input fa, :file, [ class: "file-path validate",  onchange: "updateScreen()", multiple: "true"] %>
+          </div>
+        <% end %>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col s12 m10 offset-m1 l10 offset-l1">
+        <ul id="fileList" class="collection">
+          
+        </ul>
       </div>
     </div>
 
@@ -66,18 +80,26 @@
         </li>
       </ul>
     </div>
+
   </div>
 <% end %>
 
 <script type="text/javascript">
  function getFile(){
-   document.getElementById("document_file").click();
+   document.getElementById("document_attachments_0_file").click();
  }
 
  function updateScreen(){
-   let path = document.getElementById("document_file").value
-   let file = path.substring(path.lastIndexOf('\\')+1);
-   document.getElementById("uploadButton").innerHTML = file;
+   let path = document.getElementById("document_attachments_0_file").files
+   let fileList = document.getElementById("fileList");
+   
+    var i;
+    for (i = 0; i < path.length; i++) {
+      let li = document.createElement("li");
+      li.innerHTML = path[i]["name"];
+      li.classList += "collection-item";
+      fileList.appendChild(li);  
+    }
  }
  </script >
 

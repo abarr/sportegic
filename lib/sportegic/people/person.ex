@@ -15,7 +15,7 @@ defmodule Sportegic.People.Person do
     field(:middle_names, :string)
     field(:mobile, :string)
     field(:preferred_name, :string)
-    field(:profile_image, Sportegic.People.PersonImage.Type)
+    field(:profile_image, Sportegic.People.Avatar.Type)
 
     has_many(:document, Document)
 
