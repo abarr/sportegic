@@ -22,8 +22,7 @@ defmodule Sportegic.People.File do
 
   # Override the storage directory:
   def storage_dir(_version, {_file, document}) do
-    id = Integer.to_string(document.person_id)
-    "uploads/people/documents/" <> id
+    "uploads/people/documents/"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

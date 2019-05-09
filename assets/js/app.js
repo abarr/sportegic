@@ -31,5 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let sportegic_socket = socket.connect_socket();
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") { User.verify_mobile(sportegic_socket) };
     if (window.location.pathname == "/person") { People.realtime_search(sportegic_socket) };
+
     M.updateTextFields();
 });

@@ -69,9 +69,11 @@ let Elements = {
         });
 
         let fabs = document.querySelectorAll('.fixed-action-btn');
-        M.FloatingActionButton.init(fabs, {
-            direction: 'left'
+        let init_fabs = M.FloatingActionButton.init(fabs, {
+            direction: 'left',
+            hoverEnabled: false,
         });
+        init_fabs[0].open();
 
 
         let brand = document.getElementById("fourteen");

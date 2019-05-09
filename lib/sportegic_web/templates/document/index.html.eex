@@ -64,15 +64,20 @@
 </div>
 
 <div>
-    <div class="fixed-action-btn">
-      <%= link to: Routes.person_document_path(@conn, :new, @person), class: "btn-floating btn-large blue"  do %>
-          <i class="large material-icons">add</i>
-      <% end %>
+    <div class="fixed-action-btn click-to-toggle">
+         <a class="btn-floating btn-large red">
+          <i class="large material-icons">more_horiz</i>
+        </a>
       <ul>
         <li>
         <%= link to: Routes.person_path(@conn, :show, @person), class: "btn-floating red lighten-2" do %>
           <i class="material-icons">arrow_back</i>
         <% end %>
+        </li>
+        <li>
+          <%= link to: Routes.person_document_path(@conn, :new, @person), class: "btn-floating blue"  do %>
+            <i class="large material-icons">add</i>
+          <% end %>
         </li>
       </ul>
     </div>

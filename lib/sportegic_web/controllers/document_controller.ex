@@ -2,7 +2,7 @@ defmodule SportegicWeb.DocumentController do
   use SportegicWeb, :controller
 
   alias Sportegic.People
-  alias Sportegic.People.Document
+  alias Sportegic.People.{Document, Attachment}
   alias Sportegic.LookupTypes
 
   # Allows for getting Types by LookupType
@@ -23,10 +23,7 @@ defmodule SportegicWeb.DocumentController do
   end
 
   def new(conn, _params, person, org, _permissions) do
-    changeset =
-      %Document{}
-      |> People.change_document()
-
+    changeset = People.change_document(%Document{attachments: [%Attachment{}]})
     lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
 
     types =
@@ -38,19 +35,27 @@ defmodule SportegicWeb.DocumentController do
     render(conn, "new.html", changeset: changeset, person: person, types: types)
   end
 
-  def create(conn, %{"document" => document_params} = params, person, org, _permissions) do
-    IO.inspect(params)
+  def create(conn, %{"document" => document_params}, person, org, _permissions) do
+    files =
+      document_params
+      |> Map.get("attachments")
+      |> Map.get("0")
+      |> Map.get("file")
 
     document_params =
       document_params
       |> Map.put("person_id", person.id)
+      |> Map.put("attachments", files)
 
-    case People.create_document(document_params, org) do
-      {:ok, _document} ->
-        conn
-        |> put_flash(:info, "Document created successfully.")
-        |> redirect(to: Routes.person_document_path(conn, :index, person))
+    with {:ok, document} <- People.create_document(document_params, org) do
+      files
+      |> Enum.map(fn f -> %{file: f, document_id: document.id} end)
+      |> Enum.map(&People.create_attachment(&1, org))
 
+      conn
+      |> put_flash(:info, "Document created successfully.")
+      |> redirect(to: Routes.person_document_path(conn, :index, person))
+    else
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, person: person)
     end

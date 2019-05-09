@@ -24,7 +24,14 @@ defmodule Sportegic.People.Document do
   @doc false
   def changeset(document, attrs) do
     document
-    |> cast(attrs, [:number, :expiry_date, :issuer, :additional_info, :type_id, :person_id])
+    |> cast(attrs, [
+      :number,
+      :expiry_date,
+      :issuer,
+      :additional_info,
+      :type_id,
+      :person_id
+    ])
     |> validate_required([:number, :issuer, :type_id, :person_id])
   end
 end

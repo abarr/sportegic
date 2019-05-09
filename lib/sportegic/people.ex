@@ -146,6 +146,7 @@ defmodule Sportegic.People do
     Document
     |> where([d], d.person_id == ^person.id)
     |> Repo.get!(id, prefix: org)
+    |> Repo.preload([:attachments, :type])
   end
 
   @doc """
@@ -210,7 +211,6 @@ defmodule Sportegic.People do
 
   """
   def change_document(%Document{} = document) do
-    document = Map.put(document, :attachments, [%Attachment{}])
     Document.changeset(document, %{})
   end
 
@@ -223,8 +223,10 @@ defmodule Sportegic.People do
       [%Attachment{}, ...]
 
   """
-  def list_attachments do
-    Repo.all(Attachment)
+  def list_attachments(document_id, org) do
+    Attachment
+    |> where([a], a.document_id == ^document_id)
+    |> Repo.all(prefix: org)
   end
 
   @doc """
@@ -241,7 +243,7 @@ defmodule Sportegic.People do
       ** (Ecto.NoResultsError)
 
   """
-  def get_attachment!(id), do: Repo.get!(Attachment, id)
+  def get_attachment!(id, org), do: Repo.get!(Attachment, id, prefix: org)
 
   @doc """
   Creates a attachment.
@@ -255,10 +257,10 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_attachment(attrs \\ %{}) do
+  def create_attachment(attrs \\ %{}, org) do
     %Attachment{}
     |> Attachment.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(prefix: org)
   end
 
   @doc """

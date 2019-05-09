@@ -7,59 +7,48 @@
         <%= error_tag f, :type_id %>
         <span class="helper-text" data-error="Please provide a document Type"></span>
       </div>
-    </div>
     
-    <div class="row">
       <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
         <%= label f, :number, "Document No. (e.g. Passport number)" %>
         <%= text_input f, :number, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
         <%= error_tag f, :number %>
         <span class="helper-text" data-error="Please provide a document number"></span>
       </div>
-    </div>
-
-    <div class="row">
+    
       <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
         <%= label f, :issuer, "Issuer e.g. Victoria, Florida" %>
         <%= text_input f, :issuer, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
         <%= error_tag f, :issuer %>
         <span class="helper-text" data-error="Please provide the issuing body"></span>
       </div>
-    </div>
-
-    <div class="row">
+    
       <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
         <%= label f, :expiry_date, "Epiry date of document if applicable" %>
         <%= text_input f, :expiry_date, [ id: "expiry_date", type: "text" ] %>
         <%= error_tag f, :expiry_date %>
         <span class="helper-text" data-error="Please provide an expiry date"></span>
       </div>
-    </div>
-
-    <div class="row">
+    
       <div class="input-field  col s12 m10 offset-m1 l10 offset-l1">
         <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >
         Add Attachment
           <i class="fas fa-camera fa-lg fa-fw"></i>
         </a>  
-
-        <%= inputs_for f, :attachments, fn fa -> %>
+        <div style='height: 0px;width:0px; overflow:hidden;'> <%= inputs_for f, :attachments, fn fa -> %>
           <div style='height: 0px;width:0px; overflow:hidden;'> 
             <%= file_input fa, :file, [ class: "file-path validate",  onchange: "updateScreen()", multiple: "true"] %>
           </div>
         <% end %>
+        </div>
       </div>
       
-    </div>
-    <div class="row">
+    
       <div class="col s12 m10 offset-m1 l10 offset-l1">
         <ul id="fileList" class="collection">
           
         </ul>
       </div>
-    </div>
-
-    <div class="row">
+    
       <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
         <%= label f, :additional_info, "Additonal information" %>
         <%= text_input f, :additional_info, [ class: "grey-text lighten-2", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
@@ -68,15 +57,21 @@
       </div>
     </div>
     
-    <div class="fixed-action-btn">
-      <button type="submit" class="btn-floating btn-large green">
-        <i class="large material-icons">save</i>
-      </button>
+    <div class="fixed-action-btn click-to-toggle">
+      <a href="#" class="btn-floating btn-large green">
+        <i class="large material-icons">more_horiz</i>
+      </a>
       <ul>
+        
         <li>
           <%= link to: Routes.person_document_path(@conn, :index, @person), class: "btn-floating red lighten-2" do %>
             <i class="material-icons">arrow_back</i>
           <% end %>
+        </li>
+        <li>
+          <button type="submit" class="btn-floating green">
+            <i class="large material-icons">save</i>
+          </button>
         </li>
       </ul>
     </div>
