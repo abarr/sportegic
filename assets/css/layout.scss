@@ -80,6 +80,7 @@ header, main {
     padding-bottom: 0px;
     margin-left: 5px;
     margin-top: 0px;
+    
 }
 .logo{
     height: 100px;
@@ -124,3 +125,13 @@ header, main {
 .tabs .indicator {
     background-color:rgb(185, 185, 185) !important;
 } /*Color of underline*/
+
+.remove-bottom-margin{
+    margin-bottom: 0px !important;
+}
+
+.margin-right{
+    margin-right: 10px;
+}
+
+

@@ -23,7 +23,9 @@ defmodule SportegicWeb.PersonController do
     end
   end
 
-  def create(conn, %{"person" => person_params}, org, permissions) do
+  def create(conn, %{"person" => person_params} = params, org, permissions) do
+    IO.inspect(params)
+
     with :ok <- Bodyguard.permit(People, "create:people_permissions", :person, permissions) do
       case People.create_person(person_params, org) do
         {:ok, person} ->

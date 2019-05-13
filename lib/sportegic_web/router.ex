@@ -38,7 +38,7 @@ defmodule SportegicWeb.Router do
     get "/update_password", AccountController, :update_password
     resources "/account", AccountController, only: [:new, :create, :index]
 
-    get "/login", SessionController, :new
+    get "/", SessionController, :new
     post "/login", SessionController, :create
     get "/logout", SessionController, :delete
 

@@ -6,7 +6,8 @@ defmodule SportegicWeb.SessionController do
   plug :put_layout, "accounts.html"
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    conn
+    |> render("new.html")
   end
 
   def create(conn, %{"session" => params}) do
