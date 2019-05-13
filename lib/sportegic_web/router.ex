@@ -58,7 +58,9 @@ defmodule SportegicWeb.Router do
     end
 
     resources "/person", PersonController do
-      resources "/document", DocumentController, except: [:show]
+      resources "/document", DocumentController, except: [:show] do
+        resources "/attachment", AttachmentController, only: [:index]
+      end
     end
   end
 

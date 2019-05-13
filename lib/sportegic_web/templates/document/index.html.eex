@@ -36,7 +36,7 @@
               <th>Number</th>
               <th>Expiry date</th>
               <th>Issuer</th>
-              <th>File</th>
+              <th>Attachments</th>
               <th>Additional info</th>
               <th class="right-align">Action</th>
           </tr>
@@ -49,7 +49,11 @@
             <td><%= document.number %></td>
             <td><%= readable_date(document.expiry_date) %></td>
             <td><%= document.issuer %></td>
-            <td></td>
+            <td class="center-align"> 
+              <%= link to: Routes.person_document_attachment_path(@conn, :index, @person, document) do %>
+                 <span class="new badge grey lighten-1 white-text" data-badge-caption=""> <%= Enum.count(document.attachments) %> </span> 
+              <% end %>
+            </td>
             <td class="truncate"><%= document.additional_info %></td>
              <td class="right-align"> 
                 <%= link "Edit", to: Routes.person_document_path(@conn, :edit, @person, document ) %>

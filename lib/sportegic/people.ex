@@ -125,7 +125,7 @@ defmodule Sportegic.People do
     Document
     |> where([d], d.person_id == ^person.id)
     |> Repo.all(prefix: org)
-    |> Repo.preload(type: [:lookup])
+    |> Repo.preload([type: [:lookup], attachments: []])
   end
 
   @doc """
