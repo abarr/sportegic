@@ -24,7 +24,7 @@ defmodule SportegicWeb.PersonController do
   end
 
   def create(conn, %{"person" => person_params} = params, org, permissions) do
-    IO.inspect(params)
+    IO.inspect(params, label: "HITS CREATE")
 
     with :ok <- Bodyguard.permit(People, "create:people_permissions", :person, permissions) do
       case People.create_person(person_params, org) do
@@ -53,6 +53,8 @@ defmodule SportegicWeb.PersonController do
   end
 
   def update(conn, %{"id" => id, "person" => person_params}, org, permissions) do
+    IO.inspect(person_params)
+
     with :ok <- Bodyguard.permit(People, "edit:people_permissions", :person, permissions) do
       person = People.get_person!(id, org)
 

@@ -21,8 +21,8 @@ defmodule Sportegic.People.Avatar do
   end
 
   # Override the storage directory:
-  def storage_dir(_version, {_file, scope}) do
-    "uploads/people/#{scope.firstname}_#{scope.lastname}_#{scope.dob}"
+  def storage_dir(_version, {_file, _scope}) do
+    "uploads/people/headshots/}"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

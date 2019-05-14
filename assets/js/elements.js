@@ -72,9 +72,9 @@ let Elements = {
         M.FloatingActionButton.init(fabs, {
             direction: 'left',
             hoverEnabled: false
-            
+
         });
-        
+
 
 
         let brand = document.getElementById("fourteen");
@@ -82,6 +82,9 @@ let Elements = {
 
         let tabs = document.querySelector(".tabs");
         let instances = M.Tabs.init(tabs, {});
+
+        let dates = document.querySelectorAll('.datepicker');
+        M.Datepicker.init(dates, {});
     },
     attachFlatpickrDOB(flatpickr) {
         const dob = flatpickr('#person_dob', {

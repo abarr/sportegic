@@ -4,6 +4,8 @@ defmodule SportegicWeb.PersonView do
   alias Sportegic.People.Avatar
 
   def display_image(person) do
+    IO.inspect(person)
+
     {person.profile_image, person}
     |> Avatar.url()
     |> img_tag()
@@ -25,13 +27,35 @@ defmodule SportegicWeb.PersonView do
   def error_tag_sportegic(field) do
     case field do
       :firstname ->
-        content_tag(:span, "", [{:data, [error: "Please enter your first name"]}, class: "helper-text"])
+        content_tag(:span, "", [
+          {:data, [error: "Please enter your first name"]},
+          class: "helper-text"
+        ])
+
       :lastname ->
-        content_tag(:span, "", [{:data, [error: "Please enter your last name"]}, class: "helper-text"])
+        content_tag(:span, "", [
+          {:data, [error: "Please enter your last name"]},
+          class: "helper-text"
+        ])
+
       :mobile ->
-        content_tag(:span, "", [{:data, [error: "Include country code e.g. +61"]}, class: "helper-text"])
+        content_tag(:span, "", [
+          {:data, [error: "Include country code e.g. +61"]},
+          class: "helper-text"
+        ])
+
       :email ->
-        content_tag(:span, "", [{:data, [error: "Please enter a valid email"]}, class: "helper-text" ])
+        content_tag(:span, "", [
+          {:data, [error: "Please enter a valid email"]},
+          class: "helper-text"
+        ])
+
+      :dob ->
+        content_tag(:span, "", [
+          {:data, [error: "Please provide your date of birth"]},
+          class: "helper-text"
+        ])
+
       _ ->
         content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
     end

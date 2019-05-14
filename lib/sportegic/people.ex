@@ -45,7 +45,10 @@ defmodule Sportegic.People do
       ** (Ecto.NoResultsError)
 
   """
-  def get_person!(id, org), do: Repo.get!(Person, id, prefix: org)
+  def get_person!(id, org) do
+    Person
+    |> Repo.get!(id, prefix: org)
+  end
 
   @doc """
   Creates a person.
@@ -125,7 +128,7 @@ defmodule Sportegic.People do
     Document
     |> where([d], d.person_id == ^person.id)
     |> Repo.all(prefix: org)
-    |> Repo.preload([type: [:lookup], attachments: []])
+    |> Repo.preload(type: [:lookup], attachments: [])
   end
 
   @doc """

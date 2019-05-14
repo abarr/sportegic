@@ -1,9 +1,10 @@
+
 <%= form_for @changeset, @action,[multipart: true], fn f -> %>
   <div class="page">
     <div class="row page">
         <div class="input-field col s12 m4 l4 "> 
           <%= label f, :firstname, "First Name", class: "truncate" %>
-          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$", autofocus: "true"]%>
+          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag_sportegic f, :firstname %>
         </div>
         <div class="input-field col s12 m4 l4"> 
@@ -24,12 +25,8 @@
           <%= error_tag_sportegic f, :preferred_name %>
           
         </div>
-        <div class="input-field col s12 m4 l4"> 
-          <%= label f, :dob, "Date of Birth" %>
-          <%= text_input f, :dob, [  type: "date"]%>
-          <%= error_tag_sportegic f, :dob  %>
-        </div>
         
+
         <div class="input-field col s12 m4 l4 "> 
           <%= label f, :email %>
           <%= text_input f, :email, [ class: "validate", required: "true", type: "email"]%>
@@ -43,7 +40,7 @@
           
         </div>
 
-        <div class="input-field  col s12 m8 l8 ">
+        <div class="input-field  col s12 m4 l4 ">
             <div class="file-field">
               <div class="btn grey lighten-1 z-depth-0">
                 <span>Image</span>
@@ -54,6 +51,12 @@
               </div>
             </div>
         </div>
+
+        <div class="input-field col s12 m4 l4"> 
+          <%= text_input f, :dob, [class: "datepicker", placeholder: "Date of birth"] %>
+          <%= error_tag_sportegic f, :dob %>
+        </div>
+        
     </div>
     <div>
       <div class="fixed-action-btn">

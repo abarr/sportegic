@@ -138,11 +138,11 @@
       <%= render @view_module, @view_template, assigns %>
     </main>
 
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>">
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"/>
+    <script>
       var elems = document.getElementsByClassName("collapsible");
       console.log('Collapsible elements: ', elems)
       M.Collapsible.init(elems, {});
-    
     </script>
   </body>
 </html>

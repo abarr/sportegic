@@ -35,7 +35,7 @@ defmodule SportegicWeb.DocumentController do
     render(conn, "new.html", changeset: changeset, person: person, types: types)
   end
 
-  def create(conn, %{"document" => document_params} = params, person, org, _permissions) do
+  def create(conn, %{"document" => document_params}, person, org, _permissions) do
     document_params =
       document_params
       |> Map.put("person_id", person.id)
@@ -52,9 +52,11 @@ defmodule SportegicWeb.DocumentController do
       {:error, %Ecto.Changeset{} = changeset} ->
         IO.inspect(changeset)
         lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
+
         types =
           LookupTypes.list_types(lookup, org)
           |> Enum.map(fn type -> [key: type.name, value: type.id] end)
+
         render(conn, "new.html", changeset: changeset, person: person, types: types)
     end
   end
