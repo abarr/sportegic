@@ -11,10 +11,11 @@ defmodule SportegicWeb.SessionController do
   end
 
   def create(conn, %{"session" => params}) do
+    IO.puts("CREATE SESSION")
     case Accounts.get_user_by_email(params["email"]) do
       {:ok, nil} ->
         conn
-        |> put_flash(:danger, "Either your email or password is incorrect. Please try again!")
+        |> put_flash(:danger, "Either your email or password is incorrect.")
         |> render("new.html")
 
       {:ok, %{verified: false}} ->

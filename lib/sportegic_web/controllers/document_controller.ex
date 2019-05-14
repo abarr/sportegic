@@ -35,20 +35,13 @@ defmodule SportegicWeb.DocumentController do
     render(conn, "new.html", changeset: changeset, person: person, types: types)
   end
 
-  def create(conn, %{"document" => document_params}, person, org, _permissions) do
-    files =
-      document_params
-      |> Map.get("attachments")
-      |> Map.get("0")
-      |> Map.get("file")
-
+  def create(conn, %{"document" => document_params} = params, person, org, _permissions) do
     document_params =
       document_params
       |> Map.put("person_id", person.id)
-      |> Map.put("attachments", files)
 
     with {:ok, document} <- People.create_document(document_params, org) do
-      files
+      document_params["attachments"]
       |> Enum.map(fn f -> %{file: f, document_id: document.id} end)
       |> Enum.map(&People.create_attachment(&1, org))
 
@@ -57,7 +50,12 @@ defmodule SportegicWeb.DocumentController do
       |> redirect(to: Routes.person_document_path(conn, :index, person))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, person: person)
+        IO.inspect(changeset)
+        lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
+        types =
+          LookupTypes.list_types(lookup, org)
+          |> Enum.map(fn type -> [key: type.name, value: type.id] end)
+        render(conn, "new.html", changeset: changeset, person: person, types: types)
     end
   end
 

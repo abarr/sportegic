@@ -21,9 +21,19 @@
             </div>  
         <% end %>
         <div class="section heading">
-            <h5 class="heading grey-text lighten-2">Profile</h5>
-        </div>
-        <div class="divider"></div>
+          <div class="row remove-bottom-margin">
+              <div class="col s12"> 
+              
+                <%= link to: Routes.person_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+                  <i class="far fa-chevron-left fa-lg"></i>
+              <% end %>
+                  <h5 class="heading grey-text lighten-2"> Profile</h5>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+      </div>
     </div>
     <div class="row page">
         <div class="col s12">
@@ -86,7 +96,7 @@
             </div>
         </div> 
     </div>  <%# End of Row   %>
-    <div class="row page">
+    <%# <div class="row page">
         <div class="col s12">
           <div class="row page">
             <div class="col s12 ">
@@ -96,23 +106,15 @@
               <div class="divider"></div>
             </div>
         </div> 
-    </div>
+    </div> %>
 </div>
 
 
 <div>
     <div class="fixed-action-btn">
-      
-
       <%= link to: Routes.person_path(@conn, :edit, @person), class: "btn-floating btn-large  grey lighten-1" do %>
         <i class="large material-icons">edit</i>
       <% end %>
-      <ul>
-          <li><a class="btn-floating red " href="/person"><i class="material-icons">arrow_back</i></a></li>
-          <li><a class="btn-floating blue" href="/person/new"><i class="material-icons">add</i></a></li>
-        </ul>
-      
-      
     </div>
 </div>
 

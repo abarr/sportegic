@@ -32,6 +32,7 @@ defmodule Sportegic.People.Document do
       :type_id,
       :person_id
     ])
-    |> validate_required([:number, :issuer, :type_id, :person_id])
+    |> validate_required([ :expiry_date], message: "Please include an expiry date")
+    |> validate_required([:number, :issuer, :type_id, :person_id, :expiry_date])
   end
 end

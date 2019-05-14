@@ -3,64 +3,57 @@
     <div class="row page">
         <div class="input-field col s12 m4 l4 "> 
           <%= label f, :firstname, "First Name", class: "truncate" %>
-          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
-          <%= error_tag f, :firstname %>
-          <span class="helper-text" data-error="Please provide your first name"></span>
+          <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$", autofocus: "true"]%>
+          <%= error_tag_sportegic f, :firstname %>
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :middle_names, "Middle Names", class: "truncate" %>
           <%= text_input f, :middle_names, [ class: "validate", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$" ]%>
-          <%= error_tag f, :middle_names %>
-          <span class="helper-text" data-error="Please provide your middle names"></span>
+          <%= error_tag_sportegic f, :middle_names %>
+          
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :lastname, "Last Name ", class: "truncate" %>
           <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
-          <%= error_tag f, :lastname %>
-          <span class="helper-text" data-error="Please provide your last name"></span>
+          <%= error_tag_sportegic f, :lastname %>
+          
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :preferred_name, "Preferred Name (Optional)" %>
           <%= text_input f, :preferred_name, [ class: "validate",  type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
-          <%= error_tag f, :preferred_name %>
-          <span class="helper-text" data-error="Please provide your preferred name"></span>
+          <%= error_tag_sportegic f, :preferred_name %>
+          
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :dob, "Date of Birth" %>
           <%= text_input f, :dob, [  type: "date"]%>
-          <%= error_tag f, :dob, "helper-text red-text"  %>
+          <%= error_tag_sportegic f, :dob  %>
         </div>
         
-        <div class="input-field col s12 m4 l4 pull-s8"> 
+        <div class="input-field col s12 m4 l4 "> 
           <%= label f, :email %>
           <%= text_input f, :email, [ class: "validate", required: "true", type: "email"]%>
-          <%= error_tag f, :email %>
-          <span class="helper-text" data-error="Please provide a valid email"></span>
+          <%= error_tag_sportegic f, :email %>
+          
         </div>
         <div class="input-field col s12 m4 l4">
           <%= label f, :mobile, "Mobile/Cell" %>
           <%= text_input f, :mobile, [ class: "validate", pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
-          <%= error_tag f, :mobile %>
-          <span class="helper-text" data-error="Please provide your mobile number"></span>
+          <%= error_tag_sportegic f, :mobile %>
+          
         </div>
 
         <div class="input-field  col s12 m8 l8 ">
-            <%# <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >Upload Profile Image
-             <i class="fas fa-camera fa-lg fa-fw"></i>
-            </a> %>
             <div class="file-field">
               <div class="btn grey lighten-1 z-depth-0">
                 <span>Image</span>
                 <input name="person[profile_image]" type="file">
               </div>
               <div class="file-path-wrapper">
-                <input  class="file-path validate" type="text" placeholder="Upload one or more files">
+                <input  class="file-path validate" type="text" placeholder="Upload a player image">
               </div>
             </div>
-             
-             
         </div>
-        
     </div>
     <div>
       <div class="fixed-action-btn">
@@ -72,14 +65,3 @@
   </div>
 <% end %>
 
-<script type="text/javascript">
- function getFile(){
-   document.getElementById("person_profile_image").click();
- }
-
- function updateScreen(){
-   let path = document.getElementById("person_profile_image").value
-   let file = path.substring(path.lastIndexOf('\\')+1);
-   document.getElementById("uploadButton").innerHTML = file;
- }
- </script >

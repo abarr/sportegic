@@ -1,102 +1,58 @@
 <%= form_for @changeset, @action, [multipart: true], fn f -> %>
   <div class="page">
-    <div class="row">
-      <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
+    <div class="row page">
+      <div class="input-field col col s12 m4 l4 "> 
         <%= select f, :type_id, @types, [ id: "type-select", class: "validate", required: "true"]%>
         <label>Document Type</label>
-        <%= error_tag f, :type_id %>
-        <span class="helper-text" data-error="Please provide a document Type"></span>
+        <%= error_tag_sportegic f, :type_id %>
       </div>
     
-      <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
-        <%= label f, :number, "Document No. (e.g. Passport number)" %>
+      <div class="input-field col s12 m4 l4 "> 
+        <%= label f, :number, "Document No." %>
         <%= text_input f, :number, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
-        <%= error_tag f, :number %>
-        <span class="helper-text" data-error="Please provide a document number"></span>
+        <%= error_tag_sportegic f, :number %>
       </div>
     
-      <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
+      <div class="input-field col s12 m4 l4"> 
         <%= label f, :issuer, "Issuer e.g. Victoria, Florida" %>
         <%= text_input f, :issuer, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
-        <%= error_tag f, :issuer %>
-        <span class="helper-text" data-error="Please provide the issuing body"></span>
+        <%= error_tag_sportegic f, :issuer %>
       </div>
     
-      <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
-        <%= label f, :expiry_date, "Epiry date of document if applicable" %>
-        <%= text_input f, :expiry_date, [ id: "expiry_date", type: "text" ] %>
-        <%= error_tag f, :expiry_date %>
-        <span class="helper-text" data-error="Please provide an expiry date"></span>
+      <div class="input-field col s12 m4 l4 "> 
+        <%= label f, :expiry_date, "Epiry date of document" %>
+        <%= text_input f, :expiry_date, [ class: "validate", id: "expiry_date", type: "text" ] %>
+        <span class="red-text"><%= error_tag_sportegic f, :expiry_date %></span> 
       </div>
-    
-      <div class="input-field  col s12 m10 offset-m1 l10 offset-l1">
-        <a class="btn waves-effect waves-light blue darken-4"  id="uploadButton" onclick="getFile()" >
-        Add Attachment
-          <i class="fas fa-camera fa-lg fa-fw"></i>
-        </a>  
-        <div style='height: 0px;width:0px; overflow:hidden;'> <%= inputs_for f, :attachments, fn fa -> %>
-          <div style='height: 0px;width:0px; overflow:hidden;'> 
-            <%= file_input fa, :file, [ class: "file-path validate",  onchange: "updateScreen()", multiple: "true"] %>
-          </div>
-        <% end %>
-        </div>
-      </div>
-      
-    
-      <div class="col s12 m10 offset-m1 l10 offset-l1">
-        <ul id="fileList" class="collection">
-          
-        </ul>
-      </div>
-    
-      <div class="input-field col s12 m10 offset-m1 l10 offset-l1 "> 
+
+      <div class="input-field col s12 m4 l4 "> 
         <%= label f, :additional_info, "Additonal information" %>
         <%= text_input f, :additional_info, [ class: "grey-text lighten-2", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
-        <%= error_tag f, :additional_info %>
-        <span class="helper-text" data-error="Please provide a document number"></span>
+        <%= error_tag_sportegic f, :additional_info %>
       </div>
+
+      <div class="input-field  col s12 m4 l4 ">
+            <div class="file-field">
+              <div class="btn grey lighten-1 z-depth-0">
+                <span>Attachments</span>
+                <input name="document[attachments][]" type="file" multiple="true">
+              </div>
+              <div class="file-path-wrapper">
+                <input  class="file-path validate" type="text" placeholder="Upload attachments">
+              </div>
+            </div>
+        </div>
     </div>
     
     <div class="fixed-action-btn click-to-toggle">
-      <a href="#" class="btn-floating btn-large green">
-        <i class="large material-icons">more_horiz</i>
-      </a>
-      <ul>
-        
-        <li>
-          <%= link to: Routes.person_document_path(@conn, :index, @person), class: "btn-floating red lighten-2" do %>
-            <i class="material-icons">arrow_back</i>
-          <% end %>
-        </li>
-        <li>
-          <button type="submit" class="btn-floating green">
-            <i class="large material-icons">save</i>
-          </button>
-        </li>
-      </ul>
+      <button type="submit" class="btn-floating btn-large green">
+        <i class="large material-icons">save</i>
+      </button>
     </div>
-
   </div>
 <% end %>
 
-<script type="text/javascript">
- function getFile(){
-   document.getElementById("document_attachments_0_file").click();
- }
 
- function updateScreen(){
-   let path = document.getElementById("document_attachments_0_file").files
-   let fileList = document.getElementById("fileList");
-   
-    var i;
-    for (i = 0; i < path.length; i++) {
-      let li = document.createElement("li");
-      li.innerHTML = path[i]["name"];
-      li.classList += "collection-item";
-      fileList.appendChild(li);  
-    }
- }
- </script >
 
 
 

@@ -43,7 +43,10 @@
             <td> <%= lookup.name %>  </td>
             <td> <%= lookup.description %>  </td>
             <td class="right-align"> 
-                <%= link "Select", to: Routes.lookup_type_path(@conn, :index, lookup) %> 
+                
+                <%= link to: Routes.lookup_type_path(@conn, :index, lookup), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                  <i class="fas fa-list-ul"></i>
+                <% end %>
             </td>
           </tr>
           <% end %>

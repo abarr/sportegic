@@ -1,15 +1,12 @@
-
-
 <div class="row page">
   <div class="col s12">
     <div class="section heading">
       <div class="row remove-bottom-margin">
           <div class="col s12"> 
-            <a class="margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0">
+            <%= link to: Routes.person_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
               <i class="far fa-chevron-left fa-lg"></i>
-              </a>
+           <% end %>
               <h5 class="heading grey-text lighten-2"> Create a New Person</h5>
-            </a>
           </div>
         </div>
       </div>
