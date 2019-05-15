@@ -24,7 +24,11 @@ defmodule SportegicWeb.DocumentView do
   def error_tag_sportegic(field) do
     case field do
       :expiry_date ->
-        content_tag(:span, "", [{:data, [error: "Please provide an expiry date"]}, class: "helper-text"])
+        content_tag(:span, "", [
+          {:data, [error: "Please provide an expiry date"]},
+          class: "helper-text"
+        ])
+
       _ ->
         content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
     end
@@ -32,9 +36,9 @@ defmodule SportegicWeb.DocumentView do
 
   def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
-      "invalid validate"
+      "invalid " <> classes
     end
   end
 
-  def set_field_class(_form, _field, classes), do: " validate"
+  def set_field_class(_form, _field, classes), do: classes
 end

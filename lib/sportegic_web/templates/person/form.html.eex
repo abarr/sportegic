@@ -1,40 +1,41 @@
 
+
 <%= form_for @changeset, @action,[multipart: true, id: "person-form"], fn f -> %>
   <div class="page">
     <div class="row page">
         <div class="input-field col s12 m4 l4 "> 
           <%= label f, :firstname, "First Name", class: "truncate" %>
-          <%= text_input f, :firstname, [ class: set_field_class(f, :firstname, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
+          <%= text_input f, :firstname, [ class: set_field_class(f, :firstname, " validate"), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag_sportegic f, :firstname %>
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :middle_names, "Middle Names", class: "truncate" %>
-          <%= text_input f, :middle_names, [ class: set_field_class(f, :middle_names, ""), type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$" ]%>
+          <%= text_input f, :middle_names, [ class: set_field_class(f, :middle_names, " validate"), type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$" ]%>
           <%= error_tag_sportegic f, :middle_names %>
           
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :lastname, "Last Name ", class: "truncate" %>
-          <%= text_input f, :lastname, [ class: set_field_class(f, :lastname, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
+          <%= text_input f, :lastname, [ class: set_field_class(f, :lastname, " validate"), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag_sportegic f, :lastname %>
           
         </div>
         <div class="input-field col s12 m4 l4"> 
           <%= label f, :preferred_name, "Preferred Name (Optional)" %>
-          <%= text_input f, :preferred_name, [ class: set_field_class(f, :preferred_name, ""),  type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
+          <%= text_input f, :preferred_name, [ class: set_field_class(f, :preferred_name, " validate"),  type: "text", pattern: "^[_A-z0-9]*((-|\s|')*[_A-z0-9])*$"]%>
           <%= error_tag_sportegic f, :preferred_name %>
         </div>
         
 
         <div class="input-field col s12 m4 l4 "> 
           <%= label f, :email %>
-          <%= text_input f, :email, [ class: set_field_class(f, :email, ""), required: "true", type: "email"]%>
+          <%= text_input f, :email, [ class: set_field_class(f, :email, " validate"), required: "true", type: "email"]%>
           <%= error_tag_sportegic f, :email %>
           
         </div>
         <div class="input-field col s12 m4 l4">
           <%= label f, :mobile, "Mobile/Cell" %>
-          <%= text_input f, :mobile, [ class: set_field_class(f, :mobile, ""), pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
+          <%= text_input f, :mobile, [ class: set_field_class(f, :mobile, " validate"), pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
           <%= error_tag_sportegic f, :mobile %>
           
         </div>
@@ -51,22 +52,40 @@
             </div>
         </div>
 
-        
-
-        <div class="input-field col s12 m4 l4"> 
-          <%= text_input f, :dob, [ class: "", placeholder: "Date of birth"] %>
+        <div class="input-field col s12 m4 l4 flatpickr-dob"> 
+          <%= text_input f, :dob, [ placeholder: "Date of birth", data: [input: "true"]] %>
           <%= error_tag_sportegic f, :dob %>
         </div>
         
     </div>
     <div>
       <div class="fixed-action-btn">
-        <button type="submit"  class="btn-floating btn-large green">
+        <button type="submit"  onclick="check_form()" class="btn-floating btn-large green">
           <i class="large material-icons">save</i>
         </button>
       </div>
     </div>
   </div>
 <% end %>
+
+<script>
+  function check_form(){
+    let form = document.getElementById('person-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          for( var item of previous_list){
+                item.classList.remove("invalid")
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          for (var item of list) {
+                item.classList += " invalid"
+          }
+      }
+      let dob = document.getElementById("person_dob");
+      if(!dob.value){ dob.nextElementSibling.classList += " invalid"}
+  }
+  
+</script>
 
 

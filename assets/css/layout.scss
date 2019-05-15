@@ -144,8 +144,11 @@ header, main {
     max-width: 100%;
     align-content: center;
     z-index: 900;
+    height: 100px;
     
-    
+  }
+  .toast{
+      height: 100px;
   }
 
   .msg{

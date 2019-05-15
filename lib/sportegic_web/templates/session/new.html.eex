@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <%= label f, :email %>
-                            <%= text_input f, :email , [ class: set_field_class(f, :email), required: "true", type: "email", autofocus: "true"]%>
+                            <%= text_input f, :email , [ class: set_field_class(f, :email), required: "true", type: "email"]%>
                             <%= error_tag_sportegic f, :email %>
                         </div>
                         <div class="input-field col s12">

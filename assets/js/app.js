@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
     Calendar.attachFlatpickrDOB(flatpickr);
-    Document.setupDocumentForm(M, flatpickr);
+    Calendar.attachFlatpickrExpiryDate(flatpickr)
+    Document.setupDocumentForm(M);
     User.setupUserForm(M)
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);
@@ -36,24 +37,25 @@ document.addEventListener('DOMContentLoaded', function () {
         People.realtime_search(sportegic_socket)
     };
 
-    if(window.toast){
+    // Check if there are flash messages via global variables and init a toast
+    if (window.toast) {
         var toastHTML = '<div class="msg">' + window.toast + '</div>'
         console
         switch (window.status) {
             case "info":
-                M.toast({html: toastHTML, displayLength: 4000, classes: "blue lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "blue lighten-3" })
                 break;
             case "danger":
-                M.toast({html: toastHTML, displayLength: 4000, classes: "red lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "red lighten-3" })
                 break;
             case "success":
-                M.toast({html: toastHTML, displayLength: 4000, classes: "green lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "green lighten-3" })
                 break;
             default:
                 break;
         }
-       
+
     }
-    
+
     M.updateTextFields();
 });

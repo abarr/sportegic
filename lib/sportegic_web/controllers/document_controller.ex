@@ -30,6 +30,8 @@ defmodule SportegicWeb.DocumentController do
       LookupTypes.list_types(lookup, org)
       |> Enum.map(fn type -> [key: type.name, value: type.id] end)
 
+    types = [[key: "Choose a Type", value: "", disabled: "true", selected: "true"] | types]
+
     render(conn, "new.html", changeset: changeset, person: person, types: types)
   end
 
@@ -39,16 +41,17 @@ defmodule SportegicWeb.DocumentController do
       |> Map.put("person_id", person.id)
 
     with {:ok, _document} <- People.create_document(document_params, org) do
-      
       conn
       |> put_flash(:success, "Document created successfully.")
       |> redirect(to: Routes.person_document_path(conn, :index, person))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
+
         types =
           LookupTypes.list_types(lookup, org)
           |> Enum.map(fn type -> [key: type.name, value: type.id] end)
+
         conn
         |> put_flash(:danger, "There are errors on the page.")
         |> render("new.html", changeset: changeset, person: person, types: types)

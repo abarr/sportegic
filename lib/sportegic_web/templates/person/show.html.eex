@@ -1,4 +1,4 @@
-<div class="row page">
+<div class="row page remove-bottom-margin">
     <div class="col s12">
         
         <div class="section heading">
@@ -20,7 +20,7 @@
         <div class="col s12">
           <div class="row page">
             <%#  Left col %>
-            <div class="col s12 l2 hide-on-med-only">
+            <div class="col s12 l3 xl2 hide-on-med-only">
               <div class="card white z-depth-0">
                 <div class="card-image ">
                   <%= display_image(@person) %>
@@ -28,7 +28,7 @@
               </div>
             </div>
             <%# Middle col %>
-            <div class="col s12 m8 l7 ">
+            <div class="col s12 m8 l6 xl7 ">
               <ul class="collection with-header">
                 <li class="collection-header">
                   <%= if(@person.preferred_name) do %>
@@ -63,6 +63,7 @@
                 <div class="collection-item"><h5>Information</h5></div>
                   <%= link to: Routes.person_document_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
                   <% end %>
                   <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-passport fa-fw fa-lg"></i> Visas
@@ -70,9 +71,9 @@
                   <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                   </a>
-                  <a href="#!" class="collection-item grey-text lighten-2">
+                  <%# <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-car-side fa-fw fa-lg"></i> Vehicles
-                  </a>
+                  </a> %>
               </div> 
             </div>
         </div> 

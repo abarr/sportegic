@@ -48,6 +48,7 @@ defmodule Sportegic.People do
   def get_person!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
+    |> Repo.preload(:document)
   end
 
   @doc """
@@ -168,8 +169,9 @@ defmodule Sportegic.People do
     case attrs["attachments"] do
       nil ->
         create_document_without_attachments(attrs, org)
+
       _ ->
-        create_document_with_attachments(attrs, org)   
+        create_document_with_attachments(attrs, org)
     end
   end
 
@@ -181,19 +183,21 @@ defmodule Sportegic.People do
 
   def create_document_with_attachments(attrs, org) do
     multi = Multi.new()
-   
+
     multi
-    |> Multi.run(:document, fn _repo, _changes -> 
+    |> Multi.run(:document, fn _repo, _changes ->
       create_document_without_attachments(attrs, org)
     end)
-    |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} -> 
-      list = attrs["attachments"]
-      |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
-      |> Enum.map(&create_attachment(&1, org))
+    |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
       {:ok, list}
     end)
     |> Repo.transaction()
-  end    
+  end
 
   @doc """
   Updates a document.
@@ -207,10 +211,44 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
+  # def update_document(%Document{} = document, attrs, org) do
+  #   document
+  #   |> Document.changeset(attrs)
+  #   |> Repo.update(prefix: org)
+  # end
+
   def update_document(%Document{} = document, attrs, org) do
+    case attrs["attachments"] do
+      nil ->
+        update_document_without_attachments(document, attrs, org)
+
+      _ ->
+        update_document_with_attachments(document, attrs, org)
+    end
+  end
+
+  def update_document_without_attachments(document, attrs, org) do
     document
     |> Document.changeset(attrs)
     |> Repo.update(prefix: org)
+  end
+
+  def update_document_with_attachments(document, attrs, org) do
+    multi = Multi.new()
+
+    multi
+    |> Multi.run(:document, fn _repo, _changes ->
+      update_document_without_attachments(document, attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
+      {:ok, list}
+    end)
+    |> Repo.transaction()
   end
 
   @doc """
@@ -321,8 +359,8 @@ defmodule Sportegic.People do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_attachment(%Attachment{} = attachment) do
-    Repo.delete(attachment)
+  def delete_attachment(%Attachment{} = attachment, org) do
+    Repo.delete(attachment, prefix: org)
   end
 
   @doc """
