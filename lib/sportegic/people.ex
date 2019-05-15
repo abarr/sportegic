@@ -4,8 +4,8 @@ defmodule Sportegic.People do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias Sportegic.Repo
-
   alias Sportegic.People.Person
   alias Sportegic.People.Document
   alias Sportegic.People.Attachment
@@ -165,10 +165,35 @@ defmodule Sportegic.People do
 
   """
   def create_document(attrs \\ %{}, org) do
+    case attrs["attachments"] do
+      nil ->
+        create_document_without_attachments(attrs, org)
+      _ ->
+        create_document_with_attachments(attrs, org)   
+    end
+  end
+
+  def create_document_without_attachments(attrs, org) do
     %Document{}
     |> Document.changeset(attrs)
     |> Repo.insert(prefix: org)
   end
+
+  def create_document_with_attachments(attrs, org) do
+    multi = Multi.new()
+   
+    multi
+    |> Multi.run(:document, fn _repo, _changes -> 
+      create_document_without_attachments(attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} -> 
+      list = attrs["attachments"]
+      |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
+      |> Enum.map(&create_attachment(&1, org))
+      {:ok, list}
+    end)
+    |> Repo.transaction()
+  end    
 
   @doc """
   Updates a document.

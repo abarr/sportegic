@@ -30,8 +30,6 @@ defmodule SportegicWeb.DocumentController do
       LookupTypes.list_types(lookup, org)
       |> Enum.map(fn type -> [key: type.name, value: type.id] end)
 
-    types = [[key: "Choose a Type", value: ""] | types]
-
     render(conn, "new.html", changeset: changeset, person: person, types: types)
   end
 
@@ -40,24 +38,20 @@ defmodule SportegicWeb.DocumentController do
       document_params
       |> Map.put("person_id", person.id)
 
-    with {:ok, document} <- People.create_document(document_params, org) do
-      document_params["attachments"]
-      |> Enum.map(fn f -> %{file: f, document_id: document.id} end)
-      |> Enum.map(&People.create_attachment(&1, org))
-
+    with {:ok, _document} <- People.create_document(document_params, org) do
+      
       conn
-      |> put_flash(:info, "Document created successfully.")
+      |> put_flash(:success, "Document created successfully.")
       |> redirect(to: Routes.person_document_path(conn, :index, person))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
-
         types =
           LookupTypes.list_types(lookup, org)
           |> Enum.map(fn type -> [key: type.name, value: type.id] end)
-
-        render(conn, "new.html", changeset: changeset, person: person, types: types)
+        conn
+        |> put_flash(:danger, "There are errors on the page.")
+        |> render("new.html", changeset: changeset, person: person, types: types)
     end
   end
 
@@ -93,7 +87,9 @@ defmodule SportegicWeb.DocumentController do
         |> redirect(to: Routes.person_document_path(conn, :index, person))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", document: document, changeset: changeset, person: person)
+        conn
+        |> put_flash(:danger, "Unable to update the document")
+        |> render("edit.html", document: document, changeset: changeset, person: person)
     end
   end
 
@@ -102,7 +98,7 @@ defmodule SportegicWeb.DocumentController do
     {:ok, _document} = People.delete_document(document, org)
 
     conn
-    |> put_flash(:info, "Document deleted successfully.")
+    |> put_flash(:danger, "Document deleted successfully.")
     |> redirect(to: Routes.person_document_path(conn, :index, person))
   end
 end

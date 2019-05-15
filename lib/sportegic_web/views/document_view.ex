@@ -30,11 +30,11 @@ defmodule SportegicWeb.DocumentView do
     end
   end
 
-  def set_field_class(%{errors: errors = [_ | _]}, field) do
+  def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
       "invalid validate"
     end
   end
 
-  def set_field_class(_form, _field), do: " validate"
+  def set_field_class(_form, _field, classes), do: " validate"
 end

@@ -31,10 +31,29 @@ document.addEventListener('DOMContentLoaded', function () {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)
     };
-    if (window.location.pathname == "/person") {
+    if (window.location.pathname == "/person" && window.channel) {
         let sportegic_socket = socket.connect_socket();
         People.realtime_search(sportegic_socket)
     };
 
+    if(window.toast){
+        var toastHTML = '<div class="msg">' + window.toast + '</div>'
+        console
+        switch (window.status) {
+            case "info":
+                M.toast({html: toastHTML, displayLength: 4000, classes: "blue lighten-3" })
+                break;
+            case "danger":
+                M.toast({html: toastHTML, displayLength: 4000, classes: "red lighten-3" })
+                break;
+            case "success":
+                M.toast({html: toastHTML, displayLength: 4000, classes: "green lighten-3" })
+                break;
+            default:
+                break;
+        }
+       
+    }
+    
     M.updateTextFields();
 });

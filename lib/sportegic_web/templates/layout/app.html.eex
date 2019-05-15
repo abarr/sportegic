@@ -13,8 +13,23 @@
         window.token = "<%= Phoenix.Token.sign(SportegicWeb.Endpoint, "replace_with_key", @conn.assigns.current_user.id) %>"
         window.org = "<%= @conn.assigns.organisation %>"
       <% end %>
+      <%= if get_flash(@conn, :info) || get_flash(@conn, :success) || get_flash(@conn, :danger)do %>
+          <%= if get_flash(@conn, :info) do %>
+            window.status = "info"
+            window.toast = "<%= get_flash(@conn, :info) %>"
+          <% end %>
+          <%= if get_flash(@conn, :success) do %>
+            window.status = "success"
+            window.toast = "<%= get_flash(@conn, :success) %>"
+          <% end %>
+          <%= if get_flash(@conn, :danger) do %>
+            window.status = "danger"
+            window.toast = "<%= get_flash(@conn, :danger) %>"
+          <% end %>
+      <% end %>
     </script>
   </head>
+  
   <body >
     <header>
       <div class="row nav-custom">
@@ -139,6 +154,7 @@
     </main>
 
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"/>
+    <script>toast();</script>
     <script>
       var elems = document.getElementsByClassName("collapsible");
       console.log('Collapsible elements: ', elems)

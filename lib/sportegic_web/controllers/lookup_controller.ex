@@ -26,11 +26,13 @@ defmodule SportegicWeb.LookupController do
     case LookupTypes.create_lookup(lookup_params, org) do
       {:ok, lookup} ->
         conn
-        |> put_flash(:info, "Lookup created successfully.")
+        |> put_flash(:success, "Lookup created successfully.")
         |> redirect(to: Routes.lookup_path(conn, :show, lookup))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:danger, "Unable to create new record")
+        |> render("new.html", changeset: changeset)
     end
   end
 

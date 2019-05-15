@@ -14,7 +14,7 @@ defmodule SportegicWeb.PersonView do
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
     if error = errors[field] do
       {msg, _} = error
-      content_tag(:span, "", [{:data, [error: msg]}, class: "helper-text "])
+      content_tag(:span, "", [{:data, [error: msg]}, class: "helper-text"])
     else
       error_tag_sportegic(field)
     end
@@ -61,11 +61,11 @@ defmodule SportegicWeb.PersonView do
     end
   end
 
-  def set_field_class(%{errors: errors = [_ | _]}, field) do
+  def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
-      "invalid validate"
+      "invalid validate " <> classes 
     end
   end
 
-  def set_field_class(_form, _field), do: " validate"
+  def set_field_class(_form, _field, classes), do: " validate " <> classes
 end

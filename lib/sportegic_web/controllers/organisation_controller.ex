@@ -19,11 +19,11 @@ defmodule SportegicWeb.OrganisationController do
           conn
           |> put_flash(
             :info,
-            "You are not associated with an organisation. If you create an Organisation it may incur a cost. If you expected to login to an Organisation please contact the Account Administrator."
+            "You are not associated with an organisation. If you expected to login to an Organisation please contact the Account Administrator."
           )
           |> redirect(to: Routes.organisation_path(conn, :new))
 
-        # If this Ueser is associated with only one org
+        # If this User is associated with only one org
         1 ->
           {:ok, org} = Enum.fetch(organisations, 0)
 
@@ -68,7 +68,9 @@ defmodule SportegicWeb.OrganisationController do
       |> redirect(to: Routes.organisation_path(conn, :index))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:danger, "Something has gone terribly wrong. Please contact support")
+        |> render("new.html", changeset: changeset)
     end
   end
 

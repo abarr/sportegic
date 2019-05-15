@@ -4,7 +4,11 @@ let Calendar = {
         const dob = flatpickr('#person_dob', {
             altInput: true,
             altFormat: "j F , Y",
-            dateFormat: "Y-m-d"
+            dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                instance.element.nextSibling.classList.remove("invalid");
+                instance.element.setCustomValidity("");
+            }
         });
     },
 

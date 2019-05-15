@@ -2,26 +2,7 @@
 
 <div class="row page">
   <div class="col s12">
-  <%= if get_flash(@conn, :info) do %>
-            <div id="danger" class="row scale-transition">
-            <div class="col s12">
-                <div class="card-panel z-depth-0 blue lighten-3 white-text center-align">
-                    <%= get_flash(@conn, :info) %>
-                     <i id="alert_close" class="material-icons right">clear</i>
-                </div>
-            </div>
-            </div>  
-        <% end %>
-        <%= if get_flash(@conn, :success) do %>
-            <div id="success" class="row scale-transition">
-            <div class="col s12">
-                <div class="card-panel z-depth-0 green lighten-3 white-text center-align">
-                    <%= get_flash(@conn, :success) %>
-                    <i id="alert_close" class="material-icons right">clear</i>
-                </div>
-            </div>
-            </div>  
-        <% end %>
+  
     <div class="section heading">
       <h5 class="heading grey-text lighten-2">Roles</h5>
     </div>
