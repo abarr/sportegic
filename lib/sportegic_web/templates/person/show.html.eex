@@ -61,12 +61,12 @@
             <div class="col s12 m4 l3">
               <div class="collection">
                 <div class="collection-item"><h5>Information</h5></div>
-                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
-                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
+                    <span class="truncate new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
                   <% end %>
                   <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
-                    <i class="fal fa-file fa-fw fa-lg"></i> Visas
+                    <i class="fal fa-passport fa-fw fa-lg"></i> Visas
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
                   <% end %>
                   <a href="#!" class="collection-item grey-text lighten-2">

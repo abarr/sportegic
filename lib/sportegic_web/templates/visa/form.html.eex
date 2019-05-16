@@ -18,8 +18,8 @@
       </div>
 
       <div class="input-field col s12 m4 l4 "> 
-        <%= label f, :allowed_stay, "Additonal information" %>
-        <%= text_input f, :allowed_stay, [ class: set_field_class(f, :allowed_stay, ""), type: "text", pattern: "^\d$"]%>
+        <%= label f, :allowed_stay, "Allowed Stay" %>
+        <%= text_input f, :allowed_stay, [ class: set_field_class(f, :allowed_stay, ""), type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
         <%= error_tag_sportegic f, :allowed_stay %>
       </div>
     
@@ -43,7 +43,7 @@
             <div class="file-field">
               <div class="btn grey lighten-1 z-depth-0">
                 <span>Upload</span>
-                <input name="document[attachments][]" type="file" multiple="true">
+                <input name="visa[attachments][]" type="file" multiple="true">
               </div>
               <div class="file-path-wrapper">
                 <input  class="file-path", type="text" placeholder="Upload attachments">
@@ -86,4 +86,5 @@
       let id = document.getElementById("visa_issued_date");
       if(!id.value){ id.nextElementSibling.classList += " invalid"}
   }
+  </script>
   

@@ -1,6 +1,6 @@
-let Document = {
+let Visa = {
 
-    setupDocumentForm(M) {
+    setupVisaForm(M) {
         let type_dropdown = document.getElementById('type-select');
         M.FormSelect.init(type_dropdown, {});
 
@@ -14,4 +14,4 @@ let Document = {
 
 }
 
-export default Document
+export default Visa

@@ -12,6 +12,7 @@ import People from "./people"
 import Role from "./role";
 import Calendar from "./calendar"
 import Document from "./document"
+import Visa from "./visa"
 
 // SOCKETS
 import socket from "./socket"
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[1])
     Calendar.attachFlatpickrIssuedDate(flatpickr)
     Document.setupDocumentForm(M);
+    Visa.setupVisaForm(M);
     User.setupUserForm(M)
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);

@@ -17,7 +17,7 @@ defmodule Sportegic.People.Attachment do
   @doc false
   def changeset(attachment, attrs) do
     attachment
-    |> cast(attrs, [:document_id])
+    |> cast(attrs, [:document_id, :visa_id])
     |> cast_attachments(attrs, [:file])
     |> validate_required([:file])
   end

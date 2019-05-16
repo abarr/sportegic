@@ -49,7 +49,7 @@ defmodule Sportegic.People do
   def get_person!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload(:document, :visa)
+    |> Repo.preload([:document, :visa])
   end
 
   @doc """
@@ -377,8 +377,6 @@ defmodule Sportegic.People do
     Attachment.changeset(attachment, %{})
   end
 
-  
-
   @doc """
   Returns the list of visas.
 
@@ -415,6 +413,7 @@ defmodule Sportegic.People do
     |> Repo.get!(id, prefix: org)
     |> Repo.preload([:attachments, :type])
   end
+
   @doc """
   Creates a visa.
 
@@ -428,6 +427,8 @@ defmodule Sportegic.People do
 
   """
   def create_visa(attrs \\ %{}, org) do
+    IO.inspect(attrs)
+
     case attrs["attachments"] do
       nil ->
         create_visa_without_attachments(attrs, org)
@@ -454,6 +455,7 @@ defmodule Sportegic.People do
       list =
         attrs["attachments"]
         |> Enum.map(fn f -> %{file: f, visa_id: visa_id} end)
+        |> IO.inspect()
         |> Enum.map(&create_attachment(&1, org))
 
       {:ok, list}
