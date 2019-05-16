@@ -4,11 +4,12 @@ defmodule Sportegic.People.Attachment do
 
   import Ecto.Changeset
 
-  alias Sportegic.People.Document
+  alias Sportegic.People.{Document, Visa}
 
   schema "attachments" do
     field(:file, Sportegic.People.File.Type)
     belongs_to(:document, Document)
+    belongs_to(:visa, Visa)
 
     timestamps()
   end
@@ -18,6 +19,6 @@ defmodule Sportegic.People.Attachment do
     attachment
     |> cast(attrs, [:document_id])
     |> cast_attachments(attrs, [:file])
-    |> validate_required([:file, :document_id])
+    |> validate_required([:file])
   end
 end

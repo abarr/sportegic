@@ -65,9 +65,10 @@
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
                   <% end %>
-                  <a href="#!" class="collection-item grey-text lighten-2">
-                  <i class="fal fa-passport fa-fw fa-lg"></i> Visas
-                  </a>
+                  <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-file fa-fw fa-lg"></i> Visas
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
+                  <% end %>
                   <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                   </a>

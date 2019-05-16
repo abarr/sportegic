@@ -1,0 +1,70 @@
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.person_path(@conn, :show, @person), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2"> <%= @person.firstname <> " " <> @person.lastname %> - Visas </h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <div class="row page">
+      <div class="col s12">
+        <table class="highlight responsive-table">
+          <thead>
+            <tr>
+                <th>Type</th>
+                <th>Number</th>
+                <th>Issued date</th>
+                <th>Expiry date</th>
+                <th>Issuer</th>
+                <th>Allowed Stay (Days)</th>
+                <th class="center-align">Attachments</th>
+                <th>Notes</th>
+                <th class="right-align">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          <%= for visa <- @visas do %>
+            <tr>
+            
+              <td><%= visa.type.name %></td>
+              <td><%= visa.number %></td>
+              <td><%= readable_date(visa.issued_date) %></td>
+              <td><%= readable_date(visa.expiry_date) %></td>
+              <td><%= visa.issuer %></td>
+              <td><%= visa.allowed_stay %></td>
+              <td class="center-align"> 
+                <%= link to: Routes.person_visa_attachment_path(@conn, :index, @person, visa) do %>
+                  <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(visa.attachments) %> </span> 
+                <% end %>
+              </td>
+              <td class="truncate"><%= visa.additional_info %></td>
+              <td class="right-align"> 
+                <%= link to: Routes.person_visa_path(@conn, :edit, @person, visa ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+                <%= link [ to: Routes.person_visa_path(@conn, :delete, @person, visa ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
+                  <i class="material-icons">delete</i>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>  
+      </div>
+    </div>
+</div>
+
+<div>
+    <div class="fixed-action-btn ">
+      <%= link to: Routes.person_visa_path(@conn, :new, @person), class: "btn-floating btn-large blue"  do %>
+        <i class="large material-icons">add</i>
+      <% end %>
+    </div>
+</div>
+

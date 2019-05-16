@@ -61,6 +61,9 @@ defmodule SportegicWeb.Router do
       resources "/document", DocumentController, except: [:show] do
         resources "/attachment", AttachmentController, only: [:index, :delete]
       end
+      resources "/visa", VisaController, except: [:show] do
+        resources "/attachment", AttachmentController, only: [:index, :delete]
+      end
     end
   end
 

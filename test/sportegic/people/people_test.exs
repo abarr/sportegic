@@ -199,4 +199,71 @@ defmodule Sportegic.PeopleTest do
       assert %Ecto.Changeset{} = People.change_attachment(attachment)
     end
   end
+
+  describe "visas" do
+    alias Sportegic.People.Visa
+
+    @valid_attrs %{additional_info: "some additional_info", expiry_date: ~D[2010-04-17], issued_date: ~D[2010-04-17], issuer: "some issuer", number: "some number"}
+    @update_attrs %{additional_info: "some updated additional_info", expiry_date: ~D[2011-05-18], issued_date: ~D[2011-05-18], issuer: "some updated issuer", number: "some updated number"}
+    @invalid_attrs %{additional_info: nil, expiry_date: nil, issued_date: nil, issuer: nil, number: nil}
+
+    def visa_fixture(attrs \\ %{}) do
+      {:ok, visa} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> People.create_visa()
+
+      visa
+    end
+
+    test "list_visas/0 returns all visas" do
+      visa = visa_fixture()
+      assert People.list_visas() == [visa]
+    end
+
+    test "get_visa!/1 returns the visa with given id" do
+      visa = visa_fixture()
+      assert People.get_visa!(visa.id) == visa
+    end
+
+    test "create_visa/1 with valid data creates a visa" do
+      assert {:ok, %Visa{} = visa} = People.create_visa(@valid_attrs)
+      assert visa.additional_info == "some additional_info"
+      assert visa.expiry_date == ~D[2010-04-17]
+      assert visa.issued_date == ~D[2010-04-17]
+      assert visa.issuer == "some issuer"
+      assert visa.number == "some number"
+    end
+
+    test "create_visa/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = People.create_visa(@invalid_attrs)
+    end
+
+    test "update_visa/2 with valid data updates the visa" do
+      visa = visa_fixture()
+      assert {:ok, %Visa{} = visa} = People.update_visa(visa, @update_attrs)
+      assert visa.additional_info == "some updated additional_info"
+      assert visa.expiry_date == ~D[2011-05-18]
+      assert visa.issued_date == ~D[2011-05-18]
+      assert visa.issuer == "some updated issuer"
+      assert visa.number == "some updated number"
+    end
+
+    test "update_visa/2 with invalid data returns error changeset" do
+      visa = visa_fixture()
+      assert {:error, %Ecto.Changeset{}} = People.update_visa(visa, @invalid_attrs)
+      assert visa == People.get_visa!(visa.id)
+    end
+
+    test "delete_visa/1 deletes the visa" do
+      visa = visa_fixture()
+      assert {:ok, %Visa{}} = People.delete_visa(visa)
+      assert_raise Ecto.NoResultsError, fn -> People.get_visa!(visa.id) end
+    end
+
+    test "change_visa/1 returns a visa changeset" do
+      visa = visa_fixture()
+      assert %Ecto.Changeset{} = People.change_visa(visa)
+    end
+  end
 end

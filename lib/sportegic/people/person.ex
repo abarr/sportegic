@@ -5,7 +5,7 @@ defmodule Sportegic.People.Person do
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
-  alias Sportegic.People.Document
+  alias Sportegic.People.{Document, Visa}
 
   schema "people" do
     field(:dob, :date)
@@ -18,6 +18,7 @@ defmodule Sportegic.People.Person do
     field(:profile_image, Sportegic.People.Avatar.Type)
 
     has_many(:document, Document)
+    has_many(:visa, Visa)
 
     timestamps()
   end

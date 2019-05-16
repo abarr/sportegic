@@ -23,7 +23,8 @@ let Calendar = {
             input.classList += " grey-text lighten-2 validate";
         }
     },
-    attachFlatpickrExpiryDate(flatpickr) {
+    attachFlatpickrExpiryDate(flatpickr, path) {
+        let id = path + "_expiry_date"
         const dob = flatpickr('.flatpickr-expiry-date', {
             altInput: true,
             altFormat: "j F , Y",
@@ -32,15 +33,38 @@ let Calendar = {
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {
                 if (instance) {
-                    let ed = document.getElementById("document_expiry_date");
+                    let ed = document.getElementById(id);
                     ed.nextElementSibling.classList.remove("invalid");
                     ed.nextElementSibling.classList.remove("validate");
                 }
             }
         });
 
-        if (document.getElementById("document_expiry_date")) {
-            let input = document.getElementById("document_expiry_date").nextElementSibling;
+        if (document.getElementById(id)) {
+            let input = document.getElementById(id).nextElementSibling;
+            input.setAttribute("readonly", "true");
+            input.setAttribute("required", "true");
+            input.classList += " grey-text lighten-2 validate";
+        }
+    },
+    attachFlatpickrIssuedDate(flatpickr) {
+        const dob = flatpickr('.flatpickr-issued-date', {
+            altInput: true,
+            altFormat: "j F , Y",
+            dateFormat: "Y-m-d",
+            wrap: true,
+            allowInput: true,
+            onChange: function (selectedDates, dateStr, instance) {
+                if (instance) {
+                    let id = document.getElementById("visa_issued_date");
+                    id.nextElementSibling.classList.remove("invalid");
+                    id.nextElementSibling.classList.remove("validate");
+                }
+            }
+        });
+
+        if (document.getElementById("visa_issued_date")) {
+            let input = document.getElementById("visa_issued_date").nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
             input.classList += " grey-text lighten-2 validate";

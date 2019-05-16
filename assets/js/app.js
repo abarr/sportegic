@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
     Calendar.attachFlatpickrDOB(flatpickr);
-    Calendar.attachFlatpickrExpiryDate(flatpickr)
+    Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[1])
+    Calendar.attachFlatpickrIssuedDate(flatpickr)
     Document.setupDocumentForm(M);
     User.setupUserForm(M)
     // Calendar.attachFlatpickrExpiry(flatpickr);

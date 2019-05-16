@@ -9,6 +9,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.Person
   alias Sportegic.People.Document
   alias Sportegic.People.Attachment
+  alias Sportegic.People.Visa
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -48,7 +49,7 @@ defmodule Sportegic.People do
   def get_person!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload(:document)
+    |> Repo.preload(:document, :visa)
   end
 
   @doc """
@@ -374,5 +375,164 @@ defmodule Sportegic.People do
   """
   def change_attachment(%Attachment{} = attachment) do
     Attachment.changeset(attachment, %{})
+  end
+
+  
+
+  @doc """
+  Returns the list of visas.
+
+  ## Examples
+
+      iex> list_visas()
+      [%Visa{}, ...]
+
+  """
+  def list_visas(person, org) do
+    Visa
+    |> where([v], v.person_id == ^person.id)
+    |> Repo.all(prefix: org)
+    |> Repo.preload(type: [:lookup], attachments: [])
+  end
+
+  @doc """
+  Gets a single visa.
+
+  Raises `Ecto.NoResultsError` if the Visa does not exist.
+
+  ## Examples
+
+      iex> get_visa!(123)
+      %Visa{}
+
+      iex> get_visa!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_visa!(person, id, org) do
+    Visa
+    |> where([v], v.person_id == ^person.id)
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload([:attachments, :type])
+  end
+  @doc """
+  Creates a visa.
+
+  ## Examples
+
+      iex> create_visa(%{field: value})
+      {:ok, %Visa{}}
+
+      iex> create_visa(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_visa(attrs \\ %{}, org) do
+    case attrs["attachments"] do
+      nil ->
+        create_visa_without_attachments(attrs, org)
+
+      _ ->
+        create_visa_with_attachments(attrs, org)
+    end
+  end
+
+  def create_visa_without_attachments(attrs, org) do
+    %Visa{}
+    |> Visa.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def create_visa_with_attachments(attrs, org) do
+    multi = Multi.new()
+
+    multi
+    |> Multi.run(:visa, fn _repo, _changes ->
+      create_visa_without_attachments(attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{visa: %{id: visa_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, visa_id: visa_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
+      {:ok, list}
+    end)
+    |> Repo.transaction()
+  end
+
+  @doc """
+  Updates a visa.
+
+  ## Examples
+
+      iex> update_visa(visa, %{field: new_value})
+      {:ok, %Visa{}}
+
+      iex> update_visa(visa, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_visa(%Visa{} = visa, attrs, org) do
+    case attrs["attachments"] do
+      nil ->
+        update_visa_without_attachments(visa, attrs, org)
+
+      _ ->
+        update_visa_with_attachments(visa, attrs, org)
+    end
+  end
+
+  def update_visa_without_attachments(visa, attrs, org) do
+    visa
+    |> Document.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  def update_visa_with_attachments(visa, attrs, org) do
+    multi = Multi.new()
+
+    multi
+    |> Multi.run(:visa, fn _repo, _changes ->
+      update_document_without_attachments(visa, attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{visa: %{id: visa_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, visa_id: visa_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
+      {:ok, list}
+    end)
+    |> Repo.transaction()
+  end
+
+  @doc """
+  Deletes a Visa.
+
+  ## Examples
+
+      iex> delete_visa(visa)
+      {:ok, %Visa{}}
+
+      iex> delete_visa(visa)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_visa(%Visa{} = visa, org) do
+    Repo.delete(visa, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking visa changes.
+
+  ## Examples
+
+      iex> change_visa(visa)
+      %Ecto.Changeset{source: %Visa{}}
+
+  """
+  def change_visa(%Visa{} = visa) do
+    Visa.changeset(visa, %{})
   end
 end
