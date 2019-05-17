@@ -7,12 +7,6 @@ defmodule SportegicWeb.InsurancePolicyView do
     |> File.url()
   end
 
-  def default_coverage_value(form) do
-    IO.inspect(form)
-    {:ok, default_value} = Money.to_string(Money.new("AUD", "0"), locale: "en")
-    default_value
-  end
-
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
     if error = errors[field] do
       {msg, _} = error
@@ -47,5 +41,3 @@ defmodule SportegicWeb.InsurancePolicyView do
 
   def set_field_class(_form, _field, classes), do: classes
 end
-
-

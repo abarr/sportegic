@@ -23,7 +23,8 @@ defmodule SportegicWeb.InsurancePolicyController do
   end
 
   def new(conn, _params, person, org, _permissions) do
-    changeset = People.change_insurance_policy(%InsurancePolicy{ attachments: [%Attachment{}]})
+    changeset = People.change_insurance_policy(%InsurancePolicy{attachments: [%Attachment{}]})
+    IO.inspect(changeset)
     lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
 
     types =
@@ -37,7 +38,7 @@ defmodule SportegicWeb.InsurancePolicyController do
 
   def create(conn, %{"insurance_policy" => insurance_policy_params}, person, org, _permissions) do
     insurance_policy_params =
-    insurance_policy_params
+      insurance_policy_params
       |> Map.put("person_id", person.id)
 
     with {:ok, _insurance} <- People.create_insurance_policy(insurance_policy_params, org) do
@@ -80,7 +81,13 @@ defmodule SportegicWeb.InsurancePolicyController do
     )
   end
 
-  def update(conn, %{"id" => id, "insurance_policy" => insurance_policy_params}, person, org, _permissions) do
+  def update(
+        conn,
+        %{"id" => id, "insurance_policy" => insurance_policy_params},
+        person,
+        org,
+        _permissions
+      ) do
     insurance_policy = People.get_insurance_policy!(person, id, org)
 
     case People.update_insurance_policy(insurance_policy, insurance_policy_params, org) do
@@ -92,7 +99,11 @@ defmodule SportegicWeb.InsurancePolicyController do
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
         |> put_flash(:danger, "Unable to update the insurance policy")
-        |> render("edit.html", insurance_policy: insurance_policy, changeset: changeset, person: person)
+        |> render("edit.html",
+          insurance_policy: insurance_policy,
+          changeset: changeset,
+          person: person
+        )
     end
   end
 

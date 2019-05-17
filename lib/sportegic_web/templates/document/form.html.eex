@@ -27,7 +27,6 @@
           <%= text_input f, :expiry_date, [ placeholder: "Expiry date", data: [input: "true"]] %>
           <%= error_tag_sportegic f, :expiry_date %>
       </div>
-
       <div class="input-field  col s12 m4 l4 ">
             <div class="file-field">
               <div class="btn grey lighten-1 z-depth-0">
@@ -40,7 +39,6 @@
             </div>
         </div>
     </div>
-
     
     
     <div class="fixed-action-btn click-to-toggle">

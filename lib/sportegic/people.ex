@@ -572,6 +572,7 @@ defmodule Sportegic.People do
     |> Repo.get!(id, prefix: org)
     |> Repo.preload([:attachments, :type])
   end
+
   @doc """
   Creates a insurance_policy.
 
@@ -595,6 +596,8 @@ defmodule Sportegic.People do
   end
 
   def create_insurance_policy_without_attachments(attrs, org) do
+    IO.inspect(attrs)
+
     %InsurancePolicy{}
     |> InsurancePolicy.changeset(attrs)
     |> Repo.insert(prefix: org)

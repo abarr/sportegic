@@ -7,7 +7,7 @@
       </div>
       <div class="input-field col s12 m4 l4 "> 
         <%= label f, :number, "Policy No." %>
-        <%= text_input f, :number, [ class: set_field_class(f, :number, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$", value: default_coverage_value(f)]%>
+        <%= text_input f, :number, [ class: set_field_class(f, :number, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
         <%= error_tag_sportegic f, :number %>
       </div>
     
@@ -19,7 +19,7 @@
 
       <div class="input-field col s12 m4 l4 "> 
         <%= label f, :coverage_amount, "Coverage Amount" %>
-        <%= text_input f, :coverage_amount, [ class: set_field_class(f, :coverage_amount, ""), type: "text"] %>
+        <%= text_input f, :coverage_amount, [ class: set_field_class(f, :coverage_amount, "currency"), type: "text"] %>
         <%= error_tag_sportegic f, :coverage_amount %>
       </div>
     
@@ -80,6 +80,36 @@
       if(!ed.value){ ed.nextElementSibling.classList += " invalid"}
       
   }
+
+  var currencyInput = document.querySelector('#insurance_policy_coverage_amount');
+    var currency = 'AUD'; // https://www.currency-iso.org/dam/downloads/lists/list_one.xml
+
+    currencyInput.addEventListener('focus', onFocus);
+    currencyInput.addEventListener('blur', onBlur);
+
+    function localStringToNumber( s ){
+        return Number(String(s).replace(/[^0-9.-]+/g,""));
+    }
+
+    function onFocus(e){
+      var value = e.target.value;
+      e.target.value = value ? localStringToNumber(value) : '';
+    }
+
+    function onBlur(e){
+      var value = e.target.value;
+
+      const options = {
+          maximumFractionDigits : 2,
+          currency              : currency,
+          style                 : "currency",
+          currencyDisplay       : "code"
+      }
+      
+      e.target.value = value 
+        ? localStringToNumber(value).toLocaleString(undefined, options)
+        : ''
+    }
   </script>
   
 

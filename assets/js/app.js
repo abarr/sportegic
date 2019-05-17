@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
     Calendar.attachFlatpickrDOB(flatpickr);
-    Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[1])
+    Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[3])
     Calendar.attachFlatpickrIssuedDate(flatpickr)
     Document.setupDocumentForm(M);
     Visa.setupVisaForm(M);
