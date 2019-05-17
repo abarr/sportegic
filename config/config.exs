@@ -32,6 +32,24 @@ config :sportegic, Sportegic.Communication.TwilioVerification,
   twilio_api_key: "ACac7881bb3aa9f0bf4ccf9207cb0525cd",
   twilio_secret_key: "4cd12ff8f4bbc19ab529f67f55d28e9d"
 
+config :ex_cldr,
+  json_library: Jason
+
+config :ex_money,
+  exchange_rates_retrieve_every: 300_000,
+  api_module: Money.ExchangeRates.OpenExchangeRates,
+  callback_module: Money.ExchangeRates.Callback,
+  exchange_rates_cache_module: Money.ExchangeRates.Cache.Ets,
+  preload_historic_rates: nil,
+  retriever_options: nil,
+  log_failure: :warn,
+  log_info: :info,
+  log_success: nil,
+  json_library: Sportegic.Cldr.Config.json_library(),
+  default_cldr_backend: Sportegic.Cldr
+  
+  
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -14,6 +14,11 @@
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
         <% end %>
+        <%= if Enum.member?(@conn.path_info, "insurance") do %>
+          <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+        <% end %>
           <h5 class="heading grey-text lighten-2"> <%= @person.firstname <> " " <> @person.lastname <> " - " <> @record.type.name %> </h5>
         </div>
       </div>
@@ -34,7 +39,6 @@
         <tbody>
         <%= for attachment <- @record.attachments do %>
           <tr>
-           
             <td><%= attachment.id %></td>
             <td><%= link attachment.file.file_name, to: display_attachment_link(attachment), target: "_blank" %></td>
             <td><%= readable_date(attachment.inserted_at) %></td>
@@ -46,6 +50,11 @@
               <% end %>
               <%= if Enum.member?(@conn.path_info, "visa") do %>
                 <%= link [ to: Routes.person_visa_attachment_path(@conn, :delete, @person, @record, attachment ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
+                    <i class="material-icons">delete</i>
+                <% end %>
+              <% end %>
+              <%= if Enum.member?(@conn.path_info, "insurance") do %>
+                <%= link [ to: Routes.person_insurance_policy_attachment_path(@conn, :delete, @person, @record, attachment ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
                     <i class="material-icons">delete</i>
                 <% end %>
               <% end %>

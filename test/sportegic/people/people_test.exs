@@ -266,4 +266,71 @@ defmodule Sportegic.PeopleTest do
       assert %Ecto.Changeset{} = People.change_visa(visa)
     end
   end
+
+  describe "insurance_policies" do
+    alias Sportegic.People.InsurancePolicy
+
+    @valid_attrs %{additional_info: "some additional_info", coverage_amount: 42, expiry_date: ~D[2010-04-17], issuer: "some issuer", number: "some number"}
+    @update_attrs %{additional_info: "some updated additional_info", coverage_amount: 43, expiry_date: ~D[2011-05-18], issuer: "some updated issuer", number: "some updated number"}
+    @invalid_attrs %{additional_info: nil, coverage_amount: nil, expiry_date: nil, issuer: nil, number: nil}
+
+    def insurance_policy_fixture(attrs \\ %{}) do
+      {:ok, insurance_policy} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> People.create_insurance_policy()
+
+      insurance_policy
+    end
+
+    test "list_insurance_policies/0 returns all insurance_policies" do
+      insurance_policy = insurance_policy_fixture()
+      assert People.list_insurance_policies() == [insurance_policy]
+    end
+
+    test "get_insurance_policy!/1 returns the insurance_policy with given id" do
+      insurance_policy = insurance_policy_fixture()
+      assert People.get_insurance_policy!(insurance_policy.id) == insurance_policy
+    end
+
+    test "create_insurance_policy/1 with valid data creates a insurance_policy" do
+      assert {:ok, %InsurancePolicy{} = insurance_policy} = People.create_insurance_policy(@valid_attrs)
+      assert insurance_policy.additional_info == "some additional_info"
+      assert insurance_policy.coverage_amount == 42
+      assert insurance_policy.expiry_date == ~D[2010-04-17]
+      assert insurance_policy.issuer == "some issuer"
+      assert insurance_policy.number == "some number"
+    end
+
+    test "create_insurance_policy/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = People.create_insurance_policy(@invalid_attrs)
+    end
+
+    test "update_insurance_policy/2 with valid data updates the insurance_policy" do
+      insurance_policy = insurance_policy_fixture()
+      assert {:ok, %InsurancePolicy{} = insurance_policy} = People.update_insurance_policy(insurance_policy, @update_attrs)
+      assert insurance_policy.additional_info == "some updated additional_info"
+      assert insurance_policy.coverage_amount == 43
+      assert insurance_policy.expiry_date == ~D[2011-05-18]
+      assert insurance_policy.issuer == "some updated issuer"
+      assert insurance_policy.number == "some updated number"
+    end
+
+    test "update_insurance_policy/2 with invalid data returns error changeset" do
+      insurance_policy = insurance_policy_fixture()
+      assert {:error, %Ecto.Changeset{}} = People.update_insurance_policy(insurance_policy, @invalid_attrs)
+      assert insurance_policy == People.get_insurance_policy!(insurance_policy.id)
+    end
+
+    test "delete_insurance_policy/1 deletes the insurance_policy" do
+      insurance_policy = insurance_policy_fixture()
+      assert {:ok, %InsurancePolicy{}} = People.delete_insurance_policy(insurance_policy)
+      assert_raise Ecto.NoResultsError, fn -> People.get_insurance_policy!(insurance_policy.id) end
+    end
+
+    test "change_insurance_policy/1 returns a insurance_policy changeset" do
+      insurance_policy = insurance_policy_fixture()
+      assert %Ecto.Changeset{} = People.change_insurance_policy(insurance_policy)
+    end
+  end
 end

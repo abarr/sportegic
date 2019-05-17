@@ -10,6 +10,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.Document
   alias Sportegic.People.Attachment
   alias Sportegic.People.Visa
+  alias Sportegic.People.InsurancePolicy
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -49,7 +50,7 @@ defmodule Sportegic.People do
   def get_person!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa])
+    |> Repo.preload([:document, :visa, :insurance_policy])
   end
 
   @doc """
@@ -427,8 +428,6 @@ defmodule Sportegic.People do
 
   """
   def create_visa(attrs \\ %{}, org) do
-    IO.inspect(attrs)
-
     case attrs["attachments"] do
       nil ->
         create_visa_without_attachments(attrs, org)
@@ -455,7 +454,6 @@ defmodule Sportegic.People do
       list =
         attrs["attachments"]
         |> Enum.map(fn f -> %{file: f, visa_id: visa_id} end)
-        |> IO.inspect()
         |> Enum.map(&create_attachment(&1, org))
 
       {:ok, list}
@@ -536,5 +534,162 @@ defmodule Sportegic.People do
   """
   def change_visa(%Visa{} = visa) do
     Visa.changeset(visa, %{})
+  end
+
+  @doc """
+  Returns the list of insurance_policies.
+
+  ## Examples
+
+      iex> list_insurance_policies()
+      [%InsurancePolicy{}, ...]
+
+  """
+  def list_insurance_policies(person, org) do
+    InsurancePolicy
+    |> where([i], i.person_id == ^person.id)
+    |> Repo.all(prefix: org)
+    |> Repo.preload(type: [:lookup], attachments: [])
+  end
+
+  @doc """
+  Gets a single insurance_policy.
+
+  Raises `Ecto.NoResultsError` if the Insurance policy does not exist.
+
+  ## Examples
+
+      iex> get_insurance_policy!(123)
+      %InsurancePolicy{}
+
+      iex> get_insurance_policy!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_insurance_policy!(person, id, org) do
+    InsurancePolicy
+    |> where([i], i.person_id == ^person.id)
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload([:attachments, :type])
+  end
+  @doc """
+  Creates a insurance_policy.
+
+  ## Examples
+
+      iex> create_insurance_policy(%{field: value})
+      {:ok, %InsurancePolicy{}}
+
+      iex> create_insurance_policy(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_insurance_policy(attrs \\ %{}, org) do
+    case attrs["attachments"] do
+      nil ->
+        create_insurance_policy_without_attachments(attrs, org)
+
+      _ ->
+        create_insurance_policy_with_attachments(attrs, org)
+    end
+  end
+
+  def create_insurance_policy_without_attachments(attrs, org) do
+    %InsurancePolicy{}
+    |> InsurancePolicy.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  def create_insurance_policy_with_attachments(attrs, org) do
+    multi = Multi.new()
+
+    multi
+    |> Multi.run(:visa, fn _repo, _changes ->
+      create_insurance_policy_without_attachments(attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{visa: %{id: insurance_policies_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, insurance_policies_id: insurance_policies_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
+      {:ok, list}
+    end)
+    |> Repo.transaction()
+  end
+
+  @doc """
+  Updates a insurance_policy.
+
+  ## Examples
+
+      iex> update_insurance_policy(insurance_policy, %{field: new_value})
+      {:ok, %InsurancePolicy{}}
+
+      iex> update_insurance_policy(insurance_policy, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_insurance_policy(%InsurancePolicy{} = insurance_policy, attrs, org) do
+    case attrs["attachments"] do
+      nil ->
+        update_insurance_policy_without_attachments(insurance_policy, attrs, org)
+
+      _ ->
+        update_insurance_policy_with_attachments(insurance_policy, attrs, org)
+    end
+  end
+
+  def update_insurance_policy_without_attachments(insurance_policy, attrs, org) do
+    insurance_policy
+    |> InsurancePolicy.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  def update_insurance_policy_with_attachments(insurance_policy, attrs, org) do
+    multi = Multi.new()
+
+    multi
+    |> Multi.run(:insurance_policy, fn _repo, _changes ->
+      update_insurance_policy_without_attachments(insurance_policy, attrs, org)
+    end)
+    |> Multi.run(:attachments, fn _repo, %{insurance_policy: %{id: insurance_policy_id}} ->
+      list =
+        attrs["attachments"]
+        |> Enum.map(fn f -> %{file: f, insurance_policy_id: insurance_policy_id} end)
+        |> Enum.map(&create_attachment(&1, org))
+
+      {:ok, list}
+    end)
+    |> Repo.transaction()
+  end
+
+  @doc """
+  Deletes a InsurancePolicy.
+
+  ## Examples
+
+      iex> delete_insurance_policy(insurance_policy)
+      {:ok, %InsurancePolicy{}}
+
+      iex> delete_insurance_policy(insurance_policy)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_insurance_policy(%InsurancePolicy{} = insurance_policy, org) do
+    Repo.delete(insurance_policy, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking insurance_policy changes.
+
+  ## Examples
+
+      iex> change_insurance_policy(insurance_policy)
+      %Ecto.Changeset{source: %InsurancePolicy{}}
+
+  """
+  def change_insurance_policy(%InsurancePolicy{} = insurance_policy) do
+    InsurancePolicy.changeset(insurance_policy, %{})
   end
 end

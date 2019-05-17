@@ -1,0 +1,89 @@
+<%= form_for @changeset, @action, [multipart: true, id: "insurance-form"], fn f -> %>
+  <div class="page">
+    <div class="row page">
+      <div class="input-field col col s12 m4 l4 "> 
+        <%= select f, :type_id, @types, [ required: "true", id: "type-select", class: set_field_class(f, :type_id, ""), required: "true"]%>
+        <%= error_tag_sportegic f, :type_id %>
+      </div>
+      <div class="input-field col s12 m4 l4 "> 
+        <%= label f, :number, "Policy No." %>
+        <%= text_input f, :number, [ class: set_field_class(f, :number, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$", value: default_coverage_value(f)]%>
+        <%= error_tag_sportegic f, :number %>
+      </div>
+    
+      <div class="input-field col s12 m4 l4"> 
+        <%= label f, :issuer, "Issuer e.g. AON, QBE" %>
+        <%= text_input f, :issuer, [ class: set_field_class(f, :issuer, ""), required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+        <%= error_tag_sportegic f, :issuer %>
+      </div>
+
+      <div class="input-field col s12 m4 l4 "> 
+        <%= label f, :coverage_amount, "Coverage Amount" %>
+        <%= text_input f, :coverage_amount, [ class: set_field_class(f, :coverage_amount, ""), type: "text"] %>
+        <%= error_tag_sportegic f, :coverage_amount %>
+      </div>
+    
+      <div class="input-field col s12 m4 l4 "> 
+        <%= label f, :additional_info, "Additonal information" %>
+        <%= text_input f, :additional_info, [ class: set_field_class(f, :additional_info, ""), type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+        <%= error_tag_sportegic f, :additional_info %>
+      </div>
+
+      <div class="input-field col s12 m4 l4 flatpickr-expiry-date"> 
+          <%= text_input f, :expiry_date, [ placeholder: "Expiry date", data: [input: "true"]] %>
+          <%= error_tag_sportegic f, :expiry_date %>
+      </div>
+
+      <div class="input-field  col s12 m4 l4 ">
+            <div class="file-field">
+              <div class="btn grey lighten-1 z-depth-0">
+                <span>Upload</span>
+                <input name="insurance_policy[attachments][]" type="file" multiple="true">
+              </div>
+              <div class="file-path-wrapper">
+                <input  class="file-path", type="text" placeholder="Upload attachments">
+              </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <div class="fixed-action-btn click-to-toggle">
+      <button type="submit" onclick="check_form()" class="btn-floating btn-large green">
+        <i class="large material-icons">save</i>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  function check_form(){
+    let form = document.getElementById('insurance-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          for( var item of previous_list){
+                item.classList.remove("invalid")
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          for (var item of list) {
+            if(item.tagName === "SELECT"){
+              item.parentNode.classList += " invalid"
+            }else{
+              item.classList += " invalid"
+            }
+                
+          }
+      }
+      let ed = document.getElementById("insurance_policy_expiry_date");
+      if(!ed.value){ ed.nextElementSibling.classList += " invalid"}
+      
+  }
+  </script>
+  
+
+
+
+
+

@@ -69,9 +69,10 @@
                     <i class="fal fa-passport fa-fw fa-lg"></i> Visas
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
                   <% end %>
-                  <a href="#!" class="collection-item grey-text lighten-2">
-                  <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
-                  </a>
+                  <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
+                  <% end %>
                   <%# <a href="#!" class="collection-item grey-text lighten-2">
                   <i class="fal fa-car-side fa-fw fa-lg"></i> Vehicles
                   </a> %>

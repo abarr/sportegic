@@ -23,9 +23,14 @@ defmodule SportegicWeb.AttachmentController do
     render(conn, "index.html", record: visa, person: person)
   end
 
+  def index(conn, %{"insurance_policy_id" => insurance_policy_id}, person, org, _permissions) do
+    insurance_policy = People.get_insurance_policy!(person, insurance_policy_id, org)
+    render(conn, "index.html", record: insurance_policy, person: person)
+  end
+
   def delete(
         conn,
-        %{"id" => attachment_id, "document_id" => document_id} = params,
+        %{"id" => attachment_id, "document_id" => document_id},
         person,
         org,
         _permissions
@@ -41,7 +46,7 @@ defmodule SportegicWeb.AttachmentController do
 
   def delete(
         conn,
-        %{"id" => attachment_id, "visa_id" => visa_id} = params,
+        %{"id" => attachment_id, "visa_id" => visa_id},
         person,
         org,
         _permissions
@@ -53,5 +58,21 @@ defmodule SportegicWeb.AttachmentController do
     conn
     |> put_flash(:danger, "Attachment deleted successfully.")
     |> redirect(to: Routes.person_visa_attachment_path(conn, :index, person, visa))
+  end
+
+  def delete(
+        conn,
+        %{"id" => attachment_id, "insurance_policy_id" => insurance_policy_id},
+        person,
+        org,
+        _permissions
+      ) do
+    attachment = People.get_attachment!(attachment_id, org)
+    insurance_policy = People.get_insurance_policy!(person, insurance_policy_id, org)
+    {:ok, _attachment} = People.delete_attachment(attachment, org)
+
+    conn
+    |> put_flash(:danger, "Attachment deleted successfully.")
+    |> redirect(to: Routes.person_insurance_policy_attachment_path(conn, :index, person, insurance_policy))
   end
 end
