@@ -78,7 +78,7 @@
                   </li>
                   <li>
                     <!-- Lang Dropdown Trigger -->
-                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language  grey lighten-4' href='#' data-target='lang'>En</a>
+                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language' href='#' data-target='lang'>En</a>
                     <!-- Lang Dropdown Structure -->
                     <ul id='lang' class='dropdown-content z-depth-0'>
                       <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Es</a></li>
