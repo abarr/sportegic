@@ -1,0 +1,57 @@
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <h5 class="heading grey-text lighten-2">Notes</h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <div class="row page">
+      <div class="col s12">
+        <table class="highlight responsive-table">
+          <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Event Date</th>
+                <th>details</th>
+                <th class="right-align">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          <%= for note <- @notes do %>
+            <tr>
+            
+              <td><%= note.subject %></td>
+              <td><%= note.event_date %></td>
+              <td class="truncate"><%= note.details %></td>
+              <td class="right-align"> 
+                <%= link to: Routes.note_path(@conn, :show, note ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                  <i class="far fa-book-open fa-fw "></i>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>  
+      </div>
+    </div>
+</div>
+
+<div>
+    <div class="fixed-action-btn ">
+      <%= link to: Routes.note_path(@conn, :new), class: "btn-floating btn-large blue"  do %>
+        <i class="large material-icons">add</i>
+      <% end %>
+    </div>
+</div>
+
+
+
+
+
+
+
+

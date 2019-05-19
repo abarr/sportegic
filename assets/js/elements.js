@@ -85,15 +85,22 @@ let Elements = {
 
         let dates = document.querySelectorAll('.datepicker');
         M.Datepicker.init(dates, {});
-    },
-    attachFlatpickrDOB(flatpickr) {
-        const dob = flatpickr('#person_dob', {
-            altInput: true,
-            altFormat: "j F , Y",
-            dateFormat: "Y-m-d"
+
+        let people = document.querySelectorAll('.players');
+        M.Chips.init(people, {
+            placeholder: 'Enter a person',
+            secondaryPlaceholder: '+Person',
+            autocompleteOptions: {
+                data: {
+                    'Player 1': null,
+                    'Player 2': null,
+                    'Player 3': null
+                },
+                limit: Infinity,
+                minLength: 1
+            }
         });
     }
-
 }
 
 export default Elements

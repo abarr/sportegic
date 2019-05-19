@@ -102,9 +102,9 @@
           <%= link to: Routes.person_path(@conn, :index), class: "grey-text lighten-2" do %>
             <i class="fal fa-user-astronaut fa-lg fa-fw"></i> People
           <% end %>
-          </li>
-        <%# <li class="menu" id="note"><a class="grey-text lighten-2" href="#!"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
-        <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li> %>
+        </li>
+        <li class="menu" id="note"><a class="grey-text lighten-2" href="/notes"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
+        <%# <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li> %>
         
         <li class="">
           <ul class="collapsible collapsible-accordion ">

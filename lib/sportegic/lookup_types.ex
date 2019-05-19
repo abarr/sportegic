@@ -73,6 +73,7 @@ defmodule Sportegic.LookupTypes do
       |> Enum.concat(Seeds.get_default_visa_types())
       |> Enum.concat(Seeds.get_default_insurance_types())
       |> Enum.concat(Seeds.get_default_vehicle_types())
+      |> Enum.concat(Seeds.get_default_notes_tags())
       |> Enum.map(&create_type(&1, org))
 
     {:ok, list}

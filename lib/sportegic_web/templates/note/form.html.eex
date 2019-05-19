@@ -1,0 +1,57 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <div class="page">
+    <div class="row">
+        <div class="input-field col s12 m6 l8">
+          <i class="material-icons prefix">looks_one</i>
+          <%= label f, :subject %>
+          <%= text_input f, :subject , [ class: set_field_class(f, :subject, ""), required: "true", type: "text"]%>
+          <%= error_tag_sportegic f, :subject %>
+        </div>
+        <div class="input-field col s12 m6 l4 flatpickr-event-date">
+          <i class="material-icons prefix">looks_two</i>
+          <%= text_input f, :event_date , [ placeholder: "Event date", data: [input: "true"]]%>
+          <%= error_tag_sportegic f, :event_date %>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">looks_3</i>
+          <%= label f, :details %>
+          <%= textarea f, :details , [ class: set_field_class(f, :event_date, "materialize-textarea"), required: "true", type: "text"]%>
+          <%= error_tag_sportegic f, :details %>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix margin-top-15">looks_4</i>
+          <div class="chips chips-autocomplete players"></div>
+        </div>
+        <%= hidden_input f, :tags, [name: "note[types][]"] %>
+
+        <div class="input-field col s12">
+          <i class="material-icons prefix margin-top-15">looks_5</i>
+          <div class="chips chips-autocomplete tags"></div>
+        </div>
+            
+      </div>
+      </div>
+    </div> 
+  <div>
+  <div class="fixed-action-btn">
+    <button type="submit" class="btn-floating btn-large green">
+      <i class="large material-icons">save</i>
+    </button>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

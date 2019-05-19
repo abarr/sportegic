@@ -24,7 +24,6 @@ defmodule SportegicWeb.InsurancePolicyController do
 
   def new(conn, _params, person, org, _permissions) do
     changeset = People.change_insurance_policy(%InsurancePolicy{attachments: [%Attachment{}]})
-    IO.inspect(changeset)
     lookup = LookupTypes.get_lookup_by_name!(@type_ref, org)
 
     types =

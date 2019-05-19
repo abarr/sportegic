@@ -70,6 +70,8 @@ defmodule SportegicWeb.Router do
         resources "/attachment", AttachmentController, only: [:index, :delete]
       end
     end
+
+    resources "/notes", NoteController
   end
 
   # Other scopes may use custom stacks.

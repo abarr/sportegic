@@ -16,6 +16,10 @@ defmodule Sportegic.LookupTypes.Seeds do
       %{
         name: "Vehicle Types",
         description: "Provides a list of vehicle types that people can record"
+      },
+      %{
+        name: "Note Tags",
+        description: "Provides a list of tags for categorising and weighting notes"
       }
     ]
   end
@@ -80,6 +84,23 @@ defmodule Sportegic.LookupTypes.Seeds do
       %{
         name: "Other",
         lookup_id: 4
+      }
+    ]
+  end
+
+  def get_default_notes_tags() do
+    [
+      %{
+        name: "Fight",
+        lookup_id: 5
+      },
+      %{
+        name: "Family",
+        lookup_id: 5
+      },
+      %{
+        name: "Positive Feedback",
+        lookup_id: 5
       }
     ]
   end

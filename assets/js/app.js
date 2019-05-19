@@ -13,6 +13,7 @@ import Role from "./role";
 import Calendar from "./calendar"
 import Document from "./document"
 import Visa from "./visa"
+import Notes from "./notes"
 
 // SOCKETS
 import socket from "./socket"
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Calendar.attachFlatpickrDOB(flatpickr);
     Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[3])
     Calendar.attachFlatpickrIssuedDate(flatpickr)
+    Calendar.attachFlatpickrEventDate(flatpickr)
     Document.setupDocumentForm(M);
     Visa.setupVisaForm(M);
     User.setupUserForm(M)
@@ -38,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname == "/person" && window.channel) {
         let sportegic_socket = socket.connect_socket();
         People.realtime_search(sportegic_socket)
+    };
+    if ((window.location.pathname == "/notes" || window.location.pathname == "/notes/new") && window.channel) {
+        let sportegic_socket = socket.connect_socket();
+        Notes.tags_search(sportegic_socket)
     };
 
     // Check if there are flash messages via global variables and init a toast

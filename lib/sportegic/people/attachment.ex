@@ -8,6 +8,7 @@ defmodule Sportegic.People.Attachment do
 
   schema "attachments" do
     field(:file, Sportegic.People.File.Type)
+
     belongs_to(:document, Document)
     belongs_to(:insurance_policy, InsurancePolicy)
     belongs_to(:visa, Visa)
