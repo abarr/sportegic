@@ -75,31 +75,14 @@ let Elements = {
 
         });
 
-
-
         let brand = document.getElementById("fourteen");
         M.CharacterCounter.init(brand);
 
         let tabs = document.querySelector(".tabs");
         let instances = M.Tabs.init(tabs, {});
 
-        let dates = document.querySelectorAll('.datepicker');
-        M.Datepicker.init(dates, {});
-
-        let people = document.querySelectorAll('.players');
-        M.Chips.init(people, {
-            placeholder: 'Enter a person',
-            secondaryPlaceholder: '+Person',
-            autocompleteOptions: {
-                data: {
-                    'Player 1': null,
-                    'Player 2': null,
-                    'Player 3': null
-                },
-                limit: Infinity,
-                minLength: 1
-            }
-        });
+        
+        
     }
 }
 

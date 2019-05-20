@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     if ((window.location.pathname == "/notes" || window.location.pathname == "/notes/new") && window.channel) {
         let sportegic_socket = socket.connect_socket();
-        Notes.tags_search(sportegic_socket)
+        Notes.tags_search(sportegic_socket);
+        Notes.people_search(sportegic_socket)
     };
 
     // Check if there are flash messages via global variables and init a toast

@@ -28,6 +28,12 @@ defmodule SportegicWeb.NoteController do
   def create(conn, %{"note" => note_params} = params, org, _permissions) do
     IO.inspect(params)
 
+    %{"types" => tags_list } = note_params
+    %{"people" => people_list } = note_params
+
+    IO.inspect(tags_list)
+    IO.inspect(people_list)
+
     case Notes.create_note(note_params, org) do
       {:ok, note} ->
         conn

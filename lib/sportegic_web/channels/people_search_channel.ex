@@ -15,22 +15,32 @@ defmodule SportegicWeb.PeopleSearchChannel do
   # by sending replies to requests from the client
   def handle_in("search", %{"search_value" => value, "token" => token, "org" => org}, socket) do
     # [%{firstname: "", lastname: "", id: 1}, %{...}]
-    payload =
-      People.list_people(value, org)
-      |> Enum.map(fn x ->
-        %{(x.firstname <> " " <> x.lastname) => nil}
-      end)
-      |> Enum.reduce(&Map.merge/2)
+    value = String.trim(value)
+    IO.inspect(value)
+    IO.inspect(String.valid?(value))
 
-    ids =
-      People.list_people(value, org)
-      |> Enum.map(fn x ->
-        %{(x.firstname <> " " <> x.lastname) => "/person/" <> Integer.to_string(x.id)}
-      end)
-      |> Enum.reduce(&Map.merge/2)
+    case value do
+      "" -> 
+        {:noreply, socket}
+      _  ->  
+        payload =
+        People.list_people(value, org)
+        |> Enum.map(fn x ->
+          %{(x.firstname <> " " <> x.lastname) => nil}
+        end)
+        |> Enum.reduce(&Map.merge/2)
 
-    broadcast!(socket, "search:#{token}", %{payload: payload, ids: ids})
-    {:noreply, socket}
+      ids =
+        People.list_people(value, org)
+        |> Enum.map(fn x ->
+          %{(x.firstname <> " " <> x.lastname) => "/person/" <> Integer.to_string(x.id)}
+        end)
+        |> Enum.reduce(&Map.merge/2)
+
+      broadcast!(socket, "search:#{token}", %{payload: payload, ids: ids})
+      {:noreply, socket}
+    end
+    
   end
 
   # Add authorization logic here as required.

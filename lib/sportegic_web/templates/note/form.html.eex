@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [id: "note-form"], fn f -> %>
   <div class="page">
     <div class="row">
         <div class="input-field col s12 m6 l8">
@@ -18,6 +18,7 @@
           <%= textarea f, :details , [ class: set_field_class(f, :event_date, "materialize-textarea"), required: "true", type: "text"]%>
           <%= error_tag_sportegic f, :details %>
         </div>
+        <div id="people_list"></div>
         <div class="input-field col s12">
           <i class="material-icons prefix margin-top-15">looks_4</i>
           <div class="chips chips-autocomplete players"></div>
@@ -27,6 +28,8 @@
         <div class="input-field col s12">
           <i class="material-icons prefix margin-top-15">looks_5</i>
           <div class="chips chips-autocomplete tags"></div>
+          <%= text_input f, :tag , [class: "validate", style: "display: none"] %>
+          <%= error_tag_sportegic f, :tag %>
         </div>
             
       </div>
@@ -34,11 +37,46 @@
     </div> 
   <div>
   <div class="fixed-action-btn">
-    <button type="submit" class="btn-floating btn-large green">
+    <button type="submit" onclick="check_form()" class="btn-floating btn-large green">
       <i class="large material-icons">save</i>
     </button>
   </div>
 <% end %>
+
+<script>
+  function check_form(){
+    let form = document.getElementById('note-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          for( var item of previous_list){
+                item.classList.remove("invalid")
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          for (var item of list) {
+            if(item.tagName === "SELECT"){
+              item.parentNode.classList += " invalid"
+            }else{
+              item.classList += " invalid"
+            }
+                
+          }
+      }
+      let ed = document.getElementById("note_event_date");
+      if(!ed.value){ ed.nextElementSibling.classList += " invalid"}
+
+      let tags = document.querySelector('.tags');
+      if(tags.M_Chips.chipsData.length == 0){
+        let t = document.getElementById("note_tag");
+        t.classList += " invalid"
+        let input = document.getElementsByClassName('chips tags');
+        input[0].classList += " invalid"
+      }
+      
+  }
+
+  
+  </script>
 
 
 
