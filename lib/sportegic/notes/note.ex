@@ -3,6 +3,7 @@ defmodule Sportegic.Notes.Note do
   import Ecto.Changeset
 
   alias Sportegic.LookupTypes.Type
+  alias Sportegic.Notes.NoteType
 
   schema "notes" do
     field(:event_date, :date)
@@ -10,7 +11,7 @@ defmodule Sportegic.Notes.Note do
     field(:details, :string)
     field(:user_id, :id)
 
-    many_to_many(:types, Type, join_through: "note_type")
+    many_to_many(:types, Type, join_through: NoteType)
 
     timestamps()
   end

@@ -596,8 +596,6 @@ defmodule Sportegic.People do
   end
 
   def create_insurance_policy_without_attachments(attrs, org) do
-    IO.inspect(attrs)
-
     %InsurancePolicy{}
     |> InsurancePolicy.changeset(attrs)
     |> Repo.insert(prefix: org)

@@ -16,6 +16,7 @@ let Notes = {
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',
                 autocompleteOptions: {
+
                     data: results.payload,
                     limit: Infinity,
                     minLength: 1
@@ -27,7 +28,7 @@ let Notes = {
                     input[0].classList.remove("invalid");
                     let tags_list = document.getElementById('tags_list');
                     let tag = document.createElement("input");
-                    tag.setAttribute("name", "note[types][]");
+                    tag.setAttribute("name", 'note[tags][]');
                     tag.setAttribute("hidden", "true");
                     tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
                     tags_list.appendChild(tag);
@@ -35,7 +36,7 @@ let Notes = {
                 onChipDelete: function (e, chip) {
                     let tag = document.querySelectorAll('input[value="' + chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")) + '"]');
                     tags_list.removeChild(tag[0]);
-                    if(i.chipsData.length == 0){
+                    if (i.chipsData.length == 0) {
                         let t = document.getElementById("note_tag");
                         t.classList += " invalid"
                         let input = document.getElementsByClassName('chips tags');
@@ -43,7 +44,7 @@ let Notes = {
                     }
                 }
             });
-            
+
         });
 
     },
@@ -55,7 +56,7 @@ let Notes = {
             .receive("error", resp => { console.log("Unable to join", resp) })
 
         let el = document.querySelector('.players');
-        
+
         let search = M.Chips.init(el, {
             placeholder: 'Enter a name',
             secondaryPlaceholder: '+Person',
@@ -64,7 +65,7 @@ let Notes = {
             },
             onChipAdd: function (e, chip) {
                 let people_list = document.getElementById('people_list');
-                
+
                 let tag = document.createElement("input");
                 tag.setAttribute("name", "note[people][]");
                 tag.setAttribute("hidden", "true");

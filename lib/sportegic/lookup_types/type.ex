@@ -4,6 +4,7 @@ defmodule Sportegic.LookupTypes.Type do
 
   alias Sportegic.LookupTypes.Lookup
   alias Sportegic.Notes.Note
+  alias Sportegic.Notes.NoteType
   # alias Sportegic.People.Document
 
   schema "types" do
@@ -12,7 +13,7 @@ defmodule Sportegic.LookupTypes.Type do
 
     # has_many(:document, Document)
 
-    many_to_many(:notes, Note, join_through: "note_type")
+    many_to_many(:notes, Note, join_through: NoteType)
 
     timestamps()
   end

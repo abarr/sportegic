@@ -4,10 +4,12 @@ defmodule Sportegic.Notes do
   """
 
   import Ecto.Query, warn: false
+  alias __MODULE__
   alias Sportegic.Repo
 
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NoteType
+  alias Sportegic.LookupTypes.Type
 
   @doc """
   Returns the list of notes.
@@ -19,7 +21,10 @@ defmodule Sportegic.Notes do
 
   """
   def list_notes(org) do
-    Repo.all(Note, prefix: org)
+    Note
+    |> Repo.all(prefix: org)
+    |> Repo.preload(:types)
+    |> IO.inspect()
   end
 
   @doc """
@@ -148,6 +153,26 @@ defmodule Sportegic.Notes do
     %NoteType{}
     |> NoteType.changeset(attrs)
     |> Repo.insert(prefix: org)
+  end
+
+  def create_note_type(note, tag_text, org) when is_binary(tag_text) do
+    IO.puts("HERE")
+
+    case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
+      type ->
+        NoteType.changeset(%NoteType{}, %{
+          note_id: note.id,
+          type_id: type.id
+        })
+        |> Repo.insert!(prefix: org)
+
+      _ ->
+        {:error, "Type does not exist"}
+    end
+  end
+
+  def create_note_types(note, tags_list, org) when is_list(tags_list) do
+    Enum.each(tags_list, &create_note_type(note, &1, org))
   end
 
   @doc """

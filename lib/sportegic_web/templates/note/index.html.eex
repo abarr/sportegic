@@ -17,6 +17,7 @@
                 <th>Subject</th>
                 <th>Event Date</th>
                 <th>details</th>
+                <th>tags</th>
                 <th class="right-align">Actions</th>
             </tr>
           </thead>
@@ -24,9 +25,16 @@
           <%= for note <- @notes do %>
             <tr>
             
-              <td><%= note.subject %></td>
-              <td><%= note.event_date %></td>
+              <td class="truncate"><%= note.subject %></td>
+              <td><%= readable_date(note.event_date) %></td>
               <td class="truncate"><%= note.details %></td>
+              <td>
+              <%= for tag <- note.types do %>
+                <div class="chip">
+                  <%= tag.name %>
+                </div>
+              <% end %>
+              </td>
               <td class="right-align"> 
                 <%= link to: Routes.note_path(@conn, :show, note ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
                   <i class="far fa-book-open fa-fw "></i>

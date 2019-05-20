@@ -3,8 +3,8 @@ defmodule Sportegic.Notes.NoteType do
   import Ecto.Changeset
 
   schema "note_type" do
-    field :note_id, :id
-    field :type_id, :id
+    field(:note_id, :id)
+    field(:type_id, :id)
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule Sportegic.Notes.NoteType do
   @doc false
   def changeset(note_type, attrs) do
     note_type
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:note_id, :type_id])
+    |> validate_required([:note_id, :type_id])
   end
 end

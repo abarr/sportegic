@@ -1,18 +1,58 @@
-<h1>Show Note</h1>
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.note_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2 truncate">Subject: <%= @note.subject %> </h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="row page">
+    <div class="col s12">
+         <div class="row page">
+            <div class="col s12">
+              <div class="card z-depth-0 ">
+                <div class="card-content no-padding">
+                    <span class="card-title">People</span>
+                    <div class="chip">
+                      Jane Doe
+                    </div>
+                    <div class="chip">
+                      Jane Doe
+                    </div>  
+                </div>
+              </div>
+                <div class="card z-depth-0 ">
+                  <div class="card-content no-padding">
+                      <span class="card-title">Tags</span>
+                      <div class="chip">
+                        Fight
+                      </div>
+                      <div class="chip">
+                        Family
+                      </div>  
+                  </div>
+                </div>
+            </div>
+            <div class="col s12">
+              <div class="card z-depth-0 ">
+                <div class="card-contentno-padding ">
+                    <span class="card-title">Details</span>
+                    <p>
+                      <%= @note.details %>
+                    </p> 
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
+<script> window.channel = "true" </script>
 
-<ul>
 
-  <li>
-    <strong>Note:</strong>
-    <%= @note.details %>
-  </li>
-
-  <li>
-    <strong>Event date:</strong>
-    <%= @note.event_date %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.note_path(@conn, :edit, @note) %></span>
-<span><%= link "Back", to: Routes.note_path(@conn, :index) %></span>

@@ -19,7 +19,6 @@ defmodule SportegicWeb.AttachmentController do
 
   def index(conn, %{"visa_id" => visa_id}, person, org, _permissions) do
     visa = People.get_visa!(person, visa_id, org)
-    IO.inspect(conn)
     render(conn, "index.html", record: visa, person: person)
   end
 
@@ -73,6 +72,8 @@ defmodule SportegicWeb.AttachmentController do
 
     conn
     |> put_flash(:danger, "Attachment deleted successfully.")
-    |> redirect(to: Routes.person_insurance_policy_attachment_path(conn, :index, person, insurance_policy))
+    |> redirect(
+      to: Routes.person_insurance_policy_attachment_path(conn, :index, person, insurance_policy)
+    )
   end
 end

@@ -4,8 +4,6 @@ defmodule SportegicWeb.PersonView do
   alias Sportegic.People.Avatar
 
   def display_image(person) do
-    IO.inspect(person)
-
     {person.profile_image, person}
     |> Avatar.url()
     |> img_tag()
@@ -63,7 +61,7 @@ defmodule SportegicWeb.PersonView do
 
   def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
-      "invalid validate " <> classes 
+      "invalid validate " <> classes
     end
   end
 

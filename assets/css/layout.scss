@@ -169,7 +169,11 @@ header, main {
 .chips.input-field.invalid {
     border-bottom: 1px solid rgb(255, 0, 0);
     box-shadow: 0 1px 0 0 rgb(253, 0, 0);
-  }
+}
+
+.no-padding{
+    padding: 0px;
+}
 
 
 

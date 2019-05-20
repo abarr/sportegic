@@ -22,26 +22,23 @@ defmodule SportegicWeb.NoteController do
 
   def new(conn, _params, _org, _permissions) do
     changeset = Notes.change_note(%Note{})
-    render(conn, "new.html", changeset: changeset, types: [])
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"note" => note_params} = params, org, _permissions) do
-    IO.inspect(params)
-
-    %{"types" => tags_list } = note_params
-    %{"people" => people_list } = note_params
-
-    IO.inspect(tags_list)
-    IO.inspect(people_list)
+    %{"types" => tags_list} = note_params
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->
-        conn
-        |> put_flash(:info, "Note created successfully.")
-        |> redirect(to: Routes.note_path(conn, :show, note))
+        case Notes.create_note_types(note, tags_list, org) do
+          :ok ->
+            conn
+            |> put_flash(:info, "Note created successfully.")
+            |> redirect(to: Routes.note_path(conn, :show, note))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+          {:error, %Ecto.Changeset{} = changeset} ->
+            render(conn, "new.html", changeset: changeset)
+        end
     end
   end
 
