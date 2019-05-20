@@ -22,7 +22,7 @@
           <i class="material-icons prefix margin-top-15">looks_4</i>
           <div class="chips chips-autocomplete players"></div>
         </div>
-        <%= hidden_input f, :tags, [name: "note[types][]"] %>
+        <div id="tags_list"></div>
 
         <div class="input-field col s12">
           <i class="material-icons prefix margin-top-15">looks_5</i>

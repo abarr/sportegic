@@ -10,10 +10,9 @@ let Notes = {
         channel.push("get_tags", { token: window.token, org: window.org });
 
         let tag_ids = ""
-        let tags = document.querySelectorAll('.tags');
+        let tags = document.querySelector('.tags');
 
         channel.on(`tags:${window.token}`, results => {
-            tag_ids = results.ids;
             M.Chips.init(tags, {
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',
@@ -21,6 +20,20 @@ let Notes = {
                     data: results.payload,
                     limit: Infinity,
                     minLength: 1
+                },
+                onChipAdd: function (e, chip) {
+                    let tags_list = document.getElementById('tags_list');
+                    console.log(tags_list)
+                    let tag = document.createElement("input");
+                    tag.setAttribute("name", "note[types][]");
+                    tag.setAttribute("hidden", "true");
+                    console.log(chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
+                    tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
+                    tags_list.appendChild(tag);
+                },
+                onChipDelete: function (e, chip) {
+                    let tag = document.querySelectorAll("input[value=" + chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
+                    console.log(tag)
                 }
             });
         });
