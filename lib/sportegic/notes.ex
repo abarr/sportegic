@@ -4,7 +4,6 @@ defmodule Sportegic.Notes do
   """
 
   import Ecto.Query, warn: false
-  alias __MODULE__
   alias Sportegic.Repo
 
   alias Sportegic.Notes.Note
@@ -41,8 +40,11 @@ defmodule Sportegic.Notes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_note!(id, org), do: Repo.get!(Note, id, prefix: org)
-
+  def get_note!(id, org) do
+    Note 
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload([ :types])
+  end
   @doc """
   Creates a note.
 
@@ -156,10 +158,9 @@ defmodule Sportegic.Notes do
   end
 
   def create_note_type(note, tag_text, org) when is_binary(tag_text) do
-    IO.puts("HERE")
-
     case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
       type ->
+        IO.inspect(type, label: "CREATE NOTE TYPE")
         NoteType.changeset(%NoteType{}, %{
           note_id: note.id,
           type_id: type.id

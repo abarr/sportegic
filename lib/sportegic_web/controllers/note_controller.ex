@@ -8,7 +8,7 @@ defmodule SportegicWeb.NoteController do
   action_fallback SportegicWeb.FallbackController
 
   # Allows for getting Types by LookupType
-  @type_ref "Note Tags"
+  # @type_ref "Note Tags"
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.organisation, conn.assigns.permissions]
@@ -26,7 +26,8 @@ defmodule SportegicWeb.NoteController do
   end
 
   def create(conn, %{"note" => note_params} = params, org, _permissions) do
-    %{"types" => tags_list} = note_params
+    note_params = Map.put(note_params, "user_id", conn.assigns.user.id)
+    %{"tags" => tags_list} = note_params
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->

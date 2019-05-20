@@ -19,7 +19,7 @@ defmodule Sportegic.Notes.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:subject, :details, :event_date])
+    |> cast(attrs, [:subject, :details, :event_date, :user_id])
     |> validate_required([:subject, :details, :event_date])
   end
 end
