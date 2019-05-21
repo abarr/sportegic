@@ -6,6 +6,7 @@ defmodule Sportegic.Notes.Note do
   alias Sportegic.People.Person
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Notes.NoteType
+  alias Sportegic.Notes.NotePerson
 
   schema "notes" do
     field(:event_date, :date)
@@ -13,8 +14,8 @@ defmodule Sportegic.Notes.Note do
     field(:details, :string)
     belongs_to(:user, User)
 
-    many_to_many(:types, Type, join_through: NoteType, on_replace: :delete )
-    many_to_many(:people, Person, join_through: NotePerson, on_replace: :delete )
+    many_to_many(:types, Type, join_through: NoteType, on_replace: :delete)
+    many_to_many(:people, Person, join_through: NotePerson, on_replace: :delete)
 
     timestamps()
   end

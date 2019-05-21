@@ -14,32 +14,25 @@
   </div>
   <div class="row page">
     <div class="col s12">
-          <blockquote class=" page remove-bottom-margin"><h6>Note created on the <%= readable_date(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date(@note.event_date) %></h6> </blockquote>       
+          <blockquote class=" page remove-bottom-margin"><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>       
+          <%= if Enum.count(@note.people) > 0 do %>
+            <blockquote class="page remove-bottom-margin">
+              <%= for person <- @note.people do %> 
+                <div class="chip">
+                  <%= display_image(person) %> 
+                  <%= person.firstname <> " " <> person.lastname %>
+                </div>
+              <% end %>
+            </blockquote>
+          <% end %>
+            <blockquote class="page remove-bottom-margin">
+              <%= for tag <- @note.types do %> 
+                <div class="chip">
+                  <%= tag.name %>
+                </div>
+              <% end %>
+          </blockquote>
          <div class="row page">
-            <div class="col s12">
-           
-              <div class="card z-depth-0 ">
-                <div class="card-content no-padding">
-                    <span class="card-title note-title">People involved:</span>
-                    <div class="chip">
-                      Jane Doe
-                    </div>
-                    <div class="chip">
-                      Jane Doe
-                    </div>  
-                </div>
-              </div>
-                <div class="card z-depth-0 ">
-                  <div class="card-content no-padding">
-                      <span class="card-title note-title">Tags</span>
-                      <%= for tag <- @note.types do %> 
-                          <div class="chip">
-                            <%= tag.name %>
-                          </div>
-                      <% end %>
-                  </div>
-                </div>
-            </div>
             <div class="col s12">
               <div class="card z-depth-0 ">
                 <div class="card-contentno-padding ">

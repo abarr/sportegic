@@ -34,7 +34,7 @@
               <td><%= insurance.type.name %></td>
               <td><%= insurance.number %></td>
               <td><%= insurance.coverage_amount %></td>
-              <td><%= readable_date(insurance.expiry_date) %></td>
+              <td><%= readable_date!(insurance.expiry_date) %></td>
               <td><%= insurance.issuer %></td>
               <td class="center-align"> 
                 <%= link to: Routes.person_insurance_policy_attachment_path(@conn, :index, @person, insurance) do %>

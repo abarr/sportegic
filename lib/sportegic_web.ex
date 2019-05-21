@@ -41,7 +41,7 @@ defmodule SportegicWeb do
 
       import SportegicWeb.ErrorHelpers
       import SportegicWeb.Gettext
-      import SportegicWeb.Helpers.Dates
+      import Sportegic.Helpers.Dates
       alias SportegicWeb.Router.Helpers, as: Routes
     end
   end

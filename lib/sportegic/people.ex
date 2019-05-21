@@ -2,8 +2,8 @@ defmodule Sportegic.People do
   @moduledoc """
   The People context.
   """
-
   import Ecto.Query, warn: false
+
   alias Ecto.Multi
   alias Sportegic.Repo
   alias Sportegic.People.Person
@@ -11,6 +11,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.Attachment
   alias Sportegic.People.Visa
   alias Sportegic.People.InsurancePolicy
+  alias Sportegic.Helpers.Dates
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -27,7 +28,7 @@ defmodule Sportegic.People do
     Person
     |> Person.search(search)
     |> Repo.all(prefix: org)
-    |> IO.inspect
+    |> IO.inspect()
   end
 
   def list_people(org) do
@@ -52,6 +53,16 @@ defmodule Sportegic.People do
     Person
     |> Repo.get!(id, prefix: org)
     |> Repo.preload([:document, :visa, :insurance_policy])
+  end
+
+  def get_person_by_name!(name, org) when is_binary(name) do
+    [firstname, lastname, m, d, y] = String.split(name, " ")
+    IO.inspect(m)
+    IO.inspect(d)
+    IO.inspect(y)
+
+    Person
+    |> Repo.get_by!([firstname: firstname, lastname: lastname], prefix: org)
   end
 
   @doc """

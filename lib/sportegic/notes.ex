@@ -12,6 +12,9 @@ defmodule Sportegic.Notes do
   alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Notes.NotePerson
+  alias Sportegic.People
+  alias Sportegic.People.Person
+
   @doc """
   Returns the list of notes.
 
@@ -24,7 +27,7 @@ defmodule Sportegic.Notes do
   def list_notes(org) do
     Note
     |> Repo.all(prefix: org)
-    |> Repo.preload([:types, :user])
+    |> Repo.preload([:types, :user, :people])
   end
 
   @doc """
@@ -42,10 +45,11 @@ defmodule Sportegic.Notes do
 
   """
   def get_note!(id, org) do
-    Note 
+    Note
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([ :types, :user])
+    |> Repo.preload([:types, :user, :people])
   end
+
   @doc """
   Creates a note.
 
@@ -80,6 +84,7 @@ defmodule Sportegic.Notes do
     note
     |> Note.changeset(attrs)
     |> Changeset.put_assoc(:types, Notes.get_updated_note_tags(attrs["types"], org))
+    |> Changeset.put_assoc(:people, Notes.get_updated_people_tags(attrs["people"], org))
     |> Repo.update(prefix: org)
   end
 
@@ -173,10 +178,12 @@ defmodule Sportegic.Notes do
     end
   end
 
-  
-
   def create_note_types(note, tags_list, org) when is_list(tags_list) do
     Enum.each(tags_list, &create_note_type(note, &1, org))
+  end
+
+  def create_note_people(note, people_list, org) when is_list(people_list) do
+    Enum.each(people_list, &create_note_person(note, &1, org))
   end
 
   @doc """
@@ -199,6 +206,10 @@ defmodule Sportegic.Notes do
 
   def get_updated_note_tags(updated_tags, org) when is_list(updated_tags) do
     Enum.map(updated_tags, &LookupTypes.get_type_by_name!(&1, org))
+  end
+
+  def get_updated_people_tags(updated_people \\ [], org) when is_list(updated_people) do
+    Enum.map(updated_people, &People.get_person_by_name!(&1, org))
   end
 
   @doc """
@@ -277,7 +288,24 @@ defmodule Sportegic.Notes do
     |> Repo.insert(prefix: org)
   end
 
-  
+  def create_note_person(note, person_text, org) when is_binary(person_text) do
+    [firstname, lastname, m, d, y] = String.split(person_text, " ")
+    IO.inspect(firstname)
+    IO.inspect(lastname)
+
+    case Repo.get_by(Person, [firstname: firstname, lastname: lastname], prefix: org) do
+      person ->
+        NotePerson.changeset(%NotePerson{}, %{
+          note_id: note.id,
+          person_id: person.id
+        })
+        |> Repo.insert!(prefix: org)
+
+      _ ->
+        {:error, "Type does not exist"}
+    end
+  end
+
   @doc """
   Updates a note_person.
 

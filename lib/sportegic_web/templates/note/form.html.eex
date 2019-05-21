@@ -19,7 +19,11 @@
           <%= error_tag_sportegic f, :details %>
         </div>
         <div id="people_list">
-        
+          <%= if assigns[:note] do %>
+            <%= for person <- @note.people do %>
+              <input type="text" hidden="true" name="note[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
+            <% end %>
+        <% end %>
         
         </div>
         <div class="input-field col s12">

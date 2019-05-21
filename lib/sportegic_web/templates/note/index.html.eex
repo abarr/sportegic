@@ -27,9 +27,9 @@
           <%= for note <- @notes do %>
             <tr>
             
-              <td class="truncate"><%= note.subject %></td>
-              <td><%= readable_date(note.inserted_at) %></td>
-              <td><%= readable_date(note.event_date) %></td>
+              <td ><%= note.subject %></td>
+              <td><%= readable_date!(note.inserted_at) %></td>
+              <td><%= readable_date!(note.event_date) %></td>
               <td><%= note.user.firstname <> " " <> note.user.lastname %></td>
               <td>
               <%= for tag <- note.types do %>
@@ -40,12 +40,12 @@
               </td>
               <td>
                 
-                <div class="chip">
-                  Test Person
-                </div>
-                <div class="chip">
-                  Test Person
-                </div>
+                <%= for person <- note.people do %> 
+                  <div class="chip">
+                    <%= display_image(person) %> 
+                    <%= person.firstname <> " " <> person.lastname %>
+                  </div>
+                <% end %>
               
               </td>
               <td class="right-align"> 

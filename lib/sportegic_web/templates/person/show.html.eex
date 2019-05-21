@@ -48,7 +48,7 @@
                 </li>
                 <li class="collection-item valign-wrapper">
                   <i class="fal fa-birthday-cake fa-fw fa-lg"></i>&nbsp
-                   <span class="truncate"><%= readable_date(@person.dob) %></span>
+                   <span class="truncate"><%= readable_date!(@person.dob) %></span>
                 </li>
                 <li class="collection-item valign-wrapper">
                   <i class="fal fa-mobile-android fa-fw fa-lg"></i>&nbsp

@@ -28,20 +28,19 @@ defmodule SportegicWeb.NoteController do
   def create(conn, %{"note" => note_params}, org, _permissions) do
     note_params = Map.put(note_params, "user_id", conn.assigns.user.id)
     %{"types" => tags_list} = note_params
+    %{"people" => people_list} = note_params
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->
-        case Notes.create_note_types(note, tags_list, org) do
-          :ok ->
-            conn
-            |> put_flash(:info, "Note created successfully.")
-            |> redirect(to: Routes.note_path(conn, :show, note))
-
+        with :ok <- Notes.create_note_types(note, tags_list, org),
+             :ok <- Notes.create_note_people(note, people_list, org) do
+          conn
+          |> put_flash(:info, "Note created successfully.")
+          |> redirect(to: Routes.note_path(conn, :show, note))
+        else
           {:error, %Ecto.Changeset{} = changeset} ->
             render(conn, "new.html", changeset: changeset)
         end
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -61,9 +60,9 @@ defmodule SportegicWeb.NoteController do
 
     case Notes.update_note(note, note_params, org) do
       {:ok, note} ->
-          conn
-          |> put_flash(:info, "Note created successfully.")
-          |> redirect(to: Routes.note_path(conn, :show, note))
+        conn
+        |> put_flash(:info, "Note created successfully.")
+        |> redirect(to: Routes.note_path(conn, :show, note))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

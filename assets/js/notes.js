@@ -1,11 +1,20 @@
 let Notes = {
 
-    load_initial(){
+    load_initial_tags() {
 
         let tag_elements = document.getElementsByName("note[types][]");
         let data = []
-        for(var v of tag_elements.values()){
+        for (var v of tag_elements.values()) {
             data.push({ tag: v.value })
+        }
+        return data;
+    },
+    load_initial_people() {
+
+        let people_elements = document.getElementsByName("note[people][]");
+        let data = []
+        for (var p of people_elements.values()) {
+            data.push({ tag: p.value })
         }
         return data;
     },
@@ -24,7 +33,7 @@ let Notes = {
             let i = M.Chips.init(tags, {
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',
-                data: Notes.load_initial(),
+                data: Notes.load_initial_tags(),
                 autocompleteOptions: {
 
                     data: results.payload,
@@ -70,6 +79,7 @@ let Notes = {
         let search = M.Chips.init(el, {
             placeholder: 'Enter a name',
             secondaryPlaceholder: '+Person',
+            data: Notes.load_initial_people(),
             autocompleteOptions: {
                 limit: Infinity
             },
@@ -87,11 +97,13 @@ let Notes = {
                 people_list.removeChild(tag[0]);
             }
         });
-        let input = el.getElementsByTagName("INPUT")[0];
-
-        el.addEventListener("keyup", e => {
-            channel.push("search", { search_value: input.value, token: window.token, org: window.org });
-        });
+        let input = ""
+        if (el) {
+            input = el.getElementsByTagName("INPUT")[0];
+            el.addEventListener("keyup", e => {
+                channel.push("search", { search_value: input.value, token: window.token, org: window.org });
+            });
+        }
 
         channel.on(`search:${window.token}`, results => {
             console.log(results.payload)
