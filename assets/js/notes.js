@@ -1,5 +1,14 @@
 let Notes = {
 
+    load_initial(){
+
+        let tag_elements = document.getElementsByName("note[types][]");
+        let data = []
+        for(var v of tag_elements.values()){
+            data.push({ tag: v.value })
+        }
+        return data;
+    },
     tags_search(socket) {
 
         let channel = socket.channel("tags:", { token: window.token })
@@ -15,6 +24,7 @@ let Notes = {
             let i = M.Chips.init(tags, {
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',
+                data: Notes.load_initial(),
                 autocompleteOptions: {
 
                     data: results.payload,
@@ -28,7 +38,7 @@ let Notes = {
                     input[0].classList.remove("invalid");
                     let tags_list = document.getElementById('tags_list');
                     let tag = document.createElement("input");
-                    tag.setAttribute("name", 'note[tags][]');
+                    tag.setAttribute("name", 'note[types][]');
                     tag.setAttribute("hidden", "true");
                     tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
                     tags_list.appendChild(tag);
@@ -85,6 +95,7 @@ let Notes = {
 
         channel.on(`search:${window.token}`, results => {
             console.log(results.payload)
+            console.log(el)
             el.M_Chips.autocomplete.updateData(results.payload);
         });
 

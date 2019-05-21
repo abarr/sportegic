@@ -4,12 +4,14 @@ defmodule Sportegic.Notes do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
   alias Sportegic.Repo
-
+  alias __MODULE__
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NoteType
+  alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
-
+  alias Sportegic.Notes.NotePerson
   @doc """
   Returns the list of notes.
 
@@ -22,8 +24,7 @@ defmodule Sportegic.Notes do
   def list_notes(org) do
     Note
     |> Repo.all(prefix: org)
-    |> Repo.preload(:types)
-    |> IO.inspect()
+    |> Repo.preload([:types, :user])
   end
 
   @doc """
@@ -43,7 +44,7 @@ defmodule Sportegic.Notes do
   def get_note!(id, org) do
     Note 
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([ :types])
+    |> Repo.preload([ :types, :user])
   end
   @doc """
   Creates a note.
@@ -78,6 +79,7 @@ defmodule Sportegic.Notes do
   def update_note(%Note{} = note, attrs, org) do
     note
     |> Note.changeset(attrs)
+    |> Changeset.put_assoc(:types, Notes.get_updated_note_tags(attrs["types"], org))
     |> Repo.update(prefix: org)
   end
 
@@ -160,7 +162,6 @@ defmodule Sportegic.Notes do
   def create_note_type(note, tag_text, org) when is_binary(tag_text) do
     case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
       type ->
-        IO.inspect(type, label: "CREATE NOTE TYPE")
         NoteType.changeset(%NoteType{}, %{
           note_id: note.id,
           type_id: type.id
@@ -171,6 +172,8 @@ defmodule Sportegic.Notes do
         {:error, "Type does not exist"}
     end
   end
+
+  
 
   def create_note_types(note, tags_list, org) when is_list(tags_list) do
     Enum.each(tags_list, &create_note_type(note, &1, org))
@@ -192,6 +195,10 @@ defmodule Sportegic.Notes do
     note_type
     |> NoteType.changeset(attrs)
     |> Repo.update(prefix: org)
+  end
+
+  def get_updated_note_tags(updated_tags, org) when is_list(updated_tags) do
+    Enum.map(updated_tags, &LookupTypes.get_type_by_name!(&1, org))
   end
 
   @doc """
@@ -221,5 +228,100 @@ defmodule Sportegic.Notes do
   """
   def change_note_type(%NoteType{} = note_type) do
     NoteType.changeset(note_type, %{})
+  end
+
+  @doc """
+  Returns the list of notes_people.
+
+  ## Examples
+
+      iex> list_notes_people()
+      [%NotePerson{}, ...]
+
+  """
+  def list_notes_people(org) do
+    Repo.all(NotePerson, prefix: org)
+  end
+
+  @doc """
+  Gets a single note_person.
+
+  Raises `Ecto.NoResultsError` if the Note person does not exist.
+
+  ## Examples
+
+      iex> get_note_person!(123)
+      %NotePerson{}
+
+      iex> get_note_person!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_note_person!(id, org), do: Repo.get!(NotePerson, id, prefix: org)
+
+  @doc """
+  Creates a note_person.
+
+  ## Examples
+
+      iex> create_note_person(%{field: value})
+      {:ok, %NotePerson{}}
+
+      iex> create_note_person(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_note_person(attrs \\ %{}, org) do
+    %NotePerson{}
+    |> NotePerson.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  
+  @doc """
+  Updates a note_person.
+
+  ## Examples
+
+      iex> update_note_person(note_person, %{field: new_value})
+      {:ok, %NotePerson{}}
+
+      iex> update_note_person(note_person, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_note_person(%NotePerson{} = note_person, attrs, org) do
+    note_person
+    |> NotePerson.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  @doc """
+  Deletes a NotePerson.
+
+  ## Examples
+
+      iex> delete_note_person(note_person)
+      {:ok, %NotePerson{}}
+
+      iex> delete_note_person(note_person)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_note_person(%NotePerson{} = note_person, org) do
+    Repo.delete(note_person, prfeix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking note_person changes.
+
+  ## Examples
+
+      iex> change_note_person(note_person)
+      %Ecto.Changeset{source: %NotePerson{}}
+
+  """
+  def change_note_person(%NotePerson{} = note_person) do
+    NotePerson.changeset(note_person, %{})
   end
 end

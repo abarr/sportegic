@@ -6,6 +6,8 @@ defmodule Sportegic.People.Person do
   import Ecto.Changeset
 
   alias Sportegic.People.{Document, Visa, InsurancePolicy}
+  alias Sportegic.Notes.Note
+  alias Sportegic.Notes.NotePerson
 
   schema "people" do
     field(:dob, :date)
@@ -20,6 +22,8 @@ defmodule Sportegic.People.Person do
     has_many(:document, Document)
     has_many(:insurance_policy, InsurancePolicy)
     has_many(:visa, Visa)
+
+    many_to_many(:notes, Note, join_through: NotePerson)
 
     timestamps()
   end
@@ -45,7 +49,7 @@ defmodule Sportegic.People.Person do
       where: ilike(person.firstname, ^wildcard),
       or_where: ilike(person.lastname, ^wildcard),
       or_where: ilike(person.preferred_name, ^wildcard),
-      select: %{id: person.id, firstname: person.firstname, lastname: person.lastname}
+      select: %{id: person.id, firstname: person.firstname, lastname: person.lastname, dob: person.dob}
     )
   end
 end

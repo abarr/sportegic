@@ -157,12 +157,17 @@ defmodule Sportegic.LookupTypes do
 
   """
   def get_type!(lookup, id, org) do
-    IO.puts("IN GET TYPE")
-
     Type
     |> where([t], t.lookup_id == ^lookup.id)
     |> Repo.get!(id, prefix: org)
   end
+
+  def get_type_by_name!(name, org) when is_binary(name) do
+    Type
+    |> Repo.get_by!([name: name], prefix: org)
+    |> IO.inspect
+  end
+
 
   @doc """
   Creates a type.

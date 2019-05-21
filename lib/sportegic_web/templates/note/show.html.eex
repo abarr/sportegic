@@ -14,7 +14,7 @@
   </div>
   <div class="row page">
     <div class="col s12">
-          <blockquote class=" page remove-bottom-margin"><h6>Note created on the <%= readable_date(@note.inserted_at) %> by Joe Bloggs. The event happened on <%= readable_date(@note.event_date) %></h6> </blockquote>       
+          <blockquote class=" page remove-bottom-margin"><h6>Note created on the <%= readable_date(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date(@note.event_date) %></h6> </blockquote>       
          <div class="row page">
             <div class="col s12">
            

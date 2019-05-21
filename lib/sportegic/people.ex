@@ -27,6 +27,7 @@ defmodule Sportegic.People do
     Person
     |> Person.search(search)
     |> Repo.all(prefix: org)
+    |> IO.inspect
   end
 
   def list_people(org) do

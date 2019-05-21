@@ -120,4 +120,61 @@ defmodule Sportegic.NotesTest do
       assert %Ecto.Changeset{} = Notes.change_note_type(note_type)
     end
   end
+
+  describe "notes_people" do
+    alias Sportegic.Notes.NotePerson
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def note_person_fixture(attrs \\ %{}) do
+      {:ok, note_person} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Notes.create_note_person()
+
+      note_person
+    end
+
+    test "list_notes_people/0 returns all notes_people" do
+      note_person = note_person_fixture()
+      assert Notes.list_notes_people() == [note_person]
+    end
+
+    test "get_note_person!/1 returns the note_person with given id" do
+      note_person = note_person_fixture()
+      assert Notes.get_note_person!(note_person.id) == note_person
+    end
+
+    test "create_note_person/1 with valid data creates a note_person" do
+      assert {:ok, %NotePerson{} = note_person} = Notes.create_note_person(@valid_attrs)
+    end
+
+    test "create_note_person/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Notes.create_note_person(@invalid_attrs)
+    end
+
+    test "update_note_person/2 with valid data updates the note_person" do
+      note_person = note_person_fixture()
+      assert {:ok, %NotePerson{} = note_person} = Notes.update_note_person(note_person, @update_attrs)
+    end
+
+    test "update_note_person/2 with invalid data returns error changeset" do
+      note_person = note_person_fixture()
+      assert {:error, %Ecto.Changeset{}} = Notes.update_note_person(note_person, @invalid_attrs)
+      assert note_person == Notes.get_note_person!(note_person.id)
+    end
+
+    test "delete_note_person/1 deletes the note_person" do
+      note_person = note_person_fixture()
+      assert {:ok, %NotePerson{}} = Notes.delete_note_person(note_person)
+      assert_raise Ecto.NoResultsError, fn -> Notes.get_note_person!(note_person.id) end
+    end
+
+    test "change_note_person/1 returns a note_person changeset" do
+      note_person = note_person_fixture()
+      assert %Ecto.Changeset{} = Notes.change_note_person(note_person)
+    end
+  end
 end

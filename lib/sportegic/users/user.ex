@@ -2,6 +2,7 @@ defmodule Sportegic.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Sportegic.Users.Role
+  alias Sportegic.Notes.Note
 
   schema "users" do
     field(:firstname, :string)
@@ -10,6 +11,7 @@ defmodule Sportegic.Users.User do
     field(:user_id, :integer)
     field(:disabled, :boolean, default: false)
     belongs_to(:role, Role)
+    has_many(:note, Note)
 
     timestamps()
   end

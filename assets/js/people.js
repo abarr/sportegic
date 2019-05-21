@@ -21,6 +21,7 @@ let People = {
         });
 
         channel.on(`search:${window.token}`, results => {
+            console.log(results.ids)
             people_ids = results.ids;
             search.updateData(results.payload)
         });

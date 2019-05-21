@@ -1,5 +1,6 @@
 defmodule SportegicWeb.PeopleSearchChannel do
   use SportegicWeb, :channel
+  use Timex
 
   alias Sportegic.People
 
@@ -22,22 +23,22 @@ defmodule SportegicWeb.PeopleSearchChannel do
         {:noreply, socket}
 
       _ ->
+        
         payload = People.list_people(value, org)
-
         case Enum.count(payload) do
           0 ->
             broadcast!(socket, "search:#{token}", %{payload: %{}, ids: %{}})
             {:noreply, socket}
 
           _ ->
-            payload
-            |> Enum.map(fn x -> %{(x.firstname <> " " <> x.lastname) => nil} end)
+            
+            payload = payload
+            |> Enum.map(fn x -> %{(x.firstname <> " " <> x.lastname <> " " <> "(" <> Timex.format!(x.dob, "{Mfull} {D}, {YYYY}") <> ")") => nil} end)
             |> Enum.reduce(&Map.merge/2)
-
+            
             ids =
               People.list_people(value, org)
-              |> Enum.map(fn x ->
-                %{(x.firstname <> " " <> x.lastname) => "/person/" <> Integer.to_string(x.id)}
+              |> Enum.map(fn x -> %{(x.firstname <> " " <> x.lastname <> " " <> "(" <> Timex.format!(x.dob, "{Mfull} {D}, {YYYY}") <> ")") => "/person/" <> Integer.to_string(x.id)}
               end)
               |> Enum.reduce(&Map.merge/2)
 

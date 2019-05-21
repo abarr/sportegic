@@ -41,12 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let sportegic_socket = socket.connect_socket();
         People.realtime_search(sportegic_socket)
     };
-    if ((window.location.pathname == "/notes" || window.location.pathname == "/notes/new") && window.channel) {
+    
+    if (window.location.pathname.split("/")[1] == "notes" && window.channel) {
         let sportegic_socket = socket.connect_socket();
         Notes.tags_search(sportegic_socket);
         Notes.people_search(sportegic_socket)
     };
-
     // Check if there are flash messages via global variables and init a toast
     if (window.toast) {
         var toastHTML = '<div class="msg">' + window.toast + '</div>'
