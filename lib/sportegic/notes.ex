@@ -209,7 +209,7 @@ defmodule Sportegic.Notes do
   end
 
   def get_updated_people_tags(updated_people \\ [], org) when is_list(updated_people) do
-    Enum.map(updated_people, &People.get_person_by_name!(&1, org))
+    Enum.map(updated_people, &People.get_person_by_name_dob!(&1, org))
   end
 
   @doc """

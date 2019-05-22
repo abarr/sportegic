@@ -20,7 +20,7 @@
               <%= for person <- @note.people do %> 
                 <div class="chip">
                   <%= display_image(person) %> 
-                  <%= person.firstname <> " " <> person.lastname %>
+                  <%= person.firstname <> " " <> person.lastname  %>
                 </div>
               <% end %>
             </blockquote>

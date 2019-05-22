@@ -27,7 +27,7 @@
   </div>
   <div class="row page">
     <div class="col s12">
-        <table class="highlight responsive-table">
+        <table class="highlight ">
         <thead>
           <tr>
               <th>#</th>

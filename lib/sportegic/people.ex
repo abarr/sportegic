@@ -3,7 +3,7 @@ defmodule Sportegic.People do
   The People context.
   """
   import Ecto.Query, warn: false
-
+  use Timex
   alias Ecto.Multi
   alias Sportegic.Repo
   alias Sportegic.People.Person
@@ -11,7 +11,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.Attachment
   alias Sportegic.People.Visa
   alias Sportegic.People.InsurancePolicy
-  alias Sportegic.Helpers.Dates
+  # alias Sportegic.Helpers.Dates
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -52,17 +52,20 @@ defmodule Sportegic.People do
   def get_person!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa, :insurance_policy])
+    |> Repo.preload([:document, :visa, :insurance_policy, notes: [:user, :types, :people]])
   end
 
-  def get_person_by_name!(name, org) when is_binary(name) do
-    [firstname, lastname, m, d, y] = String.split(name, " ")
-    IO.inspect(m)
-    IO.inspect(d)
-    IO.inspect(y)
-
+  # name will include DOB in format "FIRSTNAME LASTNAME (MNTH, DAY, YEAR)"
+  def get_person_by_name_dob!(name, org) when is_binary(name) do
+    [firstname, lastname | _] = String.split(name, " ")
+    [ _, dob ] = String.splitter(name, ["(", ")"]) |> Enum.take(2)
+    
+    dob = dob
+    |> Timex.parse!("{Mfull} {D}, {YYYY}")
+    |> Timex.to_date()
+    
     Person
-    |> Repo.get_by!([firstname: firstname, lastname: lastname], prefix: org)
+    |> Repo.get_by([firstname: firstname, lastname: lastname, dob: dob], prefix: org)
   end
 
   @doc """

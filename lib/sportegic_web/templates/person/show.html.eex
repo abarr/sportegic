@@ -80,7 +80,7 @@
             </div>
         </div> 
     </div>  <%# End of Row   %>
-    <%# <div class="row page">
+    <div class="row page">
         <div class="col s12">
           <div class="row page">
             <div class="col s12 ">
@@ -89,8 +89,58 @@
               </div>
               <div class="divider"></div>
             </div>
+            <div class="row page">
+              <div class="col s12">
+                <table class="highlight">
+                  <thead>
+                    <tr>
+                        <th class="hide-on-small-only">Subject</th>
+                        <th class="hide-on-med-and-down">Note Created</th>
+                        <th>Event Date</th>
+                        <th class="hide-on-med-and-down">Owner</th>
+                        <th>Tags</th>
+                        <th class="hide-on-small-only">People</th>
+                        <th class="right-align">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <%= for note <- @person.notes do %>
+                    <tr>
+                    
+                      <td class="hide-on-small-only"><%= note.subject %></td>
+                      <td class="hide-on-med-and-down"><%= readable_date!(note.inserted_at) %></td>
+                      <td><%= readable_date!(note.event_date) %></td>
+                      <td class="hide-on-med-and-down"><%= note.user.firstname <> " " <> note.user.lastname %></td>
+                      <td>
+                      <%= for tag <- note.types do %>
+                        <div class="chip">
+                          <%= tag.name %>
+                        </div>
+                      <% end %>
+                      </td>
+                      <td class="hide-on-small-only">
+                        
+                        <%= for person <- note.people do %> 
+                          <div class="chip">
+                            <%= display_image(person) %> 
+                            <%= person.firstname <> " " <> person.lastname %>
+                          </div>
+                        <% end %>
+                      
+                      </td>
+                      <td class="right-align"> 
+                        <%= link to: Routes.note_path(@conn, :show, note ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                          <i class="far fa-book-open fa-fw "></i>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>  
+              </div>
+          </div>
         </div> 
-    </div> %>
+    </div>
 </div>
 
 

@@ -40,7 +40,7 @@
         <div class="input-field col s12">
           <i class="material-icons prefix margin-top-15">looks_5</i>
           <div class="chips chips-autocomplete tags"></div>
-          <%= text_input f, :tag , [class: "validate", style: "display: none"] %>
+          <%= text_input f, :tag , [class: "validate", style: "display: none", required: "true"] %>
           <%= error_tag_sportegic f, :tag %>
         </div>
             
@@ -57,9 +57,11 @@
 
 <script>
   function check_form(){
+   
     let form = document.getElementById('note-form');
       if (form.checkValidity() == false) {
           let previous_list = form.querySelectorAll(".invalid")
+          console.log(previous_list)
           for( var item of previous_list){
                 item.classList.remove("invalid")
           }
@@ -74,15 +76,19 @@
                 
           }
       }
-      let ed = document.getElementById("note_event_date");
-      if(!ed.value){ ed.nextElementSibling.classList += " invalid"}
-
+      
       let tags = document.querySelector('.tags');
       if(tags.M_Chips.chipsData.length == 0){
         let t = document.getElementById("note_tag");
+        t.setAttribute("required", "true");
+        t.classList.remove("invalid")
         t.classList += " invalid"
         let input = document.getElementsByClassName('chips tags');
         input[0].classList += " invalid"
+      }else{
+        let t = document.getElementById("note_tag");
+        t.classList.remove("invalid")
+        t.removeAttribute("required")
       }
       
   }
