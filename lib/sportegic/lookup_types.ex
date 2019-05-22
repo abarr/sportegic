@@ -165,9 +165,7 @@ defmodule Sportegic.LookupTypes do
   def get_type_by_name!(name, org) when is_binary(name) do
     Type
     |> Repo.get_by!([name: name], prefix: org)
-    |> IO.inspect
   end
-
 
   @doc """
   Creates a type.

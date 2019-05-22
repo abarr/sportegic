@@ -16,7 +16,10 @@ let People = {
             .receive("ok", resp => { console.log("Joined successfully", resp) })
             .receive("error", resp => { console.log("Unable to join", resp) })
 
+        console.log(el)
         el.addEventListener("keyup", event => {
+            console.log("KEY UP")
+            console.log(window.token)
             channel.push("search", { search_value: el.value, token: window.token, org: window.org });
         });
 

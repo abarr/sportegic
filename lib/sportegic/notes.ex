@@ -13,7 +13,6 @@ defmodule Sportegic.Notes do
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Notes.NotePerson
   alias Sportegic.People
-  alias Sportegic.People.Person
 
   @doc """
   Returns the list of notes.
@@ -289,11 +288,7 @@ defmodule Sportegic.Notes do
   end
 
   def create_note_person(note, person_text, org) when is_binary(person_text) do
-    [firstname, lastname, m, d, y] = String.split(person_text, " ")
-    IO.inspect(firstname)
-    IO.inspect(lastname)
-
-    case Repo.get_by(Person, [firstname: firstname, lastname: lastname], prefix: org) do
+    case People.get_person_by_name_dob!(person_text, org) do
       person ->
         NotePerson.changeset(%NotePerson{}, %{
           note_id: note.id,
@@ -302,7 +297,7 @@ defmodule Sportegic.Notes do
         |> Repo.insert!(prefix: org)
 
       _ ->
-        {:error, "Type does not exist"}
+        {:error, "error"}
     end
   end
 

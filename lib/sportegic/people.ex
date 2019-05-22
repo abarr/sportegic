@@ -28,7 +28,6 @@ defmodule Sportegic.People do
     Person
     |> Person.search(search)
     |> Repo.all(prefix: org)
-    |> IO.inspect()
   end
 
   def list_people(org) do
@@ -58,12 +57,13 @@ defmodule Sportegic.People do
   # name will include DOB in format "FIRSTNAME LASTNAME (MNTH, DAY, YEAR)"
   def get_person_by_name_dob!(name, org) when is_binary(name) do
     [firstname, lastname | _] = String.split(name, " ")
-    [ _, dob ] = String.splitter(name, ["(", ")"]) |> Enum.take(2)
-    
-    dob = dob
-    |> Timex.parse!("{Mfull} {D}, {YYYY}")
-    |> Timex.to_date()
-    
+    [_, dob] = String.splitter(name, ["(", ")"]) |> Enum.take(2)
+
+    dob =
+      dob
+      |> Timex.parse!("{Mfull} {D}, {YYYY}")
+      |> Timex.to_date()
+
     Person
     |> Repo.get_by([firstname: firstname, lastname: lastname, dob: dob], prefix: org)
   end

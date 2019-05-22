@@ -24,6 +24,7 @@ defmodule SportegicWeb.PeopleSearchChannel do
 
       _ ->
         payload = People.list_people(value, org)
+        IO.puts("HERE")
 
         case Enum.count(payload) do
           0 ->
