@@ -104,7 +104,7 @@
           <% end %>
         </li>
         <li class="menu" id="notes"><a class="grey-text lighten-2" href="/notes"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
-        <%# <li class="menu" id="task"><a class="grey-text lighten-2" href="#!"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li> %>
+        <li class="menu" id="task"><a class="grey-text lighten-2" href="/tasks"><i class="far fa-list-alt fa-lg fa-fw"></i> Tasks</a></li>
         
         <li class="">
           <ul class="collapsible collapsible-accordion ">

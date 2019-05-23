@@ -97,7 +97,7 @@ let Calendar = {
         }
     },
     attachFlatpickrDueDate(flatpickr) {
-        const expiry_date = flatpickr('#dueDate', {
+        const expiry_date = flatpickr('#task_due_date', {
             altInput: true,
             altFormat: "F j, Y",
             dateFormat: "Y-m-d",

@@ -26,7 +26,13 @@ defmodule Sportegic.Users do
     user =
       User
       |> Repo.get_by([user_id: user_id], prefix: org)
+
     {:ok, user}
+  end
+
+  def get_user_by_name(name, org) do
+    [firstname, lastname] = String.split(name, " ")
+    Repo.get_by(User, [firstname: firstname, lastname: lastname], prefix: org)
   end
 
   def create_user(attrs \\ %{}, org) do
@@ -73,8 +79,10 @@ defmodule Sportegic.Users do
   end
 
   def create_default_owner_permissions(org) do
-    list = Users.list_permissions(org)
-    |> Enum.map( &create_roles_permissions(%{permission_id: &1.id, role_id: 1 }, org))
+    list =
+      Users.list_permissions(org)
+      |> Enum.map(&create_roles_permissions(%{permission_id: &1.id, role_id: 1}, org))
+
     {:ok, list}
   end
 
@@ -179,10 +187,10 @@ defmodule Sportegic.Users do
   end
 
   def get_roles_permissions(id, org) do
-      RolesPermissions
-      |> where([rp], rp.role_id == ^id)
-      |> Repo.all(prefix: org)
-      |> Repo.preload(permission: [:category])
+    RolesPermissions
+    |> where([rp], rp.role_id == ^id)
+    |> Repo.all(prefix: org)
+    |> Repo.preload(permission: [:category])
   end
 
   def get_roles_permissions!(id, org), do: Repo.get!(RolesPermissions, id, prefix: org)

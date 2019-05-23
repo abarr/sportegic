@@ -1,22 +1,28 @@
 <%= form_for @changeset, @action, [id: "task-form"], fn f -> %>
   <div class="page">
     <div class="row">
+        <div id="user_list"></div>
         <div class="input-field col s12 m6 l8">
           <i class="material-icons prefix">looks_one</i>
-          <%= label f, :action %>
-          <%= text_input f, :action , [ class: set_field_class(f, :subject, ""), required: "true", type: "text"]%>
-          <%= error_tag_sportegic f, :action %>
+          <input type="text" id="autocompleteInput" class="autocomplete">
+          <label for="autocompleteInput">Assign a person to complete the task</label>
         </div>
-        <div class="input-field col s12 m6 l4 flatpickr-event-date">
+        <div class="input-field col s12 m6 l4">
           <i class="material-icons prefix">looks_two</i>
           <%= text_input f, :due_date , [ placeholder: "Due date", data: [input: "true"]]%>
           <%= error_tag_sportegic f, :due_date %>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">looks_3</i>
+          <%= label f, :action %>
+          <%= text_input f, :action , [ class: set_field_class(f, :subject, ""), required: "true", type: "text"]%>
+          <%= error_tag_sportegic f, :action %>
         </div>
         
         <div id="people_list">
           <%= if assigns[:task] do %>
             <%= for person <- @task.people do %>
-              <input type="text" hidden="true" name="note[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
+              <input type="text" hidden="true" name="task[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
             <% end %>
           <% end %>
         </div>
@@ -24,20 +30,7 @@
           <i class="material-icons prefix margin-top-15">looks_4</i>
           <div class="chips chips-autocomplete players"></div>
         </div>
-        <div id="tags_list">
-        <%= if assigns[:note] do %>
-          <%= for tag <- @note.types do %>
-            <input type="text" hidden="true" name="note[types][]" value="<%= tag.name %>">
-          <% end %>
-        <% end %>
-        </div>
-        <div class="input-field col s12">
-          <i class="material-icons prefix margin-top-15">looks_5</i>
-          <div class="chips chips-autocomplete tags"></div>
-          <%= text_input f, :tag , [class: "validate", style: "display: none", required: "true"] %>
-          <%= error_tag_sportegic f, :tag %>
-        </div>
-            
+        
       </div>
       </div>
     </div> 
@@ -52,10 +45,9 @@
 <script>
   function check_form(){
    
-    let form = document.getElementById('note-form');
+    let form = document.getElementById('task-form');
       if (form.checkValidity() == false) {
           let previous_list = form.querySelectorAll(".invalid")
-          console.log(previous_list)
           for( var item of previous_list){
                 item.classList.remove("invalid")
           }
@@ -66,25 +58,9 @@
               item.parentNode.classList += " invalid"
             }else{
               item.classList += " invalid"
-            }
-                
+            }   
           }
       }
-      
-      let tags = document.querySelector('.tags');
-      if(tags.M_Chips.chipsData.length == 0){
-        let t = document.getElementById("note_tag");
-        t.setAttribute("required", "true");
-        t.classList.remove("invalid")
-        t.classList += " invalid"
-        let input = document.getElementsByClassName('chips tags');
-        input[0].classList += " invalid"
-      }else{
-        let t = document.getElementById("note_tag");
-        t.classList.remove("invalid")
-        t.removeAttribute("required")
-      }
-      
   }
 
   
@@ -110,22 +86,3 @@
 
 
 
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, :due_date %>
-  <%= date_select f, :due_date %>
-  <%= error_tag f, :due_date %>
-
-  <%= label f, :action %>
-  <%= textarea f, :action %>
-  <%= error_tag f, :action %>
-
-  <div>
-    <%= submit "Save" %>
-  </div>
-<% end %>

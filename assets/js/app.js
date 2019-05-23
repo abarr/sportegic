@@ -14,6 +14,7 @@ import Calendar from "./calendar"
 import Document from "./document"
 import Visa from "./visa"
 import Notes from "./notes"
+import Tasks from "./tasks"
 
 // SOCKETS
 import socket from "./socket"
@@ -23,9 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
     Calendar.attachFlatpickrDOB(flatpickr);
-    Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[3])
-    Calendar.attachFlatpickrIssuedDate(flatpickr)
-    Calendar.attachFlatpickrEventDate(flatpickr)
+    Calendar.attachFlatpickrExpiryDate(flatpickr, window.location.pathname.split("/")[3]);
+    Calendar.attachFlatpickrIssuedDate(flatpickr);
+    Calendar.attachFlatpickrEventDate(flatpickr);
+    Calendar.attachFlatpickrDueDate(flatpickr);
     Document.setupDocumentForm(M);
     Visa.setupVisaForm(M);
     User.setupUserForm(M)
@@ -36,6 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)
+    };
+    if (window.location.pathname == "/tasks" || window.location.pathname == "/tasks/new") {
+        let sportegic_socket = socket.connect_socket();
+        Tasks.realtime_user_search(sportegic_socket);
+        Tasks.people_search(sportegic_socket);
     };
     if (window.location.pathname == "/person" && window.channel) {
         let sportegic_socket = socket.connect_socket();

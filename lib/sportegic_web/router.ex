@@ -74,6 +74,8 @@ defmodule SportegicWeb.Router do
     resources "/notes", NoteController do
       resources "/comments", CommentController, only: [:create, :delete]
     end
+
+    resources "/tasks", TaskController
   end
 
   # Other scopes may use custom stacks.
