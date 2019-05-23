@@ -50,16 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if there are flash messages via global variables and init a toast
     if (window.toast) {
         var toastHTML = '<div class="msg">' + window.toast + '</div>'
-        console
         switch (window.status) {
             case "info":
-                M.toast({ html: toastHTML, displayLength: 54000, classes: "blue lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "blue lighten-3" })
                 break;
             case "danger":
-                M.toast({ html: toastHTML, displayLength: 54000, classes: "red lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "red lighten-3" })
                 break;
             case "success":
-                M.toast({ html: toastHTML, displayLength: 54000, classes: "green lighten-3" })
+                M.toast({ html: toastHTML, displayLength: 4000, classes: "green lighten-3" })
                 break;
             default:
                 break;

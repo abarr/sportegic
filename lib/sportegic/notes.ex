@@ -13,6 +13,7 @@ defmodule Sportegic.Notes do
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Notes.NotePerson
   alias Sportegic.People
+  alias Sportegic.Notes.Comment
 
   @doc """
   Returns the list of notes.
@@ -46,7 +47,7 @@ defmodule Sportegic.Notes do
   def get_note!(id, org) do
     Note
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:types, :user, :people])
+    |> Repo.preload([:types, :user, :people, comments: [:user]])
   end
 
   @doc """
@@ -65,6 +66,7 @@ defmodule Sportegic.Notes do
     %Note{}
     |> Note.changeset(attrs)
     |> Repo.insert(prefix: org)
+    
   end
 
   @doc """
@@ -157,15 +159,15 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note_type(attrs \\ %{}, org) do
-    %NoteType{}
-    |> NoteType.changeset(attrs)
-    |> Repo.insert(prefix: org)
-  end
+  # def create_note_type(attrs \\ %{}, org) do
+  #   %NoteType{}
+  #   |> NoteType.changeset(attrs)
+  #   |> Repo.insert(prefix: org)
+  # end
 
   def create_note_type(note, tag_text, org) when is_binary(tag_text) do
     case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
-      type ->
+      type when is_map(type) ->
         NoteType.changeset(%NoteType{}, %{
           note_id: note.id,
           type_id: type.id
@@ -173,7 +175,7 @@ defmodule Sportegic.Notes do
         |> Repo.insert!(prefix: org)
 
       _ ->
-        {:error, "Type does not exist"}
+        {:error, "Tag does not exist"}
     end
   end
 
@@ -208,7 +210,9 @@ defmodule Sportegic.Notes do
   end
 
   def get_updated_people_tags(updated_people \\ [], org) when is_list(updated_people) do
-    Enum.map(updated_people, &People.get_person_by_name_dob!(&1, org))
+    updated_people
+    |> Enum.map(&People.get_person_by_name_dob(&1, org))
+    |> IO.inspect
   end
 
   @doc """
@@ -281,15 +285,15 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note_person(attrs \\ %{}, org) do
-    %NotePerson{}
-    |> NotePerson.changeset(attrs)
-    |> Repo.insert(prefix: org)
-  end
+  # def create_note_person(attrs \\ %{}, org) do
+  #   %NotePerson{}
+  #   |> NotePerson.changeset(attrs)
+  #   |> Repo.insert(prefix: org)
+  # end
 
   def create_note_person(note, person_text, org) when is_binary(person_text) do
-    case People.get_person_by_name_dob!(person_text, org) do
-      person ->
+    case People.get_person_by_name_dob(person_text, org) do
+      person when is_map(person) ->
         NotePerson.changeset(%NotePerson{}, %{
           note_id: note.id,
           person_id: person.id
@@ -346,5 +350,66 @@ defmodule Sportegic.Notes do
   """
   def change_note_person(%NotePerson{} = note_person) do
     NotePerson.changeset(note_person, %{})
+  end
+
+  
+  
+  
+  @doc """
+  Creates a comment.
+
+  ## Examples
+
+      iex> create_comment(%{field: value})
+      {:ok, %Comment{}}
+
+      iex> create_comment(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_comment(note_id, user_id, attrs \\ %{}, org) do
+    attrs = attrs
+    |> Map.put("user_id", user_id)
+    |> Map.put("note_id", note_id)
+
+    %Comment{}
+    |> Comment.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+
+
+  def get_comment!(id, org) do
+    Comment
+    |> Repo.get!(id, prefix: org)
+  end
+
+  @doc """
+  Deletes a Comment.
+
+  ## Examples
+
+      iex> delete_comment(comment)
+      {:ok, %Comment{}}
+
+      iex> delete_comment(comment)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_comment(%Comment{} = comment, org) do
+    Repo.delete(comment, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking comment changes.
+
+  ## Examples
+
+      iex> change_comment(comment)
+      %Ecto.Changeset{source: %Comment{}}
+
+  """
+  def change_comment(%Comment{} = comment) do
+    Comment.changeset(comment, %{})
   end
 end

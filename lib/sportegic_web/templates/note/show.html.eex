@@ -14,38 +14,87 @@
   </div>
   <div class="row page">
     <div class="col s12">
-          <blockquote class=" page remove-bottom-margin"><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>       
-          <%= if Enum.count(@note.people) > 0 do %>
-            <blockquote class="page remove-bottom-margin">
-              <%= for person <- @note.people do %> 
-                <div class="chip">
-                  <%= display_image(person) %> 
-                  <%= person.firstname <> " " <> person.lastname  %>
-                </div>
-              <% end %>
-            </blockquote>
-          <% end %>
-            <blockquote class="page remove-bottom-margin">
-              <%= for tag <- @note.types do %> 
-                <div class="chip">
-                  <%= tag.name %>
-                </div>
-              <% end %>
-          </blockquote>
-         <div class="row page">
+          <blockquote class=" page "><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>   
+          <div class="row ">
             <div class="col s12">
               <div class="card z-depth-0 ">
-                <div class="card-contentno-padding ">
+                <div class="card-content  ">
                     <span class="card-title">Details</span>
-                    <p>
+                    <p >
                       <%= @note.details %>
                     </p> 
                 </div>
               </div>
             </div>
+          </div>    
+          <%= if Enum.count(@note.people) > 0 do %>
+            <div class="card z-depth-0 ">
+              <div class="card-content ">
+                  <span class="card-title">People</span>
+                  <%= for person <- @note.people do %> 
+                    <div class="chip truncate">
+                      <%= display_image(person) %> 
+                      <%= person.firstname <> " " <> person.lastname  %>
+                    </div>
+                  <% end %> 
+              </div>
+            </div>
+          <% end %>
+          <div class="card z-depth-0 ">
+              <div class="card-content ">
+                  <span class="card-title">Tags</span>
+                  <%= for type <- @note.types do %> 
+                    <div class="chip truncate">
+                      <%= type.name  %>
+                    </div>
+                  <% end %> 
+              </div>
+            </div>
+         
+          <%= form_for @changeset, Routes.note_comment_path(@conn, :create, @note), fn f -> %>
+            <div class="row page">
+              <div class="col s1 hide-on-medium-down "></div>
+              <div class="col s9 input-field ">
+                <%= label f, :details, "Leave a comment" %>
+                <%= textarea f, :details , [ class: set_field_class(f, :details, "validate materialize-textarea"), required: "true", type: "text"]%>
+                <%= error_tag_sportegic f, :details %>
+              </div>
+              <div class="col s1 ">
+                 <button  type="submit" class="btn comment-btn waves-effect waves-light blue lighten-2 ">
+                  <i class="large material-icons">add</i>
+                </button>
+              </div>
+            </div>
+          <% end %>
+
+          
+          <div class="col s12">
+          <%= if Enum.count(@note.comments) > 0 do %>
+            <%= for comment <- @note.comments do %> 
+                <div class="card z-depth-0 comment">
+                  <div class="card-content ">
+                      <blockquote class=""> <h6> On <%= readable_date!(comment.inserted_at) %> <%= comment.user.firstname <> " " <> comment.user.lastname %> commented: </h6></blockquote>
+                      <p > <%= comment.details %></p>
+                  </div>
+                  <%= if( comment.user.id == @conn.assigns.user.id) do %>
+                  <div class="card-action">
+                    <%= link to: Routes.note_comment_path(@conn, :delete, @note, comment), method: :delete, class: "btn-floating btn-small waves-effect waves-light red lighten-3 z-depth-0" do %>
+                      <i class="material-icons">delete</i>
+                    <% end %>
+                    
+                  </div>
+                  <% end %>
+                </div>
+              <% end %> 
+            <% end %> 
           </div>
+      
     </div>
+
+    
+    
   </div>
+  
 </div>
 <script> window.channel = "true" </script>
 <div>

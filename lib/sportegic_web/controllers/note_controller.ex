@@ -2,13 +2,10 @@ defmodule SportegicWeb.NoteController do
   use SportegicWeb, :controller
 
   alias Sportegic.Notes
-  alias Sportegic.Notes.Note
+  alias Sportegic.Notes.{Note, Comment}
 
   plug SportegicWeb.Plugs.Authenticate
   action_fallback SportegicWeb.FallbackController
-
-  # Allows for getting Types by LookupType
-  # @type_ref "Note Tags"
 
   def action(conn, _) do
     args = [conn, conn.params, conn.assigns.organisation, conn.assigns.permissions]
@@ -50,7 +47,8 @@ defmodule SportegicWeb.NoteController do
 
   def show(conn, %{"id" => id}, org, _permissions) do
     note = Notes.get_note!(id, org)
-    render(conn, "show.html", note: note)
+    changeset = Notes.change_comment(%Comment{})
+    render(conn, "show.html", note: note, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}, org, _permissions) do
@@ -69,7 +67,7 @@ defmodule SportegicWeb.NoteController do
         |> redirect(to: Routes.note_path(conn, :show, note))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "edit.html", changeset: changeset, note: note)
     end
   end
 

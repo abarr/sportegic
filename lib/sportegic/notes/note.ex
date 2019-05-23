@@ -5,6 +5,7 @@ defmodule Sportegic.Notes.Note do
   alias Sportegic.Users.User
   alias Sportegic.People.Person
   alias Sportegic.LookupTypes.Type
+  alias Sportegic.Notes.Comment
   alias Sportegic.Notes.NoteType
   alias Sportegic.Notes.NotePerson
 
@@ -12,7 +13,10 @@ defmodule Sportegic.Notes.Note do
     field(:event_date, :date)
     field(:subject, :string)
     field(:details, :string)
+
     belongs_to(:user, User)
+
+    has_many(:comments, Comment, on_delete: :delete_all)
 
     many_to_many(:types, Type, join_through: NoteType, on_replace: :delete)
     many_to_many(:people, Person, join_through: NotePerson, on_replace: :delete)
