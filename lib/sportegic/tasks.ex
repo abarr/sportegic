@@ -5,7 +5,7 @@ defmodule Sportegic.Tasks do
 
   import Ecto.Query, warn: false
   alias Sportegic.Repo
-  alias Sportegic.Tasks.TaskPeople
+  alias Sportegic.Tasks.TaskPerson
   alias Sportegic.Tasks.Task
   alias Sportegic.People
 
@@ -19,7 +19,9 @@ defmodule Sportegic.Tasks do
 
   """
   def list_tasks(org) do
-    Repo.all(Task, prefix: org)
+    Task
+    |> Repo.all(prefix: org)
+    |> Repo.preload(:people)
   end
 
   @doc """
@@ -36,7 +38,9 @@ defmodule Sportegic.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id, org), do: Repo.get!(Task, id, prefix: org)
+  def get_task!(id, org) do
+    Repo.get!(Task, id, prefix: org) |> Repo.preload(:people)
+  end
 
   @doc """
   Creates a task.
@@ -104,50 +108,51 @@ defmodule Sportegic.Tasks do
   end
 
   @doc """
-  Returns the list of task_people.
+  Returns the list of task_person.
 
   ## Examples
 
-      iex> list_task_people()
-      [%TaskPeople{}, ...]
+      iex> list_task_person()
+      [%TaskPerson{}, ...]
 
   """
-  def list_task_people(org) do
-    Repo.all(TaskPeople, prefix: org)
+  def list_task_person(org) do
+    Repo.all(TaskPerson, prefix: org)
   end
 
   @doc """
-  Gets a single task_people.
+  Gets a single task_person.
 
   Raises `Ecto.NoResultsError` if the Task people does not exist.
 
   ## Examples
 
-      iex> get_task_people!(123)
-      %TaskPeople{}
+      iex> task_person!(123)
+      %TaskPerson{}
 
-      iex> get_task_people!(456)
+      iex> task_person!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_task_people!(id, org), do: Repo.get!(TaskPeople, id, prefix: org)
+  def get_task_person!(id, org), do: Repo.get!(TaskPerson, id, prefix: org)
 
   @doc """
-  Creates a task_people.
+  Creates a task_person.
 
   ## Examples
 
-      iex> create_task_people(%{field: value})
-      {:ok, %TaskPeople{}}
+      iex> create_task_person(%{field: value})
+      {:ok, %TAskPerson{}}
 
-      iex> create_task_people(%{field: bad_value})
+      iex> create_task_person(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
   def create_task_person(task, person_text, org) when is_binary(person_text) do
     case People.get_person_by_name_dob(person_text, org) do
       person when is_map(person) ->
-        TaskPeople.changeset(%TaskPeople{}, %{
+        IO.inspect(person)
+        TaskPerson.changeset(%TaskPerson{}, %{
           task_id: task.id,
           people_id: person.id
         })
@@ -158,54 +163,54 @@ defmodule Sportegic.Tasks do
     end
   end
 
-  def create_task_people(task, people_list, org) when is_list(people_list) do
+  def create_task_person(task, people_list, org) when is_list(people_list) do
     Enum.each(people_list, &create_task_person(task, &1, org))
   end
 
   @doc """
-  Updates a task_people.
+  Updates a ttask_person.
 
   ## Examples
 
-      iex> update_task_people(task_people, %{field: new_value})
-      {:ok, %TaskPeople{}}
+      iex> update_task_person(task_person, %{field: new_value})
+      {:ok, %TaskPerson{}}
 
-      iex> update_task_people(task_people, %{field: bad_value})
+      iex> update_task_person(task_person, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_task_people(%TaskPeople{} = task_people, attrs, org) do
-    task_people
-    |> TaskPeople.changeset(attrs)
+  def update_task_person(%TaskPerson{} = task_person, attrs, org) do
+    task_person
+    |> TaskPerson.changeset(attrs)
     |> Repo.update(prefix: org)
   end
 
   @doc """
-  Deletes a TaskPeople.
+  Deletes a TaskPerson.
 
   ## Examples
 
-      iex> delete_task_people(task_people)
-      {:ok, %TaskPeople{}}
+      iex> delete_task_person(task_person)
+      {:ok, %TaskPerson{}}
 
-      iex> delete_task_people(task_people)
+      iex> delete_task_person(task_person)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_task_people(%TaskPeople{} = task_people, org) do
-    Repo.delete(task_people, prefix: org)
+  def delete_task_person(%TaskPerson{} = task_person, org) do
+    Repo.delete(task_person, prefix: org)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking task_people changes.
+  Returns an `%Ecto.Changeset{}` for tracking task_person changes.
 
   ## Examples
 
-      iex> change_task_people(task_people)
-      %Ecto.Changeset{source: %TaskPeople{}}
+      iex> change_task_person(task_person)
+      %Ecto.Changeset{source: %TaskPerson{}}
 
   """
-  def change_task_people(%TaskPeople{} = task_people) do
-    TaskPeople.changeset(task_people, %{})
+  def change_task_person(%TaskPerson{} = task_person) do
+    TaskPerson.changeset(task_person, %{})
   end
 end

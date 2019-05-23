@@ -1,15 +1,15 @@
-defmodule Sportegic.Repo.Migrations.CreateTaskPeople do
+defmodule Sportegic.Repo.Migrations.CreateTaskPerson do
   use Ecto.Migration
 
   def change do
-    create table(:task_people) do
+    create table(:task_person) do
       add :task_id, references(:tasks, on_delete: :nothing)
-      add :people_id, references(:people, on_delete: :nothing)
+      add :person_id, references(:people, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:task_people, [:task_id])
-    create index(:task_people, [:people_id])
+    create index(:task_person, [:task_id])
+    create index(:task_person, [:person_id])
   end
 end

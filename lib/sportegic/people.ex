@@ -56,6 +56,7 @@ defmodule Sportegic.People do
 
   # name will include DOB in format "FIRSTNAME LASTNAME (MNTH, DAY, YEAR)"
   def get_person_by_name_dob(name, org) when is_binary(name) do
+    IO.inspect(name)
     [firstname, lastname | _] = String.split(name, " ")
     [_, dob] = String.splitter(name, ["(", ")"]) |> Enum.take(2)
 

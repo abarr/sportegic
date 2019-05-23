@@ -8,6 +8,8 @@ defmodule Sportegic.People.Person do
   alias Sportegic.People.{Document, Visa, InsurancePolicy}
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NotePerson
+  alias Sportegic.Tasks.Task
+  alias Sportegic.Tasks.TaskPerson
 
   schema "people" do
     field(:dob, :date)
@@ -24,6 +26,7 @@ defmodule Sportegic.People.Person do
     has_many(:visa, Visa)
 
     many_to_many(:notes, Note, join_through: NotePerson)
+    many_to_many(:tasks, Task, join_through: TaskPerson)
 
     timestamps()
   end

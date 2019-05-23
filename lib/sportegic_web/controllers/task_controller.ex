@@ -36,8 +36,7 @@ defmodule SportegicWeb.TaskController do
         case Map.has_key?(task_params, "people") do
           true ->
             %{"people" => people_list} = task_params
-            Tasks.create_task_people(task, people_list, org)
-
+            Tasks.create_task_person(task, people_list, org)
           _ ->
             nil
         end

@@ -1,18 +1,59 @@
-<h1>Show Task</h1>
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.task_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2 truncate">Task</h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="row page">
+    <div class="col s12">
+          <div class="row ">
+            <div class="col s12">
+              <div class="card z-depth-0 ">
+                <div class="card-content  ">
+                    <span class="card-title">Action</span>
+                    <p >
+                      <%= @task.action %>
+                    </p> 
+                </div>
+              </div>
+            </div>
+          </div>    
+          <%= if Enum.count(@task.people) > 0 do %>
+            <div class="card z-depth-0 ">
+              <div class="card-content ">
+                  <span class="card-title">People</span>
+                  <%= for person <- @note.people do %> 
+                    <div class="chip truncate">
+                      <%= display_image(person) %> 
+                      <%= person.firstname <> " " <> person.lastname  %>
+                    </div>
+                  <% end %> 
+              </div>
+            </div>
+          <% end %>
+    </div>
 
-<ul>
+    
+    
+  </div>
+  
+</div>
+<script> window.channel = "true" </script>
+<div>
+    <div class="fixed-action-btn ">
+      <%= link to: Routes.note_path(@conn, :edit, @note), class: "btn-floating btn-large grey"  do %>
+        <i class="large material-icons">edit</i>
+      <% end %>
+    </div>
+</div>
 
-  <li>
-    <strong>Due date:</strong>
-    <%= @task.due_date %>
-  </li>
 
-  <li>
-    <strong>Action:</strong>
-    <%= @task.action %>
-  </li>
 
-</ul>
-
-<span><%= link "Edit", to: Routes.task_path(@conn, :edit, @task) %></span>
-<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>

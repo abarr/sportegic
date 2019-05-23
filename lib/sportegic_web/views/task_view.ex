@@ -1,6 +1,14 @@
 defmodule SportegicWeb.TaskView do
   use SportegicWeb, :view
 
+  alias Sportegic.People.Avatar
+
+  def display_image(person) do
+    {person.profile_image, person}
+    |> Avatar.url(:thumb)
+    |> img_tag()
+  end
+
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
     if error = errors[field] do
       {msg, _} = error

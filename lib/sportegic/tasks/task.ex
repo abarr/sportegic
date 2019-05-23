@@ -4,7 +4,7 @@ defmodule Sportegic.Tasks.Task do
 
   alias Sportegic.Users.User
   alias Sportegic.People.Person
-  alias Sportegic.Tasks.TaskPeople
+  alias Sportegic.Tasks.TaskPerson
 
   schema "tasks" do
     field(:action, :string)
@@ -13,7 +13,7 @@ defmodule Sportegic.Tasks.Task do
     belongs_to(:user, User)
     belongs_to(:assignee, User, foreign_key: :assignee_id)
 
-    many_to_many(:people, Person, join_through: TaskPeople, on_replace: :delete)
+    many_to_many(:people, Person, join_through: TaskPerson, on_replace: :delete)
 
     timestamps()
   end

@@ -65,7 +65,7 @@ defmodule Sportegic.TasksTest do
   end
 
   describe "task_people" do
-    alias Sportegic.Tasks.TaskPeople
+    alias Sportegic.Tasks.TaskPerson
 
     @valid_attrs %{}
     @update_attrs %{}
@@ -91,7 +91,7 @@ defmodule Sportegic.TasksTest do
     end
 
     test "create_task_people/1 with valid data creates a task_people" do
-      assert {:ok, %TaskPeople{} = task_people} = Tasks.create_task_people(@valid_attrs)
+      assert {:ok, %TaskPerson{} = task_people} = Tasks.create_task_people(@valid_attrs)
     end
 
     test "create_task_people/1 with invalid data returns error changeset" do
@@ -100,7 +100,7 @@ defmodule Sportegic.TasksTest do
 
     test "update_task_people/2 with valid data updates the task_people" do
       task_people = task_people_fixture()
-      assert {:ok, %TaskPeople{} = task_people} = Tasks.update_task_people(task_people, @update_attrs)
+      assert {:ok, %TaskPerson{} = task_people} = Tasks.update_task_people(task_people, @update_attrs)
     end
 
     test "update_task_people/2 with invalid data returns error changeset" do
@@ -111,7 +111,7 @@ defmodule Sportegic.TasksTest do
 
     test "delete_task_people/1 deletes the task_people" do
       task_people = task_people_fixture()
-      assert {:ok, %TaskPeople{}} = Tasks.delete_task_people(task_people)
+      assert {:ok, %TaskPerson{}} = Tasks.delete_task_people(task_people)
       assert_raise Ecto.NoResultsError, fn -> Tasks.get_task_people!(task_people.id) end
     end
 
