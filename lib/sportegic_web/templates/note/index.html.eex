@@ -33,7 +33,7 @@
               <td><%= note.user.firstname <> " " <> note.user.lastname %></td>
               <td>
               <%= for tag <- note.types do %>
-                <div class="chip">
+                <div class="chip truncate">
                   <%= tag.name %>
                 </div>
               <% end %>
@@ -41,7 +41,7 @@
               <td>
                 
                 <%= for person <- note.people do %> 
-                  <div class="chip">
+                  <div class="chip truncate">
                     <%= display_image(person) %> 
                     <%= person.firstname <> " " <> person.lastname %>
                   </div>
