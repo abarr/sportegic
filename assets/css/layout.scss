@@ -179,6 +179,9 @@ header, main {
 .no-padding{
     padding: 0px;
 }
+.remove-padding-top{
+    padding: 0px;
+}
 
 .note-title {
     font-size: 20px !important;
@@ -206,6 +209,12 @@ header, main {
       background: white;
 
 
+  }
+
+  .card.task {
+    border-radius:2px;
+    border:1px solid #ddd;
+    
   }
 
 

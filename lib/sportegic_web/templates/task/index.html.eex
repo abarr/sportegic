@@ -9,12 +9,57 @@
       <div class="divider"></div>
     </div>
 
-    <div class="row page">
+    <div class="row page remove-bottom-margin remove-padding-top">
+      
+          <div class="col s12 m12 l6">
+            <ul class="tabs  z-depth-0 ">
+              <li class="tab"><a class="active" href="#assigned">My Tasks</a></li>
+              <li class="tab"><a  href="#created">Tasks Created</a></li>
+            </ul>
+          </div>
+      
+    </div>
+
+    <div  id="assigned" class="row ">
       <div class="col s12">
+        
+            <div class="card z-depth-0 task">
+              <div class="card-content">
+                
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+
+            <div class="card z-depth-0 task">
+              <div class="card-content">
+                
+              </div>
+              <div class="card-action grey-text">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+              </div>
+            </div>
+        
+      </div>
+    </div>
+    <div  id="created" class="row">
+      <div class="col s12">
+        <div class="card z-depth-0 task">
+              <div class="card-content">
+                
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+              </div>
+            </div>
       </div>
     </div>
 </div>
-
+    
 <div>
     <div class="fixed-action-btn ">
       <%= link to: Routes.task_path(@conn, :new), class: "btn-floating btn-large blue"  do %>
