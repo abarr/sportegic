@@ -65,9 +65,13 @@ defmodule Sportegic.People do
       |> Timex.parse!("{Mfull} {D}, {YYYY}")
       |> Timex.to_date()
 
+    IO.inspect(firstname)
+    IO.inspect(lastname)
+    IO.inspect(dob)
+
     Person
     |> Repo.get_by([firstname: firstname, lastname: lastname, dob: dob], prefix: org)
-    
+    |> IO.inspect()
   end
 
   @doc """

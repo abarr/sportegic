@@ -24,12 +24,15 @@ defmodule SportegicWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params}, org, _permissions) do
+    IO.puts("CREATE")
     %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
+    IO.inspect(user_id)
 
     task_params =
       task_params
       |> Map.put("user_id", conn.assigns.user.id)
       |> Map.put("assignee_id", user_id)
+      |> IO.inspect()
 
     case Tasks.create_task(task_params, org) do
       {:ok, task} ->
@@ -37,6 +40,7 @@ defmodule SportegicWeb.TaskController do
           true ->
             %{"people" => people_list} = task_params
             Tasks.create_task_person(task, people_list, org)
+
           _ ->
             nil
         end

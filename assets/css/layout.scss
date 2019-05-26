@@ -217,6 +217,20 @@ header, main {
     
   }
 
+blockquote.task-info{
+  border-left: 5px solid #64b5f6; /* Just change the color value and that's it*/
+}
+blockquote.task-success{
+  border-left: 5px solid #6ff576; /* Just change the color value and that's it*/
+}
+blockquote.task-danger{
+  border-left: 5px solid #f66464; /* Just change the color value and that's it*/
+}
+
+.add-padding-right{
+    padding-right: 20em;
+}
+
 
 
 

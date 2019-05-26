@@ -39,7 +39,7 @@ defmodule Sportegic.Tasks do
 
   """
   def get_task!(id, org) do
-    Repo.get!(Task, id, prefix: org) |> Repo.preload(:people)
+    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user])
   end
 
   @doc """
@@ -55,6 +55,8 @@ defmodule Sportegic.Tasks do
 
   """
   def create_task(attrs \\ %{}, org) do
+    IO.puts("CREATE TASK")
+
     %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert(prefix: org)
@@ -149,12 +151,13 @@ defmodule Sportegic.Tasks do
 
   """
   def create_task_person(task, person_text, org) when is_binary(person_text) do
+    IO.puts("CREATE TASK PERSON")
+
     case People.get_person_by_name_dob(person_text, org) do
       person when is_map(person) ->
-        IO.inspect(person)
         TaskPerson.changeset(%TaskPerson{}, %{
           task_id: task.id,
-          people_id: person.id
+          person_id: person.id
         })
         |> Repo.insert!(prefix: org)
 

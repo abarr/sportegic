@@ -9,6 +9,7 @@ defmodule Sportegic.Tasks.Task do
   schema "tasks" do
     field(:action, :string)
     field(:due_date, :date)
+    field(:completed, :boolean)
 
     belongs_to(:user, User)
     belongs_to(:assignee, User, foreign_key: :assignee_id)
@@ -21,7 +22,7 @@ defmodule Sportegic.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:due_date, :action, :user_id, :assignee_id])
+    |> cast(attrs, [:due_date, :action, :user_id, :assignee_id, :completed])
     |> validate_required([:due_date, :action, :user_id, :assignee_id])
   end
 end

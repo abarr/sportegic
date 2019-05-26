@@ -9,6 +9,16 @@ defmodule SportegicWeb.TaskView do
     |> img_tag()
   end
 
+  def display_status(complete) do
+    case complete do
+      true ->
+        "<span class='new badge green right lighten-2' data-badge-caption='COMPLETED'></span>"
+
+      _ ->
+        "<span class='new badge red right lighten-2' data-badge-caption='PENDING'></span>"
+    end
+  end
+
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
     if error = errors[field] do
       {msg, _} = error
