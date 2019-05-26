@@ -221,7 +221,7 @@ blockquote.task-info{
   border-left: 5px solid #64b5f6; /* Just change the color value and that's it*/
 }
 blockquote.task-success{
-  border-left: 5px solid #6ff576; /* Just change the color value and that's it*/
+  border-left: 5px solid #92d895; /* Just change the color value and that's it*/
 }
 blockquote.task-danger{
   border-left: 5px solid #f66464; /* Just change the color value and that's it*/
@@ -231,6 +231,9 @@ blockquote.task-danger{
     padding-right: 20em;
 }
 
+.trix-button-group{
+    border-bottom-color: #ccc !important;
+}
 
 
 

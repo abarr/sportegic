@@ -23,25 +23,15 @@
     <div  id="assigned" class="row ">
       <div class="col s12">
         
-            <div class="card z-depth-0 task">
+            <div class="card horizontal z-depth-0 task">
+              <div class="card-image">5</div>
               <div class="card-content">
                 
               </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-              </div>
+              
             </div>
 
-            <div class="card z-depth-0 task">
-              <div class="card-content">
-                
-              </div>
-              <div class="card-action grey-text">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-              </div>
-            </div>
+            
         
       </div>
     </div>

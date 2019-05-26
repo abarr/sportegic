@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);
 
-
+    
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)

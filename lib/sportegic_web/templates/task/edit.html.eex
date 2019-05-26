@@ -1,5 +1,23 @@
-<h1>Edit Task</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :update, @task)) %>
-
-<span><%= link "Back", to: Routes.task_path(@conn, :index) %></span>
+<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/trix.css") %>"/>
+<script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/trix.js") %>"></script>
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.task_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2">Edit Task</h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="row page">
+    <div class="col s12">
+        <%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :update, @task)) %>
+    </div>
+  </div>
+</div>
+<script> window.channel = "true" </script>

@@ -9,6 +9,10 @@ defmodule SportegicWeb.TaskView do
     |> img_tag()
   end
 
+  def display_action(action) do
+    Jason.decode(action)
+  end
+
   def display_status(complete) do
     case complete do
       true ->
