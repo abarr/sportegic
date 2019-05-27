@@ -14,8 +14,13 @@ defmodule SportegicWeb.TaskController do
   end
 
   def index(conn, _params, org, _permissions) do
-    tasks = Tasks.list_tasks(org)
-    render(conn, "index.html", tasks: tasks)
+    tasks_assigned = Tasks.list_tasks_assigned(conn.assigns.user.id, org)
+    tasks_created = Tasks.list_tasks_created(conn.assigns.user.id, org)
+
+    render(conn, "index.html",
+      tasks_assigned: tasks_assigned,
+      tasks_created: tasks_created
+    )
   end
 
   def new(conn, _params, _org, _permissions) do

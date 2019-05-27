@@ -8,6 +8,7 @@ defmodule Sportegic.Tasks do
   alias Sportegic.Tasks.TaskPerson
   alias Sportegic.Tasks.Task
   alias Sportegic.People
+  alias Sportegic.Users.User
 
   @doc """
   Returns the list of tasks.
@@ -18,10 +19,22 @@ defmodule Sportegic.Tasks do
       [%Task{}, ...]
 
   """
-  def list_tasks(org) do
+  def list_tasks_assigned(id, org) do
     Task
+    |> join(:inner, [t], u in User, on: t.assignee_id == ^id)
+    |> distinct(true)
+    |> order_by([t, u], asc: t.due_date)
     |> Repo.all(prefix: org)
-    |> Repo.preload(:people)
+    |> Repo.preload([:people, :user])
+  end
+
+  def list_tasks_created(id, org) do
+    Task
+    |> join(:inner, [t], u in User, on: t.user_id == ^id)
+    |> distinct(true)
+    |> order_by([t, u], asc: t.due_date)
+    |> Repo.all(prefix: org)
+    |> Repo.preload([:people, :assignee])
   end
 
   @doc """
@@ -39,7 +52,7 @@ defmodule Sportegic.Tasks do
 
   """
   def get_task!(id, org) do
-    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user])
+    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user, :assignee])
   end
 
   @doc """

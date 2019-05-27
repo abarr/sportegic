@@ -9,7 +9,7 @@
       <div class="divider"></div>
     </div>
 
-    <div class="row page remove-bottom-margin remove-padding-top">
+    <div class="row page remove-padding-top">
       
           <div class="col s12 m12 l6">
             <ul class="tabs  z-depth-0 ">
@@ -22,31 +22,53 @@
 
     <div  id="assigned" class="row ">
       <div class="col s12">
-        
-            <div class="card horizontal z-depth-0 task">
-              <div class="card-image">5</div>
-              <div class="card-content">
-                
+        <%= for task <- @tasks_assigned do %>
+        <div class="card horizontal z-depth-0 task">
+          <a class="card-content width-100 task-padding" href='<%= "/tasks/" <> Integer.to_string(task.id) %>'>
+          
+            <div class="row no-padding remove-bottom-margin">
+              <%= raw(display_days(days_until(task.due_date))) %>
+              <div class="col s4 l2 task-border">
+                <span class="task-label">Created by:</span><br>
+                <span class=""><%= task.user.firstname <> " " <> task.user.lastname %> </span>
               </div>
-              
+              <div class="col s4 l8 ">
+                <span class="task-label">Action:</span><br>
+                <span class="truncate ">
+                  <%= sanitize_html_to_text(task.action) %>
+                </span>
+              </div>
             </div>
+          </a>
+        </div>
+        <% end %>
 
-            
         
+      
       </div>
     </div>
     <div  id="created" class="row">
       <div class="col s12">
-        <div class="card z-depth-0 task">
-              <div class="card-content">
-                
+        <%= for task <- @tasks_created do %>
+        <div class="card horizontal z-depth-0 task">
+          <a class="card-content width-100 task-padding" href='<%= "/tasks/" <> Integer.to_string(task.id) %>'>
+          
+            <div class="row no-padding remove-bottom-margin">
+              <%= raw(display_days(days_until(task.due_date))) %>
+              <div class="col s4 l2 task-border">
+                <span class="task-label">Assigned to:</span><br>
+                <span class=""><%= task.assignee.firstname <> " " <> task.assignee.lastname %> </span>
               </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
+              <div class="col s4 l8 ">
+                <span class="task-label">Action:</span><br>
+                <span class="truncate ">
+                  <%= sanitize_html_to_text(task.action) %>
+                </span>
               </div>
             </div>
-      </div>
+          </a>
+        </div>
+        <% end %>
     </div>
 </div>
     

@@ -135,6 +135,9 @@ header, main {
 .remove-bottom-margin{
     margin-bottom: 0px !important;
 }
+.add-bottom-margin{
+    margin-bottom: 15px !important;
+}
 
 .margin-right{
     margin-right: 10px;
@@ -180,7 +183,11 @@ header, main {
     padding: 0px;
 }
 .remove-padding-top{
-    padding: 0px;
+    padding-top: 0px;
+}
+
+.remove-padding-bottom{
+    padding-bottom: 0px !important;
 }
 
 .note-title {
@@ -235,7 +242,59 @@ blockquote.task-danger{
     border-bottom-color: #ccc !important;
 }
 
+.no-padding{
+    padding: 0px;
+}
 
+.task-days-away{
+    width: 100px;
+    border-right: 1px solid rgb(214, 214, 214);
+    text-align: center !important;
+}
+
+.width-100{
+    width: 100%;
+}
+
+.task-list{
+    width: 150px;
+}
+
+.task-label {
+    color: #9e9e9e;
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: .75rem;
+    text-align: left;
+    margin-top: 2px;
+    
+}
+
+.card-content.task-padding{
+    padding: 10px;
+    
+}
+a.card-content{
+    text-decoration-color: #9e9e9e !important;
+    color: #9e9e9e !important;
+}
+a.card-content:hover{
+    background: #ecebeb;
+    color: #9e9e9e !important;
+}
+.task-border{
+    border-right: 1px solid rgb(219, 219, 219);
+}
+.card.horizontal.task{
+    margin: 5px !important;
+}
+.task-display{
+    white-space: nowrap;
+}
+.no-bottom-margin{
+    margin-bottom: 0px !important;
+}
 
 
 

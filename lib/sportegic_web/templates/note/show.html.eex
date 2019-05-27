@@ -14,11 +14,11 @@
   </div>
   <div class="row page">
     <div class="col s12">
-          <blockquote class=" page "><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>   
-          <div class="row ">
+          <blockquote class=" page no-bottom-margin"><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>   
+          <div class="row remove-bottom-margin">
             <div class="col s12">
               <div class="card z-depth-0 ">
-                <div class="card-content  ">
+                <div class="card-content  remove-padding-bottom">
                     <span class="card-title">Details</span>
                     <p >
                       <%= @note.details %>
@@ -29,7 +29,7 @@
           </div>    
           <%= if Enum.count(@note.people) > 0 do %>
             <div class="card z-depth-0 ">
-              <div class="card-content ">
+              <div class="card-content remove-padding-bottom">
                   <span class="card-title">People</span>
                   <%= for person <- @note.people do %> 
                     <div class="chip truncate">
@@ -41,7 +41,7 @@
             </div>
           <% end %>
           <div class="card z-depth-0 ">
-              <div class="card-content ">
+              <div class="card-content remove-padding-bottom">
                   <span class="card-title">Tags</span>
                   <%= for type <- @note.types do %> 
                     <div class="chip truncate">
@@ -73,7 +73,7 @@
             <%= for comment <- @note.comments do %> 
                 <div class="card z-depth-0 comment">
                   <div class="card-content ">
-                      <blockquote class=""> <h6> On <%= readable_date!(comment.inserted_at) %> <%= comment.user.firstname <> " " <> comment.user.lastname %> commented: </h6></blockquote>
+                      <h6> On <%= readable_date!(comment.inserted_at) %> <%= comment.user.firstname <> " " <> comment.user.lastname %> commented: </h6>
                       <p > <%= comment.details %></p>
                   </div>
                   <%= if( comment.user.id == @conn.assigns.user.id) do %>

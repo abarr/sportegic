@@ -2,6 +2,7 @@ defmodule SportegicWeb.TaskView do
   use SportegicWeb, :view
 
   alias Sportegic.People.Avatar
+  alias HtmlSanitizeEx
 
   def display_image(person) do
     {person.profile_image, person}
@@ -11,6 +12,85 @@ defmodule SportegicWeb.TaskView do
 
   def display_action(action) do
     Jason.decode(action)
+  end
+
+  def time_until_date(days, date) do
+    case days do
+      n when is_integer(n) and n == 0 ->
+        "<blockquote class='page task-info'><h6 class='red-text'>This task is due today.</h6></blockquote>"
+
+      n when is_integer(n) and n < 0 ->
+        abs_days = days |> abs() |> Integer.to_string()
+
+        case abs_days do
+          "1" ->
+            "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
+              abs_days <> " day. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+
+          _ ->
+            "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
+              abs_days <> " days. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+        end
+
+      n when is_integer(n) and n > 0 ->
+        case n do
+          1 ->
+            "<blockquote class='page task-success'><h6>This task is due in " <>
+              Integer.to_string(days) <>
+              " day. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+
+          _ ->
+            "<blockquote class='page task-success'><h6>This task is due in " <>
+              Integer.to_string(days) <>
+              " days. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+        end
+    end
+  end
+
+  def display_days(days_until) do
+    case days_until do
+      n when is_integer(n) and n == 0 ->
+        "<div class=\"col s3 l2 center task-border\">
+          <span class=\"task-label red-text lighten-2\">Due:</span><br>
+          <span class=\"align-center red-text lighten-2\">Today</span>
+        </div>"
+
+      n when is_integer(n) and n < 0 ->
+        days = Integer.to_string(abs(n))
+        n = abs(n)
+
+        case n do
+          1 ->
+            "<div class=\"col s3 l2 center task-border\">
+              <span class=\"task-label red-text lighten-2\">Overdue by:</span><br>
+              <span class=\"align-center red-text lighten-2\">#{days} day</span>
+            </div>"
+
+          _ ->
+            "<div class=\"col s3 l2 center task-border\">
+              <span class=\"task-label red-text lighten-2\">Overdue by:</span><br>
+              <span class=\"align-center red-text lighten-2\">#{days} days</span>
+            </div>"
+        end
+
+      n when is_integer(n) and n > 0 ->
+        days = Integer.to_string(n)
+        n = abs(n)
+
+        case n do
+          1 ->
+            "<div class=\"col s3 l2 center task-border\">
+              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
+              <span class=\"align-center grey-text lighten-2\">#{days} day</span>
+            </div>"
+
+          _ ->
+            "<div class=\"col s3 l2 center task-border\">
+              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
+              <span class=\"align-center grey-text lighten-2\">#{days} days</span>
+            </div>"
+        end
+    end
   end
 
   def display_status(complete) do
@@ -56,4 +136,15 @@ defmodule SportegicWeb.TaskView do
   end
 
   def set_field_class(_form, _field, classes), do: classes
+
+  def sanitize_html_to_text(text) do
+    text
+    |> String.replace(~r/<li>/, "\\g{1}- ", global: true)
+    |> String.replace(
+      ~r/<\/?\s?br>|<\/\s?p>|<\/\s?li>|<\/\s?div>|<\/\s?h.>/,
+      "\\g{1}\n\r",
+      global: true
+    )
+    |> HtmlSanitizeEx.strip_tags()
+  end
 end

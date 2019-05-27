@@ -21,9 +21,12 @@ let Tasks = {
             .receive("ok", resp => { console.log("Joined successfully", resp) })
             .receive("error", resp => { console.log("Unable to join", resp) })
 
-        el.addEventListener("keyup", event => {
-            channel.push("search", { token: window.token, org: window.org });
-        });
+        if (el) {
+            el.addEventListener("keyup", event => {
+                channel.push("search", { token: window.token, org: window.org });
+            });
+
+        }
 
         channel.on(`users:${window.token}`, results => {
             search.updateData(results.payload)
