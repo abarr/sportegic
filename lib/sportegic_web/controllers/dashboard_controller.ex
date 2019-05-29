@@ -1,7 +1,7 @@
 defmodule SportegicWeb.DashboardController do
   use SportegicWeb, :controller
 
-  alias Sportegic.Users
+  alias Sportegic.Tasks
 
   plug SportegicWeb.Plugs.Authenticate
 
@@ -11,16 +11,14 @@ defmodule SportegicWeb.DashboardController do
   end
 
   def index(conn, _params, org) do
-    case Users.get_user(conn.assigns.current_user.id, org) do
-      {:ok, nil} ->
-        conn
-        |> redirect(to: Routes.user_path(conn, :new))
+    my_tasks = Tasks.count_assigned_tasks(conn.assigns.user.id, org)
+    my_overdue_tasks = Tasks.count_overdue_tasks(conn.assigns.user.id, org)
+    my_tasks_due_today = Tasks.count_tasks_due_today(conn.assigns.user.id, org)
 
-      {:ok, user} ->
-        render(conn, "index.html", user: user)
-
-      resp ->
-        IO.inspect(resp, label: "Dashboard Index resp")
-    end
+    render(conn, "index.html",
+      my_tasks: my_tasks,
+      my_overdue_tasks: my_overdue_tasks,
+      my_tasks_due_today: my_tasks_due_today
+    )
   end
 end

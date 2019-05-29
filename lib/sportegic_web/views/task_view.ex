@@ -17,7 +17,7 @@ defmodule SportegicWeb.TaskView do
   def time_until_date(days, date) do
     case days do
       n when is_integer(n) and n == 0 ->
-        "<blockquote class='page task-info'><h6 class='red-text'>This task is due today.</h6></blockquote>"
+        "<blockquote class='page task-danger'><h6 class='red-text'>This task is due today.</h6></blockquote>"
 
       n when is_integer(n) and n < 0 ->
         abs_days = days |> abs() |> Integer.to_string()

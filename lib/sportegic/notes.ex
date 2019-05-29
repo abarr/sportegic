@@ -26,6 +26,7 @@ defmodule Sportegic.Notes do
   """
   def list_notes(org) do
     Note
+    |> order_by([n], desc: n.inserted_at)
     |> Repo.all(prefix: org)
     |> Repo.preload([:types, :user, :people])
   end
@@ -66,7 +67,6 @@ defmodule Sportegic.Notes do
     %Note{}
     |> Note.changeset(attrs)
     |> Repo.insert(prefix: org)
-    
   end
 
   @doc """
@@ -212,7 +212,7 @@ defmodule Sportegic.Notes do
   def get_updated_people_tags(updated_people \\ [], org) when is_list(updated_people) do
     updated_people
     |> Enum.map(&People.get_person_by_name_dob(&1, org))
-    |> IO.inspect
+    |> IO.inspect()
   end
 
   @doc """
@@ -352,9 +352,6 @@ defmodule Sportegic.Notes do
     NotePerson.changeset(note_person, %{})
   end
 
-  
-  
-  
   @doc """
   Creates a comment.
 
@@ -368,16 +365,15 @@ defmodule Sportegic.Notes do
 
   """
   def create_comment(note_id, user_id, attrs \\ %{}, org) do
-    attrs = attrs
-    |> Map.put("user_id", user_id)
-    |> Map.put("note_id", note_id)
+    attrs =
+      attrs
+      |> Map.put("user_id", user_id)
+      |> Map.put("note_id", note_id)
 
     %Comment{}
     |> Comment.changeset(attrs)
     |> Repo.insert(prefix: org)
   end
-
-
 
   def get_comment!(id, org) do
     Comment

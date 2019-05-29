@@ -2,6 +2,7 @@ defmodule Sportegic.Tasks do
   @moduledoc """
   The Tasks context.
   """
+  use Timex
 
   import Ecto.Query, warn: false
   alias Sportegic.Repo
@@ -26,6 +27,45 @@ defmodule Sportegic.Tasks do
     |> order_by([t, u], asc: t.due_date)
     |> Repo.all(prefix: org)
     |> Repo.preload([:people, :user])
+  end
+
+  def count_assigned_tasks(id, org) do
+    query =
+      from(t in Task,
+        join: u in User,
+        on: u.id == ^id,
+        select: {t.id}
+      )
+
+    Repo.aggregate(query, :count, :id, prefix: org)
+  end
+
+  def count_overdue_tasks(id, org) do
+    today = Timex.today()
+
+    query =
+      from(t in Task,
+        join: u in User,
+        on: u.id == ^id,
+        where: t.due_date < ^today,
+        select: {t.id}
+      )
+
+    Repo.aggregate(query, :count, :id, prefix: org)
+  end
+
+  def count_tasks_due_today(id, org) do
+    today = Timex.today()
+
+    query =
+      from(t in Task,
+        join: u in User,
+        on: u.id == ^id,
+        where: t.due_date == ^today,
+        select: {t.id}
+      )
+
+    Repo.aggregate(query, :count, :id, prefix: org)
   end
 
   def list_tasks_created(id, org) do

@@ -6,8 +6,11 @@
           <%= link to: Routes.note_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
-          <h5 class="heading grey-text lighten-2 truncate">Subject: <%= @note.subject %> </h5>
+          <span class="truncate"> 
+            <h5 class="heading grey-text lighten-2  left">Subject: <%= @note.subject %> </h5>
+          </span>
         </div>
+        
       </div>
       <div class="divider"></div>
     </div>
@@ -30,7 +33,7 @@
           <%= if Enum.count(@note.people) > 0 do %>
             <div class="card z-depth-0 ">
               <div class="card-content remove-padding-bottom">
-                  <span class="card-title">People</span>
+                  <span class="card-title">Associated People</span>
                   <%= for person <- @note.people do %> 
                     <div class="chip truncate">
                       <%= display_image(person) %> 

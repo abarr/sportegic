@@ -9,7 +9,7 @@
       <div class="divider"></div>
     </div>
 
-    <div class="row page remove-padding-top">
+    <div class="row page remove-bottom-margin">
       
           <div class="col s12 m12 l6">
             <ul class="tabs  z-depth-0 ">

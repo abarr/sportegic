@@ -8,6 +8,7 @@ defmodule Sportegic.Notes.Note do
   alias Sportegic.Notes.Comment
   alias Sportegic.Notes.NoteType
   alias Sportegic.Notes.NotePerson
+  alias Sportegic.Tasks.Task
 
   schema "notes" do
     field(:event_date, :date)
@@ -15,7 +16,7 @@ defmodule Sportegic.Notes.Note do
     field(:details, :string)
 
     belongs_to(:user, User)
-
+    has_one(:task, Task, on_delete: :nothing)
     has_many(:comments, Comment, on_delete: :delete_all)
 
     many_to_many(:types, Type, join_through: NoteType, on_replace: :delete)

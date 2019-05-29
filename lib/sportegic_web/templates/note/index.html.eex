@@ -9,54 +9,46 @@
       <div class="divider"></div>
     </div>
 
-    <div class="row page">
+     <div class="row page">
       <div class="col s12">
-        <table class="highlight responsive-table">
-          <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Note Created</th>
-                <th>Event Date</th>
-                <th>Owner</th>
-                <th>Tags</th>
-                <th>People</th>
-                <th class="right-align">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          <%= for note <- @notes do %>
-            <tr>
+        <%= for note <- @notes do %>
+          <div class="card horizontal z-depth-0 task">
+            <a class="card-content width-100 task-padding" href='<%= "/notes/" <> Integer.to_string(note.id) %>'>
             
-              <td ><%= note.subject %></td>
-              <td><%= readable_date!(note.inserted_at) %></td>
-              <td><%= readable_date!(note.event_date) %></td>
-              <td><%= note.user.firstname <> " " <> note.user.lastname %></td>
-              <td>
-              <%= for tag <- note.types do %>
-                <div class="chip truncate">
-                  <%= tag.name %>
+              <div class="row no-padding remove-bottom-margin">
+                <div class="col s3 m2 l2 note-list task-border">
+                  <span class="task-label">Created:</span><br>
+                  <span class=""><%= readable_date!(note.inserted_at) %> </span>
                 </div>
-              <% end %>
-              </td>
-              <td>
-                
-                <%= for person <- note.people do %> 
-                  <div class="chip truncate">
-                    <%= display_image(person) %> 
-                    <%= person.firstname <> " " <> person.lastname %>
-                  </div>
-                <% end %>
-              
-              </td>
-              <td class="right-align"> 
-                <%= link to: Routes.note_path(@conn, :show, note ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
-                  <i class="far fa-book-open fa-fw "></i>
-                <% end %>
-              </td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>  
+                <div class="col s2 task-border note-list hide-on-small-only">
+                  <span class="task-label">Created by:</span><br>
+                  <span class=""><%= note.user.firstname <> " " <> note.user.lastname %> </span>
+                </div>
+                <div class="col s3 task-border note-list">
+                  <span class="task-label">Tags:</span><br>
+                  <span class="truncate">
+                    <%= for tag <- note.types do %>
+                      <div class="chip truncate valign-wrapper">
+                        <%= tag.name %>
+                      </div>
+                    <% end %>
+                  </span>
+                </div>
+                <div class="col s4 m5 l5 note-list">
+                  <span class="task-label">People:</span><br>
+                  <span class="truncate">
+                    <%= for person <- note.people do %> 
+                      <div class="chip truncate valign-wrapper">
+                        <%= display_image(person) %> 
+                        <%= person.firstname <> " " <> person.lastname %>
+                      </div>
+                    <% end %>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        <% end %>  
       </div>
     </div>
 </div>

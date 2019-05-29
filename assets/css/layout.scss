@@ -95,7 +95,8 @@ header, main {
 }
 
 .page{
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .search-row{
@@ -103,7 +104,9 @@ header, main {
     margin-bottom: 0px;
 }
 
-
+.padding-top-15{
+    padding-top: 15px;
+}
 .permission-row{
     border: 1px solid rgb(165, 162, 162);
     padding: .5em;
@@ -286,6 +289,10 @@ a.card-content:hover{
 .task-border{
     border-right: 1px solid rgb(219, 219, 219);
 }
+.note-list{
+    height: 75px;
+}
+
 .card.horizontal.task{
     margin: 5px !important;
 }
@@ -295,6 +302,7 @@ a.card-content:hover{
 .no-bottom-margin{
     margin-bottom: 0px !important;
 }
+
 
 
 
