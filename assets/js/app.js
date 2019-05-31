@@ -4,6 +4,9 @@ import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
 import flatpickr from 'flatpickr'
+import Vue from 'vue/dist/vue.esm.browser';
+  
+
 
 // CUSTOM
 import Elements from "./elements"
@@ -20,6 +23,7 @@ import Tasks from "./tasks"
 import socket from "./socket"
 
 document.addEventListener('DOMContentLoaded', function () {
+    
 
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
@@ -49,10 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
         People.realtime_search(sportegic_socket)
     };
 
-    if (window.location.pathname.split("/")[1] == "notes" && window.channel) {
+
+    if (window.location.pathname.split("/")[1] == "notes") {
         let sportegic_socket = socket.connect_socket();
         Notes.tags_search(sportegic_socket);
-        Notes.people_search(sportegic_socket)
+        Notes.people_search(sportegic_socket);
+        Notes.init_notes_search(Vue);
     };
     // Check if there are flash messages via global variables and init a toast
     if (window.toast) {

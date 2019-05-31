@@ -1,5 +1,14 @@
 let Notes = {
 
+    init_notes_search(Vue){
+        new Vue({
+            el: '#vue-search-results',
+            data:{
+                test: 'Something Different'
+            }
+          });
+    },
+
     load_initial_tags() {
 
         let tag_elements = document.getElementsByName("note[types][]");
