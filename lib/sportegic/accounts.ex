@@ -77,9 +77,12 @@ defmodule Sportegic.Accounts do
       |> Repo.insert()
 
     # Create a tenant based on org prefix
-    resp = Triplex.create(org.prefix)
-    IO.inspect(resp, label: "RESPONSE FROM TRIPLEX")
-    {:ok, org}
+    case Triplex.create(org.prefix) do
+      {:ok, _tenant} -> {:ok, org}
+      {:error, msg} ->
+        IO.inspect(msg, label: "ERROR FROM TRIPLEX") 
+        {:error, msg} 
+    end
   end
 
   def update_organisation(%Organisation{} = organisation, attrs) do

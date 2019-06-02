@@ -1,7 +1,7 @@
 defmodule SportegicWeb.NotesSearchChannel do
   use SportegicWeb, :channel
 
-  alias Sportegic.Motes
+  alias Sportegic.Notes
 
   def join("notes:", %{"token" => token}, socket) do
     if authorized?(token, socket.assigns.account_id) do

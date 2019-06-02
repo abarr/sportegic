@@ -4,10 +4,11 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
   def up do
     execute("""
       CREATE MATERIALIZED VIEW #{prefix()}.notes_search_view AS
-        SELECT n.id AS note_id, (
+        SELECT n.id AS id, (
           setweight(to_tsvector(p.firstname || ' ' || p.lastname  || ' ' || p.preferred_name ), 'A') ||
           setweight(to_tsvector(coalesce(string_agg(t.name, ' '), ' ')), 'B') ||
-          setweight(to_tsvector(n.subject), 'C')
+          setweight(to_tsvector(n.subject), 'C') ||
+          setweight(to_tsvector(n.details), 'D')
         ) AS search
       FROM #{prefix()}.notes AS n
       LEFT JOIN #{prefix()}.notes_people as np ON np.note_id = n.id
@@ -20,9 +21,9 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
     # to support full-text searches
     create(index("notes_search_view", ["search"], using: :gin))
     # to support substring title matches with ILIKE
-    execute(
-      "CREATE INDEX notes_search_title_trgm_index ON #{prefix()}.notes_search_view USING gin (subject gin_trgm_ops)"
-    )
+    # execute(
+    #   "CREATE INDEX notes_search_title_trgm_index ON #{prefix()}.notes_search_view USING gin (subject gin_trgm_ops)"
+    # )
 
     # to support updating CONCURRENTLY
     create(unique_index("notes_search_view", [:id]))

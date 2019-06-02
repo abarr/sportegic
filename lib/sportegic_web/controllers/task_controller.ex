@@ -24,7 +24,7 @@ defmodule SportegicWeb.TaskController do
     )
   end
 
-  def new(conn, params, _org, _permissions) do
+  def new(conn, _params, _org, _permissions) do
     changeset = Changeset.change(%Task{}, %{note_id: conn.query_params["note"]})
     render(conn, "new.html", changeset: changeset)
   end
