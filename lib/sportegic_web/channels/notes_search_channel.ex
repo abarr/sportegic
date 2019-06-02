@@ -30,6 +30,7 @@ defmodule SportegicWeb.NotesSearchChannel do
             {:noreply, socket}
 
           _ ->
+            IO.inspect(payload)
             broadcast!(socket, "search:#{token}", %{payload: payload})
             {:noreply, socket}
         end

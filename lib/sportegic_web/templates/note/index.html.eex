@@ -9,6 +9,7 @@
       <div class="divider"></div>
     </div>
     <div class="row page remove-bottom-margin">
+      <div id="vue-search-results">
       <div class="col s12">
         <div class="row">
           <div class="input-field col s12">
@@ -19,8 +20,8 @@
         </div>
       </div>
     </div>
-    <div id="vue-search-results">
-    <h6>{{ test }}</h6>
+    
+    
       <%# <div class="collection">
         <a class="collection-item width-100 task-padding" href='#'>
           <div class="row no-padding remove-bottom-margin grey-text lighten-2">

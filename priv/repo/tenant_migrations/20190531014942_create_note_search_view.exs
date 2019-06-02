@@ -5,10 +5,11 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
     execute("""
       CREATE MATERIALIZED VIEW #{prefix()}.notes_search_view AS
         SELECT n.id AS id, (
-          setweight(to_tsvector(p.firstname || ' ' || p.lastname  || ' ' || p.preferred_name ), 'A') ||
+          setweight(to_tsvector(coalesce(string_agg(p.firstname, ' '), ' ')), 'A') ||
+          setweight(to_tsvector(coalesce(string_agg(p.lastname, ' '), ' ')), 'A') ||
+          setweight(to_tsvector(coalesce(string_agg(p.preferred_name, ' '), ' ')), 'A') ||
           setweight(to_tsvector(coalesce(string_agg(t.name, ' '), ' ')), 'B') ||
-          setweight(to_tsvector(n.subject), 'C') ||
-          setweight(to_tsvector(n.details), 'D')
+          setweight(to_tsvector(n.subject), 'C')
         ) AS search
       FROM #{prefix()}.notes AS n
       LEFT JOIN #{prefix()}.notes_people as np ON np.note_id = n.id

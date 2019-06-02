@@ -3,10 +3,17 @@ let Notes = {
     init_notes_search(Vue, socket) {
         new Vue({
             el: '#vue-search-results',
+            ready() {
+                let channel = socket.channel("notes:", { token: window.token })
+                channel.join()
+                    .receive("ok", resp => { console.log("Joined successfully", resp) })
+                    .receive("error", resp => { console.log("Unable to join", resp) })
+            },
             data: {
                 test: 'Something Different'
             }
         });
+
 
     },
 

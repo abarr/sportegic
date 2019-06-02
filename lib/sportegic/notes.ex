@@ -33,12 +33,14 @@ defmodule Sportegic.Notes do
 
   def list_notes(search_term, org) do
     note_ids = Notes.Search.run(search_term, org)
-    IO.inspect(note_ids) 
-    Note
+
+    from(note in Note,
+      where: note.id in ^note_ids,
+      select: note
+    )
     |> Repo.all(prefix: org)
-    |> Repo.preload([:types, :user, :people])  
-   
- end
+    |> Repo.preload([:types, :user, :people])
+  end
 
   @doc """
   Gets a single note.
