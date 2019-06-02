@@ -1,12 +1,13 @@
 let Notes = {
 
-    init_notes_search(Vue){
+    init_notes_search(Vue, socket) {
         new Vue({
             el: '#vue-search-results',
-            data:{
+            data: {
                 test: 'Something Different'
             }
-          });
+        });
+
     },
 
     load_initial_tags() {

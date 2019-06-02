@@ -20,53 +20,42 @@
       </div>
     </div>
     <div id="vue-search-results">
-    <h3>{{ test }}</h3>
-      <div class="collection">
-      </div>
+    <h6>{{ test }}</h6>
+      <%# <div class="collection">
+        <a class="collection-item width-100 task-padding" href='#'>
+          <div class="row no-padding remove-bottom-margin grey-text lighten-2">
+            <div class="col s3 m2 l2 note-list task-border">
+              <span class="task-label">Created:</span><br>
+              <span class=""> DATE </span>
+            </div>
+            <div class="col s2 task-border note-list hide-on-small-only">
+              <span class="task-label">Created by:</span><br>
+              <span class=""> NAME </span>
+            </div>
+            <div class="col s3 task-border note-list">
+              <span class="task-label">Tags:</span><br>
+              <span class="truncate">
+                
+                  <div class="chip truncate valign-wrapper">
+                    List of tags
+                  </div>
+                
+              </span>
+            </div>
+            <div class="col s4 m5 l5 note-list">
+              <span class="task-label">People:</span><br>
+              <span class="truncate">
+                
+                  <div class="chip truncate valign-wrapper">
+                    List of people
+                  </div>
+                
+              </span>
+            </div>
+          </div>
+        </a>
+      </div> %>
     </div>
-
-    <div class="col s12">
-      <div class="collection ">
-        <%= for note <- @notes do %>
-          <a class="collection-item width-100 task-padding" href='<%= "/notes/" <> Integer.to_string(note.id) %>'>
-              <div class="row no-padding remove-bottom-margin grey-text lighten-2">
-                <div class="col s3 m2 l2 note-list task-border">
-                  <span class="task-label">Created:</span><br>
-                  <span class=""><%= readable_date!(note.inserted_at) %> </span>
-                </div>
-                <div class="col s2 task-border note-list hide-on-small-only">
-                  <span class="task-label">Created by:</span><br>
-                  <span class=""><%= note.user.firstname <> " " <> note.user.lastname %> </span>
-                </div>
-                <div class="col s3 task-border note-list">
-                  <span class="task-label">Tags:</span><br>
-                  <span class="truncate">
-                    <%= for tag <- note.types do %>
-                      <div class="chip truncate valign-wrapper">
-                        <%= tag.name %>
-                      </div>
-                    <% end %>
-                  </span>
-                </div>
-                <div class="col s4 m5 l5 note-list">
-                  <span class="task-label">People:</span><br>
-                  <span class="truncate">
-                    <%= for person <- note.people do %> 
-                      <div class="chip truncate valign-wrapper">
-                        <%= display_image(person) %> 
-                        <%= person.firstname <> " " <> person.lastname %>
-                      </div>
-                    <% end %>
-                  </span>
-                </div>
-              </div>
-            </a>
-          
-        <% end %>  
-        
-      </div>
-    </div>
-     
           
 </div>
 
