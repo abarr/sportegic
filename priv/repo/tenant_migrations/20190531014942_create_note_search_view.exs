@@ -21,10 +21,6 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
 
     # to support full-text searches
     create(index("notes_search_view", ["search"], using: :gin))
-    # to support substring title matches with ILIKE
-    # execute(
-    #   "CREATE INDEX notes_search_title_trgm_index ON #{prefix()}.notes_search_view USING gin (subject gin_trgm_ops)"
-    # )
 
     # to support updating CONCURRENTLY
     create(unique_index("notes_search_view", [:id]))
@@ -37,24 +33,22 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
     """)
 
     execute("""
-      CREATE TRIGGER refresh_notes_search
-        AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
-        ON #{prefix()}.notes
+      CREATE TRIGGER refresh_notes_search_note
+        AFTER INSERT OR UPDATE OR DELETE ON #{prefix()}.notes
         FOR EACH STATEMENT
         EXECUTE PROCEDURE #{prefix()}.refresh_notes_search();
     """)
 
     execute("""
-        CREATE TRIGGER refresh_notes_search
-        AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE
-        ON #{prefix()}.note_type
+        CREATE TRIGGER refresh_notes_search_type
+        AFTER INSERT OR UPDATE OR DELETE ON #{prefix()}.note_type
         FOR EACH STATEMENT
         EXECUTE PROCEDURE #{prefix()}.refresh_notes_search();
     """)
 
     execute("""
-        CREATE TRIGGER refresh_notes_search
-        AFTER UPDATE OR TRUNCATE ON #{prefix()}.people
+        CREATE TRIGGER refresh_notes_search_people
+        AFTER INSERT OR UPDATE OR DELETE ON #{prefix()}.Notes_people
         FOR EACH STATEMENT
         EXECUTE PROCEDURE #{prefix()}.refresh_notes_search();
     """)

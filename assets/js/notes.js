@@ -1,15 +1,16 @@
+import moment from 'moment';
+
 let Notes = {
 
     notes_search(Vue, socket) {
-        
+
         new Vue({
             el: '#vue-search-results',
-            mounted: function(){
+            mounted: function () {
                 this.channel = socket.channel("notes:", { token: window.token })
                 this.channel.on(`search:${window.token}`, results => {
-                    this.notes = results.results.slice(0);
-                    
-                  });
+                    this.notes = results.results;
+                });
                 this.channel.join()
                     .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
                     .receive("error", resp => { console.log("Unable to join", resp) })
@@ -23,8 +24,13 @@ let Notes = {
                 searchNotes() {
                     this.channel.push("search", { search_value: this.search, token: window.token, org: window.org });
                 }
+            },
+            filters: {
+                moment: function (date) {
+                    return moment(date).format('DD/MM/YYYY');
+                }
             }
-            
+
         });
 
 
