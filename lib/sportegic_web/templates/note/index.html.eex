@@ -39,7 +39,7 @@
               <tbody v-for="note in notes">
             
                 <tr>
-                
+                  <a href="/notes/1">
                   <td > {{ note.event_date | moment }}</td>
                   <td> {{ note.inserted_at | moment}} </td>
                   <td> {{ note.subject }} </td>
@@ -55,8 +55,9 @@
                       </div>
                   </td>
                   
-                  
+                </a>  
                 </tr>
+                
               </tbody>
             </table>
 </div>
