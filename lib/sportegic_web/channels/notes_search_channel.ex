@@ -14,6 +14,7 @@ defmodule SportegicWeb.NotesSearchChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("search", %{"search_value" => value, "token" => token, "org" => org}, socket) do
+
     # [%{firstname: "", lastname: "", id: 1}, %{...}]
     value = String.trim(value)
 
@@ -26,12 +27,11 @@ defmodule SportegicWeb.NotesSearchChannel do
 
         case Enum.count(payload) do
           0 ->
-            broadcast!(socket, "search:#{token}", %{payload: %{}})
+            broadcast!(socket, "search:#{token}", %{results: %{}})
             {:noreply, socket}
 
           _ ->
-            IO.inspect(payload)
-            broadcast!(socket, "search:#{token}", %{payload: payload})
+            broadcast!(socket, "search:#{token}", %{results: payload})
             {:noreply, socket}
         end
     end

@@ -10,6 +10,8 @@ defmodule Sportegic.Notes.Note do
   alias Sportegic.Notes.NotePerson
   alias Sportegic.Tasks.Task
 
+  @derive {Jason.Encoder, only: [:inserted_at, :subject, :user, :people, :types]}
+
   schema "notes" do
     field(:event_date, :date)
     field(:subject, :string)

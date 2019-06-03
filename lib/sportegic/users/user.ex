@@ -4,6 +4,8 @@ defmodule Sportegic.Users.User do
   alias Sportegic.Users.Role
   alias Sportegic.Notes.{Note, Comment}
 
+  @derive {Jason.Encoder, only: [:firstname, :lastname]}
+
   schema "users" do
     field(:firstname, :string)
     field(:lastname, :string)

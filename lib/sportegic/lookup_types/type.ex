@@ -5,7 +5,8 @@ defmodule Sportegic.LookupTypes.Type do
   alias Sportegic.LookupTypes.Lookup
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NoteType
-  # alias Sportegic.People.Document
+  
+  @derive {Jason.Encoder, only: [:name]}
 
   schema "types" do
     field(:name, :string)

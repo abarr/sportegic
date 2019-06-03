@@ -54,7 +54,7 @@ defmodule Sportegic.Repo.Migrations.CreateNoteSearchView do
 
     execute("""
         CREATE TRIGGER refresh_notes_search
-        AFTER UPDATE OR TRUNCATE ON #{prefix()}.types
+        AFTER UPDATE OR TRUNCATE ON #{prefix()}.people
         FOR EACH STATEMENT
         EXECUTE PROCEDURE #{prefix()}.refresh_notes_search();
     """)

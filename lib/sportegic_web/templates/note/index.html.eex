@@ -10,52 +10,62 @@
     </div>
     <div class="row page remove-bottom-margin">
       <div id="vue-search-results">
-      <div class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">search</i>
-            <input id="icon_prefix" type="text" class="validate">
-            <label for="icon_prefix">Search all notes</label>
+        
+        <div class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">search</i>
+              <input id="icon_prefix" type="text" class="validate" v-model="search" v-on:keyup="searchNotes">
+              <label for="icon_prefix">Search all notes</label>
+            </div>
           </div>
         </div>
+
+        <div class="collection" v-for="note in notes">
+          <a class="collection-item width-100 task-padding" href='#'>
+            <div class="row no-padding remove-bottom-margin grey-text lighten-2">
+              <div class="col s3 m2 l2 note-list task-border">
+                <span class="task-label">Created:</span><br>
+                <span class=""> {{ note.inserted_at}} </span>
+              </div>
+              <div class="col s2 task-border note-list hide-on-small-only">
+                <span class="task-label">Subject:</span><br>
+                <span class="truncate"> {{ note.subject }} </span>
+              </div>
+              <div class="col s2 task-border note-list hide-on-small-only">
+                <span class="task-label">Created by:</span><br>
+                <span class=""> {{ note.user.firstname }} {{ note.user.lastname }} </span>
+              </div>
+              <div class="col s3 task-border note-list">
+                <span class="task-label">People:</span><br>
+                <div v-for="person in note.people">
+                  <span class="truncate">
+                    <div class="chip truncate valign-wrapper">
+                      {{ person.firstname }} {{ person.lastname }}
+                    </div>
+                  </span>
+                </div>
+                
+              </div>
+              <div class="col s4 m5 l3 note-list">
+                <span class="task-label">Tags:</span><br>
+                <div v-for="tag in note.types">
+                  <span class="truncate"> 
+                    <div class="chip truncate valign-wrapper">
+                        {{ tag.name }}
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
       </div>
-    </div>
+
+
+      </div>
     
     
-      <%# <div class="collection">
-        <a class="collection-item width-100 task-padding" href='#'>
-          <div class="row no-padding remove-bottom-margin grey-text lighten-2">
-            <div class="col s3 m2 l2 note-list task-border">
-              <span class="task-label">Created:</span><br>
-              <span class=""> DATE </span>
-            </div>
-            <div class="col s2 task-border note-list hide-on-small-only">
-              <span class="task-label">Created by:</span><br>
-              <span class=""> NAME </span>
-            </div>
-            <div class="col s3 task-border note-list">
-              <span class="task-label">Tags:</span><br>
-              <span class="truncate">
-                
-                  <div class="chip truncate valign-wrapper">
-                    List of tags
-                  </div>
-                
-              </span>
-            </div>
-            <div class="col s4 m5 l5 note-list">
-              <span class="task-label">People:</span><br>
-              <span class="truncate">
-                
-                  <div class="chip truncate valign-wrapper">
-                    List of people
-                  </div>
-                
-              </span>
-            </div>
-          </div>
-        </a>
-      </div> %>
+      
     </div>
           
 </div>

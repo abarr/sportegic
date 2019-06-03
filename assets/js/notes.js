@@ -1,17 +1,30 @@
 let Notes = {
 
-    init_notes_search(Vue, socket) {
+    notes_search(Vue, socket) {
+        
         new Vue({
             el: '#vue-search-results',
-            ready() {
-                let channel = socket.channel("notes:", { token: window.token })
-                channel.join()
-                    .receive("ok", resp => { console.log("Joined successfully", resp) })
+            mounted: function(){
+                this.channel = socket.channel("notes:", { token: window.token })
+                this.channel.on(`search:${window.token}`, results => {
+                    this.notes = results.results.slice(0);
+                    
+                  });
+                this.channel.join()
+                    .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
                     .receive("error", resp => { console.log("Unable to join", resp) })
             },
             data: {
-                test: 'Something Different'
+                notes: [],
+                search: '',
+                channel: null,
+            },
+            methods: {
+                searchNotes() {
+                    this.channel.push("search", { search_value: this.search, token: window.token, org: window.org });
+                }
             }
+            
         });
 
 

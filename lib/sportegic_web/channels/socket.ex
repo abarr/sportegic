@@ -6,7 +6,7 @@ defmodule SportegicWeb.Socket do
   ## Channels
   channel "mobile:*", SportegicWeb.MobileChannel
   channel "people_search:*", SportegicWeb.PeopleSearchChannel
-  channel "notes_search:*", SportegicWeb.NotesSearchChannel
+  channel "notes:*", SportegicWeb.NotesSearchChannel
   channel "user_search:*", SportegicWeb.UserSearchChannel
   channel "tags:*", SportegicWeb.TagsSearchChannel
   # Socket params are passed from the client and can

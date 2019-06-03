@@ -58,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let sportegic_socket = socket.connect_socket();
         Notes.tags_search(sportegic_socket);
         Notes.people_search(sportegic_socket);
-        Notes.init_notes_search(Vue);
+        console.log("HERE")
+        Notes.notes_search(Vue, sportegic_socket);
     };
     // Check if there are flash messages via global variables and init a toast
     if (window.toast) {
