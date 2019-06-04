@@ -3,6 +3,7 @@ defmodule SportegicWeb.NoteController do
 
   alias Sportegic.Notes
   alias Sportegic.Notes.{Note, Comment}
+  alias HtmlSanitizeEx
 
   plug SportegicWeb.Plugs.Authenticate
   action_fallback SportegicWeb.FallbackController
@@ -23,6 +24,8 @@ defmodule SportegicWeb.NoteController do
   end
 
   def create(conn, %{"note" => note_params}, org, _permissions) do
+    # Sanitize user input
+    note_params = only_basic_html(note_params)
     note_params = Map.put(note_params, "user_id", conn.assigns.user.id)
 
     case Notes.create_note(note_params, org) do
@@ -46,6 +49,11 @@ defmodule SportegicWeb.NoteController do
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  defp only_basic_html(%{ "details" => details } = note_params) do
+    note_params
+    |> Map.put(:details, HtmlSanitizeEx.basic_html(details))
   end
 
   def show(conn, %{"id" => id}, org, _permissions) do

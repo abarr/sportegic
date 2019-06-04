@@ -25,7 +25,7 @@ let Calendar = {
     },
     attachFlatpickrExpiryDate(flatpickr, path) {
         let id = path + "_expiry_date"
-        console.log(id)
+        
         const dob = flatpickr('.flatpickr-expiry-date', {
             altInput: true,
             altFormat: "j F , Y",

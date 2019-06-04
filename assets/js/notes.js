@@ -3,37 +3,39 @@ import moment from 'moment';
 let Notes = {
 
     notes_search(Vue, socket) {
-
-        new Vue({
-            el: '#vue-search-results',
-            mounted: function () {
-                this.channel = socket.channel("notes:", { token: window.token })
-                this.channel.on(`search:${window.token}`, results => {
-                    this.notes = results.results;
-                });
-                this.channel.join()
-                    .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
-                    .receive("error", resp => { console.log("Unable to join", resp) })
-            },
-            data: {
-                notes: [],
-                search: '',
-                channel: null,
-            },
-            methods: {
-                searchNotes() {
-                    this.channel.push("search", { search_value: this.search, token: window.token, org: window.org });
+        if(document.querySelector('#vue-search-results')){
+            new Vue({
+                el: '#vue-search-results',
+                mounted: function () {
+                    this.channel = socket.channel("notes:", { token: window.token })
+                    this.channel.on(`search:${window.token}`, results => {
+                        this.notes = results.results;
+                    });
+                    this.channel.join()
+                        .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
+                        .receive("error", resp => { console.log("Unable to join", resp) })
+                },
+                data: {
+                    notes: [],
+                    search: '',
+                    channel: null,
+                },
+                methods: {
+                    searchNotes() {
+                        this.channel.push("search", { search_value: this.search, token: window.token, org: window.org });
+                    },
+                    go(id){
+                       window.location = "/notes/" + id;          
+                    }
+                },
+                filters: {
+                    moment: function (date) {
+                        return moment(date).format('DD/MM/YYYY');
+                    }
                 }
-            },
-            filters: {
-                moment: function (date) {
-                    return moment(date).format('DD/MM/YYYY');
-                }
-            }
-
-        });
-
-
+    
+            });
+        }
     },
 
     load_initial_tags() {
@@ -142,8 +144,6 @@ let Notes = {
         }
 
         channel.on(`search:${window.token}`, results => {
-            console.log(results.payload)
-            console.log(el)
             el.M_Chips.autocomplete.updateData(results.payload);
         });
 

@@ -24,7 +24,7 @@
                 <div class="card-content  remove-padding-bottom">
                     <span class="card-title">Details</span>
                     <p >
-                      <%= @note.details %>
+                      <%= raw(@note.details) %>
                     </p> 
                 </div>
               </div>
@@ -56,7 +56,6 @@
          
           <%= form_for @changeset, Routes.note_comment_path(@conn, :create, @note), fn f -> %>
             <div class="row page">
-              <div class="col s1 hide-on-medium-down "></div>
               <div class="col s9 input-field ">
                 <%= label f, :details, "Leave a comment" %>
                 <%= textarea f, :details , [ class: set_field_class(f, :details, "validate materialize-textarea"), required: "true", type: "text"]%>
@@ -76,7 +75,7 @@
             <%= for comment <- @note.comments do %> 
                 <div class="card z-depth-0 comment">
                   <div class="card-content ">
-                      <h6> On <%= readable_date!(comment.inserted_at) %> <%= comment.user.firstname <> " " <> comment.user.lastname %> commented: </h6>
+                      <p style="font-size: .75rem;"> On <%= readable_date!(comment.inserted_at) %> <%= comment.user.firstname <> " " <> comment.user.lastname %> commented: </p><br/>
                       <p > <%= comment.details %></p>
                   </div>
                   <%= if( comment.user.id == @conn.assigns.user.id) do %>

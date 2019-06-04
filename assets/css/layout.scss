@@ -8,6 +8,20 @@ header, main {
     }     
 }
 
+.wait-for-icons {
+    display: none;
+  }
+  
+  .fontawesome-i2svg-active .wait-for-icons {
+    display: initial;
+  }
+  
+  
+
+[v-cloak] {
+    display: none;
+  }
+
 .datepicker-date-display{
     background-color: gray;
 }

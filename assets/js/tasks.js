@@ -80,8 +80,6 @@ let Tasks = {
         }
 
         channel.on(`search:${window.token}`, results => {
-            console.log(results.payload)
-            console.log(el)
             el.M_Chips.autocomplete.updateData(results.payload);
         });
 

@@ -44,7 +44,6 @@
 <script>
   
   function check_form(){
-    console.log(q);
     let form = document.getElementById('task-form');
       if (form.checkValidity() == false) {
           let previous_list = form.querySelectorAll(".invalid")

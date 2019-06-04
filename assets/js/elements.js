@@ -61,7 +61,6 @@ let Elements = {
         [].forEach.call(menuItems, el => {
             if (el.id == page) {
                 el.classList += " active";
-                console.log(page)
                 if (["role", "user", "my_profile", "lookup"].includes(page)) {
                     document.getElementById("administration").click();
                 }

@@ -32,7 +32,7 @@
   
   <body >
     <header>
-      <div class="row nav-custom">
+      <div class="row nav-custom ">
       <div class="col s12 remove-right-padding">   
           <div class="nav-wrapper hide-on-large-only ">
             <div class="row ">
@@ -93,7 +93,7 @@
         
       </div>
       <%# SIDE NAV %>
-      <ul id="slide-out" class="sidenav sidenav-fixed z-depth-0 sidenav-custom ">
+      <ul id="slide-out" class="sidenav sidenav-fixed z-depth-0 sidenav-custom wait-for-icons">
         <li class="logo">
           <a href="/dashboard" class=" grey-text lighten-2"><h4><%= organisation_name(@conn.assigns.organisation) %></h4></a>
         </li>
