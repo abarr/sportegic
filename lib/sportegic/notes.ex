@@ -59,7 +59,7 @@ defmodule Sportegic.Notes do
   def get_note!(id, org) do
     Note
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:types, :user, :people, comments: [:user]])
+    |> Repo.preload([:types, :user, :people, comments: [:user], tasks: [:assignee, :user]])
   end
 
   @doc """
@@ -220,7 +220,7 @@ defmodule Sportegic.Notes do
     Enum.map(updated_tags, &LookupTypes.get_type_by_name!(&1, org))
   end
 
-  def get_updated_people_tags(nil, org), do: []
+  def get_updated_people_tags(nil, _org), do: []
   def get_updated_people_tags(updated_people, org) when is_list(updated_people) do
     updated_people
     |> Enum.map(&People.get_person_by_name_dob(&1, org))

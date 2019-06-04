@@ -1,7 +1,6 @@
 defmodule SportegicWeb.TaskController do
   use SportegicWeb, :controller
 
-  alias Ecto.Changeset
   alias Sportegic.Tasks
   alias Sportegic.Tasks.Task
   alias Sportegic.Users
@@ -25,12 +24,17 @@ defmodule SportegicWeb.TaskController do
   end
 
   def new(conn, _params, _org, _permissions) do
-    changeset = Changeset.change(%Task{}, %{note_id: conn.query_params["note"]})
-    render(conn, "new.html", changeset: changeset)
+    case conn.query_params["note_id"] do
+      nil -> 
+        changeset = Tasks.change_task(%Task{})
+        render(conn, "new.html", changeset: changeset)
+        _ -> 
+        changeset = Tasks.change_task(%Task{note_id: conn.query_params["note_id"]})
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 
   def create(conn, %{"task" => task_params}, org, _permissions) do
-    IO.inspect(task_params, label: "TASK PARAMS")
     %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
 
     task_params =

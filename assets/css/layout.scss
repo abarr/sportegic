@@ -8,6 +8,10 @@ header, main {
     }     
 }
 
+blockquote{
+    padding: 24px !important;
+}
+
 .wait-for-icons {
     display: none;
   }
@@ -239,6 +243,15 @@ header, main {
     border:1px solid #ddd;
     
   }
+
+  .card.note {
+    border-radius:2px;
+    border:1px solid #ddd;
+    
+  }
+blockquote{
+    margin-left: 15px !important;
+}
 
 blockquote.task-info{
   border-left: 5px solid #64b5f6; /* Just change the color value and that's it*/

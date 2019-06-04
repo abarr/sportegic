@@ -1,6 +1,8 @@
 
 <%= form_for @changeset, @action, [id: "task-form"], fn f -> %>
+ 
   <%= hidden_input f, :note_id %>
+ 
   <div class="page">
     <div class="row">
         <div id="user_list"></div>

@@ -92,7 +92,7 @@ defmodule Sportegic.Tasks do
 
   """
   def get_task!(id, org) do
-    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user, :assignee])
+    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user, :assignee, :note])
   end
 
   @doc """

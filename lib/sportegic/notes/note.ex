@@ -18,7 +18,7 @@ defmodule Sportegic.Notes.Note do
     field(:details, :string)
 
     belongs_to(:user, User)
-    has_one(:task, Task, on_delete: :nothing)
+    has_many(:tasks, Task, on_delete: :nothing)
     has_many(:comments, Comment, on_delete: :delete_all)
 
     many_to_many(:types, Type, join_through: NoteType, on_replace: :delete)

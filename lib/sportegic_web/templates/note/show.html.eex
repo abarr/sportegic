@@ -17,22 +17,31 @@
   </div>
   <div class="row page">
     <div class="col s12">
-          <blockquote class=" page no-bottom-margin"><h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> </blockquote>   
-          <div class="row remove-bottom-margin">
-            <div class="col s12">
-              <div class="card z-depth-0 ">
-                <div class="card-content  remove-padding-bottom">
-                    <span class="card-title">Details</span>
-                    <p >
-                      <%= raw(@note.details) %>
-                    </p> 
-                </div>
-              </div>
+      <div class="row">
+        <blockquote class="page no-bottom-margin col s12 ">
+        <h6>Note created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>. The event happened on <%= readable_date!(@note.event_date) %></h6> 
+        </blockquote>  
+      </div>
+      </div>
+      
+
+      <div class="row remove-bottom-margin">
+        <div class="col s12">
+          <div class="card z-depth-0 ">
+            <div class="card-content  remove-padding-bottom">
+                <span class="card-title">Details</span>
+                <p >
+                  <%= raw(@note.details) %>
+                </p> 
             </div>
-          </div>    
+          </div>
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col s12">
           <%= if Enum.count(@note.people) > 0 do %>
-            <div class="card z-depth-0 ">
-              <div class="card-content remove-padding-bottom">
+            <div class="card z-depth-0 note ">
+              <div class="card-content">
                   <span class="card-title">Associated People</span>
                   <%= for person <- @note.people do %> 
                     <div class="chip truncate">
@@ -43,8 +52,12 @@
               </div>
             </div>
           <% end %>
-          <div class="card z-depth-0 ">
-              <div class="card-content remove-padding-bottom">
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col s12">
+          <div class="card z-depth-0 note">
+              <div class="card-content ">
                   <span class="card-title">Tags</span>
                   <%= for type <- @note.types do %> 
                     <div class="chip truncate">
@@ -53,21 +66,70 @@
                   <% end %> 
               </div>
             </div>
-         
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <div class="card z-depth-0 note">
+              <div class="card-content ">
+              <span class="card-title">Associated Tasks</span>
+                <%= for task <- @note.tasks do %>
+                  <div class="card horizontal z-depth-0 task">
+                    <a class="card-content width-100 task-padding" href='<%= "/tasks/" <> Integer.to_string(task.id) %>'>
+                    
+                      <div class="row no-padding remove-bottom-margin">
+                        <%= raw(display_days(days_until(task.due_date))) %>
+                        <div class="col s4 m3 l2 task-border hide-on-med-and-down">
+                          <span class="task-label">Assignee:</span><br>
+                          <span class=""><%= task.assignee.firstname <> " " <> task.assignee.lastname %> </span>
+                        </div>
+                        <div class="col s4 m3 l2 hide-on-large-only">
+                          <span class="task-label">Assignee:</span><br>
+                          <span class=""><%= task.assignee.firstname <> " " <> task.assignee.lastname %> </span>
+                        </div>
+                        <div class="col m3 l2 task-border hide-on-med-and-down">
+                          <span class="task-label">Created by:</span><br>
+                          <span class=""><%= task.user.firstname <> " " <> task.user.lastname %> </span>
+                        </div>
+                        <div class="col m6 hide-on-med-and-down">
+                          <span class="task-label">Action:</span><br>
+                          <span class="truncate ">
+                            <%= sanitize_html_to_text(task.action) %>
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
           <%= form_for @changeset, Routes.note_comment_path(@conn, :create, @note), fn f -> %>
             <div class="row page">
-              <div class="col s10  input-field ">
+              <div class="col s6  l8  input-field ">
                 <%= label f, :details, "Leave a comment" %>
                 <%= textarea f, :details , [ class: set_field_class(f, :details, "validate materialize-textarea"), required: "true", type: "text"]%>
                 <%= error_tag_sportegic f, :details %>
               </div>
-              <div class="col s1 ">
-                 <button  type="submit" class="btn comment-btn waves-effect waves-light blue lighten-2 ">
+              <div class="col s6 l4">
+                 <button  type="submit" class="btn comment-btn waves-effect waves-light blue lighten-2 z-depth-0">
                   <i class="large material-icons">add</i>
                 </button>
+          <% end %>
+                <%= link "Add Task", to: Routes.task_path(@conn, :new, note_id: @note.id), class: "waves-effect waves-light btn comment-btn blue z-depth-0" %>
+                
               </div>
             </div>
-          <% end %>
+          
+        </div>
+      </div>    
+         
+          
 
           
           <div class="col s12">
