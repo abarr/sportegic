@@ -7,7 +7,7 @@
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
           <span class="truncate"> 
-            <h5 class="heading grey-text lighten-2  left">Subject: <%= @note.subject %> </h5>
+            <h5 class="heading grey-text lighten-2  left">Note: <%= @note.subject %> </h5>
           </span>
         </div>
         
@@ -56,7 +56,7 @@
          
           <%= form_for @changeset, Routes.note_comment_path(@conn, :create, @note), fn f -> %>
             <div class="row page">
-              <div class="col s9 input-field ">
+              <div class="col s10  input-field ">
                 <%= label f, :details, "Leave a comment" %>
                 <%= textarea f, :details , [ class: set_field_class(f, :details, "validate materialize-textarea"), required: "true", type: "text"]%>
                 <%= error_tag_sportegic f, :details %>
