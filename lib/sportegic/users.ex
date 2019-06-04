@@ -38,7 +38,9 @@ defmodule Sportegic.Users do
   def create_user(attrs \\ %{}, org) do
     %User{}
     |> User.changeset(attrs)
+    |> IO.inspect()
     |> Repo.insert(prefix: org)
+    |> IO.inspect()
   end
 
   def update_user(%User{} = user, attrs, org) do

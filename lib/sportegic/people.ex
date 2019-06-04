@@ -89,7 +89,9 @@ defmodule Sportegic.People do
   def create_person(attrs \\ %{}, org) do
     %Person{}
     |> Person.changeset(attrs)
+    |> IO.inspect()
     |> Repo.insert(prefix: org)
+    |> IO.inspect()
   end
 
   @doc """
