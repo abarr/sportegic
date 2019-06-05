@@ -10,15 +10,22 @@ let Notes = {
                     this.channel = socket.channel("notes:", { token: window.token })
                     this.channel.on(`search:${window.token}`, results => {
                         this.notes = results.results;
+                        this.heading = "Search Results"
+                    });
+                    this.channel.on(`recent:${window.token}`, results => {
+                        this.notes = results.results;
                     });
                     this.channel.join()
                         .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
                         .receive("error", resp => { console.log("Unable to join", resp) })
+
+                    this.channel.push("recent", { token: window.token, org: window.org });    
                 },
                 data: {
                     notes: [],
                     search: '',
                     channel: null,
+                    heading: "Most Recent (5)"
                 },
                 methods: {
                     searchNotes() {

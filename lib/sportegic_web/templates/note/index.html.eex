@@ -20,7 +20,8 @@
 
         <div class="row page" >
           <div class="col s12" v-cloak>
-            <table class="highlight">
+            <h6>{{ heading }}</h6>
+            <table class="highlight" style="margin: 15px;">
               
               <thead v-if="notes.length > 0">
                 <tr>

@@ -11,6 +11,21 @@ defmodule SportegicWeb.NotesSearchChannel do
     end
   end
 
+  def handle_in("recent", %{  "token" => token, "org" => org }, socket) do
+    IO.puts("HERE")
+    payload = Notes.list_recent_notes(org)
+    IO.puts("AFTER PAYLOAD")
+    case Enum.count(payload) do
+      0 ->
+        broadcast!(socket, "recent:#{token}", %{results: %{}})
+        {:noreply, socket}
+
+      _ ->
+        broadcast!(socket, "recent:#{token}", %{results: payload})
+        {:noreply, socket}
+    end
+  end
+
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("search", %{"search_value" => value, "token" => token, "org" => org}, socket) do

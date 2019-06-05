@@ -27,9 +27,9 @@
 
       <div class="row remove-bottom-margin">
         <div class="col s12">
-          <div class="card z-depth-0 ">
+          <div class="card z-depth-0 note">
             <div class="card-content  remove-padding-bottom">
-                <span class="card-title">Details</span>
+                <h6 class="card-title">Details</h6>
                 <p >
                   <%= raw(@note.details) %>
                 </p> 
@@ -37,12 +37,12 @@
           </div>
         </div>
       </div>  
-      <div class="row">
+      <div class="row remove-bottom-margin">
         <div class="col s12">
           <%= if Enum.count(@note.people) > 0 do %>
             <div class="card z-depth-0 note ">
-              <div class="card-content">
-                  <span class="card-title">Associated People</span>
+              <div class="card-content card-info">
+                  <h6 class="">People</h6>
                   <%= for person <- @note.people do %> 
                     <div class="chip truncate">
                       <%= display_image(person) %> 
@@ -54,11 +54,11 @@
           <% end %>
         </div>
       </div>  
-      <div class="row">
+      <div class="row remove-bottom-margin">
         <div class="col s12">
           <div class="card z-depth-0 note">
-              <div class="card-content ">
-                  <span class="card-title">Tags</span>
+              <div class="card-content card-info">
+                  <h6 class="">Tags</h6>
                   <%= for type <- @note.types do %> 
                     <div class="chip truncate">
                       <%= type.name  %>
@@ -71,6 +71,7 @@
 
       <div class="row">
         <div class="col s12">
+        <%= if Enum.count(@note.tasks) > 0 do %>
           <div class="card z-depth-0 note">
               <div class="card-content ">
               <span class="card-title">Associated Tasks</span>
@@ -105,6 +106,7 @@
               </div>
           </div>
         </div>
+        <% end %>
       </div>
 
       <div class="row">

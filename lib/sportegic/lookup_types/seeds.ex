@@ -99,9 +99,18 @@ defmodule Sportegic.LookupTypes.Seeds do
         lookup_id: 5
       },
       %{
-        name: "Positive Feedback",
+        name: "Feedback",
+        lookup_id: 5
+      },
+      %{
+        name: "Training",
+        lookup_id: 5
+      },
+      %{
+        name: "Illness",
         lookup_id: 5
       }
+
     ]
   end
 end

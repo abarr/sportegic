@@ -42,6 +42,14 @@ defmodule Sportegic.Notes do
     |> Repo.preload([:types, :user, :people])
   end
 
+  def list_recent_notes(org) do
+    Note 
+    |> order_by([n], [desc: n.id])
+    |> limit(5)
+    |> Repo.all(prefix: org)
+    |> Repo.preload([:types, :user, :people]) 
+  end
+
   @doc """
   Gets a single note.
 
@@ -170,11 +178,11 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  # def create_note_type(attrs \\ %{}, org) do
-  #   %NoteType{}
-  #   |> NoteType.changeset(attrs)
-  #   |> Repo.insert(prefix: org)
-  # end
+  def create_note_type(attrs \\ %{}, org) do
+    %NoteType{}
+    |> NoteType.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
 
   def create_note_type(note, tag_text, org) when is_binary(tag_text) do
     case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
@@ -296,11 +304,11 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  # def create_note_person(attrs \\ %{}, org) do
-  #   %NotePerson{}
-  #   |> NotePerson.changeset(attrs)
-  #   |> Repo.insert(prefix: org)
-  # end
+  def create_note_person(attrs \\ %{}, org) do
+    %NotePerson{}
+    |> NotePerson.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
 
   def create_note_person(note, person_text, org) when is_binary(person_text) do
     case People.get_person_by_name_dob(person_text, org) do

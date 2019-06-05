@@ -6,7 +6,7 @@ defmodule SportegicWeb.PersonView do
   def display_image(person) do
     {person.profile_image, person}
     |> Avatar.url(:original)
-    |> img_tag()
+    |> img_tag(class: "circle responsive-img")
   end
 
   def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do

@@ -3,7 +3,7 @@
         
         <div class="section heading">
           <div class="row remove-bottom-margin">
-              <div class="col s12"> 
+              <div class="col s12 truncate"> 
               
                 <%= link to: Routes.person_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
                   <i class="far fa-chevron-left fa-lg"></i>
@@ -18,17 +18,18 @@
     </div>
     <div class="row page">
         <div class="col s12">
-          <div class="row page">
+
+
+          <div class="row page remove-bottom-margin">
             <%#  Left col %>
-            <div class="col s12 l3 xl2 hide-on-med-only">
-              <div class="card white z-depth-0">
-                <div class="card-image ">
+            <div class="col s12 m3 l5 xl3 ">
+              <div class="card white z-depth-0 center-align">
+                <%# <div class="card-image "> %>
                   <%= display_image(@person) %>
-                </div>     
+                <%# </div>      %>
               </div>
             </div>
-            <%# Middle col %>
-            <div class="col s12 m8 l6 xl7 ">
+            <div class="col s12 m9 l7 xl5 ">
               <ul class="collection with-header">
                 <li class="collection-header">
                   <%= if(@person.preferred_name) do %>
@@ -53,17 +54,15 @@
                 <li class="collection-item valign-wrapper">
                   <i class="fal fa-mobile-android fa-fw fa-lg"></i>&nbsp
                   <span class="truncate"6><%= @person.mobile %></span>
-                  
                 </li>
               </ul>
             </div>
-            <%# Right col %>
-            <div class="col s12 m4 l3">
+            <div class="col s12 xl4">
               <div class="collection">
-                <div class="collection-item"><h5>Information</h5></div>
+                <div class="collection-item "><h5>Information</h5></div>
                   <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
-                    <span class="truncate new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
                   <% end %>
                   <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-passport fa-fw fa-lg"></i> Visas
@@ -73,17 +72,95 @@
                     <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
                   <% end %>
-                  <%= link to: Routes.note_path(@conn, :index), class: "collection-item grey-text lighten-2" do %>  
-                    <i class="fal fa-user-injured fa-fw fa-lg"></i> Notes
-                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.notes) %> </span> 
-                  <% end %>
-                  <%# <a href="#!" class="collection-item grey-text lighten-2">
-                  <i class="fal fa-car-side fa-fw fa-lg"></i> Vehicles
-                  </a> %>
+                
               </div> 
             </div>
-        </div> 
-    </div>  <%# End of Row   %>
+          </div>
+
+          <div class="row page">
+            <div class="col s12 xl3">
+              <div class="collection">
+                <div class="collection-item "><h5>Quick Links</h5></div>  
+                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-file fa-fw fa-lg"></i> Documents
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
+                  <% end %>
+                  <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-passport fa-fw fa-lg"></i> Visas
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
+                  <% end %>
+                  <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
+                  <% end %>
+              </div>
+            </div>
+             
+             <div class="col s10 m9 l7 xl9">
+                
+                  <div class="section heading">
+                    <div class="row remove-bottom-margin">
+                        <div class="col s12 truncate"> 
+                            <h5 class="heading grey-text lighten-2">Recent Notes</h5>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="divider"></div>
+                </div>
+                    <div class="col s12 xl9 "> 
+                    <%= if Enum.count(@person.notes) > 0 do %> 
+                      <table class="highlight" style="margin: 15px;">
+                        <thead>
+                          <tr >
+                            <th class="hide-on-small-only">#</th>
+                              <th>Event</th>
+                              <th class="hide-on-small-only">Created</th>
+                              <th>Subject</th>
+                              <th class="hide-on-small-only">Owner</th>
+                              <th class="hide-on-small-only">Tags</th>
+                              <th class="hide-on-small-only">People</th>
+                              
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%= for note <- @person.notes do  %>
+                            
+                            <tr onclick="go(<%= note.id %>)">
+                            
+                              <td class="hide-on-small-only"> <%= note.id %> </td>
+                              <td > <%= readable_date!(note.event_date) %> </td>
+                              <td class="hide-on-small-only"> <%= readable_date!(note.inserted_at) %> </td>
+                              <td> <%= note.subject %> </td>
+                              <td class="hide-on-small-only"> <%= note.user.firstname <> " " <> note.user.lastname %> </td>
+                              <td class="hide-on-small-only">
+                                <%= for tag <- note.types do %>
+                                  <div class="chip truncate" >
+                                    <%= tag.name %>
+                                  </div>
+                                <% end %>
+                              </td>
+                              <td class="hide-on-small-only">
+                                <%= for person <- note.people do %>
+                                  <div class="chip truncate" v-for="person in note.people">
+                                    <%= person.firstname <> " " <> person.lastname %>
+                                  </div>
+                                <% end %>
+                              </td>
+                             
+                          </tr>
+                          
+                        <% end %>
+                        </tbody>
+                      </table>
+                     
+                    </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+              
+    
 </div>
 
 
@@ -96,4 +173,10 @@
        
     </div>
 </div>
+
+<script>
+  function go(id){
+    window.location = "/notes/" + id;
+  }
+</script>
 
