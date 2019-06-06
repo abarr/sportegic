@@ -5,7 +5,7 @@
           <div class="row remove-bottom-margin">
               <div class="col s12 truncate"> 
               
-                <%= link to: Routes.person_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+                <%= link to: NavigationHistory.last_path(@conn, 1), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
                   <i class="far fa-chevron-left fa-lg"></i>
               <% end %>
                   <h5 class="heading grey-text lighten-2"> Profile</h5>
@@ -78,42 +78,26 @@
           </div>
 
           <div class="row page">
-            <div class="col s12 xl3">
-              <div class="collection">
-                <div class="collection-item "><h5>Quick Links</h5></div>  
-                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
-                    <i class="fal fa-file fa-fw fa-lg"></i> Documents
-                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
-                  <% end %>
-                  <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
-                    <i class="fal fa-passport fa-fw fa-lg"></i> Visas
-                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
-                  <% end %>
-                  <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
-                    <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
-                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
-                  <% end %>
-              </div>
-            </div>
-             
-             <div class="col s10 m9 l7 xl9">
+             <div class="col s12">
                 
                   <div class="section heading">
                     <div class="row remove-bottom-margin">
-                        <div class="col s12 truncate"> 
-                            <h5 class="heading grey-text lighten-2">Recent Notes</h5>
+                        <div class="col s12 valign-wrapper"> 
+                            <h5 class="heading grey-text lighten-2 ">
+                              Recent Notes <%= if Enum.count(@person.notes) > 0 do %> (last 3) <% end %>
+                            </h5>
+                            
                           </a>
                         </div>
                       </div>
                     </div>
                   <div class="divider"></div>
                 </div>
-                    <div class="col s12 xl9 "> 
-                    <%= if Enum.count(@person.notes) > 0 do %> 
+                    <div class="col s12 "> 
+                     
                       <table class="highlight" style="margin: 15px;">
                         <thead>
                           <tr >
-                            <th class="hide-on-small-only">#</th>
                               <th>Event</th>
                               <th class="hide-on-small-only">Created</th>
                               <th>Subject</th>
@@ -124,11 +108,11 @@
                           </tr>
                         </thead>
                         <tbody>
+                        <%= if Enum.count(@person.notes) > 0 do %>
                           <%= for note <- @person.notes do  %>
                             
                             <tr onclick="go(<%= note.id %>)">
                             
-                              <td class="hide-on-small-only"> <%= note.id %> </td>
                               <td > <%= readable_date!(note.event_date) %> </td>
                               <td class="hide-on-small-only"> <%= readable_date!(note.inserted_at) %> </td>
                               <td> <%= note.subject %> </td>
@@ -142,20 +126,40 @@
                               </td>
                               <td class="hide-on-small-only">
                                 <%= for person <- note.people do %>
-                                  <div class="chip truncate" v-for="person in note.people">
+                                  <div class="chip truncate">
                                     <%= person.firstname <> " " <> person.lastname %>
                                   </div>
                                 <% end %>
                               </td>
                              
                           </tr>
-                          
                         <% end %>
-                        </tbody>
+                        <tr>
+                            <th colspan="6"> 
+                              <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a>
+                            </th>                          
+                          </tr>
+                      <% else %>
+                                      
+                        <tr>
+                            <th colspan="6"> 
+                               <h6 style="margin-left: 15px;">No associated notes</h6>
+                            </th>                          
+                          </tr>
+                        <tr>
+                            <th colspan="6"> 
+                              <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a>
+                            </th>                          
+                          </tr>
+                       <% end %>    
+                    </tbody>
+                       
+                         
+                       
                       </table>
                      
                     </div>
-                <% end %>
+                
               </div>
             </div>
           </div>

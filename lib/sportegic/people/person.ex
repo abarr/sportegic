@@ -11,7 +11,7 @@ defmodule Sportegic.People.Person do
   alias Sportegic.Tasks.Task
   alias Sportegic.Tasks.TaskPerson
 
-  @derive {Jason.Encoder, only: [:firstname, :lastname]}
+  @derive {Jason.Encoder, only: [:firstname, :lastname, :profile_image]}
 
   schema "people" do
     field(:dob, :date)

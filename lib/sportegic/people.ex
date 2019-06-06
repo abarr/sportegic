@@ -11,7 +11,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.Attachment
   alias Sportegic.People.Visa
   alias Sportegic.People.InsurancePolicy
-  # alias Sportegic.Helpers.Dates
+  alias Sportegic.Notes.Note
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -49,14 +49,20 @@ defmodule Sportegic.People do
 
   """
   def get_person!(id, org) do
+
+    query = 
+      from n in Note, 
+        order_by: [asc: n.inserted_at], 
+        preload: [:user, :types, :people],
+        limit: 3
+
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa, :insurance_policy, notes: [:user, :types, :people]])
+    |> Repo.preload([:document, :visa, :insurance_policy, [notes: query]])
   end
 
   # name will include DOB in format "FIRSTNAME LASTNAME (MNTH, DAY, YEAR)"
   def get_person_by_name_dob(name, org) when is_binary(name) do
-    IO.inspect(name)
     [firstname, lastname | _] = String.split(name, " ")
     [_, dob] = String.splitter(name, ["(", ")"]) |> Enum.take(2)
 
@@ -64,10 +70,6 @@ defmodule Sportegic.People do
       dob
       |> Timex.parse!("{Mfull} {D}, {YYYY}")
       |> Timex.to_date()
-
-    IO.inspect(firstname)
-    IO.inspect(lastname)
-    IO.inspect(dob)
 
     Person
     |> Repo.get_by([firstname: firstname, lastname: lastname, dob: dob], prefix: org)
@@ -89,9 +91,7 @@ defmodule Sportegic.People do
   def create_person(attrs \\ %{}, org) do
     %Person{}
     |> Person.changeset(attrs)
-    |> IO.inspect()
     |> Repo.insert(prefix: org)
-    |> IO.inspect()
   end
 
   @doc """
