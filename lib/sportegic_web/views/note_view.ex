@@ -10,6 +10,16 @@ defmodule SportegicWeb.NoteView do
     |> img_tag()
   end
 
+  def display_status(complete) do
+    case complete do
+      true ->
+        "<span class='new badge green right lighten-2' data-badge-caption='COMPLETED'></span>"
+
+      _ ->
+        "<span class='new badge red right lighten-2' data-badge-caption='PENDING'></span>"
+    end
+  end
+
   def display_action(action) do
     Jason.decode(action)
   end

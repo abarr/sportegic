@@ -4,6 +4,7 @@ defmodule SportegicWeb.TaskController do
   alias Sportegic.Tasks
   alias Sportegic.Tasks.Task
   alias Sportegic.Users
+  alias Sportegic.Notes
 
   plug SportegicWeb.Plugs.Authenticate
   action_fallback SportegicWeb.FallbackController
@@ -23,26 +24,27 @@ defmodule SportegicWeb.TaskController do
     )
   end
 
-  def new(conn, _params, _org, _permissions) do
-    case conn.query_params["note_id"] do
-      nil -> 
+  def new(conn, params, org, _permissions) do
+    case Map.has_key?(params, "note_id") do
+      false -> 
         changeset = Tasks.change_task(%Task{})
         render(conn, "new.html", changeset: changeset)
-        _ -> 
-        changeset = Tasks.change_task(%Task{note_id: conn.query_params["note_id"]})
-        render(conn, "new.html", changeset: changeset)
+      _     ->
+        note = Notes.get_note_only(params["note_id"], org)
+        changeset = Tasks.change_task(%Task{})
+        render(conn, "new.html", changeset: changeset, note: note)
     end
   end
 
-  def create(conn, %{"task" => task_params}, org, _permissions) do
+  def create(conn, %{"task" => task_params} = params, org, _permissions) do
+    
     %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
 
     task_params =
       task_params
-      |> Map.put("note_id", task_params["note_id"])
+      |> Map.put("note_id", params["note_id"])
       |> Map.put("user_id", conn.assigns.user.id)
       |> Map.put("assignee_id", user_id)
-      |> IO.inspect()
 
     case Tasks.create_task(task_params, org) do
       {:ok, task} ->

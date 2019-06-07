@@ -136,7 +136,8 @@
                         <% end %>
                         <tr>
                             <th colspan="6"> 
-                              <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a>
+                               <%= link to: Routes.person_note_path(@conn, :new, @person), class: "btn btn-small waves-effect z-depth-0 waves-light blue lighten-2" do %><i class="material-icons">add</i><% end %>
+                              <%# <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a> %>
                             </th>                          
                           </tr>
                       <% else %>
@@ -148,7 +149,8 @@
                           </tr>
                         <tr>
                             <th colspan="6"> 
-                              <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a>
+                              <%= link to: Routes.person_note_path(@conn, :new, @person), class: "btn btn-small waves-effect z-depth-0 waves-light blue lighten-2" do %><i class="material-icons">add</i><% end %>
+                              <%# <a class="btn btn-small waves-effect z-depth-0 waves-light blue lighten-2"><i class="material-icons">add</i></a> %>
                             </th>                          
                           </tr>
                        <% end %>    

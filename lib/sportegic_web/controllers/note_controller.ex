@@ -4,6 +4,7 @@ defmodule SportegicWeb.NoteController do
   alias Sportegic.Notes
   alias Sportegic.Notes.{Note, Comment}
   alias HtmlSanitizeEx
+  alias Sportegic.People
 
   plug SportegicWeb.Plugs.Authenticate
   action_fallback SportegicWeb.FallbackController
@@ -18,12 +19,23 @@ defmodule SportegicWeb.NoteController do
     render(conn, "index.html", notes: notes)
   end
 
-  def new(conn, _params, _org, _permissions) do
-    changeset = Notes.change_note(%Note{})
-    render(conn, "new.html", changeset: changeset)
+  def new(conn, params, org, _permissions) do
+    case Map.has_key?(params, "person_id") do
+      false ->
+        changeset = Notes.change_note(%Note{})
+        render(conn, "new.html", changeset: changeset)
+      _     ->
+        person = People.get_person_only(params["person_id"], org)
+        note = %Note{ people: [ person ], types: []}
+        changeset = Notes.change_note(%Note{})
+        render(conn, "new.html", changeset: changeset, note: note)
+    end
+    
+    
   end
 
   def create(conn, %{"note" => note_params}, org, _permissions) do
+    
     # Sanitize user input
     note_params = only_basic_html(note_params)
     note_params = Map.put(note_params, "user_id", conn.assigns.user.id)
@@ -53,7 +65,7 @@ defmodule SportegicWeb.NoteController do
 
   defp only_basic_html(%{ "details" => details } = note_params) do
     note_params
-    |> Map.put(:details, HtmlSanitizeEx.basic_html(details))
+    |> Map.put("details", HtmlSanitizeEx.basic_html(details))
   end
 
   def show(conn, %{"id" => id}, org, _permissions) do

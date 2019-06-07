@@ -8,7 +8,7 @@ defmodule Sportegic.Repo.Migrations.CreateTasks do
       add(:completed, :boolean, default: false)
       add(:user_id, references(:users, on_delete: :nothing))
       add(:assignee_id, references(:users, on_delete: :nothing))
-      add(:note_id, references(:notes, on_delete: :delete_all))
+      add(:note_id, references(:notes, on_delete: :delete_all), null: true)
 
       timestamps()
     end

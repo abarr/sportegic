@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)
     };
-    if (window.location.pathname == "/tasks" || window.location.pathname == "/tasks/new") {
+    if (window.location.pathname.split("/")[1] == "tasks" || window.location.pathname.split("/")[3] == "tasks") {
         let sportegic_socket = socket.connect_socket();
         Tasks.realtime_user_search(sportegic_socket);
         Tasks.people_search(sportegic_socket);
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
-    if (window.location.pathname.split("/")[1] == "notes") {
+    if (window.location.pathname.split("/")[1] == "notes" || window.location.pathname.split("/")[3] == "notes") {
         let sportegic_socket = socket.connect_socket();
         Notes.tags_search(sportegic_socket);
         Notes.people_search(sportegic_socket);

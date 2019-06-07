@@ -1,8 +1,21 @@
+ <%= if assigns[:note] do %>
+  <div class="row "></div>
+    <div class="col s12">
+      <div class="card z-depth-0 note">
+        <div class="card-content blue lighten-3 white-text">
+          This task will be linked to the note: <%= @note.subject %> (Created on the <%= readable_date!(@note.inserted_at) %> by <%= @note.user.firstname <> " " <> @note.user.lastname %>)
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <% end %>
+
 
 <%= form_for @changeset, @action, [id: "task-form"], fn f -> %>
- 
-  <%= hidden_input f, :note_id %>
- 
+
+      
+  
   <div class="page">
     <div class="row">
         <div id="user_list"></div>

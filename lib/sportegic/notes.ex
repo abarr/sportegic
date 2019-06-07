@@ -70,6 +70,12 @@ defmodule Sportegic.Notes do
     |> Repo.preload([:types, :user, :people, comments: [:user], tasks: [:assignee, :user]])
   end
 
+  def get_note_only(id, org) do
+    Note
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload(:user)
+  end
+
   @doc """
   Creates a note.
 

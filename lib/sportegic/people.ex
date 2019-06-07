@@ -61,6 +61,11 @@ defmodule Sportegic.People do
     |> Repo.preload([:document, :visa, :insurance_policy, [notes: query]])
   end
 
+  def get_person_only(id, org) do
+    Person
+    |> Repo.get!(id, prefix: org)
+  end
+
   # name will include DOB in format "FIRSTNAME LASTNAME (MNTH, DAY, YEAR)"
   def get_person_by_name_dob(name, org) when is_binary(name) do
     [firstname, lastname | _] = String.split(name, " ")

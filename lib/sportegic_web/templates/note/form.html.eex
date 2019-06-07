@@ -17,8 +17,10 @@
         </div>
         <div id="people_list">
           <%= if assigns[:note] do %>
-            <%= for person <- @note.people do %>
-              <input type="text" hidden="true" name="note[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
+            <%= if Enum.count(assigns.note.people) > 0 do %>
+              <%= for person <- @note.people do %>
+                <input type="text" hidden="true" name="note[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
+              <% end %>
             <% end %>
         <% end %>
         
@@ -29,8 +31,10 @@
         </div>
         <div id="tags_list">
         <%= if assigns[:note] do %>
-          <%= for tag <- @note.types do %>
-            <input type="text" hidden="true" name="note[types][]" value="<%= tag.name %>">
+          <%= if Enum.count(assigns.note.types) > 0 do %>
+            <%= for tag <- @note.types do %>
+              <input type="text" hidden="true" name="note[types][]" value="<%= tag.name %>">
+            <% end %>
           <% end %>
         <% end %>
         </div>

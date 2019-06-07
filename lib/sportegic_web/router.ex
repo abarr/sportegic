@@ -7,7 +7,7 @@ defmodule SportegicWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug NavigationHistory.Tracker, excluded_paths: ["/login"]
+    plug NavigationHistory.Tracker, excluded_paths: ["/login",  ~r(/*new)]
     plug SportegicWeb.Plugs.Session
   end
 
@@ -70,10 +70,14 @@ defmodule SportegicWeb.Router do
       resources "/insurance_policy", InsurancePolicyController, except: [:show] do
         resources "/attachment", AttachmentController, only: [:index, :delete]
       end
+
+      get "/notes/new", NoteController, :new
     end
 
     resources "/notes", NoteController do
       resources "/comments", CommentController, only: [:create, :delete]
+      get "/tasks/new", TaskController, :new
+      post "/tasks/new", TaskController, :create
     end
 
     resources "/tasks", TaskController

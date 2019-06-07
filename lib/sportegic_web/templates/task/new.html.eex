@@ -16,7 +16,12 @@
   </div>
   <div class="row page">
     <div class="col s12">
-        <%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :create)) %>
+        <%= if assigns[:note] do %>
+          <%= render "form.html", Map.put(assigns, :action, Routes.note_task_path(@conn, :create, @note)) %>
+        <% else %>
+          <%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :create)) %>
+        <% end %>
+        
     </div>
   </div>
 </div>
