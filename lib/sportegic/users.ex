@@ -88,6 +88,14 @@ defmodule Sportegic.Users do
     {:ok, list}
   end
 
+  def create_default_administrator_permissions(org) do
+    list =
+      Users.list_permissions(org)
+      |> Enum.map(&create_roles_permissions(%{permission_id: &1.id, role_id: 2}, org))
+
+    {:ok, list}
+  end
+
   def update_role(%Role{} = role, attrs, permissions, org) do
     role
     |> Role.changeset(attrs)

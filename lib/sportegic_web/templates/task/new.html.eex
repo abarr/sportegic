@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/trix.css") %>"/>
-<script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/trix.js") %>"></script>
+
 <div class="row page">
   <div class="col s12">
     <div class="section heading">
@@ -26,5 +25,7 @@
   </div>
 </div>
 <script> window.channel = "true" </script>
+<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/trix.css") %>"/>
+<script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/trix.js") %>"></script>
 
 

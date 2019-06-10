@@ -61,7 +61,8 @@ defmodule SportegicWeb.OrganisationController do
          {:ok, _roles} <- Users.create_default_roles(org.prefix),
          {:ok, _cats} <- Users.create_default_categories(org.prefix),
          {:ok, _perm} <- Users.create_default_permissions(org.prefix),
-         {:ok, _role_permissions} <- Users.create_default_owner_permissions(org.prefix) do
+         {:ok, _role_permissions} <- Users.create_default_owner_permissions(org.prefix),
+         {:ok, _role_permissions} <- Users.create_default_administrator_permissions(org.prefix) do
       conn
       |> put_session(:organisation, org.prefix)
       |> put_flash(:info, "Organisation created successfully.")

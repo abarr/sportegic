@@ -82,7 +82,7 @@ defmodule SportegicWeb.RoleController do
           render(conn, "edit.html",
             role: role,
             changeset: changeset,
-            permissions: permissions
+            permissions_cats: permissions
           )
       end
     end

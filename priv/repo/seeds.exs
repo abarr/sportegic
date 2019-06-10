@@ -4,12 +4,19 @@ Sportegic.Accounts.create_user(%{
   "verified" => "true"
 })
 
+Sportegic.Accounts.create_user(%{
+  "email" => "g@t.com",
+  "password" => "password",
+  "verified" => "true"
+})
+
 Sportegic.Accounts.create_organisation(%{
   "display" => "Collingwood",
   "name" => "Collingwood"
 })
 
 Sportegic.Accounts.create_organisations_users(%{user_id: 1, organisation_id: 1})
+Sportegic.Accounts.create_organisations_users(%{user_id: 2, organisation_id: 1})
 
 Sportegic.LookupTypes.create_default_lookups("collingwood")
 Sportegic.LookupTypes.create_default_lookup_types("collingwood")
@@ -17,6 +24,7 @@ Sportegic.Users.create_default_roles("collingwood")
 Sportegic.Users.create_default_categories("collingwood")
 Sportegic.Users.create_default_permissions("collingwood")
 Sportegic.Users.create_default_owner_permissions("collingwood")
+Sportegic.Users.create_default_administrator_permissions("collingwood")
 
 # Create an account owner
 
@@ -24,9 +32,20 @@ Sportegic.Users.create_user(
   %{
     firstname: "Andrew",
     lastname: "Barr",
-    mobile: "+61413306150",
+    mobile: "+61411333222",
     user_id: "1",
     role_id: "1"
+  },
+  "collingwood"
+)
+
+Sportegic.Users.create_user(
+  %{
+    firstname: "Geaorge",
+    lastname: "Clooney",
+    mobile: "+61411222333",
+    user_id: "2",
+    role_id: "2"
   },
   "collingwood"
 )
