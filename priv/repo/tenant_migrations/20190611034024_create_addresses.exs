@@ -12,6 +12,7 @@ defmodule Sportegic.Repo.Migrations.CreateAddresses do
       add(:sublocality_level_1, :string)
       add(:country, :string)
       add(:administrative_area_level_1, :string)
+      add(:administrative_area_level_2, :string)
       add(:postal_code, :string)
 
       add(:person_id, references(:people, on_delete: :delete_all))
