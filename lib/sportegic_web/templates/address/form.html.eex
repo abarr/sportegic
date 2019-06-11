@@ -20,6 +20,7 @@
     <%= hidden_input f, :sublocality_level_1, [id: "sublocality_level_1"] %>
     <%= hidden_input f, :postal_town, [id: "postal_town"] %>
     <%= hidden_input f, :administrative_area_level_1, [id: "administrative_area_level_1"] %>
+    <%= hidden_input f, :administrative_area_level_2, [id: "administrative_area_level_2"] %>
     <%= hidden_input f, :country, [id: "country"] %>
     <%= hidden_input f, :postal_code, [id: "postal_code"] %>
   
@@ -44,6 +45,8 @@
         street_number: 'short_name',
         route: 'long_name',
         locality: 'long_name',
+        postal_town: 'postal_town',
+        sublocality_level_1: 'sublocality_level_1',
         administrative_area_level_1: 'short_name',
         postal_town: 'short_name',
         sublocality_level_1: 'shortname',
@@ -76,9 +79,11 @@
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
           var addressType = place.address_components[i].types[0];
-          
+          console.log(addressType)
           if (componentForm[addressType]) {
+            console.log("Address type is in the list")
             var val = place.address_components[i][componentForm[addressType]];
+            console.log(value)
             document.getElementById(addressType).value = val;
           }
         }

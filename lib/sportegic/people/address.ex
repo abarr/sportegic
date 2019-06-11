@@ -8,6 +8,7 @@ defmodule Sportegic.People.Address do
   schema "addresses" do
     field(:address, :string)
     field(:administrative_area_level_1, :string)
+    field(:administrative_area_level_2, :string)
     field(:country, :string)
     field(:locality, :string)
     field(:postal_town, :string)
@@ -34,7 +35,8 @@ defmodule Sportegic.People.Address do
     :country,
     :postal_code,
     :person_id,
-    :administrative_area_level_1
+    :administrative_area_level_1,
+    :administrative_area_level_2,
   ]
 
   @doc false
