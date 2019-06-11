@@ -11,7 +11,7 @@ defmodule Sportegic.Accounts.Organisation do
 
     many_to_many(:users, User, join_through: "organisations_users")
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

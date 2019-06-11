@@ -1,0 +1,48 @@
+<h1>Show Address</h1>
+
+<ul>
+
+  <li>
+    <strong>Unit number:</strong>
+    <%= @address.unit_number %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @address.address %>
+  </li>
+
+  <li>
+    <strong>Street number:</strong>
+    <%= @address.street_number %>
+  </li>
+
+  <li>
+    <strong>Route:</strong>
+    <%= @address.route %>
+  </li>
+
+  <li>
+    <strong>Locality:</strong>
+    <%= @address.locality %>
+  </li>
+
+  <li>
+    <strong>Country:</strong>
+    <%= @address.country %>
+  </li>
+
+  <li>
+    <strong>Administrative area level 1:</strong>
+    <%= @address.administrative_area_level_1 %>
+  </li>
+
+  <li>
+    <strong>Postal code:</strong>
+    <%= @address.postal_code %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.address_path(@conn, :edit, @address) %></span>
+<span><%= link "Back", to: Routes.address_path(@conn, :index) %></span>

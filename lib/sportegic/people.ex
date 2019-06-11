@@ -78,7 +78,6 @@ defmodule Sportegic.People do
 
     Person
     |> Repo.get_by([firstname: firstname, lastname: lastname, dob: dob], prefix: org)
-    |> IO.inspect()
   end
 
   @doc """

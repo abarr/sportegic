@@ -20,6 +20,10 @@ defmodule Sportegic.LookupTypes.Seeds do
       %{
         name: "Note Tags",
         description: "Provides a list of tags for categorising and weighting notes"
+      },
+      %{
+        name: "Address Types",
+        description: "Provides a list of address types that can be recorded"
       }
     ]
   end
@@ -111,6 +115,19 @@ defmodule Sportegic.LookupTypes.Seeds do
         lookup_id: 5
       }
 
+    ]
+  end
+
+  def get_default_address_types() do
+    [
+      %{
+        name: "Primary",
+        lookup_id: 6
+      },
+      %{
+        name: "Secondary",
+        lookup_id: 6
+      }
     ]
   end
 end

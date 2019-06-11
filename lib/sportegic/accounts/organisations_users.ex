@@ -6,7 +6,7 @@ defmodule Sportegic.Accounts.OrganisationsUsers do
     field(:user_id, :id)
     field(:organisation_id, :id)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

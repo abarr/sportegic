@@ -55,6 +55,10 @@
                   <i class="fal fa-mobile-android fa-fw fa-lg"></i>&nbsp
                   <span class="truncate"6><%= @person.mobile %></span>
                 </li>
+                <li class="collection-item valign-wrapper">
+                  <i class="fal fa-home-lg-alt fa-fw fa-lg"></i></i>&nbsp
+                  <span class="truncate"6><%=  %></span>
+                </li>
               </ul>
             </div>
             <div class="col s12 xl4">
@@ -71,6 +75,10 @@
                   <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
+                  <% end %>
+                  <%= link to: Routes.person_address_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-user-injured fa-fw fa-lg"></i> Addresses
+                    <span class="new badge grey lighten-1 white-text " data-badge-caption=""> 0<%=  %>
                   <% end %>
                 
               </div> 

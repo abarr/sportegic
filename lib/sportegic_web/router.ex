@@ -72,6 +72,8 @@ defmodule SportegicWeb.Router do
       end
 
       get "/notes/new", NoteController, :new
+      get "/address/new", AddressController, :new
+      get "/address", AddressController, :index
     end
 
     resources "/notes", NoteController do
@@ -81,6 +83,8 @@ defmodule SportegicWeb.Router do
     end
 
     resources "/tasks", TaskController
+
+    resources "/address", AddressController
   end
 
   # Other scopes may use custom stacks.

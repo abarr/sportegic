@@ -1,0 +1,37 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= label f, :unit_number %>
+  <%= text_input f, :unit_number %>
+  <%= error_tag f, :unit_number %>
+
+  <%= label f, :address %>
+  <%= text_input f, :address %>
+  <%= error_tag f, :address %>
+
+  <%= label f, :street_number %>
+  <%= text_input f, :street_number %>
+  <%= error_tag f, :street_number %>
+
+  <%= label f, :route %>
+  <%= text_input f, :route %>
+  <%= error_tag f, :route %>
+
+  <%= label f, :locality %>
+  <%= text_input f, :locality %>
+  <%= error_tag f, :locality %>
+
+  <%= label f, :country %>
+  <%= text_input f, :country %>
+  <%= error_tag f, :country %>
+
+  <%= label f, :administrative_area_level_1 %>
+  <%= text_input f, :administrative_area_level_1 %>
+  <%= error_tag f, :administrative_area_level_1 %>
+
+  <%= label f, :postal_code %>
+  <%= text_input f, :postal_code %>
+  <%= error_tag f, :postal_code %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

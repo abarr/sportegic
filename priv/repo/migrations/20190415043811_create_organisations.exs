@@ -7,7 +7,7 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisations do
       add :display, :string
       add :prefix, :string
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end

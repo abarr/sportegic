@@ -19,8 +19,7 @@ defmodule SportegicWeb.UserSearchChannel do
         %{(x.firstname <> " " <> x.lastname) => nil}
       end)
       |> Enum.reduce(&Map.merge/2)
-      |> IO.inspect()
-
+      
     broadcast!(socket, "users:#{token}", %{payload: payload})
     {:noreply, socket}
   end
