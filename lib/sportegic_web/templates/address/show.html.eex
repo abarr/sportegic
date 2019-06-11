@@ -44,5 +44,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.address_path(@conn, :edit, @address) %></span>
-<span><%= link "Back", to: Routes.address_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.people_address_path(@conn, :edit, @person, @address) %></span>
+<span><%= link "Back", to: Routes.people_address_path(@conn, :index, @person) %></span>

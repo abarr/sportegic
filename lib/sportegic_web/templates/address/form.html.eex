@@ -1,37 +1,100 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= label f, :unit_number %>
-  <%= text_input f, :unit_number %>
-  <%= error_tag f, :unit_number %>
+  <div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s12 m2">
+          <%= text_input f, :unit_number, [id: "unit", placeholder: "Apartment"] %>
+            <label for="unit"></label>
+        </div>
+        <div class="input-field col s12 m10">
+          <%= text_input f, :address, [id: "address", placeholder: "Enter the street address"] %>
+          <label for="address"></label>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <%= label f, :address %>
-  <%= text_input f, :address %>
-  <%= error_tag f, :address %>
-
-  <%= label f, :street_number %>
-  <%= text_input f, :street_number %>
-  <%= error_tag f, :street_number %>
-
-  <%= label f, :route %>
-  <%= text_input f, :route %>
-  <%= error_tag f, :route %>
-
-  <%= label f, :locality %>
-  <%= text_input f, :locality %>
-  <%= error_tag f, :locality %>
-
-  <%= label f, :country %>
-  <%= text_input f, :country %>
-  <%= error_tag f, :country %>
-
-  <%= label f, :administrative_area_level_1 %>
-  <%= text_input f, :administrative_area_level_1 %>
-  <%= error_tag f, :administrative_area_level_1 %>
-
-  <%= label f, :postal_code %>
-  <%= text_input f, :postal_code %>
-  <%= error_tag f, :postal_code %>
-
-  <div>
-    <%= submit "Save" %>
+    <%= hidden_input f, :street_number, [id: "street_number"] %>
+    <%= hidden_input f, :route, [id: "route"] %>
+    <%= hidden_input f, :locality, [id: "locality"] %>
+    <%= hidden_input f, :administrative_area_level_1, [id: "administrative_area_level_1"] %>
+    <%= hidden_input f, :country, [id: "country"] %>
+    <%= hidden_input f, :postal_code, [id: "postal_code"] %>
+  
+  <div class="fixed-action-btn">
+    <button type="submit" onclick="" class="btn-floating btn-large green">
+      <i class="large material-icons">save</i>
+    </button>
   </div>
 <% end %>
+
+
+<script>
+      // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var placeSearch, autocomplete;
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        address = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        address.addListener('place_changed', fillInAddress);
+      }
+
+      function fillInAddress() {
+
+        // Get the place details from the autocomplete object.
+        var place = address.getPlace();
+        
+        
+        
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            document.getElementById(addressType).value = val;
+          }
+        }
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlfaS66hsZ6n1yIUpyd_2QGQ7zpDZ12Pk&libraries=places&callback=initAutocomplete"
+        async defer></script>

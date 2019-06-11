@@ -7,7 +7,7 @@ defmodule SportegicWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug NavigationHistory.Tracker, excluded_paths: ["/login",  ~r(/*new)]
+    plug NavigationHistory.Tracker, excluded_paths: ["/login", ~r(/*new)]
     plug SportegicWeb.Plugs.Session
   end
 
@@ -71,9 +71,9 @@ defmodule SportegicWeb.Router do
         resources "/attachment", AttachmentController, only: [:index, :delete]
       end
 
+      resources "/address", AddressController
+
       get "/notes/new", NoteController, :new
-      get "/address/new", AddressController, :new
-      get "/address", AddressController, :index
     end
 
     resources "/notes", NoteController do
@@ -83,8 +83,6 @@ defmodule SportegicWeb.Router do
     end
 
     resources "/tasks", TaskController
-
-    resources "/address", AddressController
   end
 
   # Other scopes may use custom stacks.

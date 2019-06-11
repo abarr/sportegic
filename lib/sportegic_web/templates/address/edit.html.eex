@@ -1,5 +1,5 @@
 <h1>Edit Address</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.address_path(@conn, :update, @address)) %>
+<%= render "form.html", Map.put(assigns, :action, Routes.people_address_path(@conn, :update, @person, @address)) %>
 
-<span><%= link "Back", to: Routes.address_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.people_address_path(@conn, :index, @person) %></span>

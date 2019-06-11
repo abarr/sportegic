@@ -6,16 +6,18 @@ defmodule Sportegic.People.Address do
   alias Sportegic.LookupTypes.Type
 
   schema "addresses" do
-    field :address, :string
-    field :administrative_area_level_1, :string
-    field :country, :string
-    field :locality, :string
-    field :postal_code, :string
-    field :route, :string
-    field :street_number, :string
-    field :unit_number, :string
-    
-    belongs_to :person, Person
+    field(:address, :string)
+    field(:administrative_area_level_1, :string)
+    field(:country, :string)
+    field(:locality, :string)
+    field(:postal_town, :string)
+    field(:sublocality_level_1, :string)
+    field(:postal_code, :string)
+    field(:route, :string)
+    field(:street_number, :string)
+    field(:unit_number, :string)
+
+    belongs_to(:person, Person)
     belongs_to(:type, Type)
 
     timestamps()
@@ -27,6 +29,8 @@ defmodule Sportegic.People.Address do
     :street_number,
     :route,
     :locality,
+    :postal_town,
+    :sublocality_level_1,
     :country,
     :postal_code,
     :person_id,
