@@ -17,6 +17,8 @@
     <%= hidden_input f, :street_number, [id: "street_number"] %>
     <%= hidden_input f, :route, [id: "route"] %>
     <%= hidden_input f, :locality, [id: "locality"] %>
+    <%= hidden_input f, :sublocality_level_1, [id: "sublocality_level_1"] %>
+    <%= hidden_input f, :postal_town, [id: "postal_town"] %>
     <%= hidden_input f, :administrative_area_level_1, [id: "administrative_area_level_1"] %>
     <%= hidden_input f, :country, [id: "country"] %>
     <%= hidden_input f, :postal_code, [id: "postal_code"] %>
@@ -43,6 +45,8 @@
         route: 'long_name',
         locality: 'long_name',
         administrative_area_level_1: 'short_name',
+        postal_town: 'short_name',
+        sublocality_level_1: 'shortname',
         country: 'long_name',
         postal_code: 'short_name'
       };
@@ -54,6 +58,7 @@
             /** @type {!HTMLInputElement} */(document.getElementById('address')),
             {types: ['geocode']});
 
+        console.log(address)
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         address.addListener('place_changed', fillInAddress);
@@ -63,6 +68,7 @@
 
         // Get the place details from the autocomplete object.
         var place = address.getPlace();
+        console.log(place)
         
         
         
