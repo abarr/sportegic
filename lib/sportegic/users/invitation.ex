@@ -10,7 +10,7 @@ defmodule Sportegic.Users.Invitation do
     field :completed, :boolean, default: false
     belongs_to :role, Role
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

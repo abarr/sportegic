@@ -17,7 +17,7 @@ defmodule Sportegic.Users.Role do
       on_replace: :delete
     )
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

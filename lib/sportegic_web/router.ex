@@ -71,7 +71,7 @@ defmodule SportegicWeb.Router do
         resources "/attachment", AttachmentController, only: [:index, :delete]
       end
 
-      resources "/address", AddressController
+      resources "/address", AddressController, except: [:show]
 
       get "/notes/new", NoteController, :new
     end

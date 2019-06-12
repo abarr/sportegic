@@ -9,7 +9,7 @@ defmodule Sportegic.Users.RolesPermissions do
     belongs_to(:role, Role)
     belongs_to(:permission, Permission)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

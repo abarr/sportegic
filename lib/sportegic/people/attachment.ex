@@ -13,7 +13,7 @@ defmodule Sportegic.People.Attachment do
     belongs_to(:insurance_policy, InsurancePolicy)
     belongs_to(:visa, Visa)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

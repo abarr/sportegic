@@ -9,7 +9,7 @@ defmodule Sportegic.Users.Category do
     field(:key, :string)
     has_many(:permission, Permission)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

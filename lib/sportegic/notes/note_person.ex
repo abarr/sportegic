@@ -6,7 +6,7 @@ defmodule Sportegic.Notes.NotePerson do
     field :person_id, :id
     field :note_id, :id
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

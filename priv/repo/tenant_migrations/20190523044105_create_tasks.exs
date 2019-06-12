@@ -3,14 +3,14 @@ defmodule Sportegic.Repo.Migrations.CreateTasks do
 
   def change do
     create table(:tasks) do
-      add(:due_date, :date)
+      add(:due_date, :timestamptz)
       add(:action, :text)
       add(:completed, :boolean, default: false)
       add(:user_id, references(:users, on_delete: :nothing))
       add(:assignee_id, references(:users, on_delete: :nothing))
       add(:note_id, references(:notes, on_delete: :delete_all), null: true)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:tasks, [:user_id]))

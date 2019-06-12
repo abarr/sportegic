@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateTypes do
       add(:name, :string)
       add(:lookup_id, references(:lookups, on_delete: :delete_all))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:types, [:lookup_id]))

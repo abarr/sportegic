@@ -6,7 +6,7 @@ defmodule Sportegic.Tasks.TaskPerson do
     field(:task_id, :id)
     field(:person_id, :id)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

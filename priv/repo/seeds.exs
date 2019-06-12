@@ -41,7 +41,7 @@ Sportegic.Users.create_user(
 
 Sportegic.Users.create_user(
   %{
-    firstname: "Geaorge",
+    firstname: "George",
     lastname: "Clooney",
     mobile: "+61411222333",
     user_id: "2",
@@ -134,7 +134,7 @@ Sportegic.People.create_person(
 
 #  Note One
 Sportegic.Notes.create_note(%{
-  event_date: "2019-05-15",
+  event_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}},"Australia/Perth"),
   subject: "Players involved in altercation at training",
   details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -170,7 +170,7 @@ Sportegic.Notes.create_note_person(%{
 
 #  Note Two
 Sportegic.Notes.create_note(%{
-  event_date: "2019-06-04",
+  event_date: Timex.now,
   subject: "Players involved in altercation at training",
   details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -198,7 +198,7 @@ Sportegic.Notes.create_note_person(%{
 
 #  Note Three
 Sportegic.Notes.create_note(%{
-  event_date: "2019-06-04",
+  event_date: Timex.now,
   subject: "Excellent feedback from school visit",
   details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -214,8 +214,6 @@ Sportegic.Notes.create_note_type(%{
   type_id: "14"
 }, "collingwood")
 
-
-
 Sportegic.Notes.create_note_person(%{
   note_id: "3",
   person_id: "5"
@@ -224,6 +222,33 @@ Sportegic.Notes.create_note_person(%{
 Sportegic.Notes.create_note_person(%{
   note_id: "3",
   person_id: "1"
+}, "collingwood")
+
+Sportegic.Tasks.create_task(%{
+  action: "<p>This is an action that I would like you to take. Please ensure that you do heaps of tasks</>",
+  due_date: Timex.now,
+  completed: false,
+  note_id: "1",
+  user_id: "1",
+  assignee_id: "2"
+}, "collingwood")
+
+Sportegic.Tasks.create_task(%{
+  action: "<p>This is an action that Someone else has asked me to complete</>",
+  due_date: Timex.now,
+  completed: false,
+  note_id: "2",
+  user_id: "2",
+  assignee_id: "1"
+}, "collingwood")
+
+Sportegic.Tasks.create_task(%{
+  action: "<p>This is another action that Someone else has asked me to complete</>",
+  due_date: Timex.now,
+  completed: false,
+  note_id: "1",
+  user_id: "2",
+  assignee_id: "1"
 }, "collingwood")
 
 

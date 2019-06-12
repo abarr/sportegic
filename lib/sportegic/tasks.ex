@@ -108,8 +108,6 @@ defmodule Sportegic.Tasks do
 
   """
   def create_task(attrs \\ %{}, org) do
-    IO.puts("CREATE TASK")
-
     %Task{}
     |> Task.changeset(attrs)
     |> Repo.insert(prefix: org)

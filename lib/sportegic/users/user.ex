@@ -17,7 +17,7 @@ defmodule Sportegic.Users.User do
     has_many(:comments, Comment)
     has_many(:notes, Note)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

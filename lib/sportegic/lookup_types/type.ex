@@ -16,7 +16,7 @@ defmodule Sportegic.LookupTypes.Type do
 
     many_to_many(:notes, Note, join_through: NoteType)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

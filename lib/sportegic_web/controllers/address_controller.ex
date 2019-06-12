@@ -19,7 +19,7 @@ defmodule SportegicWeb.AddressController do
   end
 
   def index(conn, _params, person, org, _permissions) do
-    addresses = People.list_addresses(org)
+    addresses = People.list_addresses(person, org)
     render(conn, "index.html", addresses: addresses, person: person)
   end
 
@@ -40,8 +40,7 @@ defmodule SportegicWeb.AddressController do
     address_params =
       address_params
       |> Map.put("person_id", person.id)
-      |> IO.inspect()
-
+      
     with {:ok, _address} <- People.create_address(address_params, org) do
       conn
       |> put_flash(:success, "Document created successfully.")
@@ -60,25 +59,26 @@ defmodule SportegicWeb.AddressController do
     end
   end
 
-  def show(conn, %{"id" => id}, _person, org, _permissions) do
-    address = People.get_address!(id, org)
-    render(conn, "show.html", address: address)
-  end
-
-  def edit(conn, %{"id" => id}, _person, org, _permissions) do
-    address = People.get_address!(id, org)
+  def edit(conn, %{"id" => id}, person, org, _permissions) do
+    address = People.get_address!(person, id, org)
     changeset = People.change_address(address)
-    render(conn, "edit.html", address: address, changeset: changeset)
+
+    types =
+      LookupTypes.get_lookup_by_name!(@type_ref, org)
+      |> LookupTypes.list_types(org)
+      |> Enum.map(fn type -> [key: type.name, value: type.id] end)
+
+    render(conn, "edit.html", address: address, changeset: changeset, types: types,person: person )
   end
 
   def update(conn, %{"id" => id, "address" => address_params}, person, org, _permissions) do
-    address = People.get_address!(id, org)
+    address = People.get_address!(person, id, org)
 
     case People.update_address(address, address_params, org) do
-      {:ok, address} ->
+      {:ok, _address} ->
         conn
         |> put_flash(:info, "Address updated successfully.")
-        |> redirect(to: Routes.people_address_path(conn, :show, person, address))
+        |> redirect(to: Routes.person_address_path(conn, :index, person))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", address: address, changeset: changeset)
@@ -86,11 +86,11 @@ defmodule SportegicWeb.AddressController do
   end
 
   def delete(conn, %{"id" => id}, person, org, _permissions) do
-    address = People.get_address!(id, org)
+    address = People.get_address!(person, id, org)
     {:ok, _address} = People.delete_address(address, org)
 
     conn
-    |> put_flash(:info, "Address deleted successfully.")
-    |> redirect(to: Routes.people_address_path(conn, :index, person))
+    |> put_flash(:danger, "Address deleted successfully.")
+    |> redirect(to: Routes.person_address_path(conn, :index, person))
   end
 end

@@ -13,7 +13,7 @@ defmodule Sportegic.Notes.Note do
   @derive {Jason.Encoder, only: [:id, :inserted_at, :subject, :user, :people, :types, :event_date]}
 
   schema "notes" do
-    field(:event_date, :date)
+    field(:event_date, :utc_datetime)
     field(:subject, :string)
     field(:details, :string)
 
@@ -24,7 +24,7 @@ defmodule Sportegic.Notes.Note do
     many_to_many(:types, Type, join_through: NoteType, on_replace: :delete)
     many_to_many(:people, Person, join_through: NotePerson, on_replace: :delete)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

@@ -3,8 +3,8 @@ defmodule Sportegic.Repo.Migrations.CreateVisas do
 
   def change do
     create table(:visas) do
-      add :expiry_date, :date
-      add :issued_date, :date
+      add :expiry_date, :timestamptz
+      add :issued_date, :timestamptz
       add :issuer, :string
       add :allowed_stay, :string
       add :additional_info, :string
@@ -12,7 +12,7 @@ defmodule Sportegic.Repo.Migrations.CreateVisas do
       add :type_id, references(:types, on_delete: :nothing)
       add :person_id, references(:people, on_delete: :delete_all)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:visas, [:type_id])

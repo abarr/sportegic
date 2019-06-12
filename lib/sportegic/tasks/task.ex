@@ -9,7 +9,7 @@ defmodule Sportegic.Tasks.Task do
 
   schema "tasks" do
     field(:action, :string)
-    field(:due_date, :date)
+    field(:due_date, :utc_datetime)
     field(:completed, :boolean)
 
     belongs_to(:note, Note)
@@ -18,7 +18,7 @@ defmodule Sportegic.Tasks.Task do
 
     many_to_many(:people, Person, join_through: TaskPerson, on_replace: :delete)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

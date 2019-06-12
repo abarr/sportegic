@@ -21,10 +21,11 @@ defmodule Sportegic.People.Address do
     belongs_to(:person, Person)
     belongs_to(:type, Type)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @fields [
+    :type_id,
     :unit_number,
     :address,
     :street_number,

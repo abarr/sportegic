@@ -1,12 +1,18 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [id: "address-form"] ,fn f -> %>
   <div class="row">
     <div class="col s12">
-      <div class="row">
+      <div class="row page remove-bottom-margin remove-padding-bottom">
+        <div class="input-field col s12 m4 "> 
+          <%= select f, :type_id, @types, [ required: "true", id: "type-select", class: set_field_class(f, :type_id, ""), required: "true"]%>
+          <%= error_tag_sportegic :type_id %>
+        </div>
+      </div>
+      <div class="row page">
         <div class="input-field col s12 m2">
           <%= text_input f, :unit_number, [id: "unit", placeholder: "Apartment"] %>
             <label for="unit"></label>
         </div>
-        <div class="input-field col s12 m10">
+        <div class="input-field col s12 m8">
           <%= text_input f, :address, [id: "address", placeholder: "Enter the street address"] %>
           <label for="address"></label>
         </div>
@@ -25,7 +31,7 @@
     <%= hidden_input f, :postal_code, [id: "postal_code"] %>
   
   <div class="fixed-action-btn">
-    <button type="submit" onclick="" class="btn-floating btn-large green">
+    <button type="submit"  onclick="check_form()" class="btn-floating btn-large green">
       <i class="large material-icons">save</i>
     </button>
   </div>
@@ -33,6 +39,28 @@
 
 
 <script>
+
+function check_form(){
+    let form = document.getElementById('address-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          for( var item of previous_list){
+                item.classList.remove("invalid")
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          for (var item of list) {
+            if(item.tagName === "SELECT"){
+              item.parentNode.classList += " invalid"
+            }else{
+              item.classList += " invalid"
+            }
+                
+          }
+      }
+      
+  }
+  
       // This example displays an address form, using the autocomplete feature
       // of the Google Places API to help users fill in the information.
 
@@ -65,6 +93,14 @@
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         address.addListener('place_changed', fillInAddress);
+
+        var input = document.getElementById('address');
+        google.maps.event.addDomListener(input, 'keydown', function(event) { 
+          if (event.keyCode === 13) { 
+              event.preventDefault(); 
+              document.querySelector("button[type=submit").focus()
+          }
+        }); 
       }
 
       function fillInAddress() {
@@ -83,7 +119,7 @@
           if (componentForm[addressType]) {
             console.log("Address type is in the list")
             var val = place.address_components[i][componentForm[addressType]];
-            console.log(value)
+            console.log(val)
             document.getElementById(addressType).value = val;
           }
         }

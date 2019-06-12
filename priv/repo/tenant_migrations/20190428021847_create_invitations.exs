@@ -8,7 +8,7 @@ defmodule Sportegic.Repo.Migrations.CreateInvitations do
       add :completed, :boolean, default: false
       add :role_id, references(:roles, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:invitations, [:role_id])

@@ -10,7 +10,7 @@ defmodule Sportegic.Repo.Migrations.CreateProfiles do
       add(:user_id, :integer)
       add(:role_id, references(:roles, on_delete: :nothing))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end

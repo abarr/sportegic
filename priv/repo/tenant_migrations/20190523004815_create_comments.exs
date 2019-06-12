@@ -7,7 +7,7 @@ defmodule Sportegic.Repo.Migrations.CreateComments do
       add :user_id, references(:users, on_delete: :nothing)
       add :note_id, references(:notes, on_delete: :delete_all)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:comments, [:user_id])

@@ -18,7 +18,7 @@ defmodule Sportegic.People.InsurancePolicy do
 
     has_many(:attachments, Attachment)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

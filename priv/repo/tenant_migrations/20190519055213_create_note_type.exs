@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateNoteType do
       add :note_id, references(:notes, on_delete: :nothing)
       add :type_id, references(:types, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:note_type, [:note_id])

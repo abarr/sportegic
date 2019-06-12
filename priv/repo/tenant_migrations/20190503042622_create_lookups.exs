@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateLookups do
       add :name, :string
       add :description, :string
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
   end

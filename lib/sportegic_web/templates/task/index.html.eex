@@ -20,7 +20,7 @@
       
     </div>
 
-    <div  id="assigned" class="row ">
+    <div  id="assigned" class="row wait-for-icons">
       <div class="col s12">
         <%= for task <- @tasks_assigned do %>
         <div class="card horizontal z-depth-0 task">
@@ -47,7 +47,7 @@
       
       </div>
     </div>
-    <div  id="created" class="row">
+    <div  id="created" class="row wait-for-icons">
       <div class="col s12">
         <%= for task <- @tasks_created do %>
         <div class="card horizontal z-depth-0 task">

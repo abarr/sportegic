@@ -9,7 +9,7 @@ defmodule Sportegic.LookupTypes.Lookup do
     field(:description, :string)
     has_many(:types, Type)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

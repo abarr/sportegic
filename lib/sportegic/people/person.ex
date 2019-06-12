@@ -5,7 +5,7 @@ defmodule Sportegic.People.Person do
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
-  alias Sportegic.People.{Document, Visa, InsurancePolicy}
+  alias Sportegic.People.{Document, Visa, InsurancePolicy, Address}
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NotePerson
   alias Sportegic.Tasks.Task
@@ -26,11 +26,12 @@ defmodule Sportegic.People.Person do
     has_many(:document, Document)
     has_many(:insurance_policy, InsurancePolicy)
     has_many(:visa, Visa)
+    has_many(:addresses, Address)
 
     many_to_many(:notes, Note, join_through: NotePerson)
     many_to_many(:tasks, Task, join_through: TaskPerson)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

@@ -54,7 +54,7 @@ defmodule Sportegic.People do
 
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa, :insurance_policy, [notes: query]])
+    |> Repo.preload([:document, :visa, :insurance_policy, :addresses, [notes: query]])
   end
 
   def get_person_only(id, org) do
@@ -726,8 +726,11 @@ defmodule Sportegic.People do
       [%Address{}, ...]
 
   """
-  def list_addresses(org) do
-    Repo.all(Address, prefix: org)
+  def list_addresses(person, org) do
+    Address
+    |> where([a], a.person_id == ^person.id)
+    |> Repo.all( prefix: org)
+    |> Repo.preload(:type)
   end
 
   @doc """
@@ -744,8 +747,12 @@ defmodule Sportegic.People do
       ** (Ecto.NoResultsError)
 
   """
-  def get_address!(id, org), do: Repo.get!(Address, id, prefix: org)
-
+  def get_address!(person, id, org) do
+    Address
+    |> where([a], a.person_id == ^person.id)
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload([:type])
+  end
   @doc """
   Creates a address.
 
