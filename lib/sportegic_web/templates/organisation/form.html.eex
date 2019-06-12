@@ -1,21 +1,91 @@
 <%= form_for @changeset, @action, fn f -> %>
   <div class="row">
     <div class="input-field col s12">
-      <%= label f, :name %>
-      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", autofocus: "true", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+      <%= label f, :name, "Organisation Name" %>
+      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
       <%= error_tag f, :name %>
       <span class="helper-text" data-error="Please provide full account name"></span>
     </div>
     <div class="input-field col s12">
-      <%= label f, :display, [for: "fourteen"] %>
+      <%= label f, :display, "Common Name e.g. Bulls", [for: "fourteen"] %>
       <%= text_input f, :display, [class: "validate", required: "true", data: [length: "14"], id: "fourteen", maxlength: "14", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :display %>
       <span class="helper-text" data-error="A short name commonly used"></span>
     </div>
+    <div class="input-field col s12 ">
+          <%= text_input f, :city, [id: "address", placeholder: "Enter Home City/Suburb"] %>
+          <label for="address"></label>
+    </div>
 
-
-    <div>
-      <%= submit "Create", [class: "btn waves-effect waves-light blue"] %>
+    <div class="right">
+      <%= submit  [class: "btn-floating btn-large z-depth-0 waves-effect waves-light blue"] do %>
+         <i class="large material-icons">add</i>
+      <% end %>
     </div>  
+    
   </div>
+
+  <%= hidden_input f, :home_city, [id: "home_city"] %>
 <% end %>
+
+<script>
+// This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var autocomplete;
+      
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        address = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('address')),
+            {types: ['(cities)']});
+
+        console.log(address)
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        address.addListener('place_changed', fillInAddress);
+
+        var input = document.getElementById('address');
+        google.maps.event.addDomListener(input, 'keydown', function(event) { 
+          if (event.keyCode === 13) { 
+              event.preventDefault(); 
+              document.querySelector("button[type=submit").focus()
+          }
+        }); 
+      }
+
+      function fillInAddress() {
+
+        // Get the place details from the autocomplete object.
+        var place = address.getPlace();
+        console.log(place)
+        document.getElementById("home_city").value = place.formatted_address;
+        
+      }
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlfaS66hsZ6n1yIUpyd_2QGQ7zpDZ12Pk&libraries=places&callback=initAutocomplete"
+        async defer></script>

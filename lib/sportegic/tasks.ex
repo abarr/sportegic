@@ -41,8 +41,8 @@ defmodule Sportegic.Tasks do
   end
 
   def count_overdue_tasks(id, org) do
-    today = Timex.today()
-
+    today = DateTime.utc_now
+    
     query =
       from(t in Task,
         join: u in User,
@@ -55,7 +55,7 @@ defmodule Sportegic.Tasks do
   end
 
   def count_tasks_due_today(id, org) do
-    today = Timex.today()
+    today = DateTime.utc_now
 
     query =
       from(t in Task,
@@ -202,8 +202,6 @@ defmodule Sportegic.Tasks do
 
   """
   def create_task_person(task, person_text, org) when is_binary(person_text) do
-    IO.puts("CREATE TASK PERSON")
-
     case People.get_person_by_name_dob(person_text, org) do
       person when is_map(person) ->
         TaskPerson.changeset(%TaskPerson{}, %{

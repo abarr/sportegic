@@ -134,7 +134,7 @@ Sportegic.People.create_person(
 
 #  Note One
 Sportegic.Notes.create_note(%{
-  event_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}},"Australia/Perth"),
+  event_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}}),
   subject: "Players involved in altercation at training",
   details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -170,7 +170,7 @@ Sportegic.Notes.create_note_person(%{
 
 #  Note Two
 Sportegic.Notes.create_note(%{
-  event_date: Timex.now,
+  event_date: Timex.to_datetime({{2019, 06, 10},{0,0,0}}),
   subject: "Players involved in altercation at training",
   details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
@@ -226,7 +226,7 @@ Sportegic.Notes.create_note_person(%{
 
 Sportegic.Tasks.create_task(%{
   action: "<p>This is an action that I would like you to take. Please ensure that you do heaps of tasks</>",
-  due_date: Timex.now,
+  due_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}}),
   completed: false,
   note_id: "1",
   user_id: "1",
@@ -235,7 +235,7 @@ Sportegic.Tasks.create_task(%{
 
 Sportegic.Tasks.create_task(%{
   action: "<p>This is an action that Someone else has asked me to complete</>",
-  due_date: Timex.now,
+  due_date: Timex.to_datetime({{2019, 05, 01},{0,0,0}}),
   completed: false,
   note_id: "2",
   user_id: "2",
