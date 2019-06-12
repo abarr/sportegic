@@ -9,28 +9,35 @@
       <div class="divider"></div>
     </div>
     </div>
-    <div class="row page padding-top-15">
-    <div class="col s12 m4">
-      <div class="card red lighten-2 z-depth-0">
-        <div class="card-content white-text">
-          <a href=""><h5 class="center-align white-text">Overdue Tasks: <%= @my_overdue_tasks %></h5></a>
+    <div class="row">
+      <div class="col s12">
+        <div class="card z-depth-0">
+          <div class="card-content ">
+            <div class="row">
+              <div class="col s4">
+                <div class="card red lighten-2 z-depth-0">
+                  <div class="card-content white-text">
+                    <a href="/tasks"><h5 class="center-align white-text">Overdue Tasks: <%= @my_overdue_tasks %></h5></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                 <div class="card orange lighten-2 z-depth-0">
+                  <div class="card-content white-text">
+                    <a href="/tasks"><h5 class="center-align white-text">Due Today: <%= @my_tasks_due_today %></h5></a>
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="card blue lighten-2 z-depth-0">
+                  <div class="card-content white-text">
+                    <a href="/tasks"><h5 class="center-align white-text">All Tasks: <%= @my_tasks %></h5></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col s12 m4">
-      <div class="card orange lighten-2 z-depth-0">
-        <div class="card-content white-text">
-          <a href=""><h5 class="center-align white-text">Due Today: <%= @my_tasks_due_today %></h5></a>
-          
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m4">
-      <div class="card blue lighten-2 z-depth-0">
-        <div class="card-content white-text">
-          <a href=""><h5 class="center-align white-text">All Tasks: <%= @my_tasks %></h5></a>
-        </div>
-      </div>
-    </div>
-  </div> 
 </div>

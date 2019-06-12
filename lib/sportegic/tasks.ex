@@ -23,6 +23,7 @@ defmodule Sportegic.Tasks do
   def list_tasks_assigned(id, org) do
     Task
     |> join(:inner, [t], u in User, on: t.assignee_id == ^id)
+    |> where([t], t.completed == false)
     |> distinct(true)
     |> order_by([t, u], asc: t.due_date)
     |> Repo.all(prefix: org)
@@ -41,8 +42,8 @@ defmodule Sportegic.Tasks do
   end
 
   def count_overdue_tasks(id, org) do
-    today = DateTime.utc_now
-    
+    today = DateTime.utc_now()
+
     query =
       from(t in Task,
         join: u in User,
@@ -55,7 +56,7 @@ defmodule Sportegic.Tasks do
   end
 
   def count_tasks_due_today(id, org) do
-    today = DateTime.utc_now
+    today = DateTime.utc_now()
 
     query =
       from(t in Task,

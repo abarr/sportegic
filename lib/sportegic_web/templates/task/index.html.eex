@@ -20,56 +20,53 @@
       
     </div>
 
-    <div  id="assigned" class="row wait-for-icons">
-      <div class="col s12">
-        <%= for task <- @tasks_assigned do %>
-        <div class="card horizontal z-depth-0 task">
-          <a class="card-content width-100 task-padding" href='<%= "/tasks/" <> Integer.to_string(task.id) %>'>
-          
-            <div class="row no-padding remove-bottom-margin">
-              <%= raw(display_days(days_until(task.due_date))) %>
-              <div class="col s4 l2 task-border">
-                <span class="task-label">Created by:</span><br>
-                <span class=""><%= task.user.firstname <> " " <> task.user.lastname %> </span>
-              </div>
-              <div class="col s4 l8 ">
-                <span class="task-label">Action:</span><br>
-                <span class="truncate ">
-                  <%= sanitize_html_to_text(task.action) %>
-                </span>
-              </div>
-            </div>
-          </a>
+    <div  id="assigned" class="row page wait-for-icons">
+      <div class="row page">
+        <div class="col s12">
+          <table class="highlight">
+            <thead>
+              <tr>
+                  <th width="15%">Due</th>
+                  <th class="hide-on-med-and-down">Created by</th>
+                  <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for task <- @tasks_assigned do %>
+                <tr onclick="go(<%= task.id %>)">
+                  <td width="15%"><%= raw(display_days(days_until(task.due_date))) %></td>
+                  <td class="hide-on-med-and-down"><%= task.user.firstname <> " " <> task.user.lastname  %></td>
+                  <td class="truncate"><%= raw(task.action) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>  
         </div>
-        <% end %>
-
-        
-      
       </div>
     </div>
-    <div  id="created" class="row wait-for-icons">
-      <div class="col s12">
-        <%= for task <- @tasks_created do %>
-        <div class="card horizontal z-depth-0 task">
-          <a class="card-content width-100 task-padding" href='<%= "/tasks/" <> Integer.to_string(task.id) %>'>
-          
-            <div class="row no-padding remove-bottom-margin">
-              <%= raw(display_days(days_until(task.due_date))) %>
-              <div class="col s4 l2 task-border">
-                <span class="task-label">Assigned to:</span><br>
-                <span class=""><%= task.assignee.firstname <> " " <> task.assignee.lastname %> </span>
-              </div>
-              <div class="col s4 l8 ">
-                <span class="task-label">Action:</span><br>
-                <span class="truncate ">
-                  <%= sanitize_html_to_text(task.action) %>
-                </span>
-              </div>
-            </div>
-          </a>
+    <div  id="created" class="row page wait-for-icons">
+      <div class="row page">
+        <div class="col s12">
+          <table class="highlight">
+            <thead>
+              <tr>
+                  <th width="15%">Due</th>
+                  <th class="hide-on-med-and-down">Assigned to</th>
+                  <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for task <- @tasks_created do %>
+                <tr onclick="go(<%= task.id %>)">
+                  <td width="15%"><%= raw(display_days(days_until(task.due_date))) %></td>
+                  <td class="hide-on-med-and-down"><%= task.assignee.firstname <> " " <> task.assignee.lastname  %></td>
+                  <td class="truncate"><%= raw(task.action) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>  
         </div>
-        <% end %>
-    </div>
+      </div>
 </div>
     
 <div>
@@ -80,7 +77,11 @@
     </div>
 </div>
 
-
+<script>
+  function go(id){
+    window.location = "/tasks/" + id;
+  }
+</script>
 
 
 

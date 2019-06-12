@@ -25,11 +25,11 @@ defmodule SportegicWeb.TaskView do
         case abs_days do
           "1" ->
             "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
-              abs_days <> " day. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+              abs_days <> " day. Due date was " <> readable_date!(date) <> "</h6></blockquote>"
 
           _ ->
             "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
-              abs_days <> " days. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+              abs_days <> " days. Due date was " <> readable_date!(date) <> "</h6></blockquote>"
         end
 
       n when is_integer(n) and n > 0 ->
@@ -37,12 +37,12 @@ defmodule SportegicWeb.TaskView do
           1 ->
             "<blockquote class='page task-success'><h6>This task is due in " <>
               Integer.to_string(days) <>
-              " day. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+              " day. Due Date was " <> readable_date!(date) <> "</h6></blockquote>"
 
           _ ->
             "<blockquote class='page task-success'><h6>This task is due in " <>
               Integer.to_string(days) <>
-              " days. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+              " days. Due Date was " <> readable_date!(date) <> "</h6></blockquote>"
         end
     end
   end
@@ -50,10 +50,9 @@ defmodule SportegicWeb.TaskView do
   def display_days(days_until) do
     case days_until do
       n when is_integer(n) and n == 0 ->
-        "<div class=\"col s3 l2 center task-border\">
-          <span class=\"task-label red-text lighten-2\">Due:</span><br>
-          <span class=\"align-center red-text lighten-2\">Today</span>
-        </div>"
+        "<div class=\"\">
+              <span class=\"red-text lighten-2\">Due today!</span>
+            </div>"
 
       n when is_integer(n) and n < 0 ->
         days = Integer.to_string(abs(n))
@@ -61,15 +60,13 @@ defmodule SportegicWeb.TaskView do
 
         case n do
           1 ->
-            "<div class=\"col s3 l2 center task-border\">
-              <span class=\"task-label red-text lighten-2\">Overdue by:</span><br>
-              <span class=\"align-center red-text lighten-2\">#{days} day</span>
+            "<div class=\"\">
+              <span class=\"red-text lighten-2\">Overdue #{days} day</span>
             </div>"
 
           _ ->
-            "<div class=\"col s3 l2 center task-border\">
-              <span class=\"task-label red-text lighten-2\">Overdue by:</span><br>
-              <span class=\"align-center red-text lighten-2\">#{days} days</span>
+            "<div class=\"\">
+              <span class=\"red-text lighten-2\">Overdue #{days} days</span>
             </div>"
         end
 
@@ -79,15 +76,13 @@ defmodule SportegicWeb.TaskView do
 
         case n do
           1 ->
-            "<div class=\"col s3 l2 center task-border\">
-              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
-              <span class=\"align-center grey-text lighten-2\">#{days} day</span>
+            "<div class=\"\">
+              <span class=\"grey-text lighten-2\">Due in #{days} day</span>
             </div>"
 
           _ ->
-            "<div class=\"col s3 l2 center task-border\">
-              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
-              <span class=\"align-center grey-text lighten-2\">#{days} days</span>
+            "<div class=\"\">
+              <span class=\"grey-text lighten-2\">Due in #{days} days</span>
             </div>"
         end
     end

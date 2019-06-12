@@ -12,7 +12,7 @@
           <%= text_input f, :unit_number, [id: "unit", placeholder: "Apartment"] %>
             <label for="unit"></label>
         </div>
-        <div class="input-field col s12 m8">
+        <div class="input-field col s12 m10">
           <%= text_input f, :address, [id: "address", placeholder: "Enter the street address"] %>
           <label for="address"></label>
         </div>
