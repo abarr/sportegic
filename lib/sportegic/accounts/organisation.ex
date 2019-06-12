@@ -8,6 +8,7 @@ defmodule Sportegic.Accounts.Organisation do
     field(:display, :string)
     field(:name, :string)
     field(:home_city, :string)
+
     field(:prefix, OrganisationPrefix)
 
     many_to_many(:users, User, join_through: "organisations_users")
@@ -21,6 +22,6 @@ defmodule Sportegic.Accounts.Organisation do
 
     organisation
     |> cast(attrs, [:name, :display, :prefix, :home_city])
-    |> validate_required([:name, :display, :prefix])
+    |> validate_required([:name, :display, :home_city, :prefix])
   end
 end

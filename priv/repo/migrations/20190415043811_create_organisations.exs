@@ -6,6 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisations do
       add :name, :string
       add :display, :string
       add :home_city, :string
+      add :utc_offset_minutes, :string
       add :prefix, :string
 
       timestamps(type: :timestamptz)

@@ -12,7 +12,8 @@ Sportegic.Accounts.create_user(%{
 
 Sportegic.Accounts.create_organisation(%{
   "display" => "Collingwood",
-  "name" => "Collingwood"
+  "name" => "Collingwood",
+  "home_city" => "Collingwood VIC 3066, Australia"
 })
 
 Sportegic.Accounts.create_organisations_users(%{user_id: 1, organisation_id: 1})
@@ -129,127 +130,177 @@ Sportegic.People.create_person(
   "collingwood"
 )
 
-
 #  Create some notes
 
 #  Note One
-Sportegic.Notes.create_note(%{
-  event_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}}),
-  subject: "Players involved in altercation at training",
-  details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
+Sportegic.Notes.create_note(
+  %{
+    event_date: Timex.to_datetime({{2019, 07, 01}, {0, 0, 0}}),
+    subject: "Players involved in altercation at training",
+    details:
+      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
   <li>Aliquam tincidunt mauris eu risus.</li>
   <li>Vestibulum auctor dapibus neque.</li>
   </ul>",
-  user_id: "1"
+    user_id: "1"
+  },
+  "collingwood"
+)
 
-}, "collingwood")
+Sportegic.Notes.create_note_type(
+  %{
+    note_id: "1",
+    type_id: "12"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_type(%{
-  note_id: "1",
-  type_id: "12"
-}, "collingwood")
+Sportegic.Notes.create_note_type(
+  %{
+    note_id: "1",
+    type_id: "14"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_type(%{
-  note_id: "1",
-  type_id: "14"
-}, "collingwood")
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "1",
+    person_id: "1"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_person(%{
-  note_id: "1",
-  person_id: "1"
-}, "collingwood")
-Sportegic.Notes.create_note_person(%{
-  note_id: "1",
-  person_id: "2"
-}, "collingwood")
-Sportegic.Notes.create_note_person(%{
-  note_id: "1",
-  person_id: "3"
-}, "collingwood")
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "1",
+    person_id: "2"
+  },
+  "collingwood"
+)
+
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "1",
+    person_id: "3"
+  },
+  "collingwood"
+)
 
 #  Note Two
-Sportegic.Notes.create_note(%{
-  event_date: Timex.to_datetime({{2019, 06, 10},{0,0,0}}),
-  subject: "Players involved in altercation at training",
-  details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
+Sportegic.Notes.create_note(
+  %{
+    event_date: Timex.to_datetime({{2019, 06, 10}, {0, 0, 0}}),
+    subject: "Players involved in altercation at training",
+    details:
+      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
   <li>Aliquam tincidunt mauris eu risus.</li>
   <li>Vestibulum auctor dapibus neque.</li>
   </ul>",
-  user_id: "1"
+    user_id: "1"
+  },
+  "collingwood"
+)
 
-}, "collingwood")
+Sportegic.Notes.create_note_type(
+  %{
+    note_id: "2",
+    type_id: "16"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_type(%{
-  note_id: "2",
-  type_id: "16"
-}, "collingwood")
+Sportegic.Notes.create_note_type(
+  %{
+    note_id: "2",
+    type_id: "15"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_type(%{
-  note_id: "2",
-  type_id: "15"
-}, "collingwood")
-
-Sportegic.Notes.create_note_person(%{
-  note_id: "2",
-  person_id: "5"
-}, "collingwood")
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "2",
+    person_id: "5"
+  },
+  "collingwood"
+)
 
 #  Note Three
-Sportegic.Notes.create_note(%{
-  event_date: Timex.now,
-  subject: "Excellent feedback from school visit",
-  details: "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
+Sportegic.Notes.create_note(
+  %{
+    event_date: Timex.now(),
+    subject: "Excellent feedback from school visit",
+    details:
+      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
   <li>Aliquam tincidunt mauris eu risus.</li>
   <li>Vestibulum auctor dapibus neque.</li>
   </ul>",
-  user_id: "1"
+    user_id: "1"
+  },
+  "collingwood"
+)
 
-}, "collingwood")
+Sportegic.Notes.create_note_type(
+  %{
+    note_id: "3",
+    type_id: "14"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_type(%{
-  note_id: "3",
-  type_id: "14"
-}, "collingwood")
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "3",
+    person_id: "5"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_person(%{
-  note_id: "3",
-  person_id: "5"
-}, "collingwood")
+Sportegic.Notes.create_note_person(
+  %{
+    note_id: "3",
+    person_id: "1"
+  },
+  "collingwood"
+)
 
-Sportegic.Notes.create_note_person(%{
-  note_id: "3",
-  person_id: "1"
-}, "collingwood")
+Sportegic.Tasks.create_task(
+  %{
+    action:
+      "<p>This is an action that I would like you to take. Please ensure that you do heaps of tasks</>",
+    due_date: Timex.to_datetime({{2019, 07, 01}, {0, 0, 0}}),
+    completed: false,
+    note_id: "1",
+    user_id: "1",
+    assignee_id: "2"
+  },
+  "collingwood"
+)
 
-Sportegic.Tasks.create_task(%{
-  action: "<p>This is an action that I would like you to take. Please ensure that you do heaps of tasks</>",
-  due_date: Timex.to_datetime({{2019, 07, 01},{0,0,0}}),
-  completed: false,
-  note_id: "1",
-  user_id: "1",
-  assignee_id: "2"
-}, "collingwood")
+Sportegic.Tasks.create_task(
+  %{
+    action: "<p>This is an action that Someone else has asked me to complete</>",
+    due_date: Timex.to_datetime({{2019, 05, 01}, {0, 0, 0}}),
+    completed: false,
+    note_id: "2",
+    user_id: "2",
+    assignee_id: "1"
+  },
+  "collingwood"
+)
 
-Sportegic.Tasks.create_task(%{
-  action: "<p>This is an action that Someone else has asked me to complete</>",
-  due_date: Timex.to_datetime({{2019, 05, 01},{0,0,0}}),
-  completed: false,
-  note_id: "2",
-  user_id: "2",
-  assignee_id: "1"
-}, "collingwood")
-
-Sportegic.Tasks.create_task(%{
-  action: "<p>This is another action that Someone else has asked me to complete</>",
-  due_date: Timex.now,
-  completed: false,
-  note_id: "1",
-  user_id: "2",
-  assignee_id: "1"
-}, "collingwood")
-
-
-
+Sportegic.Tasks.create_task(
+  %{
+    action: "<p>This is another action that Someone else has asked me to complete</>",
+    due_date: Timex.now(),
+    completed: false,
+    note_id: "1",
+    user_id: "2",
+    assignee_id: "1"
+  },
+  "collingwood"
+)

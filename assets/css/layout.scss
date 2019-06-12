@@ -1,3 +1,5 @@
+
+
 header, main {
       padding-left: 300px;
     }
@@ -6,6 +8,11 @@ header, main {
       header, main {
         padding-left: 0;
     }     
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    rgb(175, 172, 172);
+     
 }
 
 blockquote{

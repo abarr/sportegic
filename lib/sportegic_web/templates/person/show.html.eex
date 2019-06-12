@@ -29,8 +29,8 @@
                 <%# </div>      %>
               </div>
             </div>
-            <div class="col s12 m9 l7 xl5 ">
-              <ul class="collection with-header">
+            <div class="col s12 m9 l7 xl5 wait-for-icons">
+              <ul class="collection with-header ">
                 <li class="collection-header">
                   <%= if(@person.preferred_name) do %>
                   <h5>
@@ -61,8 +61,8 @@
                 </li>
               </ul>
             </div>
-            <div class="col s12 xl4">
-              <div class="collection">
+            <div class="col s12 xl4 wait-for-icons">
+              <div class="collection ">
                 <div class="collection-item "><h5>Information</h5></div>
                   <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
