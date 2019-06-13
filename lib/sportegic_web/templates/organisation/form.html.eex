@@ -26,6 +26,7 @@
   </div>
 
   <%= hidden_input f, :home_city, [id: "home_city"] %>
+   <%= hidden_input f, :utc_offset_minutes, [id: "utc_offset_minutes"] %>
 <% end %>
 
 <script>
@@ -46,7 +47,6 @@
             /** @type {!HTMLInputElement} */(document.getElementById('address')),
             {types: ['(cities)']});
 
-        console.log(address)
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         address.addListener('place_changed', fillInAddress);
@@ -63,7 +63,9 @@
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = address.getPlace();
+        console.log(place)
         document.getElementById("home_city").value = place.formatted_address;
+        document.getElementById("utc_offset_minutes").value = place.utc_offset;
         
       }
 

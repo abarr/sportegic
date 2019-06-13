@@ -35,6 +35,7 @@ defmodule Sportegic.Tasks do
       from(t in Task,
         join: u in User,
         on: u.id == ^id,
+        where: t.completed == false,
         select: {t.id}
       )
 
@@ -49,6 +50,7 @@ defmodule Sportegic.Tasks do
         join: u in User,
         on: u.id == ^id,
         where: t.due_date < ^today,
+        where: t.completed == false,
         select: {t.id}
       )
 
@@ -63,6 +65,7 @@ defmodule Sportegic.Tasks do
         join: u in User,
         on: u.id == ^id,
         where: t.due_date == ^today,
+        where: t.completed == false,
         select: {t.id}
       )
 
@@ -93,7 +96,9 @@ defmodule Sportegic.Tasks do
 
   """
   def get_task!(id, org) do
-    Repo.get!(Task, id, prefix: org) |> Repo.preload([:people, :user, :assignee, :note])
+    Task
+    |> Repo.get!(id, prefix: org) 
+    |> Repo.preload([:people, :user, :assignee, :completed_by, note: [:types, :people, :user]])
   end
 
   @doc """

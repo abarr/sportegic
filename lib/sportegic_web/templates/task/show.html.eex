@@ -3,10 +3,10 @@
     <div class="section heading">
       <div class="row remove-bottom-margin">
         <div class="col s12" style="display: inline; "> 
-          <%= link to: NavigationHistory.last_path(@conn, 1), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+          <%= link to: Routes.task_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
-          <h5 class="heading grey-text lighten-2 truncate left">Task Assigned to: <%= @task.assignee.firstname <> " " <> @task.assignee.lastname %></h5>
+          <h5 class="heading grey-text lighten-2 truncate left">Task</h5>
           <%= raw(display_status(@task.completed)) %>
         </div>
       </div>
@@ -47,12 +47,72 @@
                   <%=  raw(@task.action) %>
                 </p> 
             </div>
-            
+            <div class="card-action">
+             <%= if @task.completed do %>
+                <h6 class="green-text">Task completed <%= readable_date!(@task.completed_date) %> by <%= @task.completed_by.firstname <> " " <>  @task.completed_by.lastname %></h6>
+             <% else %>
+                <%= link "Complete Task", [ to: Routes.task_path(@conn, :complete, @task), method: :post,  class: "btn btn-small waves-effect waves-light green z-depth-0 lighten-2"] %>
+             <% end %>
+                
+            </div>
           </div>
         </div>
       </div>  
       
-      
+      <div class="row">
+        <div class="col s12">
+          <div class="card z-depth-0 ">
+            <div class="card-content card-info">
+              <h6 class="">Associated Note</h6>
+              <table class="highlight" >
+                <thead>
+                  <tr >
+                      <th>Event</th>
+                      <th class="hide-on-small-only">Created</th>
+                      <th>Subject</th>
+                      <th class="hide-on-small-only">Owner</th>
+                      <th class="hide-on-small-only">Tags</th>
+                      <th class="hide-on-small-only">People</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%= if @task.note do %>
+                  
+                    <tr onclick="go(<%= @task.note.id %>)">
+                      <td > <%= readable_date!(@task.note.event_date) %></td>
+                      <td class="hide-on-small-only"> <%= readable_date!(@task.note.inserted_at) %> </td>
+                      <td> <%= @task.note.subject %> </td>
+                      <td class="hide-on-small-only"> <%=  @task.note.user.firstname <> " " <> @task.note.user.lastname  %> </td>
+                      <td class="hide-on-small-only">
+                        <%= for tag <- @task.note.types do %>
+                          <div class="chip truncate">
+                            <%= tag.name %>
+                          </div>
+                          <% end %>
+                      </td>
+                      <td class="hide-on-small-only">
+                        <%= for person <- @task.note.people do %>
+                          <div class="chip truncate" ">
+                            <%=  person.firstname <> " " <> person.lastname  %>
+                          </div>
+                        <% end %>  
+                      </td>
+                  
+                    </tr>
+                 
+                <% else %>          
+                    <tr>
+                      <th colspan="6"> 
+                          <h6 style="margin-left: 15px;">No associated Note</h6>
+                      </th>                          
+                    </tr>
+                <% end %>    
+              </tbody>
+                       
+            </table>
+          </div>
+        </div>
+      </div>
       
     </div>
 
@@ -62,7 +122,12 @@
   
 </div>
 <script> window.channel = "true" </script>
-<%= if(@conn.assigns.user.id == @task.user.id) do %>
+<script>
+  function go(id){
+    window.location = "/notes/" + id;
+  }
+</script>
+<%= if((@conn.assigns.user.id == @task.user.id ) && !@task.completed ) do %>
   <div>
       <div class="fixed-action-btn ">
         <%= link to: Routes.task_path(@conn, :edit, @task), class: "btn-floating btn-large grey"  do %>

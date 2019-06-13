@@ -52,7 +52,7 @@ defmodule SportegicWeb.OrganisationController do
 
   def create(conn, %{"organisation" => organisation_params}) do
     user_id = conn.assigns.current_user.id
-
+    
     with {:ok, org} <- Accounts.create_organisation(organisation_params),
          {:ok, _orgs_users} <-
            Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),

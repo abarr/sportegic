@@ -91,6 +91,25 @@ defmodule SportegicWeb.TaskController do
     end
   end
 
+  def complete(conn, %{"id" => id}, org, _permissions) do
+    task = Tasks.get_task!(id, org)
+    
+    task_params = %{}
+    |> Map.put("completed", "true")
+    |> Map.put("completed_date", DateTime.utc_now())
+    |> Map.put("completed_by_id", to_string(conn.assigns.user.id))
+   
+    case Tasks.update_task(task, task_params, org) do
+      {:ok, task} ->
+        conn
+        |> put_flash(:info, "Task updated successfully.")
+        |> redirect(to: Routes.task_path(conn, :show, task))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", task: task, changeset: changeset)
+    end
+  end
+
   def delete(conn, %{"id" => id}, org, _permissions) do
     task = Tasks.get_task!(id, org)
     {:ok, _task} = Tasks.delete_task(task, org)

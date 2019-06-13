@@ -82,7 +82,9 @@ defmodule SportegicWeb.Router do
       post "/tasks/new", TaskController, :create
     end
 
-    resources "/tasks", TaskController
+    resources "/tasks", TaskController 
+    post "/tasks/:id/complete", TaskController, :complete
+    
   end
 
   # Other scopes may use custom stacks.
