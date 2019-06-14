@@ -5,7 +5,7 @@ defmodule Sportegic.Repo.Migrations.CreateNotes do
     create table(:notes) do
       add(:details, :text)
       add(:subject, :string)
-      add(:event_date, :timestamptz)
+      add(:event_date, :utc_datetime)
       add(:user_id, references(:users, on_delete: :nothing))
       add(:sentiment, :integer, default: 0)
 
