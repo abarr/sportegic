@@ -12,7 +12,7 @@ defmodule Sportegic.Repo.Migrations.CreateVisas do
       add :type_id, references(:types, on_delete: :nothing)
       add :person_id, references(:people, on_delete: :delete_all)
 
-      timestamps(type: :timestamptz)
+      timestamps()
     end
 
     create index(:visas, [:type_id])

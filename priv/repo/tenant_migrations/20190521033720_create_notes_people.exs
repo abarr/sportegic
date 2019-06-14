@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateNotesPeople do
       add :person_id, references(:people, on_delete: :nothing)
       add :note_id, references(:notes, on_delete: :nothing)
 
-      timestamps(type: :timestamptz)
+      timestamps()
     end
 
     create index(:notes_people, [:person_id])

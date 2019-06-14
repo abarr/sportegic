@@ -37,8 +37,10 @@ defmodule SportegicWeb.NoteController do
   def create(conn, %{"note" => note_params}, org, _permissions) do
     
     # Sanitize user input
-    note_params = only_basic_html(note_params)
-    note_params = Map.put(note_params, "user_id", conn.assigns.user.id)
+    note_params = note_params
+    |> only_basic_html()
+    |> Map.put("user_id", conn.assigns.user.id)
+    |> Map.put("sentiment", Notes.get_sentiment(note_params))
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->
@@ -90,6 +92,7 @@ defmodule SportegicWeb.NoteController do
         |> redirect(to: Routes.note_path(conn, :show, note))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         render(conn, "edit.html", changeset: changeset, note: note)
     end
   end

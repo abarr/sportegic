@@ -18,7 +18,7 @@ defmodule Sportegic.Repo.Migrations.CreateAddresses do
       add(:person_id, references(:people, on_delete: :delete_all))
       add(:type_id, references(:types, on_delete: :delete_all))
 
-      timestamps(type: :timestamptz)
+      timestamps()
     end
 
     create(index(:addresses, [:person_id]))

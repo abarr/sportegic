@@ -76,13 +76,14 @@ let Calendar = {
             defaultDate: 'today',
             altInput: true,
             altFormat: "j F , Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "Z",
             wrap: true,
             maxDate: "today",
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {
                 if (instance) {
                     let id = document.getElementById("note_event_date");
+                    console.log(instance)
                     id.nextElementSibling.classList.remove("invalid");
                     id.nextElementSibling.classList.remove("validate");
                 }

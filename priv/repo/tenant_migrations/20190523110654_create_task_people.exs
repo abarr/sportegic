@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateTaskPerson do
       add :task_id, references(:tasks, on_delete: :nothing)
       add :person_id, references(:people, on_delete: :nothing)
 
-      timestamps(type: :timestamptz)
+      timestamps()
     end
 
     create index(:task_person, [:task_id])

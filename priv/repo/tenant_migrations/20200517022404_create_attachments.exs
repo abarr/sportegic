@@ -8,7 +8,7 @@ defmodule Sportegic.Repo.Migrations.CreateAttachments do
       add(:visa_id, references(:visas, on_delete: :delete_all))
       add(:insurance_policy_id, references(:insurance_policies, on_delete: :delete_all))
 
-      timestamps(type: :timestamptz)
+      timestamps()
     end
 
     create(index(:attachments, [:document_id]))

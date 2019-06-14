@@ -7,14 +7,11 @@ defmodule Sportegic.Notes do
   alias Ecto.Changeset
   alias Sportegic.Repo
   alias __MODULE__
-  alias Sportegic.Notes.Note
-  alias Sportegic.Notes.NoteType
+  alias Sportegic.Notes.{Note, Comment, NotePerson, NoteType, Sentiment}
   alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
-  alias Sportegic.Notes.NotePerson
   alias Sportegic.People
-  alias Sportegic.Notes.Comment
-
+  
   @doc """
   Returns the list of notes.
 
@@ -88,10 +85,28 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note(attrs \\ %{}, org) do
+  def create_note(%{"event_date" => event_date} = attrs \\ %{}, org) do
+    event_date
+    |> IO.inspect(label: "RAW:")
+    |> Elixir.DateTime.from_iso8601()
+    |> IO.inspect(label: "DATETIME RAW")
+
+    {:ok, dt, _m} = Elixir.DateTime.from_iso8601("2019-06-12T14:00:00.000+10")
+    d = dt  
+    |> IO.inspect
+    |> Timex.to_datetime("Australia/Brisbane")
+    |> IO.inspect
+    
+    attrs = Map.put(attrs, "event_date", d)
+
     %Note{}
     |> Note.changeset(attrs)
+    |> IO.inspect
     |> Repo.insert(prefix: org)
+  end
+
+  def get_sentiment(%{"subject" => subject, "details" => details}) do
+    Sentiment.build_sentiment_score(subject, details)
   end
 
   @doc """

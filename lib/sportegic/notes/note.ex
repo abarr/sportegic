@@ -16,6 +16,7 @@ defmodule Sportegic.Notes.Note do
     field(:event_date, :utc_datetime)
     field(:subject, :string)
     field(:details, :string)
+    field(:sentiment, :integer)
 
     belongs_to(:user, User)
     has_many(:tasks, Task, on_delete: :nothing)
@@ -30,7 +31,7 @@ defmodule Sportegic.Notes.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:subject, :details, :event_date, :user_id])
+    |> cast(attrs, [:subject, :details, :event_date, :user_id, :sentiment])
     |> validate_required([:subject, :details, :event_date])
   end
 end
