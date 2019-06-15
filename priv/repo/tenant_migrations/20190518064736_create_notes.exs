@@ -9,7 +9,7 @@ defmodule Sportegic.Repo.Migrations.CreateNotes do
       add(:user_id, references(:users, on_delete: :nothing))
       add(:sentiment, :integer, default: 0)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:notes, [:user_id]))

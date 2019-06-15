@@ -3,11 +3,10 @@ defmodule Sportegic.Repo.Migrations.CreateLookups do
 
   def change do
     create table(:lookups) do
-      add :name, :string
-      add :description, :string
+      add(:name, :string)
+      add(:description, :string)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
-
   end
 end

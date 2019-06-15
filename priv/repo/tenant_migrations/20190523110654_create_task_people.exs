@@ -3,13 +3,13 @@ defmodule Sportegic.Repo.Migrations.CreateTaskPerson do
 
   def change do
     create table(:task_person) do
-      add :task_id, references(:tasks, on_delete: :nothing)
-      add :person_id, references(:people, on_delete: :nothing)
+      add(:task_id, references(:tasks, on_delete: :nothing))
+      add(:person_id, references(:people, on_delete: :nothing))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
-    create index(:task_person, [:task_id])
-    create index(:task_person, [:person_id])
+    create(index(:task_person, [:task_id]))
+    create(index(:task_person, [:person_id]))
   end
 end

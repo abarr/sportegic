@@ -3,14 +3,14 @@ defmodule Sportegic.Repo.Migrations.CreateComments do
 
   def change do
     create table(:comments) do
-      add :details, :text
-      add :user_id, references(:users, on_delete: :nothing)
-      add :note_id, references(:notes, on_delete: :delete_all)
+      add(:details, :text)
+      add(:user_id, references(:users, on_delete: :nothing))
+      add(:note_id, references(:notes, on_delete: :delete_all))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
-    create index(:comments, [:user_id])
-    create index(:comments, [:note_id])
+    create(index(:comments, [:user_id]))
+    create(index(:comments, [:note_id]))
   end
 end

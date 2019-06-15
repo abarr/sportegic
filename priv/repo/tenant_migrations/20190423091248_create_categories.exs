@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateCategories do
       add(:name, :string)
       add(:key, :string)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end

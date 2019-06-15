@@ -9,7 +9,7 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisations do
       add :utc_offset_minutes, :integer, default: 0
       add :prefix, :string
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end

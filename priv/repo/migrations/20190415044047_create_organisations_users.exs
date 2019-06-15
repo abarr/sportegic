@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisationsUsers do
       add :user_id, references(:users, on_delete: :nothing)
       add :organisation_id, references(:organisations, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create unique_index(:organisations_users, [:organisation_id, :user_id])

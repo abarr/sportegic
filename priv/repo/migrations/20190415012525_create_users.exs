@@ -7,7 +7,7 @@ defmodule Sportegic.Repo.Migrations.CreateUsers do
       add :password_hash, :string, null: false
       add :verified, :boolean, default: false, null: false
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create unique_index(:users, [:email])

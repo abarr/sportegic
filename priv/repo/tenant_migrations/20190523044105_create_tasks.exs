@@ -12,7 +12,7 @@ defmodule Sportegic.Repo.Migrations.CreateTasks do
       add(:completed_by_id, references(:users, on_delete: :nothing))
       add(:note_id, references(:notes, on_delete: :delete_all), null: true)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:tasks, [:user_id]))

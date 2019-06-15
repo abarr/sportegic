@@ -3,13 +3,13 @@ defmodule Sportegic.Repo.Migrations.CreateNoteType do
 
   def change do
     create table(:note_type) do
-      add :note_id, references(:notes, on_delete: :nothing)
-      add :type_id, references(:types, on_delete: :nothing)
+      add(:note_id, references(:notes, on_delete: :nothing))
+      add(:type_id, references(:types, on_delete: :nothing))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
-    create index(:note_type, [:note_id])
-    create index(:note_type, [:type_id])
+    create(index(:note_type, [:note_id]))
+    create(index(:note_type, [:type_id]))
   end
 end

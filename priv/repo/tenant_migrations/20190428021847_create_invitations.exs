@@ -3,14 +3,14 @@ defmodule Sportegic.Repo.Migrations.CreateInvitations do
 
   def change do
     create table(:invitations) do
-      add :email, :string
-      add :org_name, :string
-      add :completed, :boolean, default: false
-      add :role_id, references(:roles, on_delete: :nothing)
+      add(:email, :string)
+      add(:org_name, :string)
+      add(:completed, :boolean, default: false)
+      add(:role_id, references(:roles, on_delete: :nothing))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
-    create index(:invitations, [:role_id])
+    create(index(:invitations, [:role_id]))
   end
 end

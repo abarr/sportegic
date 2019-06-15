@@ -6,7 +6,7 @@ defmodule Sportegic.Repo.Migrations.CreatePermissions do
       add(:name, :string)
       add(:category_id, references(:categories, on_delete: :nothing))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:permissions, [:category_id]))

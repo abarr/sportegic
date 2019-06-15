@@ -10,7 +10,7 @@ defmodule Sportegic.Repo.Migrations.CreateDocuments do
       add(:type_id, references(:types, on_delete: :nothing))
       add(:person_id, references(:people, on_delete: :delete_all))
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create(index(:documents, [:type_id]))

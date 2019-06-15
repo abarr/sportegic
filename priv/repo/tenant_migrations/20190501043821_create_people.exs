@@ -12,7 +12,7 @@ defmodule Sportegic.Repo.Migrations.CreatePeople do
       add(:preferred_name, :string)
       add(:profile_image, :string)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end
