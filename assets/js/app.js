@@ -5,7 +5,8 @@ import "phoenix_html"
 import M from "./materialize";
 import flatpickr from 'flatpickr'
 import Vue from 'vue/dist/vue.esm.browser';
-  
+import Chart from 'chart.js';
+
 
 
 // CUSTOM
@@ -21,9 +22,10 @@ import Tasks from "./tasks"
 
 // SOCKETS
 import socket from "./socket"
+import Dashboard from "./dashboard";
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
 
     Elements.initLayoutTemplate(M);
     Role.setupRoleForm();
@@ -34,11 +36,15 @@ document.addEventListener('DOMContentLoaded', function () {
     Calendar.attachFlatpickrDueDate(flatpickr);
     Document.setupDocumentForm(M);
     Visa.setupVisaForm(M);
-    User.setupUserForm(M)
+    User.setupUserForm(M);
+
+
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);
+    if (window.location.pathname == "/dashboard") {
+        Dashboard.create_sentiment_chart(Chart);
+    };
 
-    
     if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)

@@ -24,23 +24,22 @@ defmodule SportegicWeb.NoteController do
       false ->
         changeset = Notes.change_note(%Note{})
         render(conn, "new.html", changeset: changeset)
-      _     ->
+
+      _ ->
         person = People.get_person_only(params["person_id"], org)
-        note = %Note{ people: [ person ], types: []}
+        note = %Note{people: [person], types: []}
         changeset = Notes.change_note(%Note{})
         render(conn, "new.html", changeset: changeset, note: note)
     end
-    
-    
   end
 
   def create(conn, %{"note" => note_params}, org, _permissions) do
-    
     # Sanitize user input
-    note_params = note_params
-    |> only_basic_html()
-    |> Map.put("user_id", conn.assigns.user.id)
-    |> Map.put("sentiment", Notes.get_sentiment(note_params))
+    note_params =
+      note_params
+      |> only_basic_html()
+      |> Map.put("user_id", conn.assigns.user.id)
+      |> Map.put("sentiment", Notes.get_sentiment(note_params))
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->
@@ -65,13 +64,23 @@ defmodule SportegicWeb.NoteController do
     end
   end
 
-  defp only_basic_html(%{ "details" => details } = note_params) do
+  defp only_basic_html(%{"details" => details} = note_params) do
     note_params
     |> Map.put("details", HtmlSanitizeEx.basic_html(details))
   end
 
+  defp event_date_to_utc(%{"event_date" => event_date} = note_params) do
+    {:ok, event_date, _offset} =
+      event_date
+      |> DateTime.from_iso8601()
+
+    Map.put(note_params, "event_date", event_date)
+  end
+
   def show(conn, %{"id" => id}, org, _permissions) do
     note = Notes.get_note!(id, org)
+    # |> Map.put(:event_date, Timex.to_datetime(note.event_date, "Australia/Brisbane"))
+
     changeset = Notes.change_comment(%Comment{})
     render(conn, "show.html", note: note, changeset: changeset)
   end

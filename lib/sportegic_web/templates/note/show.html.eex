@@ -26,7 +26,7 @@
     <div class="row remove-bottom-margin">
       <div class="col s12">
         <div class="card z-depth-0 note">
-          <div class="card-content  remove-padding-bottom">
+          <div class="card-content ">
               <h6 class="card-title">Details</h6>
               <p >
                 <%= raw(@note.details) %>
@@ -36,24 +36,28 @@
       </div>
     </div>  
       <div class="row remove-bottom-margin">
-        <div class="col s12 l6">
-          <%= if Enum.count(@note.people) > 0 do %>
+        <div class="col s12">
+          
             <div class="card z-depth-0 note ">
               <div class="card-content card-info">
                   <h6 class="">People</h6>
-                  <%= for person <- @note.people do %> 
-                    <a class="chip truncate" href="/person/<%= person.id %>">
-                      <%= display_image(person) %> 
-                      <%= person.firstname <> " " <> person.lastname  %>
-                    </a>
-                  <% end %> 
+                  <%= if Enum.count(@note.people) > 0 do %>
+                    <%= for person <- @note.people do %> 
+                      <a class="chip truncate" href="/person/<%= person.id %>">
+                        <%= display_image(person) %> 
+                        <%= person.firstname <> " " <> person.lastname  %>
+                      </a>
+                    <% end %> 
+                  <% else %>
+                    <p>There are no associated people ...</p>
+                  <% end %>
               </div>
             </div>
-          <% end %>
+          
         </div>
       <%# </div>  
       <div class="row remove-bottom-margin"> %>
-        <div class="col s12 l6">
+        <div class="col s12">
           <div class="card z-depth-0 note">
               <div class="card-content card-info">
                   <h6 class="">Tags</h6>
@@ -123,18 +127,17 @@
     <div class="row">
       <div class="col s12">
         <%= form_for @changeset, Routes.note_comment_path(@conn, :create, @note), fn f -> %>
-          <div class="row page">
-            <div class="col s6  l8  input-field ">
+          <div class="row page remove-bottom-padding remove-bottom-margin">
+            <div class="col s10  m11  input-field ">
               <%= label f, :details, "Leave a comment" %>
               <%= textarea f, :details , [ class: set_field_class(f, :details, "validate materialize-textarea"), required: "true", type: "text"]%>
               <%= error_tag_sportegic f, :details %>
             </div>
-          <div class="col s6 l4 right">
+          <div class="col s2 m1 right">
             <button  type="submit" class="btn comment-btn waves-effect waves-light blue lighten-2 z-depth-0">
               <i class="large material-icons">add</i>
             </button>
         <% end %>
-            <%= link "Add Task", to: Routes.task_path(@conn, :new, note_id: @note.id), class: "waves-effect waves-light btn comment-btn blue z-depth-0" %>
               
           </div>
         </div>
@@ -150,7 +153,7 @@
             </div>
             <%= if( comment.user.id == @conn.assigns.user.id) do %>
             <div class="card-action">
-              <%= link to: Routes.note_comment_path(@conn, :delete, @note, comment), method: :delete, class: "btn-floating btn-small waves-effect waves-light red lighten-3 z-depth-0" do %>
+              <%= link to: Routes.note_comment_path(@conn, :delete, @note, comment), method: :delete, class: "btn-floating btn-small waves-effect waves-light red lighten-2 z-depth-0" do %>
                 <i class="material-icons">delete</i>
               <% end %>
               

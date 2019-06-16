@@ -133,7 +133,7 @@ Sportegic.People.create_person(
 
 #  Create some notes
 
-#  Note One
+# #  Note One
 Sportegic.Notes.create_note(
   %{
     event_date: DateTime.utc_now(),

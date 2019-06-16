@@ -11,7 +11,7 @@ defmodule Sportegic.Notes do
   alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
   alias Sportegic.People
-  
+
   @doc """
   Returns the list of notes.
 
@@ -40,11 +40,11 @@ defmodule Sportegic.Notes do
   end
 
   def list_recent_notes(org) do
-    Note 
-    |> order_by([n], [desc: n.id])
+    Note
+    |> order_by([n], desc: n.id)
     |> limit(5)
     |> Repo.all(prefix: org)
-    |> Repo.preload([:types, :user, :people]) 
+    |> Repo.preload([:types, :user, :people])
   end
 
   @doc """
@@ -85,23 +85,9 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note(%{"event_date" => event_date} = attrs \\ %{}, org) do
-    event_date
-    |> IO.inspect(label: "RAW:")
-    |> Elixir.DateTime.from_iso8601()
-    |> IO.inspect(label: "DATETIME RAW")
-
-    {:ok, dt, _m} = Elixir.DateTime.from_iso8601("2019-06-12T14:00:00.000+10")
-    d = dt  
-    |> IO.inspect
-    |> Timex.to_datetime("Australia/Brisbane")
-    |> IO.inspect
-    
-    attrs = Map.put(attrs, "event_date", d)
-
+  def create_note(attrs \\ %{}, org) do
     %Note{}
     |> Note.changeset(attrs)
-    |> IO.inspect
     |> Repo.insert(prefix: org)
   end
 
@@ -250,6 +236,7 @@ defmodule Sportegic.Notes do
   end
 
   def get_updated_people_tags(nil, _org), do: []
+
   def get_updated_people_tags(updated_people, org) when is_list(updated_people) do
     updated_people
     |> Enum.map(&People.get_person_by_name_dob(&1, org))
