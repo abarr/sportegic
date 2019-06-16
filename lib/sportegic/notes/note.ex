@@ -16,7 +16,7 @@ defmodule Sportegic.Notes.Note do
     field(:event_date, :utc_datetime)
     field(:subject, :string)
     field(:details, :string)
-    field(:sentiment, :integer)
+    field(:sentiment, :float)
 
     belongs_to(:user, User)
     has_many(:tasks, Task, on_delete: :nothing)

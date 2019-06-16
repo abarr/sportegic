@@ -69,14 +69,7 @@ defmodule SportegicWeb.NoteController do
     |> Map.put("details", HtmlSanitizeEx.basic_html(details))
   end
 
-  defp event_date_to_utc(%{"event_date" => event_date} = note_params) do
-    {:ok, event_date, _offset} =
-      event_date
-      |> DateTime.from_iso8601()
-
-    Map.put(note_params, "event_date", event_date)
-  end
-
+  
   def show(conn, %{"id" => id}, org, _permissions) do
     note = Notes.get_note!(id, org)
     # |> Map.put(:event_date, Timex.to_datetime(note.event_date, "Australia/Brisbane"))

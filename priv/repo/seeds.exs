@@ -14,7 +14,7 @@ Sportegic.Accounts.create_organisation(%{
   "display" => "Collingwood",
   "name" => "Collingwood",
   "home_city" => "Collingwood VIC 3066, Australia",
-  "utc_offset_minutes" => "600"
+  "timezone" => "Australia/Melbourne"
 })
 
 Sportegic.Accounts.create_organisations_users(%{user_id: 1, organisation_id: 1})

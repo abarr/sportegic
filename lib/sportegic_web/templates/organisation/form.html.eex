@@ -16,7 +16,7 @@
           <%= text_input f, :city, [id: "address", placeholder: "Enter Home City/Suburb", style: "color: #9c9a9a;"] %>
           <label for="address"></label>
     </div>
-
+    
     <div class="right">
       <%= submit  [class: "btn-floating btn-large z-depth-0 waves-effect waves-light blue"] do %>
          <i class="large material-icons">add</i>
@@ -26,19 +26,12 @@
   </div>
 
   <%= hidden_input f, :home_city, [id: "home_city"] %>
-   <%= hidden_input f, :utc_offset_minutes, [id: "utc_offset_minutes"] %>
+   <%= hidden_input f, :timezone, [id: "timezone"] %>
 <% end %>
 
+    
 <script>
-// This example displays an address form, using the autocomplete feature
-      // of the Google Places API to help users fill in the information.
-
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       var autocomplete;
-      
 
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
@@ -46,6 +39,8 @@
         address = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('address')),
             {types: ['(cities)']});
+
+        address.setFields(['address_component', 'formatted_address', 'geometry']);
 
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
@@ -65,9 +60,22 @@
         var place = address.getPlace();
         console.log(place)
         document.getElementById("home_city").value = place.formatted_address;
-        document.getElementById("utc_offset_minutes").value = place.utc_offset;
         
+        var targetDate = new Date() // Current date/time of user computer
+        var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+        
+        fetch('https://maps.googleapis.com/maps/api/timezone/json?location=' + place.geometry.location.lat() + ',' + place.geometry.location.lng() + '&timestamp=' + timestamp + '&key=AIzaSyBhXHpSt2T2rHE-kP_Vrgw0M5GYm9ui8NI')
+        .then(function(response) {
+          console.log("Response")
+          return response.json();
+        })
+        .then(function(tz) {
+          console.log(tz)
+          document.getElementById("timezone").value = tz.timeZoneId;
+        });
       }
+
+  
 
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.

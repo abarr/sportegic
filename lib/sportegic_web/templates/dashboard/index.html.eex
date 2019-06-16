@@ -42,12 +42,16 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <div class="card z-depth-0 note">
+        <div class="card z-depth-0">
           <div class="card-content ">
-            <canvas id="myChart" height="50px" ></canvas>
+
+            
+              
           </div>
         </div>
       </div>
     </div>
 </div>
+
+
 

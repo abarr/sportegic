@@ -8,7 +8,7 @@ defmodule Sportegic.Accounts.Organisation do
     field(:display, :string)
     field(:name, :string)
     field(:home_city, :string)
-    field(:utc_offset_minutes, :integer)
+    field(:timezone, :string)
 
     field(:prefix, OrganisationPrefix)
 
@@ -22,7 +22,7 @@ defmodule Sportegic.Accounts.Organisation do
     attrs = Map.put(attrs, "prefix", attrs["display"])
 
     organisation
-    |> cast(attrs, [:name, :display, :prefix, :home_city, :utc_offset_minutes])
-    |> validate_required([:name, :display, :home_city, :prefix])
+    |> cast(attrs, [:name, :display, :prefix, :home_city, :timezone])
+    |> validate_required([:name, :display, :home_city, :prefix, :timezone])
   end
 end

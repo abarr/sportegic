@@ -18,6 +18,7 @@
           <thead>
             <tr>
                 <th>Type</th>
+                <th>Apartment</th>
                 <th>Address</th>
                 <th>Actions</th>
             </tr>
@@ -26,6 +27,7 @@
             <%= for address <- @addresses do %>
               <tr>
                 <td><%= address.type.name %></td>
+                <td><%= address.unit_number %></td>
                 <td><%= address.address %></td>
                 <td>
                   <%= link to: Routes.person_address_path(@conn, :edit, @person, address ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
