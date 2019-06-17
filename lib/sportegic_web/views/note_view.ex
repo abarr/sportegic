@@ -24,7 +24,7 @@ defmodule SportegicWeb.NoteView do
     Jason.decode(action)
   end
 
-  def time_until_date(days, date) do
+  def time_until_date(days, date, timezone) do
     case days do
       n when is_integer(n) and n == 0 ->
         "<blockquote class='page task-danger'><h6 class='red-text'>This task is due today.</h6></blockquote>"
@@ -35,11 +35,11 @@ defmodule SportegicWeb.NoteView do
         case abs_days do
           "1" ->
             "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
-              abs_days <> " day. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+              abs_days <> " day. Due date is " <> readable_date!(date, timezone) <> "</h6></blockquote>"
 
           _ ->
             "<blockquote class='page task-danger'><h6 class='red-text'>This task is overdue by " <>
-              abs_days <> " days. Due date is " <> readable_date!(date) <> "</h6></blockquote>"
+              abs_days <> " days. Due date is " <> readable_date!(date, timezone) <> "</h6></blockquote>"
         end
 
       n when is_integer(n) and n > 0 ->
@@ -47,12 +47,12 @@ defmodule SportegicWeb.NoteView do
           1 ->
             "<blockquote class='page task-success'><h6>This task is due in " <>
               Integer.to_string(days) <>
-              " day. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+              " day. Due Date is " <> readable_date!(date, timezone) <> "</h6></blockquote>"
 
           _ ->
             "<blockquote class='page task-success'><h6>This task is due in " <>
               Integer.to_string(days) <>
-              " days. Due Date is " <> readable_date!(date) <> "</h6></blockquote>"
+              " days. Due Date is " <> readable_date!(date, timezone) <> "</h6></blockquote>"
         end
     end
   end

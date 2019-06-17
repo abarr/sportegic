@@ -10,7 +10,7 @@
                     <div class="col s12">
                         <ul class="collection">
                             <%= for organisation <- @organisations do %>
-                                <a href="/set_organisation?org=<%= organisation.prefix %>" class="collection-item">
+                                <a href="/set_organisation?org=<%= organisation.prefix %>&tz=<%= organisation.timezone %>" class="collection-item">
                                     <%= organisation.name %>
                                 </a>
                             <% end %> 

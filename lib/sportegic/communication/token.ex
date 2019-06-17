@@ -16,6 +16,15 @@ defmodule Sportegic.Communication.Token do
   end
 
   def verify_token(token) do
-    Phoenix.Token.verify(SportegicWeb.Endpoint, @salt, token, max_age: @max_age)
+    case Phoenix.Token.verify(SportegicWeb.Endpoint, @salt, token, max_age: @max_age) do
+      {:ok, key} when is_binary(key) -> 
+        # Account for invitation tokens containing ref to org (See above)
+        case String.contains?(key, ":") do
+          true -> {:ok, String.split(key, ":")}
+          _    -> {:ok, key}
+        end
+      {:ok, key}  -> {:ok, key}    
+      _          -> {:error, "Invalid Token"}  
+    end
   end
 end

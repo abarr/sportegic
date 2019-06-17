@@ -43,16 +43,29 @@ defmodule SportegicWeb.UserController do
   end
 
   def create_invitation(conn, %{"email" => email, "role" => role_id}, org, permissions) do
-    with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions), 
-         {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id, org_name: org}, org),
-         {:ok, _id} <- Communication.email_with_token(conn, invitation, email, "rsvp") do
-      
-      users = Users.list_users(org)
-      invitations = Users.list_invitations(org)
+    
+    case Accounts.check_if_user_exists_for_org?(email, org) do
+      true ->  
+        roles =
+          Users.list_roles(org)
+          |> Enum.map(fn role -> [key: role.name, value: role.id] end)
 
-      conn
-      |> put_flash(:succss, "Invitation seccessuly sent")
-      |> render("index.html", users: users, invitations: invitations)
+        conn
+        |> put_flash(:danger, "This User is already registered to your organisation!")
+        |> render("invitation.html", roles: roles)
+
+      _ ->
+        with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions), 
+            {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id, org_name: org}, org),
+            {:ok, _id} <- Communication.email_with_token(conn, invitation, email, "rsvp") do
+    
+          users = Users.list_users(org)
+          invitations = Users.list_invitations(org)
+
+          conn
+          |> put_flash(:succss, "Invitation seccessuly sent")
+          |> render("index.html", users: users, invitations: invitations)
+        end
     end
   end
 

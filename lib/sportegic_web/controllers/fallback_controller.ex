@@ -9,7 +9,7 @@ defmodule SportegicWeb.FallbackController do
 
   def call(conn, _response) do
     conn
-    |> put_flash(:danger, "DISASTER!")
+    |> put_flash(:danger, "Something has gone terribly wrong! Please contact Support Desk")
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 end

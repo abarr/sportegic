@@ -30,6 +30,7 @@ defmodule SportegicWeb.Plugs.Session do
                 |> assign(:permissions, [])
                 |> assign(:current_user, account)
                 |> assign(:organisation, org)
+                |> assign(:timezone, get_session(conn, :timezone))
 
               {:ok, user} ->
                 roles_permissions  = Users.get_roles_permissions(user.role_id, org)
@@ -43,6 +44,7 @@ defmodule SportegicWeb.Plugs.Session do
                   end)) 
                 |> assign(:current_user, account)
                 |> assign(:organisation, org)
+                |> assign(:timezone, get_session(conn, :timezone))
             end
         end
 

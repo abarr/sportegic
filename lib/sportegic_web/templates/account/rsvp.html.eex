@@ -47,7 +47,7 @@
                         </div>
                         <%= hidden_input f, :mobile, [id: "mobile"] %>
                         <div id="send" class="input-field col s3 right-align">
-                            <a id="verify" class="btn waves-effect blue lighten-2" style="width: 100%;">
+                            <a id="verify" class="btn waves-effect blue lighten-2 z-depth-0" style="width: 100%;">
                             Send Code
                             </a>
                         </div>
@@ -64,7 +64,7 @@
                             <span class="helper-text" data-error="Invalid code!"></span>
                         </div>
                         <div id="check" class="input-field col s3 right-align" hidden="true">
-                            <a id="verify" class="btn waves-effect blue lighten-2" style="width: 100%;">
+                            <a id="verify" class="btn waves-effect blue lighten-2 z-depth-0" style="width: 100%;">
                             Check Code
                             </a>
                         </div>

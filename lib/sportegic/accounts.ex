@@ -21,12 +21,30 @@ defmodule Sportegic.Accounts do
   end
 
   def get_user_by_email(email) do
-    user =
-      User
-      |> Repo.get_by(email: email)
-      |> Repo.preload(:organisations)
+   case Repo.get_by(User, email: name) |> Repo.preload(:organisations) do
+      nil           -> {:error, "No records by this name"}
+      {:error, msg} -> {:error, msg}
+      user          -> {:ok, user}
+    end
+  end
 
-    {:ok, user}
+  def check_if_user_exists_for_org?(email, org) do
+    case get_user_by_email(email) do
+      {:ok, user} -> 
+        org = Accounts.get_organisation_by_prefix(org)
+        case Accounts.get_organisations_users(user.id, org.id) do
+          {:ok, _org_user} -> true
+          _                -> false
+        end
+      _ -> false  
+    end
+  end
+
+  def get_or_create_user(attrs \\ %{}) do
+    case Accounts.get_user_by_email(attrs["email"]) do
+      {:ok, account} -> {:ok, account}
+      _              -> Accounts.create_user(attrs)
+    end
   end
 
   def create_user(attrs \\ %{}) do
@@ -103,14 +121,22 @@ defmodule Sportegic.Accounts do
     Repo.all(OrganisationsUsers)
   end
 
-  def get_organisations_users(user_id, org_id) do
-    [org_user] =
-      OrganisationsUsers
-      |> where([ou], ou.user_id == ^user_id)
-      |> where([ou], ou.organisation_id == ^org_id)
-      |> Repo.all()
+  # def get_organisations_users(user_id, org_id) do
+  #   [org_user] =
+  #     OrganisationsUsers
+  #     |> where([ou], ou.user_id == ^user_id)
+  #     |> where([ou], ou.organisation_id == ^org_id)
+  #     |> Repo.all()
 
-    {:ok, org_user}
+  #   {:ok, org_user}
+  # end
+
+  def get_organisations_users(user_id, org_id) do
+    case Repo.get_by(OrganisationsUsers, [org_id: org_id, user_id: user_id]) do
+      nil -> {:error, "No records exist"}
+      {:error, msg} -> {:error, msg}   
+      org_user -> {:ok, org_user}   
+    end
   end
 
   def create_organisations_users(attrs \\ %{}) do

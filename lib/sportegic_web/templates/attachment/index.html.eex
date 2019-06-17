@@ -41,7 +41,7 @@
           <tr>
             <td><%= attachment.id %></td>
             <td><%= link attachment.file.file_name, to: display_attachment_link(attachment), target: "_blank" %></td>
-            <td><%= readable_date!(attachment.inserted_at) %></td>
+            <td><%= readable_date!(attachment.inserted_at, @conn.assigns.timezone) %></td>
             <td class="right-align"> 
               <%= if Enum.member?(@conn.path_info, "document") do %>
                 <%= link [ to: Routes.person_document_attachment_path(@conn, :delete, @person, @record, attachment ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>

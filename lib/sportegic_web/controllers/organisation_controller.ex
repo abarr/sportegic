@@ -30,6 +30,7 @@ defmodule SportegicWeb.OrganisationController do
           conn
           |> clear_flash()
           |> put_session(:organisation, org.prefix)
+          |> put_session(:timezone, org.timezone)
           |> redirect(to: Routes.dashboard_path(conn, :index))
 
         # Many orgs - choose from list
@@ -39,9 +40,10 @@ defmodule SportegicWeb.OrganisationController do
     end
   end
 
-  def set_organisation(conn, %{"org" => org_prefix}) do
+  def set_organisation(conn, %{"org" => org_prefix, "tz" => timezone}) do
     conn
     |> put_session(:organisation, org_prefix)
+    |> put_session(:timezone, timezone)
     |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
@@ -65,6 +67,7 @@ defmodule SportegicWeb.OrganisationController do
          {:ok, _role_permissions} <- Users.create_default_administrator_permissions(org.prefix) do
       conn
       |> put_session(:organisation, org.prefix)
+      |> put_session(:timezone, org.timezone)
       |> put_flash(:info, "Organisation created successfully.")
       |> redirect(to: Routes.organisation_path(conn, :index))
     else

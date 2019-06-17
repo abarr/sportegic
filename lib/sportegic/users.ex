@@ -62,8 +62,11 @@ defmodule Sportegic.Users do
   end
 
   def get_role_by_name(name, org) do
-    Role
-    |> Repo.get_by([name: name], prefix: org)
+    case Repo.get_by(Role,[name: name], prefix: org) do
+      nil           -> {:error, "No records by this name"}
+      {:error, msg} -> {:error, msg}
+      role          -> {:ok, role}
+    end
   end
 
   def create_role(attrs \\ %{}, org) do
@@ -81,6 +84,7 @@ defmodule Sportegic.Users do
   def create_default_owner_permissions(org) do
     list =
       Users.list_permissions(org)
+      |> IO.inspect(label: "PERMISSIONS")
       |> Enum.map(&create_roles_permissions(%{permission_id: &1.id, role_id: 1}, org))
 
     {:ok, list}
@@ -204,6 +208,7 @@ defmodule Sportegic.Users do
   def get_roles_permissions!(id, org), do: Repo.get!(RolesPermissions, id, prefix: org)
 
   def create_roles_permissions(attrs \\ %{}, org) do
+    IO.inspect(attrs, label: "CREATE ROLE PERMMISSIONS")
     %RolesPermissions{}
     |> RolesPermissions.changeset(attrs)
     |> Repo.insert(prefix: org)
@@ -255,7 +260,7 @@ defmodule Sportegic.Users do
   def update_invitation(%Invitation{} = invitation, attrs, org) do
     invitation
     |> Invitation.changeset(attrs)
-    |> Repo.update(prefix: org)
+    |> Repo.update!(prefix: org)
   end
 
   def delete_invitation(%Invitation{} = invitation, org) do

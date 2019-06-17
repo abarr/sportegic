@@ -32,7 +32,7 @@
             
               <td><%= document.type.name %></td>
               <td><%= document.number %></td>
-              <td><%= readable_date!(document.expiry_date) %></td>
+              <td><%= readable_date!(document.expiry_date, @conn.assigns.timezone) %></td>
               <td><%= document.issuer %></td>
               <td class="center-align"> 
                 <%= link to: Routes.person_document_attachment_path(@conn, :index, @person, document) do %>

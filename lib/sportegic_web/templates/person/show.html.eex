@@ -122,7 +122,7 @@
                             <tr onclick="go(<%= note.id %>)">
                             
                               <td > <%= readable_date!(note.event_date) %> </td>
-                              <td class="hide-on-small-only"> <%= readable_date!(note.inserted_at) %> </td>
+                              <td class="hide-on-small-only"> <%= readable_date!(note.inserted_at, @conn.assigns.timezone) %> </td>
                               <td> <%= note.subject %> </td>
                               <td class="hide-on-small-only"> <%= note.user.firstname <> " " <> note.user.lastname %> </td>
                               <td class="hide-on-small-only">

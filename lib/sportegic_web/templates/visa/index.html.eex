@@ -34,8 +34,8 @@
             
               <td><%= visa.type.name %></td>
               <td><%= visa.number %></td>
-              <td><%= readable_date!(visa.issued_date) %></td>
-              <td><%= readable_date!(visa.expiry_date) %></td>
+              <td><%= readable_date!(visa.issued_date, @conn.assigns.timezone) %></td>
+              <td><%= readable_date!(visa.expiry_date, @conn.assigns.timezone) %></td>
               <td><%= visa.issuer %></td>
               <td><%= visa.allowed_stay %></td>
               <td class="center-align"> 

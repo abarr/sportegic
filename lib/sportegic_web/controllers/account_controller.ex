@@ -17,10 +17,9 @@ defmodule SportegicWeb.AccountController do
   end
 
   def rsvp(conn, %{"token" => token}) do
-    with {:ok, key} <- Token.verify_token(token) do
-      [org, invite_id] = key |> String.split(":")
+    with {:ok, [org, invite_id]} <- Token.verify_token(token) do
       invitation = Users.get_invitation!(invite_id, org)
-      _resp = Users.update_invitation(invitation, %{completed: true}, org)
+      |> Users.update_invitation(%{completed: true}, org)
 
       changeset =
         %Rsvp{}
@@ -35,31 +34,31 @@ defmodule SportegicWeb.AccountController do
   end
 
   def create_from_rsvp(conn, %{"rsvp" => rsvp}) do
-    {_old, rsvp} = Map.get_and_update(rsvp, "org", fn v -> {v, prefixify(v)} end)
-    rsvp = Map.put(rsvp, "verified", "true")
-    {:ok, org} = Accounts.get_organisation_by_prefix(rsvp["org"])
-    role = Users.get_role_by_name(rsvp["role_id"], org.prefix)
-    {user_params, _params} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
+    
+    {_, rsvp} = Map.get_and_update!(rsvp, "org", fn v -> {v, prefixify(v)} end)
+    rsvp = rsvp
+    |> Map.put("verified", "true")
 
-    with {:ok, account} <- Accounts.create_user(rsvp),
-         {:ok, _realtionship} <-
-           Accounts.create_organisations_users(%{user_id: account.id, organisation_id: org.id}) do
-      user_params =
-        user_params
-        |> Map.put("role_id", Integer.to_string(role.id))
-        |> Map.put("user_id", Integer.to_string(account.id))
+    with  {:ok, org} <- Accounts.get_organisation_by_prefix(rsvp["org"]),
+          {:ok, role} <- Users.get_role_by_name(rsvp["role_id"], org.prefix),
+          {:ok, account} <- Accounts.get_or_create_user(rsvp),
+          {:ok, _} <- Accounts.create_organisations_users(%{user_id: account.id, organisation_id: org.id}) do
+            
+          {user_params, _rsvp} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
+          user_params =
+            user_params
+            |> Map.put("role_id", Integer.to_string(role.id))
+            |> Map.put("user_id", Integer.to_string(account.id))
 
-      case Users.create_user(user_params, org.prefix) do
-        {:ok, _user} ->
-          conn
-          |> put_flash(:success, "Your account has been created. Time to test your login!")
-          |> redirect(to: Routes.session_path(conn, :new))
+          case Users.create_user(user_params, org.prefix) do
+            {:ok, _user} ->
+              conn
+              |> put_flash(:success, "Your account has been created. Time to test your login!")
+              |> redirect(to: Routes.session_path(conn, :new))
 
-        {:error, changeset} ->
-          IO.inspect(changeset)
-
-          render(conn, "rsvp.html", changeset: changeset)
-      end
+            {:error, changeset} ->
+             render(conn, "rsvp.html", changeset: changeset)
+          end
     end
   end
 

@@ -1,4 +1,4 @@
-defmodule Sportegic.Accounts.OrganisationPrefix do
+defmodule Sportegic.Accounts.OrganisationPrefixType do
   @behaviour Ecto.Type
   def type, do: :string
 

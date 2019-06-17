@@ -2,15 +2,14 @@ defmodule Sportegic.Accounts.Organisation do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Accounts.{User, OrganisationPrefix}
+  alias Sportegic.Accounts.{User, OrganisationPrefixType}
 
   schema "organisations" do
     field(:display, :string)
     field(:name, :string)
     field(:home_city, :string)
     field(:timezone, :string)
-
-    field(:prefix, OrganisationPrefix)
+    field(:prefix, OrganisationPrefixType)
 
     many_to_many(:users, User, join_through: "organisations_users")
 

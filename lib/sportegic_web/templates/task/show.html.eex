@@ -16,10 +16,10 @@
   <div class="row page">
     <div class="row">
       <div class="col s12 l6">
-       <%= raw(time_until_date(days_until(@task.due_date), @task.due_date)) %> 
+       <%= raw(time_until_date(days_until(@task.due_date), @task.due_date, @conn.assigns.timezone)) %> 
       </div>  
       <div class="col s12 l6">
-        <blockquote class=" page task-info"><h6>Task created on the <%= readable_date!(@task.inserted_at) %> by <%= @task.user.firstname <> " " <> @task.user.lastname %></h6> </blockquote>  
+        <blockquote class=" page task-info"><h6>Task created on the <%= readable_date!(@task.inserted_at, @conn.assigns.timezone) %> by <%= @task.user.firstname <> " " <> @task.user.lastname %></h6> </blockquote>  
        </div>   
       
     </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="card-action">
              <%= if @task.completed do %>
-                <h6 class="green-text">Task completed <%= readable_date!(@task.completed_date) %> by <%= @task.completed_by.firstname <> " " <>  @task.completed_by.lastname %></h6>
+                <h6 class="green-text">Task completed <%= readable_date!(@task.completed_date, @conn.assigns.timezone) %> by <%= @task.completed_by.firstname <> " " <>  @task.completed_by.lastname %></h6>
              <% else %>
                 <%= link "Complete Task", [ to: Routes.task_path(@conn, :complete, @task), method: :post,  class: "btn btn-small waves-effect waves-light green z-depth-0 lighten-2"] %>
              <% end %>
@@ -80,7 +80,7 @@
                   
                     <tr onclick="go(<%= @task.note.id %>)">
                       <td > <%= readable_date!(@task.note.event_date) %></td>
-                      <td class="hide-on-small-only"> <%= readable_date!(@task.note.inserted_at) %> </td>
+                      <td class="hide-on-small-only"> <%= readable_date!(@task.note.inserted_at, @conn.assigns.timezone) %> </td>
                       <td> <%= @task.note.subject %> </td>
                       <td class="hide-on-small-only"> <%=  @task.note.user.firstname <> " " <> @task.note.user.lastname  %> </td>
                       <td class="hide-on-small-only">
