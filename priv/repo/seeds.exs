@@ -10,6 +10,18 @@ Sportegic.Accounts.create_user(%{
   "verified" => "true"
 })
 
+Sportegic.Accounts.create_user(%{
+  "email" => "s@t.com",
+  "password" => "password",
+  "verified" => "true"
+})
+
+Sportegic.Accounts.create_user(%{
+  "email" => "e@t.com",
+  "password" => "password",
+  "verified" => "true"
+})
+
 Sportegic.Accounts.create_organisation(%{
   "display" => "Collingwood",
   "name" => "Collingwood",
@@ -17,8 +29,17 @@ Sportegic.Accounts.create_organisation(%{
   "timezone" => "Australia/Melbourne"
 })
 
+Sportegic.Accounts.create_organisation(%{
+  "display" => "Marvel Rugby",
+  "name" => "Marvel Studios",
+  "home_city" => "West Hollywood, CA, USA",
+  "timezone" => "America/Los_Angeles"
+})
+
 Sportegic.Accounts.create_organisations_users(%{user_id: 1, organisation_id: 1})
 Sportegic.Accounts.create_organisations_users(%{user_id: 2, organisation_id: 1})
+Sportegic.Accounts.create_organisations_users(%{user_id: 3, organisation_id: 2})
+Sportegic.Accounts.create_organisations_users(%{user_id: 4, organisation_id: 2})
 
 Sportegic.LookupTypes.create_default_lookups("collingwood")
 Sportegic.LookupTypes.create_default_lookup_types("collingwood")
@@ -27,6 +48,14 @@ Sportegic.Users.create_default_categories("collingwood")
 Sportegic.Users.create_default_permissions("collingwood")
 Sportegic.Users.create_default_owner_permissions("collingwood")
 Sportegic.Users.create_default_administrator_permissions("collingwood")
+
+Sportegic.LookupTypes.create_default_lookups("marvel_rugby")
+Sportegic.LookupTypes.create_default_lookup_types("marvel_rugby")
+Sportegic.Users.create_default_roles("marvel_rugby")
+Sportegic.Users.create_default_categories("marvel_rugby")
+Sportegic.Users.create_default_permissions("marvel_rugby")
+Sportegic.Users.create_default_owner_permissions("marvel_rugby")
+Sportegic.Users.create_default_administrator_permissions("marvel_rugby")
 
 # Create an account owner
 
@@ -50,6 +79,28 @@ Sportegic.Users.create_user(
     role_id: "2"
   },
   "collingwood"
+)
+
+Sportegic.Users.create_user(
+  %{
+    firstname: "Eric",
+    lastname: "Banner",
+    mobile: "+15553908772",
+    user_id: "4",
+    role_id: "2"
+  },
+  "marvel_rugby"
+)
+
+Sportegic.Users.create_user(
+  %{
+    firstname: "Stan",
+    lastname: "Lee",
+    mobile: "+15558888777",
+    user_id: "3",
+    role_id: "1"
+  },
+  "marvel_rugby"
 )
 
 # Create some players

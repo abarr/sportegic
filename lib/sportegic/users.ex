@@ -13,6 +13,7 @@ defmodule Sportegic.Users do
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
+  # Get user bu User table id
   def get_user!(id, org), do: Repo.get!(User, id, prefix: org)
 
   def list_users(org) do
@@ -21,13 +22,13 @@ defmodule Sportegic.Users do
     |> Repo.preload(:role)
   end
 
-  #  Get profile using user_id from con
+  #  Get user using user_id from from Account user table (Public Schema)
   def get_user(user_id, org) do
-    user =
-      User
-      |> Repo.get_by([user_id: user_id], prefix: org)
-
-    {:ok, user}
+    case Repo.get_by(User,[user_id: user_id], prefix: org) do
+      nil           -> {:ok, nil}
+      {:error, msg} -> {:error, msg}
+      user          -> {:ok, user}
+    end
   end
 
   def get_user_by_name(name, org) do
@@ -45,6 +46,16 @@ defmodule Sportegic.Users do
     user
     |> User.changeset(attrs)
     |> Repo.update(prefix: org)
+  end
+
+  def count_account_owners(org) do
+    query = 
+      from( u in User,
+      where: u.role_id == 1,
+      select: {u.id}
+      )
+
+    Repo.aggregate(query, :count, :id, prefix: org)  
   end
 
   def change_user(%User{} = profile) do

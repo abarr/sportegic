@@ -4,6 +4,7 @@ defmodule Sportegic.Accounts do
   alias Sportegic.Repo
   alias Sportegic.Accounts
   alias Sportegic.Accounts.{User, Organisation, OrganisationsUsers, Rsvp}
+  alias Sportegic.Users
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -28,20 +29,23 @@ defmodule Sportegic.Accounts do
     end
   end
 
-  def check_if_user_exists_for_org?(email, org) do
+  def get_user_status(email, org) do
     case get_user_by_email(email) do
       {:ok, user} ->
-        {:ok, org} = Accounts.get_organisation_by_prefix(org)
-
-        case Accounts.get_organisations_users(user.id, org.id) do
-          {:ok, _org_user} -> true
-          _ -> false
+        case Enum.find(user.organisations, fn o -> o.prefix == org end) do
+          nil -> 
+            # Check if user exists but is disabled
+            case Users.get_user(user.id, org) do
+              {:ok, nil} -> {:new} # User exists but they are not assoc with org
+              {:ok, _user } -> {:exists_disabled} # Account exists but they are disabled
+              _ -> {:error, "Error checking if user exists for organisation"}
+            end
+          _ -> {:exists} # Account exists and they are already associated with org
         end
-
-      _ ->
-        false
+      _ -> {:new} # No account new User
     end
   end
+
 
   def get_or_create_user(attrs \\ %{}) do
     case Accounts.get_user_by_email(attrs["email"]) do
@@ -127,6 +131,7 @@ defmodule Sportegic.Accounts do
   end
 
   def get_organisations_users(user_id, org_id) do
+    IO.inspect(user_id, label: "get_organisation_user")
     case Repo.get_by(OrganisationsUsers, organisation_id: org_id, user_id: user_id) do
       nil -> {:error, "No records exist"}
       {:error, msg} -> {:error, msg}
@@ -150,7 +155,8 @@ defmodule Sportegic.Accounts do
   end
 
   def delete_organisations_users(%OrganisationsUsers{} = organisations_users) do
-    Repo.delete(organisations_users)
+    organisations_users
+    |> Repo.delete()
   end
 
   def change_organisations_users(%OrganisationsUsers{} = organisations_users) do

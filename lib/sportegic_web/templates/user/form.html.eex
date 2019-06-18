@@ -1,12 +1,12 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <div class="row">
-    <div class="input-field col s12">
+  <div class="row page">
+    <div class="input-field col s12 m6">
       <%= label f, :firstname %>
       <%= text_input f, :firstname, [ class: "validate", required: "true", type: "text", autofocus: "true", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :firstname %>
       <span class="helper-text" data-error="Please provide your first name"></span>
     </div>
-    <div class="input-field col s12">
+    <div class="input-field col s12  m6">
       <%= label f, :lastname %>
       <%= text_input f, :lastname, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :lastname %>
@@ -49,7 +49,9 @@
     </div>
   </div>
   
-  <div>
-    <%= submit "Create", [id: "submit", class: "btn waves-effect waves-light blue", disabled: true] %>
+  <div class="fixed-action-btn">
+    <button type="submit" class="btn-floating btn-large green">
+      <i class="large material-icons">save</i>
+    </button>
   </div>
 <% end %>

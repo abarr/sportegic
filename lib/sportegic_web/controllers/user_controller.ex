@@ -44,17 +44,26 @@ defmodule SportegicWeb.UserController do
 
   def create_invitation(conn, %{"email" => email, "role" => role_id}, org, permissions) do
     
-    case Accounts.check_if_user_exists_for_org?(email, org) do
-      true ->  
+    case Accounts.get_user_status(email, org) do
+      {:exists_disabled} ->  
         roles =
           Users.list_roles(org)
           |> Enum.map(fn role -> [key: role.name, value: role.id] end)
 
         conn
-        |> put_flash(:danger, "This User is already registered to your organisation!")
+        |> put_flash(:danger, "This User is already registered to your organisation but has been disabled!")
         |> render("invitation.html", roles: roles)
 
-      _ ->
+      {:exists} ->  
+        roles =
+          Users.list_roles(org)
+          |> Enum.map(fn role -> [key: role.name, value: role.id] end)
+
+        conn
+        |> put_flash(:info, "This User is already registered to your organisation!")
+        |> render("invitation.html", roles: roles)  
+
+      {:new} ->
         with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions), 
             {:ok, invitation} <- Users.create_invitation(%{email: email, role_id: role_id, org_name: org}, org),
             {:ok, _id} <- Communication.email_with_token(conn, invitation, email, "rsvp") do
@@ -119,16 +128,30 @@ defmodule SportegicWeb.UserController do
   end
 
   def disable(conn, %{"id" => id}, org, permissions) do
-    with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions),
+    
+    case Users.count_account_owners(org) do
+      1 ->
+        users = Users.list_users(org)
+        invitations = Users.list_invitations(org)
+
+        conn
+        |> put_flash(:danger, "This User is the only Account Owner, there must always be at least one Account Owner")
+        |> render("index.html", users: users, invitations: invitations)
+      _ ->
+        with :ok <- Bodyguard.permit(Users, "delete:user_permissions", :user, permissions),
          {:ok, user} <- Users.get_user(id, org),
          {:ok, _updated_user} <- Users.update_user(user, %{disabled: true}, org),
          {:ok, organisation} <- Accounts.get_organisation_by_prefix(org),
          {:ok, orgs_user} <- Accounts.get_organisations_users(user.id, organisation.id),
-         {:ok, _success} <- Accounts.delete_organisations_users(orgs_user) do
-      users = Users.list_users(org)
-      invitations = Users.list_invitations(org)
-      render(conn, "index.html", users: users, invitations: invitations)
+         {:ok, _org_user} <- Accounts.delete_organisations_users(orgs_user) do
+        users = Users.list_users(org)
+        invitations = Users.list_invitations(org)
+        conn
+        |> put_flash(:success, "User access successfully disbaled")
+        |> render("index.html", users: users, invitations: invitations)
+      end
     end
+
   end
 
   def enable(conn, %{"id" => id}, org, permissions) do

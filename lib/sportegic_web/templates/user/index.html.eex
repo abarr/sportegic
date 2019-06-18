@@ -6,7 +6,7 @@
         <div class="divider"></div>
     </div>
     <div class="row page">
-        <div class="row">
+        <div class="row search-row">
           <div class="col s12 m12 l6">
             <ul class="tabs  z-depth-0 ">
               <li class="tab"><a class="active" href="#users">Users</a></li>
@@ -15,7 +15,7 @@
           </div>
         </div>
         
-        <div  id="users" class="row">
+        <div  id="users" class="row  wait-for-icons">
           <div class="col s12">
             <div class="row search-row">
               <div class="input-field col s12">
@@ -37,14 +37,14 @@
                 </thead>
                 <tbody>
                 <%= for user <- @users do %>
-                  <tr>
+                  <tr onclick="go(<%= user.id %>)">
                     <td> <%= user.firstname <> " " <> user.lastname %>  </td>
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
                     <td class="left-align"> 
                     
                       <%= if(user.disabled != true) do %>
-                        <%= if(user.id == 1 or user.id == @conn.assigns.user.id) do %>  
+                        <%= if(user.id == @conn.assigns.user.id) do %>  
                           <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3 disabled" %>
                         <% else %>
                           <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3" %>
@@ -61,7 +61,7 @@
           </div>
         </div>
 
-        <div  id="invitations" class="row">
+        <div  id="invitations" class="row  wait-for-icons">
           <div class="col s12">
 
               <div class="row search-row">
@@ -115,6 +115,12 @@
       
     </div>
 </div>
+
+<script>
+  function go(id){
+    window.location = "/user/" + id + "/edit";
+  }
+</script>
 
 <script>
 function userFilter() {
