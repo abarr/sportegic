@@ -21,29 +21,32 @@ defmodule Sportegic.Accounts do
   end
 
   def get_user_by_email(email) do
-   case Repo.get_by(User, email: name) |> Repo.preload(:organisations) do
-      nil           -> {:error, "No records by this name"}
+    case Repo.get_by(User, email: email) |> Repo.preload(:organisations) do
+      nil -> {:error, "No records by this name"}
       {:error, msg} -> {:error, msg}
-      user          -> {:ok, user}
+      user -> {:ok, user}
     end
   end
 
   def check_if_user_exists_for_org?(email, org) do
     case get_user_by_email(email) do
-      {:ok, user} -> 
-        org = Accounts.get_organisation_by_prefix(org)
+      {:ok, user} ->
+        {:ok, org} = Accounts.get_organisation_by_prefix(org)
+
         case Accounts.get_organisations_users(user.id, org.id) do
           {:ok, _org_user} -> true
-          _                -> false
+          _ -> false
         end
-      _ -> false  
+
+      _ ->
+        false
     end
   end
 
   def get_or_create_user(attrs \\ %{}) do
     case Accounts.get_user_by_email(attrs["email"]) do
       {:ok, account} -> {:ok, account}
-      _              -> Accounts.create_user(attrs)
+      _ -> Accounts.create_user(attrs)
     end
   end
 
@@ -96,10 +99,12 @@ defmodule Sportegic.Accounts do
 
     # Create a tenant based on org prefix
     case Triplex.create(org.prefix) do
-      {:ok, _tenant} -> {:ok, org}
+      {:ok, _tenant} ->
+        {:ok, org}
+
       {:error, msg} ->
-        IO.inspect(msg, label: "ERROR FROM TRIPLEX") 
-        {:error, msg} 
+        IO.inspect(msg, label: "ERROR FROM TRIPLEX")
+        {:error, msg}
     end
   end
 
@@ -121,21 +126,11 @@ defmodule Sportegic.Accounts do
     Repo.all(OrganisationsUsers)
   end
 
-  # def get_organisations_users(user_id, org_id) do
-  #   [org_user] =
-  #     OrganisationsUsers
-  #     |> where([ou], ou.user_id == ^user_id)
-  #     |> where([ou], ou.organisation_id == ^org_id)
-  #     |> Repo.all()
-
-  #   {:ok, org_user}
-  # end
-
   def get_organisations_users(user_id, org_id) do
-    case Repo.get_by(OrganisationsUsers, [org_id: org_id, user_id: user_id]) do
+    case Repo.get_by(OrganisationsUsers, organisation_id: org_id, user_id: user_id) do
       nil -> {:error, "No records exist"}
-      {:error, msg} -> {:error, msg}   
-      org_user -> {:ok, org_user}   
+      {:error, msg} -> {:error, msg}
+      org_user -> {:ok, org_user}
     end
   end
 

@@ -1,0 +1,6 @@
+I have the email
+check if the email has been used by a user
+    if it has been registered check if it has been associated with the org
+    if it has been associated with the org send back the account_id
+        Message to user that the account exists or exists and is disbaled
+    If it has not been associated with the org continue
