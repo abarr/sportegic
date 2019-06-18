@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Dashboard.create_sentiment_chart(Chart);
     };
 
-    if (window.location.pathname == "/rsvp" || window.location.pathname == "/user/new") {
+    if (window.location.pathname == "/rsvp" || window.location.pathname.split("/")[1] == "user") {
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)
     };

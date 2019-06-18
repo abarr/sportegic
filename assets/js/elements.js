@@ -78,12 +78,13 @@ let Elements = {
         M.CharacterCounter.init(brand);
 
         let tabs = document.querySelector(".tabs");
-        let instances = M.Tabs.init(tabs, {});
+        M.Tabs.init(tabs, {});
 
-        
-        
+        let r_id = document.getElementById('user_role_id');
+        M.FormSelect.init(r_id, {});
 
-        
+
+
     }
 }
 

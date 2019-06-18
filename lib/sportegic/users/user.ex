@@ -10,10 +10,12 @@ defmodule Sportegic.Users.User do
     field(:firstname, :string)
     field(:lastname, :string)
     field(:mobile, :string)
+    field(:mobile_no, :string)
+    field(:country_code, :string)
     field(:user_id, :integer)
     field(:disabled, :boolean, default: false)
     belongs_to(:role, Role)
-    
+
     has_many(:comments, Comment)
     has_many(:notes, Note)
 
@@ -23,7 +25,16 @@ defmodule Sportegic.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:firstname, :lastname, :mobile, :disabled, :user_id, :role_id])
+    |> cast(attrs, [
+      :firstname,
+      :lastname,
+      :mobile,
+      :disabled,
+      :user_id,
+      :role_id,
+      :mobile_no,
+      :country_code
+    ])
     |> validate_required([:firstname, :lastname, :mobile, :user_id])
   end
 end

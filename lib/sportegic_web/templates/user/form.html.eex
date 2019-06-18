@@ -13,9 +13,9 @@
       <span class="helper-text" data-error="Please provide your last name"></span>
     </div>
     <div class="input-field col s3">
-        <%= label f, :country %>
+        <%= label f, :country_code %>
         <%= text_input f, :country, [ class: "validate", pattern: "[+][0-9]{1,3}$", required: "true", type: "text"] %>
-        <%= error_tag f, :country %>
+        <%= error_tag f, :country_code %>
         <span class="helper-text" data-error="e.g. +61"></span>
     </div>
     <div class="input-field col s6">
