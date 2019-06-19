@@ -15,14 +15,17 @@ defmodule SportegicWeb.UserView do
   end
 
   def error_tag_sportegic(field) do
-    IO.inspect(field, label: "FIELD")
-
     case field do
-      :role_id ->
+      :role ->
         content_tag(:span, "", [
           {:data, [error: "Please choose a Role"]},
           class: "helper-text"
         ])
+      :email ->
+        content_tag(:span, "", [
+          {:data, [error: "Please use a valid email address"]},
+          class: "helper-text"
+        ])    
 
       _ ->
         content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])

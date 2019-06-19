@@ -1,7 +1,7 @@
 defmodule Sportegic.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Sportegic.Users.Role
+  alias Sportegic.Users.{Role}
   alias Sportegic.Notes.{Note, Comment}
 
   @derive {Jason.Encoder, only: [:firstname, :lastname]}
@@ -22,8 +22,12 @@ defmodule Sportegic.Users.User do
     timestamps(type: :utc_datetime)
   end
 
+  
   @doc false
   def changeset(user, attrs) do
+    
+    attrs = add_mobile(attrs)
+
     user
     |> cast(attrs, [
       :firstname,
@@ -35,6 +39,21 @@ defmodule Sportegic.Users.User do
       :mobile_no,
       :country_code
     ])
-    |> validate_required([:firstname, :lastname, :mobile, :user_id])
+    |> validate_required([:firstname, :lastname, :mobile, :user_id, :mobile_no, :country_code])
+    
   end
+
+  def add_mobile(attrs) when map_size(attrs) == 0, do: attrs
+  def add_mobile(attrs) do
+    case attrs["mobile"] do
+      true ->
+        attrs 
+        |> Map.put("mobile" , attrs["country_code"]<> attrs["mobile_no"])  
+      _    ->
+        attrs 
+        |> Map.put(:mobile , attrs.country_code <> attrs.mobile_no)
+    end
+    
+  end
+  
 end

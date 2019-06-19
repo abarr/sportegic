@@ -16,7 +16,7 @@
   </div>
   <div class="row">
     <div class="col s12">
-      <%= form_for @conn, Routes.user_path(@conn, :invitation), [], fn f -> %>
+      <%= form_for @conn, Routes.user_path(@conn, :invitation), [id: "invitation-form"], fn f -> %>
         <div class="page">
           <div class="row">
               <div class="input-field col s12 m6 l6">
@@ -28,34 +28,57 @@
               <div class="input-field col s12 m6 l6 grey-text lighten-2"> 
                 <i class="material-icons prefix">looks_two</i>
                 
-                <%= select f, :role, @roles ,[id: "invite-role-select", class: "validate ", required: "true", type: "text"] %>
+                <%= select f, :role, @roles ,[id: "invite-role-select", class: set_field_class(f, :role), required: "true"] %>
                 <label>Role</label>
                 <%= error_tag_sportegic f, :role %>
-                <span class="helper-text" data-error="Please provide a brief description to help others"></span>
+                
               </div>
             </div>
           </div> 
 
 
           <div>
-    <div class="fixed-action-btn">
-      <button type="submit" class="btn-floating btn-large green">
-        <i class="large material-icons">save</i>
-      </button>
-      <ul>
-        <li><a class="btn-floating red lighten-2" href="/user"><i class="material-icons">arrow_back</i></a></li>
-      </ul>
-    </div>
-  </div>
-  </div>
-
-
+            <div class="fixed-action-btn">
+              <button type="submit" onclick="check_form()" class="btn-floating btn-large green">
+                <i class="large material-icons">save</i>
+              </button>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
 </div>
 
+<script>
+  function check_form(){
+    let form = document.getElementById('invitation-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          console.log(previous_list)
+          for( var item of previous_list){
+              item.classList.remove("invalid")
+              item.classList.remove("red-text");
+              item.classList += " grey-text";
+                
+          }
 
+          let list = form.querySelectorAll(':invalid');
+          console.log(list)
+          for (var item of list) {
+            if(item.nodeName == "SELECT"){
+              item.parentElement.children.item(0).classList.remove("grey-text");
+              item.parentElement.children.item(0).classList += " invalid red-text";
+            }else{
+              item.classList += " invalid"
+            }
+              
+          }
+      }
+      
+  }
+  
+</script>
 
 
 

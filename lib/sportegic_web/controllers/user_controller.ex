@@ -80,8 +80,12 @@ defmodule SportegicWeb.UserController do
     end
   end
 
-  def create(conn, %{"user" => user_params}, org, _permissions) do
-    user_params = Map.put(user_params, "user_id", Integer.to_string(conn.assigns.current_user.id))
+  def create(conn, %{"user" => user_params} = params, org, _permissions) do
+    IO.inspect(params)
+    
+    user_params = user_params
+    |> Map.put("user_id", Integer.to_string(conn.assigns.current_user.id))
+    |> IO.inspect
 
     case Users.create_user(user_params, org) do
       {:ok, user} ->
@@ -117,7 +121,6 @@ defmodule SportegicWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}, org, permissions) do
     with :ok <- Bodyguard.permit(Users, "edit:user_permissions", :user, permissions) do
       user = Users.get_user!(id, org)
-      IO.inspect("In Update")
 
       case Users.update_user(user, user_params, org) do
         {:ok, _user} ->

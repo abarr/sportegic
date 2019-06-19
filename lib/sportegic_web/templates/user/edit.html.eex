@@ -14,7 +14,7 @@
   </div>
   <div class="row page">
     <div class="col s12">
-        <%= form_for @changeset, Routes.user_path(@conn, :update, @user), fn f -> %>
+        <%= form_for @changeset, Routes.user_path(@conn, :update, @user), [id: "user-edit-form"], fn f -> %>
           <div class="row page">
             <div class="input-field col s12 m4 ">
               <%= label f, :firstname %>
@@ -40,11 +40,10 @@
             </div>
             <div class="input-field col s6">
                 <%= label f, :mobile_no %>
-                <%= text_input f, :mobile_no, [ class: "validate grey-text lighten-2", required: "true"] %>
+                <%= text_input f, :mobile_no, [ class: "validate grey-text lighten-2", required: "true", onchange: "mobile_changed()"] %>
                 <%= error_tag f, :mobile_no %>
                 <span class="helper-text" data-error="Please provide your mobile number"></span>
             </div>
-            <%= hidden_input f, :mobile, [id: "mobile"] %>
             <div id="send" class="input-field col s3 right-align">
                 <a id="verify" class="btn waves-effect blue lighten-2 z-depth-0" style="width: 100%;" disabled>
                 verify
@@ -58,7 +57,7 @@
             </div>
             <div id="code" class="input-field col s9" hidden="true">
                 <%= label f, :code %>
-                <%= text_input f, :code, [ class: "validate", required: "true"] %>
+                <%= text_input f, :code, [ class: "validate"] %>
                 <%= error_tag f, :code %>
                 <span class="helper-text" data-error="Invalid code!"></span>
             </div>
@@ -70,7 +69,7 @@
           </div>
           
           <div class="fixed-action-btn">
-            <button id="submit" type="submit" class="btn-floating btn-large green">
+            <button id="submit" onclick="check_form()" type="submit" class="btn-floating btn-large green">
               <i class="large material-icons">save</i>
             </button>
           </div>
@@ -86,5 +85,32 @@
     let submit = document.getElementById("submit");
     verify.removeAttribute("disabled");
     submit.setAttribute("disabled", "disabled" )
+  }
+
+  function check_form(){
+    let form = document.getElementById('user-edit-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          console.log(previous_list)
+          for( var item of previous_list){
+              item.classList.remove("invalid")
+              item.classList.remove("red-text");
+              item.classList += " grey-text";
+                
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          console.log(list)
+          for (var item of list) {
+            if(item.nodeName == "SELECT"){
+              item.parentElement.children.item(0).classList.remove("grey-text");
+              item.parentElement.children.item(0).classList += " invalid red-text";
+            }else{
+              item.classList += " invalid"
+            }
+              
+          }
+      }
+      
   }
 </script>

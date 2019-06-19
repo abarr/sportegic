@@ -11,12 +11,12 @@ let User = {
 
     },
     verify_mobile(socket) {
-
+        
         let channel = socket.channel('mobile:', {});
 
         var country, code_input, mobile_no
         if (document.getElementById("rsvp_country_code") || document.getElementById("user_country_code")) {
-
+           
             if (document.getElementById("rsvp_country_code")) {
                 country = document.getElementById("rsvp_country_code");
                 mobile_no = document.getElementById("rsvp_mobile_no");
@@ -33,7 +33,6 @@ let User = {
 
             let code = document.getElementById("code");
             let check = document.getElementById("check");
-            let mobile = document.getElementById("mobile");
             let submit = document.getElementById("submit");
 
             verify.addEventListener("click", e => {
@@ -56,7 +55,6 @@ let User = {
 
             channel.on("send_verification", payload => {
                 if (payload.status == "ok") {
-                    mobile.value = payload.mobile;
                     code.removeAttribute("hidden");
                     check.removeAttribute("hidden");
                     verify.innerHTML = "Resend";
@@ -89,8 +87,8 @@ let User = {
                     code.setAttribute("hidden", "true");
                     check.setAttribute("hidden", "true");
 
-                    country.setAttribute("disabled", "true")
-                    mobile_no.setAttribute("disabled", "true")
+                    country.setAttribute("readonly", "true")
+                    mobile_no.setAttribute("readonly", "true")
 
                     send.setAttribute("hidden", "true");
                     valid.removeAttribute("hidden");

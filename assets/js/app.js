@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     if (window.location.pathname == "/rsvp" || window.location.pathname.split("/")[1] == "user") {
+
         let sportegic_socket = socket.connect_socket();
         User.verify_mobile(sportegic_socket)
     };

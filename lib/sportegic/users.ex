@@ -61,7 +61,7 @@ defmodule Sportegic.Users do
   def change_user(%User{} = profile) do
     User.changeset(profile, %{})
   end
-
+ 
   def list_roles(org) do
     Repo.all(Role, prefix: org)
   end

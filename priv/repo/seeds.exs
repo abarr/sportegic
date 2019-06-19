@@ -63,7 +63,6 @@ Sportegic.Users.create_user(
   %{
     firstname: "Andrew",
     lastname: "Barr",
-    mobile: "+610411333222",
     mobile_no: "0411333222",
     country_code: "+61",
     user_id: "1",
@@ -76,7 +75,6 @@ Sportegic.Users.create_user(
   %{
     firstname: "George",
     lastname: "Clooney",
-    mobile: "+61411222333",
     mobile_no: "0411222333",
     country_code: "+61",
     user_id: "2",
@@ -89,7 +87,6 @@ Sportegic.Users.create_user(
   %{
     firstname: "Eric",
     lastname: "Banner",
-    mobile: "+15553908772",
     mobile_no: "5553908772",
     country_code: "+1",
     user_id: "4",
@@ -102,7 +99,6 @@ Sportegic.Users.create_user(
   %{
     firstname: "Stan",
     lastname: "Lee",
-    mobile: "+155539076772",
     mobile_no: "55539076772",
     country_code: "+1",
     user_id: "3",
