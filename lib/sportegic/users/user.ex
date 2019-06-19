@@ -22,10 +22,8 @@ defmodule Sportegic.Users.User do
     timestamps(type: :utc_datetime)
   end
 
-  
   @doc false
   def changeset(user, attrs) do
-    
     attrs = add_mobile(attrs)
 
     user
@@ -40,20 +38,21 @@ defmodule Sportegic.Users.User do
       :country_code
     ])
     |> validate_required([:firstname, :lastname, :mobile, :user_id, :mobile_no, :country_code])
-    
   end
 
   def add_mobile(attrs) when map_size(attrs) == 0, do: attrs
+
   def add_mobile(attrs) do
-    case attrs["mobile"] do
+    case attrs["mobile_no"] do
       true ->
-        attrs 
-        |> Map.put("mobile" , attrs["country_code"]<> attrs["mobile_no"])  
-      _    ->
-        attrs 
-        |> Map.put(:mobile , attrs.country_code <> attrs.mobile_no)
+        attrs
+        |> Map.put("mobile", attrs["country_code"] <> attrs["mobile_no"])
+
+      r ->
+        IO.inspect(r)
+
+        attrs
+        |> Map.put(:mobile, attrs.country_code <> attrs.mobile_no)
     end
-    
   end
-  
 end
