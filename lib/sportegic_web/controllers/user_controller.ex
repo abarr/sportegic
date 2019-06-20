@@ -74,29 +74,32 @@ defmodule SportegicWeb.UserController do
           invitations = Users.list_invitations(org)
 
           conn
+          |> IO.inspect(label: "This is now")
           |> put_flash(:succss, "Invitation seccessuly sent")
-          |> render("index.html", users: users, invitations: invitations)
-        end
+          |> redirect(to: Routes.user_path(conn, :index))
+        end 
     end
   end
 
-  def create(conn, %{"user" => user_params} = params, org, _permissions) do
-    IO.inspect(params)
-    
+  def create(conn, %{"user" => user_params}, org, _permissions) do
     user_params = user_params
     |> Map.put("user_id", Integer.to_string(conn.assigns.current_user.id))
-    |> IO.inspect
-
+    
     case Users.create_user(user_params, org) do
       {:ok, user} ->
-        cond do
-          user.id == 1 ->
-            Users.update_user(user, %{role_id: 1}, org)
+
+        case user.id do
+          1 ->
+            user
+            |> Users.update_user( %{role_id: "1"}, org)
+
+            conn
+            |> redirect(to: Routes.dashboard_path(conn, :index))
+          _ ->  
+            conn
+            |> redirect(to: Routes.dashboard_path(conn, :index))
         end
-
-        conn
-        |> redirect(to: Routes.dashboard_path(conn, :index))
-
+        
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

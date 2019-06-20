@@ -24,8 +24,8 @@ defmodule Sportegic.Users.User do
 
   @doc false
   def changeset(user, attrs) do
-    attrs = add_mobile(attrs)
-
+    attrs = add_mobile(attrs)  
+    
     user
     |> cast(attrs, [
       :firstname,
@@ -41,18 +41,21 @@ defmodule Sportegic.Users.User do
   end
 
   def add_mobile(attrs) when map_size(attrs) == 0, do: attrs
-
   def add_mobile(attrs) do
-    case attrs["mobile_no"] do
-      true ->
-        attrs
-        |> Map.put("mobile", attrs["country_code"] <> attrs["mobile_no"])
-
-      r ->
-        IO.inspect(r)
-
-        attrs
-        |> Map.put(:mobile, attrs.country_code <> attrs.mobile_no)
+    case Map.has_key?(attrs, :mobile_no) || Map.has_key?(attrs, "mobile_no") do
+      true -> 
+        case Map.has_key?(attrs, :mobile_no) do
+          true ->
+            attrs
+            |> Map.put(:mobile, attrs.country_code <> attrs.mobile_no)
+            
+          _ ->
+            mobile = attrs["country_code"] <> attrs["mobile_no"]
+            attrs
+            |> Map.put("mobile", mobile)
+            
+        end
+      _    -> attrs
     end
   end
 end

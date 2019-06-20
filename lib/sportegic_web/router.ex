@@ -49,7 +49,7 @@ defmodule SportegicWeb.Router do
     get "/user/:id/disable", UserController, :disable
     get "/user/:id/enable", UserController, :enable
     get "/user/invitation", UserController, :invitation
-    post "/user/invitation", UserController, :create_invitation
+    post "/user/invitation/create", UserController, :create_invitation
     resources "/user", UserController
 
     resources "/role", RoleController

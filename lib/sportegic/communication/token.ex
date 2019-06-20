@@ -6,6 +6,10 @@ defmodule Sportegic.Communication.Token do
   @max_age 86_400
   # @max_age 1
 
+  def get_max_age_minutes() do
+    @max_age
+  end
+
   def generate_token(%User{id: user_id}) do
     Phoenix.Token.sign(SportegicWeb.Endpoint, @salt, user_id)
   end

@@ -16,7 +16,7 @@
   </div>
   <div class="row">
     <div class="col s12">
-      <%= form_for @conn, Routes.user_path(@conn, :invitation), [id: "invitation-form"], fn f -> %>
+      <%= form_for @conn, Routes.user_path(@conn, :create_invitation), [id: "invitation-form"], fn f -> %>
         <div class="page">
           <div class="row">
               <div class="input-field col s12 m6 l6">

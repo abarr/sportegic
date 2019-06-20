@@ -44,7 +44,7 @@ defmodule SportegicWeb.AccountController do
           {:ok, account} <- Accounts.get_or_create_user(rsvp),
           {:ok, _} <- Accounts.create_organisations_users(%{user_id: account.id, organisation_id: org.id}) do
             
-          {user_params, _rsvp} = Map.split(rsvp, ["firstname", "lastname", "mobile"])
+          {user_params, _rsvp} = Map.split(rsvp, ["firstname", "lastname", "mobile_no", "country_code"])
           user_params =
             user_params
             |> Map.put("role_id", Integer.to_string(role.id))

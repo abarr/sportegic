@@ -8,6 +8,7 @@ defmodule Sportegic.Users.Invitation do
     field :email, :string
     field :org_name, :string
     field :completed, :boolean, default: false
+    field :expired, :boolean, default: false
     belongs_to :role, Role
 
     timestamps(type: :utc_datetime)
@@ -16,7 +17,7 @@ defmodule Sportegic.Users.Invitation do
   @doc false
   def changeset(invitation, attrs) do
     invitation
-    |> cast(attrs, [:email, :org_name, :role_id, :completed])
+    |> cast(attrs, [:email, :org_name, :role_id, :completed, :expired])
     |> validate_required([:email, :org_name, :role_id])
   end
 end

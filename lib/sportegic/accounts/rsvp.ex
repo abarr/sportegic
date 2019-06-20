@@ -7,7 +7,8 @@ defmodule Sportegic.Accounts.Rsvp do
     field(:lastname, :string)
     field(:org, :string)
     field(:email, :string)
-    field(:mobile, :string)
+    field(:mobile_no, :string)
+    field(:country_code, :string)
     field(:password, :string)
     field(:role_id, :string)
   end
@@ -15,7 +16,7 @@ defmodule Sportegic.Accounts.Rsvp do
   
   def changeset(rsvp, params \\ %{}) do
     rsvp
-    |> cast(params,[:firstname, :lastname, :org, :email, :mobile, :password, :role_id])
+    |> cast(params,[:firstname, :lastname, :org, :email, :mobile_no, :country_code, :password, :role_id])
   end
 
 end

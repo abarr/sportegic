@@ -1,15 +1,11 @@
 defmodule Sportegic.Users do
   import Ecto.Query, warn: false
+  use Timex
 
   alias __MODULE__
   alias Sportegic.Repo
-  alias Sportegic.Users.User
-  alias Sportegic.Users.Invitation
-  alias Sportegic.Users.Category
-  alias Sportegic.Users.Permission
-  alias Sportegic.Users.Role
-  alias Sportegic.Users.Seeds
-  alias Sportegic.Users.RolesPermissions
+  alias Sportegic.Users.{User, Invitation, Category, Permission, Role, Seeds, RolesPermissions}
+  alias Sportegic.Communication.Token
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -40,6 +36,7 @@ defmodule Sportegic.Users do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert(prefix: org)
+    |> IO.inspect(label: "CREATE_USER")
   end
 
   def update_user(%User{} = user, attrs, org) do
@@ -219,7 +216,6 @@ defmodule Sportegic.Users do
   def get_roles_permissions!(id, org), do: Repo.get!(RolesPermissions, id, prefix: org)
 
   def create_roles_permissions(attrs \\ %{}, org) do
-    IO.inspect(attrs, label: "CREATE ROLE PERMMISSIONS")
     %RolesPermissions{}
     |> RolesPermissions.changeset(attrs)
     |> Repo.insert(prefix: org)
@@ -250,6 +246,25 @@ defmodule Sportegic.Users do
     |> Repo.preload(:role)
   end
 
+  def expire_invitations(org) do
+    exp_invitations = Invitation
+    |> where([i], i.expired == false)
+    |> Repo.all(prefix: org)
+
+    exp_invitations
+    |> IO.inspect
+    |> Enum.each(fn i -> 
+        IO.inspect(i, label: "EACH")
+        if Timex.diff(DateTime.utc_now, i.inserted_at, :minutes) < Token.get_max_age_minutes do
+          IO.inspect(i, label: "THIS IS PASSED TO UPDATE")
+          inv = Users.update_invitation(i, %{expired: "true"}, org)
+          IO.inspect(inv)
+        end
+        
+    end )
+
+  end
+
   def get_invitation!(id, org) do
     Invitation
     |> Repo.get!(id, prefix: org)
@@ -269,9 +284,12 @@ defmodule Sportegic.Users do
   end
 
   def update_invitation(%Invitation{} = invitation, attrs, org) do
+    IO.inspect(attrs, label: "ATTRS")
     invitation
     |> Invitation.changeset(attrs)
-    |> Repo.update!(prefix: org)
+    |> IO.inspect
+    |> Repo.update(prefix: org)
+    |> IO.inspect
   end
 
   def delete_invitation(%Invitation{} = invitation, org) do
