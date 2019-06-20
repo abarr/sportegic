@@ -1,5 +1,6 @@
 defmodule Sportegic.Users do
   import Ecto.Query, warn: false
+  import Ecto.Changeset
   use Timex
 
   alias __MODULE__
@@ -39,19 +40,35 @@ defmodule Sportegic.Users do
   end
 
   def update_user(%User{} = user, attrs, org) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update(prefix: org)
+    case Users.is_only_account_owner?(user.id, org) do
+      true ->
+          with {:ok, _val} <- User.changeset(user, attrs) |> fetch_change( :role_id) do
+            changeset = user
+            |> User.changeset(attrs)
+            |> add_error(:role_id, "There must always be one Account Owner")
+            {:error, changeset}
+          else
+            :error ->
+              user
+              |> User.changeset(attrs)
+              |> Repo.update(prefix: org)
+          end
+      _    ->
+          user
+          |> User.changeset(attrs)
+          |> Repo.update(prefix: org)
+    end
   end
 
-  def count_account_owners(org) do
+  def is_only_account_owner?(id, org) do
     query =
       from(u in User,
         where: u.role_id == 1,
-        select: {u.id}
+        select: u.id
       )
-
-    Repo.aggregate(query, :count, :id, prefix: org)
+    query
+    |> Repo.all(prefix: org)
+    |> Enum.member?(id)
   end
 
   def change_user(%User{} = profile) do

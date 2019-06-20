@@ -8,28 +8,21 @@
     </div>
     <div class="divider"></div>
   </div>
-  <div class="row page">
+  <div class="row page search-row">
     <div class="col s12">
       <table class="highlight">
         <thead>
           <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Action</th>
+              
           </tr>
         </thead>
         <tbody>
         <%= for role <- @roles do %>
-          <tr>
+          <tr onclick="go(<%= role.id %>)">
             <td> <%= role.name %>  </td>
             <td> <%= role.description %> </td>
-            <td class="center-align"> 
-              <%= if(role.id != 1) do %>  
-                <%= link "Edit", to: Routes.role_path(@conn, :edit, role) %> 
-              <% else %>
-                Edit
-              <% end %>
-            </td>
           </tr>
           <% end %>
         </tbody>
@@ -47,4 +40,9 @@
       
     </div>
 </div>
+<script>
+  function go(id){
+    window.location = "/role/" + id + "/edit";
+  }
+</script>
 

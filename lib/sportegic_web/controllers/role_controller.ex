@@ -72,13 +72,12 @@ defmodule SportegicWeb.RoleController do
 
       case role.id do
         1 ->
-          roles = Users.list_roles(org)
-
           conn
-          |> put_flash(:info, "The Owner Role cannot be edited.")
-          |> render("index.html", roles: roles)
+          |> put_flash(:danger, "The Owner Role cannot be edited.")
+          |> redirect(to: Routes.role_path(conn, :index))
 
         _ ->
+          IO.inspect(changeset, label: "CHANGESET")
           render(conn, "edit.html",
             role: role,
             changeset: changeset,

@@ -120,8 +120,8 @@ defmodule SportegicWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}, org, permissions) do
     with :ok <- Bodyguard.permit(Users, "edit:user_permissions", :user, permissions) do
-      user = Users.get_user!(id, org)
 
+      user = Users.get_user!(id, org)
       case Users.update_user(user, user_params, org) do
         {:ok, _user} ->
           conn
@@ -129,23 +129,22 @@ defmodule SportegicWeb.UserController do
           |> redirect(to: Routes.user_path(conn, :index))
 
         {:error, %Ecto.Changeset{} = changeset} ->
-          render(conn, "edit.html", user: user, changeset: changeset)
+          IO.inspect(changeset)
+          roles = Users.list_roles(org)
+          render(conn, "edit.html", user: user, changeset: changeset, roles: roles)
       end
     end
   end
 
   def disable(conn, %{"id" => id}, org, permissions) do
-    case Users.count_account_owners(org) do
-      1 ->
-        users = Users.list_users(org)
-        invitations = Users.list_invitations(org)
-
+    case Users.is_only_account_owner?(id, org) do
+      true ->
         conn
         |> put_flash(
           :danger,
           "This User is the only Account Owner, there must always be at least one Account Owner"
         )
-        |> render("index.html", users: users, invitations: invitations)
+        |> redirect(to: Routes.user_path(conn, :index))
 
       _ ->
         with :ok <- Bodyguard.permit(Users, "delete:user_permissions", :user, permissions),

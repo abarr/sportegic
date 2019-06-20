@@ -19,15 +19,16 @@
             <div class="input-field col s12 m4 ">
               <%= label f, :firstname %>
               <%= text_input f, :firstname, [ class: "validate grey-text lighten-2", required: "true", type: "text", autofocus: "true", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
-              <%= error_tag f, :firstname %>
-              <span class="helper-text" data-error="Please provide your first name"></span>
+              <%= error_tag_sportegic f, :firstname %>
+             
             </div>
             <div class="input-field col s12 m4">
               <%= label f, :lastname %>
               <%= text_input f, :lastname, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
-              <%= error_tag f, :lastname %>
+              <%= error_tag_sportegic f, :lastname %>
             </div>
             <div class="input-field col s12 m4 grey-text lighten-2"> 
+                
                 <%= select f, :role_id, Enum.map(@roles, &{&1.name, &1.id})  %>
                 <label>Role</label>
                 <%= error_tag_sportegic f, :role_id %>

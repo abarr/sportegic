@@ -35,4 +35,37 @@ defmodule SportegicWeb.RoleView do
       _ -> nil
     end
   end
+
+  def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
+    
+    if error = errors[field] do
+      {msg, _} = error
+      content_tag(:span, "", [{:data, [error: msg]}, class: " helper-text"])
+    else
+      error_tag_sportegic(field)
+    end
+  end
+
+  def error_tag_sportegic(_form, field) do
+    error_tag_sportegic(field)
+  end
+
+  def error_tag_sportegic(field) do
+    case field do
+      :description ->
+        content_tag(:span, "", [
+          {:data, [error: "Please provide a short description"]},
+          class: "helper-text"
+        ])
+      :role_id ->
+        content_tag(:span, "", [
+          {:data, [error: "Please provide a short description"]},
+          class: "helper-text"
+        ])  
+
+      _ ->
+        content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
+    end
+  end
+
 end

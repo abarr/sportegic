@@ -4,16 +4,15 @@
     <div class="input-field col s12 m6 l6"> 
       <i class="material-icons prefix">looks_one</i>
       <%= label f, :name %>
-      <%= text_input f, :name, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
-      <%= error_tag f, :name %>
-      <span class="helper-text" data-error="Please provide a name for your new role"></span>
+      <%= text_input f, :name, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+      <%= error_tag_sportegic f, :name %>
+      
     </div>
     <div class="input-field col s12 m6 l6"> 
       <i class="material-icons prefix">looks_two</i>
       <%= label f, :description %>
-      <%= text_input f, :description, [ class: "validate", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
-      <%= error_tag f, :description %>
-      <span class="helper-text" data-error="Please provide a brief description to help others"></span>
+      <%= text_input f, :description, [ class: "validate grey-text lighten-2", required: "true", type: "text"] %>
+      <%= error_tag_sportegic f, :description %>
     </div>
   <%# </div>
   <div class="row"> %>
@@ -49,9 +48,6 @@
       <button type="submit" class="btn-floating btn-large green">
         <i class="large material-icons">save</i>
       </button>
-      <ul>
-        <li><a class="btn-floating red lighten-2" href="/role"><i class="material-icons">arrow_back</i></a></li>
-      </ul>
     </div>
   </div>
   </div>

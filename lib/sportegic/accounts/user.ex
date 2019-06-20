@@ -2,10 +2,10 @@ defmodule Sportegic.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.Accounts.Organisation
+  alias Sportegic.Accounts.{Organisation, UserEmailType}
 
   schema "users" do
-    field(:email, :string)
+    field(:email, UserEmailType)
     field(:password_hash, :string)
     field(:password, :string, virtual: true)
     field(:verified, :boolean, default: false)

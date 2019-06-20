@@ -4,7 +4,7 @@ defmodule Sportegic.Users.Seeds do
       %{
         name: "Account Owner",
         description:
-          "This role is applied to the User who originally created the organisation. There must always be a minimum of one Account Owner. This Role cannot be edited."
+          "This role is applied to the User who originally created the organisation."
       },
       %{
         name: "Administrator",

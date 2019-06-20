@@ -4,7 +4,7 @@ defmodule Sportegic.Repo.Migrations.CreateRoles do
   def change do
     create table(:roles) do
       add(:name, :string)
-      add(:description, :string)
+      add(:description, :text)
 
       timestamps(type: :timestamptz)
     end

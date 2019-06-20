@@ -27,7 +27,9 @@ blockquote{
     display: initial;
   }
   
-  
+.hide {
+    display: none;
+}
 
 [v-cloak] {
     display: none;

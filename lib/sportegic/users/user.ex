@@ -1,6 +1,7 @@
 defmodule Sportegic.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Sportegic.Users
   alias Sportegic.Users.{Role}
   alias Sportegic.Notes.{Note, Comment}
 
@@ -38,7 +39,11 @@ defmodule Sportegic.Users.User do
       :country_code
     ])
     |> validate_required([:firstname, :lastname, :mobile, :user_id, :mobile_no, :country_code])
+  
   end
+
+  
+  
 
   def add_mobile(attrs) when map_size(attrs) == 0, do: attrs
   def add_mobile(attrs) do

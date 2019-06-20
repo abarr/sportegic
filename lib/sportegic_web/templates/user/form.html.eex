@@ -13,7 +13,7 @@
       <span class="helper-text" data-error="Please provide your last name"></span>
     </div>
     <div class="input-field col s3">
-        <%= label f, :country_code %>
+        <%= label f, :country_code, "Country" %>
         <%= text_input f, :country_code, [ class: "validate", pattern: "[+][0-9]{1,3}$", required: "true", type: "text"] %>
         <%= error_tag f, :country_code %>
         <span class="helper-text" data-error="e.g. +61"></span>
@@ -49,7 +49,7 @@
     </div>
   </div>
   
-  <div class="floating-action-btn right">
+  <div class="floating-action-btn right-align">
     <button id="submit" type="submit" class="btn-floating btn-large green" disabled="true">
       <i class="large material-icons">save</i>
     </button>
