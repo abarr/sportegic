@@ -70,36 +70,33 @@ defmodule SportegicWeb.UserController do
              {:ok, invitation} <-
                Users.create_invitation(%{email: email, role_id: role_id, org_name: org}, org),
              {:ok, _id} <- Communication.email_with_token(conn, invitation, email, "rsvp") do
-          users = Users.list_users(org)
-          invitations = Users.list_invitations(org)
-
           conn
-          |> IO.inspect(label: "This is now")
           |> put_flash(:succss, "Invitation seccessuly sent")
           |> redirect(to: Routes.user_path(conn, :index))
-        end 
+        end
     end
   end
 
   def create(conn, %{"user" => user_params}, org, _permissions) do
-    user_params = user_params
-    |> Map.put("user_id", Integer.to_string(conn.assigns.current_user.id))
-    
+    user_params =
+      user_params
+      |> Map.put("user_id", Integer.to_string(conn.assigns.current_user.id))
+
     case Users.create_user(user_params, org) do
       {:ok, user} ->
-
         case user.id do
           1 ->
             user
-            |> Users.update_user( %{role_id: "1"}, org)
+            |> Users.update_user(%{role_id: "1"}, org)
 
             conn
             |> redirect(to: Routes.dashboard_path(conn, :index))
-          _ ->  
+
+          _ ->
             conn
             |> redirect(to: Routes.dashboard_path(conn, :index))
         end
-        
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -132,7 +129,6 @@ defmodule SportegicWeb.UserController do
           |> redirect(to: Routes.user_path(conn, :index))
 
         {:error, %Ecto.Changeset{} = changeset} ->
-          IO.inspect(changeset)
           render(conn, "edit.html", user: user, changeset: changeset)
       end
     end

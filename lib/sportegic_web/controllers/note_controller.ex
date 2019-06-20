@@ -69,7 +69,6 @@ defmodule SportegicWeb.NoteController do
     |> Map.put("details", HtmlSanitizeEx.basic_html(details))
   end
 
-  
   def show(conn, %{"id" => id}, org, _permissions) do
     note = Notes.get_note!(id, org)
     # |> Map.put(:event_date, Timex.to_datetime(note.event_date, "Australia/Brisbane"))
@@ -94,7 +93,6 @@ defmodule SportegicWeb.NoteController do
         |> redirect(to: Routes.note_path(conn, :show, note))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset)
         render(conn, "edit.html", changeset: changeset, note: note)
     end
   end

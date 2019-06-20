@@ -33,19 +33,26 @@ defmodule Sportegic.Accounts do
     case get_user_by_email(email) do
       {:ok, user} ->
         case Enum.find(user.organisations, fn o -> o.prefix == org end) do
-          nil -> 
+          nil ->
             # Check if user exists but is disabled
             case Users.get_user(user.id, org) do
-              {:ok, nil} -> {:new} # User exists but they are not assoc with org
-              {:ok, _user } -> {:exists_disabled} # Account exists but they are disabled
+              # User exists but they are not assoc with org
+              {:ok, nil} -> {:new}
+              # Account exists but they are disabled
+              {:ok, _user} -> {:exists_disabled}
               _ -> {:error, "Error checking if user exists for organisation"}
             end
-          _ -> {:exists} # Account exists and they are already associated with org
+
+          # Account exists and they are already associated with org
+          _ ->
+            {:exists}
         end
-      _ -> {:new} # No account new User
+
+      # No account new User
+      _ ->
+        {:new}
     end
   end
-
 
   def get_or_create_user(attrs \\ %{}) do
     case Accounts.get_user_by_email(attrs["email"]) do
@@ -107,7 +114,6 @@ defmodule Sportegic.Accounts do
         {:ok, org}
 
       {:error, msg} ->
-        IO.inspect(msg, label: "ERROR FROM TRIPLEX")
         {:error, msg}
     end
   end
@@ -131,7 +137,6 @@ defmodule Sportegic.Accounts do
   end
 
   def get_organisations_users(user_id, org_id) do
-    IO.inspect(user_id, label: "get_organisation_user")
     case Repo.get_by(OrganisationsUsers, organisation_id: org_id, user_id: user_id) do
       nil -> {:error, "No records exist"}
       {:error, msg} -> {:error, msg}

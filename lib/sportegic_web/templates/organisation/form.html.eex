@@ -16,10 +16,25 @@
           <%= text_input f, :city, [id: "address", placeholder: "Enter Home City/Suburb", style: "color: #9c9a9a;"] %>
           <label for="address"></label>
     </div>
+    <div id="msg" class="input-field col s12 grey-text lighten-2 left valign-wrapper">
+      
+      <div class="preloader-wrapper small active right-align">
+        <div class="spinner-layer spinner-green-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <div ><h6 class="">Just a moment, we are grabbing your timezone ...</h6></div>
+    </div>
     
     <div class="right">
-      <%= submit  [class: "btn-floating btn-large z-depth-0 waves-effect waves-light blue"] do %>
-         <i class="large material-icons">add</i>
+      <%= submit  [class: "btn-floating btn-large z-depth-0 waves-effect waves-light green", disabled: "true"] do %>
+         <i class="large material-icons">save</i>
       <% end %>
     </div>  
     
@@ -63,7 +78,11 @@
         
         var targetDate = new Date() // Current date/time of user computer
         var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
-        
+        let msg = document.getElementById("msg");
+        let lbl = document.createElement("h6");
+        lbl.innerHTML = "Just moment, we are grabbing your timezone ....";
+        msg.appendChild(lbl);
+
         fetch('https://maps.googleapis.com/maps/api/timezone/json?location=' + place.geometry.location.lat() + ',' + place.geometry.location.lng() + '&timestamp=' + timestamp + '&key=AIzaSyBhXHpSt2T2rHE-kP_Vrgw0M5GYm9ui8NI')
         .then(function(response) {
           console.log("Response")

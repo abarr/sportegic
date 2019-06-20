@@ -20,10 +20,10 @@ defmodule Sportegic.Users do
 
   #  Get user using user_id from from Account user table (Public Schema)
   def get_user(user_id, org) do
-    case Repo.get_by(User,[user_id: user_id], prefix: org) do
-      nil           -> {:ok, nil}
+    case Repo.get_by(User, [user_id: user_id], prefix: org) do
+      nil -> {:ok, nil}
       {:error, msg} -> {:error, msg}
-      user          -> {:ok, user}
+      user -> {:ok, user}
     end
   end
 
@@ -36,7 +36,6 @@ defmodule Sportegic.Users do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert(prefix: org)
-    |> IO.inspect(label: "CREATE_USER")
   end
 
   def update_user(%User{} = user, attrs, org) do
@@ -46,19 +45,19 @@ defmodule Sportegic.Users do
   end
 
   def count_account_owners(org) do
-    query = 
-      from( u in User,
-      where: u.role_id == 1,
-      select: {u.id}
+    query =
+      from(u in User,
+        where: u.role_id == 1,
+        select: {u.id}
       )
 
-    Repo.aggregate(query, :count, :id, prefix: org)  
+    Repo.aggregate(query, :count, :id, prefix: org)
   end
 
   def change_user(%User{} = profile) do
     User.changeset(profile, %{})
   end
- 
+
   def list_roles(org) do
     Repo.all(Role, prefix: org)
   end
@@ -70,10 +69,10 @@ defmodule Sportegic.Users do
   end
 
   def get_role_by_name(name, org) do
-    case Repo.get_by(Role,[name: name], prefix: org) do
-      nil           -> {:error, "No records by this name"}
+    case Repo.get_by(Role, [name: name], prefix: org) do
+      nil -> {:error, "No records by this name"}
       {:error, msg} -> {:error, msg}
-      role          -> {:ok, role}
+      role -> {:ok, role}
     end
   end
 
@@ -92,7 +91,6 @@ defmodule Sportegic.Users do
   def create_default_owner_permissions(org) do
     list =
       Users.list_permissions(org)
-      |> IO.inspect(label: "PERMISSIONS")
       |> Enum.map(&create_roles_permissions(%{permission_id: &1.id, role_id: 1}, org))
 
     {:ok, list}
@@ -247,22 +245,17 @@ defmodule Sportegic.Users do
   end
 
   def expire_invitations(org) do
-    exp_invitations = Invitation
-    |> where([i], i.expired == false)
-    |> Repo.all(prefix: org)
+    exp_invitations =
+      Invitation
+      |> where([i], i.expired == false)
+      |> Repo.all(prefix: org)
 
     exp_invitations
-    |> IO.inspect
-    |> Enum.each(fn i -> 
-        IO.inspect(i, label: "EACH")
-        if Timex.diff(DateTime.utc_now, i.inserted_at, :minutes) < Token.get_max_age_minutes do
-          IO.inspect(i, label: "THIS IS PASSED TO UPDATE")
-          inv = Users.update_invitation(i, %{expired: "true"}, org)
-          IO.inspect(inv)
-        end
-        
-    end )
-
+    |> Enum.each(fn i ->
+      if Timex.diff(DateTime.utc_now(), i.inserted_at, :minutes) < Token.get_max_age_minutes() do
+        Users.update_invitation(i, %{expired: "true"}, org)
+      end
+    end)
   end
 
   def get_invitation!(id, org) do
@@ -284,12 +277,9 @@ defmodule Sportegic.Users do
   end
 
   def update_invitation(%Invitation{} = invitation, attrs, org) do
-    IO.inspect(attrs, label: "ATTRS")
     invitation
     |> Invitation.changeset(attrs)
-    |> IO.inspect
     |> Repo.update(prefix: org)
-    |> IO.inspect
   end
 
   def delete_invitation(%Invitation{} = invitation, org) do
