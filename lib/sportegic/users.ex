@@ -66,9 +66,16 @@ defmodule Sportegic.Users do
         where: u.role_id == 1,
         select: u.id
       )
-    query
-    |> Repo.all(prefix: org)
-    |> Enum.member?(id)
+    
+    case Repo.aggregate(query, :count, :id, prefix: org) do
+      n when n == 1 ->
+        query
+        |> Repo.all(prefix: org)
+        |> Enum.member?(id)
+      _ -> 
+        false
+    end
+    
   end
 
   def change_user(%User{} = profile) do
@@ -254,6 +261,7 @@ defmodule Sportegic.Users do
   end
 
   def list_invitations(org) do
+    expire_invitations(org)
     Invitation
     |> order_by([i], desc: i.inserted_at)
     |> where([i], i.completed == false)
@@ -266,18 +274,20 @@ defmodule Sportegic.Users do
       Invitation
       |> where([i], i.expired == false)
       |> Repo.all(prefix: org)
-
+    max_age = Token.get_max_age_minutes()
     exp_invitations
     |> Enum.each(fn i ->
-      if Timex.diff(DateTime.utc_now(), i.inserted_at, :minutes) < Token.get_max_age_minutes() do
-        Users.update_invitation(i, %{expired: "true"}, org)
+      case Timex.diff(DateTime.utc_now(), i.updated_at, :seconds) do
+        diff when diff < max_age -> 
+          nil
+        _ -> Users.update_invitation(i, %{expired: "true"}, org)
       end
     end)
   end
 
   def get_invitation!(id, org) do
     Invitation
-    |> Repo.get!(id, prefix: org)
+    |> Repo.get(id, prefix: org)
     |> Repo.preload(:role)
   end
 

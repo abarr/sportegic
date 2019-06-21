@@ -26,7 +26,7 @@
             </div>
 
 
-              <table class="highlight " id="userTable">
+              <table id="userTable">
                 <thead>
                   <tr>
                       <th>Name</th>
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
                 <%= for user <- @users do %>
-                  <tr onclick="go(<%= user.id %>)">
+                  <tr >
                     <td> <%= user.firstname <> " " <> user.lastname %>  </td>
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
@@ -45,12 +45,15 @@
                     
                       <%= if(user.disabled != true) do %>
                         <%= if(user.id == @conn.assigns.user.id) do %>  
-                          <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3 disabled" %>
+                          <a href="#" class="chip white-text grey lighten-1">Disable User</a> 
                         <% else %>
-                          <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "btn-flat waves-effect white-text red lighten-3" %>
+                          <%= link "Disable User", to: Routes.user_path(@conn, :disable, user), class: "chip white-text red lighten-3" %>
                         <% end %>
                       <% else %>
-                        <%= link "Enable User", to: Routes.user_path(@conn, :enable, user), class: "btn-flat waves-effect white-text green lighten-3" %> 
+                        <%= link "Enable User", to: Routes.user_path(@conn, :enable, user), class: "chip white-text green lighten-3" %> 
+                      <% end %>
+                      <%= link to: Routes.user_path(@conn, :edit, user ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                        <i class="material-icons">edit</i>
                       <% end %>
                     
                     </td>
@@ -74,13 +77,13 @@
 
 
 
-              <table id="invitationTable" class="highlight ">
+              <table id="invitationTable" >
                 <thead>
                   <tr>
                       <th>email</th>
                       <th>Role</th>
-                      <th>Sent</th>
                       <th>Status</th>
+                      <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -88,13 +91,21 @@
                   <tr>
                     <td> <%= invite.email %>  </td>
                     <td> <%= invite.role.name %> </td>
-                    <td> <%= readable_date!(invite.inserted_at, @conn.assigns.timezone) %> </td>
+                    
                     <td> 
                     <%= if invite.expired do %>
-                      <span class="btn-flat waves-effect white-text red lighten-3">EXPIRED</span>
+                      <span class="chip white-text red lighten-3">EXPIRED</span>
                     <% else %>  
-                      <span class="btn-flat waves-effect white-text green lighten-3">ACTIVE</span>
+                      <span class="chip white-text green lighten-3">ACTIVE</span>
                     <% end %>  
+                    </td>
+                    <td>
+                      <%= link [ to: Routes.user_path(@conn, :delete_invitation, invite ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
+                        <i class="material-icons">delete</i>
+                      <% end %>
+                      <%= link [ to: Routes.user_path(@conn, :resend_invitation, invite ), class: "btn-floating btn-small waves-effect waves-light blue z-depth-0 lighten-2"] do %>
+                        <i class="material-icons">email</i>
+                      <% end %>
                     </td>
                   </tr>
                   <% end %>

@@ -129,9 +129,19 @@ defmodule SportegicWeb.UserController do
           |> redirect(to: Routes.user_path(conn, :index))
 
         {:error, %Ecto.Changeset{} = changeset} ->
-          IO.inspect(changeset)
-          roles = Users.list_roles(org)
-          render(conn, "edit.html", user: user, changeset: changeset, roles: roles)
+           %{ errors: [{ field, { message, _ }}]} = changeset
+          case field do
+            :role_id -> 
+              roles = Users.list_roles(org)
+              conn
+              |> put_flash(:danger, message)
+              |> render("edit.html", user: user, changeset: changeset, roles: roles)
+              _    ->
+              roles = Users.list_roles(org)
+              conn
+              |> render("edit.html", user: user, changeset: changeset, roles: roles)
+          end
+          
       end
     end
   end
@@ -153,12 +163,10 @@ defmodule SportegicWeb.UserController do
              {:ok, organisation} <- Accounts.get_organisation_by_prefix(org),
              {:ok, orgs_user} <- Accounts.get_organisations_users(user.id, organisation.id),
              {:ok, _org_user} <- Accounts.delete_organisations_users(orgs_user) do
-          users = Users.list_users(org)
-          invitations = Users.list_invitations(org)
-
+          
           conn
-          |> put_flash(:success, "User access successfully disbaled")
-          |> render("index.html", users: users, invitations: invitations)
+          |> put_flash(:danger, "User access successfully disabled")
+          |> redirect( to: Routes.user_path(conn, :index))
         end
     end
   end
@@ -173,9 +181,36 @@ defmodule SportegicWeb.UserController do
              user_id: updated_user.id,
              organisation_id: organisation.id
            }) do
-      users = Users.list_users(org)
-      invitations = Users.list_invitations(org)
-      render(conn, "index.html", users: users, invitations: invitations)
+      conn
+      |> put_flash(:success, "User access restored succesfully!")
+      |> redirect( to: Routes.user_path(conn, :index))
     end
+  end
+
+  def resend_invitation(conn, %{"id" => id}, org, permissions) do
+    with :ok <- Bodyguard.permit(Users, "create:user_permissions", :user, permissions) do
+      # Get the invitation and update it to expired = false
+      with {:ok, invitation} <-  Users.update_invitation(Users.get_invitation!(id, org), %{ expired: false }, org),
+            {:ok, _id} <- Communication.email_with_token(conn, invitation, invitation.email, "rsvp") do
+        
+              conn
+              |> put_flash(:success, "Invitation successfully sent again, the User has 24 hours")
+              |> redirect(to: Routes.user_path(conn, :index))
+      else
+        _ ->
+          conn
+          |> put_flash(:danger, "Something is wrong, we could not send invitation!")
+          |> redirect(to: Routes.user_path(conn, :index))
+      end
+    end
+  end
+
+  def delete_invitation(conn, %{"id" => id}, org, _permissions) do
+    invitation = Users.get_invitation!(id, org)
+    {:ok, _invite} = Users.delete_invitation(invitation, org)
+
+    conn
+    |> put_flash(:danger, "Invitation deleted successfully.")
+    |> redirect(to: Routes.user_path(conn, :index))
   end
 end

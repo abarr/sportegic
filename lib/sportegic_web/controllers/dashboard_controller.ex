@@ -18,18 +18,7 @@ defmodule SportegicWeb.DashboardController do
         |> redirect(to: Routes.user_path(conn, :new))
    
       {:ok, user} ->
-        my_tasks = Tasks.count_assigned_tasks(user.id, org)
-        my_overdue_tasks = Tasks.count_overdue_tasks(user.id, org)
-        my_tasks_due_today = Tasks.count_tasks_due_today(user.id, org)
-        render(conn, "index.html", 
-          user: user,
-          my_tasks: my_tasks,
-          my_overdue_tasks: my_overdue_tasks,
-          my_tasks_due_today: my_tasks_due_today
-        )
-
-      resp ->
-        IO.inspect(resp, label: "Dashboard Index resp")
+        render(conn, "index.html", user: user)
     end
   end
 

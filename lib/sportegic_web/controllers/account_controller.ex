@@ -18,18 +18,27 @@ defmodule SportegicWeb.AccountController do
 
   def rsvp(conn, %{"token" => token}) do
     with {:ok, [org, invite_id]} <- Token.verify_token(token) do
-      invitation = Users.get_invitation!(invite_id, org)
-      |> Users.update_invitation(%{completed: true}, org)
 
-      changeset =
-        %Rsvp{}
-        |> Accounts.change_rsvp()
-        |> Ecto.Changeset.put_change(:email, invitation.email)
-        |> Ecto.Changeset.put_change(:role_id, invitation.role_id)
-        |> Ecto.Changeset.put_change(:org, readify(invitation.org_name))
+      case Users.get_invitation!(invite_id, org) do
+        nil -> 
+          conn
+          |> put_flash(:danger, "This invitation is no longer valid, please contact the Administrator")
+          |> redirect(to: Routes.session_path(conn, :new))
 
-      conn
-      |> render("rsvp.html", changeset: changeset, invitation: invitation)
+        invitation ->
+          invitation
+          |> Users.update_invitation(%{completed: true}, org)
+
+          changeset =
+          %Rsvp{}
+          |> Accounts.change_rsvp()
+          |> Ecto.Changeset.put_change(:email, invitation.email)
+          |> Ecto.Changeset.put_change(:role_id, invitation.role_id)
+          |> Ecto.Changeset.put_change(:org, readify(invitation.org_name))
+
+          conn
+          |> render("rsvp.html", changeset: changeset, invitation: invitation)
+      end
     end
   end
 

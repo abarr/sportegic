@@ -1,7 +1,8 @@
 defmodule SportegicWeb.UserView do
   use SportegicWeb, :view
 
-  def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
+  def error_tag_sportegic(%{errors: errors = [_ | _]} = f, field) do
+    IO.inspect(f, label: "VIEW")
     if error = errors[field] do
       {msg, _} = error
       content_tag(:span, "", [{:data, [error: msg]}, class: "helper-text "])
@@ -16,7 +17,7 @@ defmodule SportegicWeb.UserView do
 
   def error_tag_sportegic(field) do
     case field do
-      :role ->
+      :role_id ->
         content_tag(:span, "", [
           {:data, [error: "Please choose a Role"]},
           class: "helper-text"
