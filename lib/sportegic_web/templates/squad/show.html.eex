@@ -14,18 +14,47 @@
       <div class="divider"></div>
     </div>
   </div>
-  <div class="row page">
-    <div class="col s12">      </div>
+  <div class="row ">
+    <div class="col s12">      
+      <div class="row remove-bottom-margin">
+        <div class="col s12">
+          <div class="card   z-depth-0">
+          <div class=" valign-wrapper">
+            <div class="card-content  no-padding col s12 m6">
+                 <div class="search-wrapper ">
+                  <input id="search squad" class="remove-bottom-margin" placeholder="Search">
+                  <div class="search-results"></div>
+                </div>
+              </div>
+              <div class="card-content action-bar-card-padding col s12 m6">
+                
+                <a class="right waves-effect blue waves-light chip white-text z-depth-0"><i class="fal fa-envelope fa-lg"></i></a>
+                <a class="right waves-effect blue waves-light chip white-text z-depth-0"><i class="fal fa-comment fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col s12">
+          <table>
+            <thead>
+              <th></th>
+              <th>Name</th>
+              <th>Positions</th>
+              <th></th>
+            </thead>
+          
+          </table>
+        
+        </div>
+      </div>
+      
+    </div>
   </div>
 </div>
 
-<div>
-    <div class="fixed-action-btn ">
-      <%= link to: Routes.squad_path(@conn, :edit, @squad), class: "btn-floating btn-large grey"  do %>
-        <i class="large material-icons">edit</i>
-      <% end %>
-    </div>
-</div>
 
 
 

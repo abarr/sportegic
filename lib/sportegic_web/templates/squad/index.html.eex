@@ -7,19 +7,31 @@
     </div>
     <div class="row page search-row">
       <div class="col s12">
-        <table class="highlight">
+        <table class="">
           <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
-                
+                <th class="hide-on-med-and-down">Description</th>
+                <th>Actions</th>
             </tr>
           </thead>
           <tbody>
           <%= for squad <- @squads do %>
-            <tr onclick="go(<%= squad.id %>)">
+            <tr>
               <td> <%= squad.name %>  </td>
-              <td> <%= squad.description %> </td>
+              <td class="hide-on-med-and-down"> <%= squad.description %> </td>
+              <td>
+              <%= link [ to: Routes.squad_path(@conn, :show, squad ), class: "btn-floating btn-small waves-effect waves-light blue z-depth-0 lighten-2"] do %>
+                  <i class="fal fa-folder-open fa-lg fa-fw"></i>
+                <% end %>
+              
+                <%= link [ to: Routes.squad_path(@conn, :edit, squad ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1"] do %>
+                  <i class="material-icons">edit</i>
+                <% end %>
+              <%= link [ to: Routes.squad_path(@conn, :delete, squad ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
+                <i class="material-icons">delete</i>
+              <% end %>  
+              </td>
             </tr>
             <% end %>
           </tbody>
@@ -37,11 +49,7 @@
     </div>
 </div>
 
-<script>
-  function go(id){
-    window.location = "/squads/" + id ;
-  }
-</script>
+
 
 
 

@@ -1,6 +1,6 @@
 <%= form_for @changeset, @action, fn f -> %>
  <div class="page">
- <div class="row">
+  <div class="row">
     <div class="input-field col s12 m6 l6"> 
       <i class="material-icons prefix">looks_one</i>
       <%= label f, :name %>

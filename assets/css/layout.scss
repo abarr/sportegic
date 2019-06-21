@@ -209,7 +209,7 @@ blockquote{
 }
 
 .no-padding{
-    padding: 0px;
+    padding: 0px !important;
 }
 .remove-padding-top{
     padding-top: 0px;
@@ -340,6 +340,22 @@ a.card-content:hover{
 }
 .no-bottom-margin{
     margin-bottom: 0px !important;
+}
+
+.action-bar-card-padding{
+    padding: 12px !important;
+}
+
+.search-wrapper {
+    color: #777;
+    margin-top: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    -webkit-transition: margin .25s ease;
+    transition: margin .25s ease
+}
+ 
+input.search.squad{
+    border-bottom: none !important;
 }
 
 
