@@ -86,6 +86,8 @@ defmodule SportegicWeb.Router do
 
     resources "/tasks", TaskController 
     post "/tasks/:id/complete", TaskController, :complete
+
+    resources "/squads", SquadController
     
   end
 

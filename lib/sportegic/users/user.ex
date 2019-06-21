@@ -1,7 +1,6 @@
 defmodule Sportegic.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Sportegic.Users
   alias Sportegic.Users.{Role}
   alias Sportegic.Notes.{Note, Comment}
 

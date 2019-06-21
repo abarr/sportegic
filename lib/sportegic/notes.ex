@@ -435,4 +435,5 @@ defmodule Sportegic.Notes do
   def change_comment(%Comment{} = comment) do
     Comment.changeset(comment, %{})
   end
+
 end

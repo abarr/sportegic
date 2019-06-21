@@ -1,0 +1,34 @@
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.squad_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <span class="truncate"> 
+            <h5 class="heading grey-text lighten-2  left">Squad: <%= @squad.name %> </h5>
+          </span>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="row page">
+    <div class="col s12">      </div>
+  </div>
+</div>
+
+<div>
+    <div class="fixed-action-btn ">
+      <%= link to: Routes.squad_path(@conn, :edit, @squad), class: "btn-floating btn-large grey"  do %>
+        <i class="large material-icons">edit</i>
+      <% end %>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+ 
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.squad_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2">Edit Squad </h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12">
+        <%= render "form.html", Map.put(assigns, :action, Routes.squad_path(@conn, :update, @squad)) %>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-defmodule SportegicWeb.UserView do
+defmodule SportegicWeb.SquadView do
   use SportegicWeb, :view
 
   def error_tag_sportegic(%{errors: errors = [_ | _]} = f, field) do
@@ -16,14 +16,14 @@ defmodule SportegicWeb.UserView do
 
   def error_tag_sportegic(field) do
     case field do
-      :role_id ->
+      :name ->
         content_tag(:span, "", [
-          {:data, [error: "Please choose a Role"]},
+          {:data, [error: "Please name the Squad"]},
           class: "helper-text"
         ])
-      :email ->
+      :description ->
         content_tag(:span, "", [
-          {:data, [error: "Please use a valid email address"]},
+          {:data, [error: "Please provide a short description"]},
           class: "helper-text"
         ])    
 

@@ -103,6 +103,7 @@
             <i class="fal fa-user-astronaut fa-lg fa-fw"></i> People
           <% end %>
         </li>
+        <li class="menu" id="squads"><a class="grey-text lighten-2" href="/squads"><i class="fal fa-users-class fa-lg fa-fw"></i></i> Squads</a></li>
         <li class="menu" id="notes"><a class="grey-text lighten-2" href="/notes"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
         <li class="menu" id="tasks">
           <a class="grey-text lighten-2" href="/tasks">

@@ -1,7 +1,6 @@
 defmodule SportegicWeb.DashboardController do
   use SportegicWeb, :controller
 
-  alias Sportegic.Tasks
   alias Sportegic.Users
 
   plug SportegicWeb.Plugs.Authenticate
