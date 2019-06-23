@@ -7,7 +7,7 @@ let People = {
         let people_ids = ""
         let search = M.Autocomplete.init(el, {
             onAutocomplete: function (event) {
-                window.location.href = people_ids[event]
+                window.location.href = "/person/" + people_ids[event]
             },
             data: {}
         });

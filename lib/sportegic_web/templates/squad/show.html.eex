@@ -16,36 +16,49 @@
   </div>
   <div class="row ">
     <div class="col s12">      
-      <div class="row remove-bottom-margin">
-        <div class="col s12">
-          <div class="card   z-depth-0">
-          <div class=" valign-wrapper">
-            <div class="card-content  no-padding col s12 m6">
-                 <div class="search-wrapper ">
-                  <input id="search squad" class="remove-bottom-margin" placeholder="Search">
-                  <div class="search-results"></div>
-                </div>
-              </div>
-              <div class="card-content action-bar-card-padding col s12 m6">
-                
-                <a class="right waves-effect blue waves-light chip white-text z-depth-0"><i class="fal fa-envelope fa-lg"></i></a>
-                <a class="right waves-effect blue waves-light chip white-text z-depth-0"><i class="fal fa-comment fa-lg"></i></a>
+      <div class="row ">
+        
+        
+        <%= form_for @conn, Routes.squad_path(@conn, :add_members, @squad), [as: :squad_members, method: :post], fn f -> %>
+          <div class="col s12 valign-wrapper">
+            <div class="col s11 top-margin-25">
+              <div class="input-field ">
+                <div class="chips chips-autocomplete players"></div>
               </div>
             </div>
+            <div class="col s1">
+              <%= submit class: " btn-floating btn-small waves-effect waves-light blue z-depth-0 "  do %>
+              <i class="fal fa-plus fa-lg"></i>
+              <% end %>
+            </div>  
+              <div id="people_list"></div>
+            </div>
           </div>
-        </div>
+        <% end %>
+        
+        
+       
       </div>
-
-      <div class="row ">
-        <div class="col s12">
+      
+      <div class="row page">
+        <div class="col s12 ">
           <table>
             <thead>
-              <th></th>
               <th>Name</th>
-              <th>Positions</th>
-              <th></th>
+              <th class="right">Actions</th>
             </thead>
-          
+            <tbody>
+              <%= for person <- @squad.people do %>
+              <tr>
+                <td> <%= person.firstname <> " " <> person.lastname %> </td>
+                <td class="right"> 
+                  <%= link [ to: Routes.squad_path(@conn, :remove_member, @squad, person ), class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
+                    <i class="material-icons">delete</i>
+                  <% end %>  
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
           </table>
         
         </div>

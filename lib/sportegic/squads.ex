@@ -6,6 +6,7 @@ defmodule Sportegic.Squads do
   import Ecto.Query, warn: false
   alias Sportegic.Repo
   alias Sportegic.Squads.{Squad, SquadPerson}
+  alias Sportegic.People.Person
 
   @doc """
   Returns the list of squads.
@@ -17,7 +18,9 @@ defmodule Sportegic.Squads do
 
   """
   def list_squads(org) do
-    Repo.all(Squad, prefix: org)
+    Squad
+    |> Repo.all( prefix: org)
+    
   end
 
   @doc """
@@ -34,7 +37,7 @@ defmodule Sportegic.Squads do
       ** (Ecto.NoResultsError)
 
   """
-  def get_squad!(id, org), do: Repo.get!(Squad, id, prefix: org)
+  def get_squad!(id, org), do: Repo.get!(Squad, id, prefix: org) |> Repo.preload(:people)
 
   @doc """
   Creates a squad.
@@ -132,6 +135,12 @@ defmodule Sportegic.Squads do
   """
   def get_squad_person!(id, org), do: Repo.get!(SquadPerson, id, prefix: org)
 
+  def get_squad_person(person_id, squad_id, org) do
+    case Repo.get_by(SquadPerson, [person_id: person_id, squad_id: squad_id], prefix: org) do
+      nil -> {:error, "Unable to get Squad Person record"}
+      sp -> {:ok, sp}
+    end
+  end
   @doc """
   Creates a squad_person.
 
@@ -148,6 +157,24 @@ defmodule Sportegic.Squads do
     %SquadPerson{}
     |> SquadPerson.changeset(attrs)
     |> Repo.insert(prefix: org)
+  end
+
+  def create_squad_person(squad, person_id, org) when is_binary(person_id) do
+    case Repo.get_by(Person, %{id: person_id}, prefix: org) do
+      person when is_map(person) ->
+        SquadPerson.changeset(%SquadPerson{}, %{
+          person_id: person.id,
+          squad_id: squad.id
+        })
+        |> Repo.insert!(prefix: org)
+
+      _ ->
+        {:error, "Person does not exist"}
+    end
+  end
+
+  def create_squad_people(squad, people_list, org) when is_list(people_list) do
+    Enum.each(people_list, &create_squad_person(squad, &1, org))
   end
 
   @doc """

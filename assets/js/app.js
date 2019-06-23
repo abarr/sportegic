@@ -19,6 +19,7 @@ import Document from "./document"
 import Visa from "./visa"
 import Notes from "./notes"
 import Tasks from "./tasks"
+import Squads from "./squads"
 
 // SOCKETS
 import socket from "./socket"
@@ -60,6 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
         People.realtime_search(sportegic_socket)
     };
 
+    if (window.location.pathname.split("/")[1] == "squads")
+    {
+        let sportegic_socket = socket.connect_socket();
+        Squads.people_search(sportegic_socket);
+    }
 
     if (window.location.pathname.split("/")[1] == "notes" || window.location.pathname.split("/")[3] == "notes") {
         let sportegic_socket = socket.connect_socket();

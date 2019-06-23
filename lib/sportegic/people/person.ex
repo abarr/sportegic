@@ -6,10 +6,9 @@ defmodule Sportegic.People.Person do
   import Ecto.Changeset
 
   alias Sportegic.People.{Document, Visa, InsurancePolicy, Address}
-  alias Sportegic.Notes.Note
-  alias Sportegic.Notes.NotePerson
-  alias Sportegic.Tasks.Task
-  alias Sportegic.Tasks.TaskPerson
+  alias Sportegic.Notes.{Note,NotePerson}
+  alias Sportegic.Tasks.{Task,TaskPerson}
+  alias Sportegic.Squads.{Squad, SquadPerson}
 
   @derive {Jason.Encoder, only: [:firstname, :lastname, :profile_image]}
 
@@ -28,6 +27,7 @@ defmodule Sportegic.People.Person do
     has_many(:visa, Visa)
     has_many(:addresses, Address)
 
+    many_to_many(:squads, Squad, join_through: SquadPerson)
     many_to_many(:notes, Note, join_through: NotePerson)
     many_to_many(:tasks, Task, join_through: TaskPerson)
 

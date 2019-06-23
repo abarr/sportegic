@@ -51,7 +51,7 @@ defmodule SportegicWeb.PeopleSearchChannel do
                      " " <>
                      x.lastname <>
                      " " <> "(" <> Timex.format!(x.dob, "{Mfull} {D}, {YYYY}") <> ")") =>
-                    "/person/" <> Integer.to_string(x.id)
+                   Integer.to_string(x.id)
                 }
               end)
               |> Enum.reduce(&Map.merge/2)
