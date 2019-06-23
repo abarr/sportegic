@@ -1,0 +1,10 @@
+{application,cldr_utils,
+             [{applications,[kernel,stdlib,elixir,logger,decimal]},
+              {description,"Map, Calendar, Digits, Macro, Math and String helpers for ex_cldr\n"},
+              {modules,['Elixir.Cldr.Calendar.Conversion',
+                        'Elixir.Cldr.Digits','Elixir.Cldr.Helpers',
+                        'Elixir.Cldr.Macros','Elixir.Cldr.Map',
+                        'Elixir.Cldr.Math','Elixir.Cldr.String',
+                        'Elixir.CldrUtils']},
+              {registered,[]},
+              {vsn,"2.2.0"}]}.

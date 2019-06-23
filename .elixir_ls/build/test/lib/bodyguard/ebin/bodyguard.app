@@ -1,0 +1,12 @@
+{application,bodyguard,
+             [{applications,[kernel,stdlib,elixir,plug]},
+              {description,"Bodyguard is a simple, flexibile authorization library with a focus\non Phoenix 1.3+ apps.\n"},
+              {modules,['Elixir.Bodyguard','Elixir.Bodyguard.Action',
+                        'Elixir.Bodyguard.NotAuthorizedError',
+                        'Elixir.Bodyguard.Plug',
+                        'Elixir.Bodyguard.Plug.Authorize',
+                        'Elixir.Bodyguard.Plug.BuildAction',
+                        'Elixir.Bodyguard.Policy','Elixir.Bodyguard.Schema',
+                        'Elixir.Plug.Exception.Bodyguard.NotAuthorizedError']},
+              {registered,[]},
+              {vsn,"2.2.3"}]}.
