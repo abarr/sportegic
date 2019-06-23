@@ -3,7 +3,7 @@ import moment from 'moment';
 let Notes = {
 
     notes_search(Vue, socket) {
-        if(document.querySelector('#vue-search-results')){
+        if (document.querySelector('#vue-search-results')) {
             new Vue({
                 el: '#vue-search-results',
                 mounted: function () {
@@ -19,7 +19,7 @@ let Notes = {
                         .receive("ok", resp => { console.log("Joined successfully to notes", resp) })
                         .receive("error", resp => { console.log("Unable to join", resp) })
 
-                    this.channel.push("recent", { token: window.token, org: window.org });    
+                    this.channel.push("recent", { token: window.token, org: window.org });
                 },
                 data: {
                     notes: [],
@@ -31,8 +31,8 @@ let Notes = {
                     searchNotes() {
                         this.channel.push("search", { search_value: this.search, token: window.token, org: window.org });
                     },
-                    go(id){
-                       window.location = "/notes/" + id;          
+                    go(id) {
+                        window.location = "/notes/" + id;
                     }
                 },
                 filters: {
@@ -40,7 +40,7 @@ let Notes = {
                         return moment(date).format('DD/MM/YYYY');
                     }
                 }
-    
+
             });
         }
     },
@@ -136,6 +136,7 @@ let Notes = {
                 tag.setAttribute("hidden", "true");
                 tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
                 people_list.appendChild(tag);
+
             },
             onChipDelete: function (e, chip) {
                 let tag = document.querySelectorAll('input[value="' + chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")) + '"]');
