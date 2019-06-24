@@ -1,6 +1,8 @@
 # The directory for local storage testing
 /uploads/
 
+/.elixir_ls/
+
 # The directory Mix will write compiled artifacts to.
 /_build/
 
