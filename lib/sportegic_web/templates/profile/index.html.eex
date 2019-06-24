@@ -1,0 +1,73 @@
+<div class="row page">
+  <div class="col s12">
+    <div class="section heading">
+      <div class="row remove-bottom-margin">
+        <div class="col s12"> 
+          <%= link to: Routes.person_path(@conn, :show, @person), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+            <i class="far fa-chevron-left fa-lg"></i>
+          <% end %>
+          <h5 class="heading grey-text lighten-2"> <%= @person.firstname <> " " <> @person.lastname %> - Athletic Profile</h5>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <div class="row page remove-bottom-margin">
+      <div class="col s12">
+        <div class="card z-depth-0 note ">
+          <div class="card-content card-info">
+            <div class="chip">Loose Head</div>
+            <div class="chip">Hooker</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row page">
+      <div class="col s12">
+        <div class="section heading">
+            <div class="row remove-bottom-margin">
+                <div class="col s12 valign-wrapper"> 
+                    <h5 class="heading grey-text lighten-2 ">
+                      Injury Records
+                    </h5>
+                    
+                  </a>
+                </div>
+              </div>
+            </div>
+          <div class="divider"></div>
+        </div>
+        <div class="col s12">
+        <table>
+        <thead>
+          <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Injury</th>
+              <th>Details</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>15/06/2019</td>
+            <td>15/07/2019</td>
+            <td>Hip Injury</td>
+            <td>This is the detail</td>
+          </tr>
+          
+        </tbody>
+      </table>
+      </div>
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

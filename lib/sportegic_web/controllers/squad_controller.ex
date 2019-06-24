@@ -74,7 +74,7 @@ defmodule SportegicWeb.SquadController do
     case Squads.create_squad_people(squad, squad_members, org) do
       :ok ->
         conn
-        |> put_flash(:info, "Squad deleted successfully.")
+        |> put_flash(:info, "Squad updated successfully.")
         |> redirect(to: Routes.squad_path(conn, :show, squad))
       {:error, msg} ->
         conn

@@ -9,7 +9,7 @@
       </div>
       <div class="row page">
         <div class="input-field col s12 m2">
-          <%= text_input f, :unit_number, [id: "unit", placeholder: "Apartment"] %>
+          <%= text_input f, :unit_number, [id: "unit", placeholder: "Apartment", autocomplete: "off"] %>
             <label for="unit"></label>
         </div>
         <div class="input-field col s12 m10">

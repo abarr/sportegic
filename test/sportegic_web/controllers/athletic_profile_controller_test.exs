@@ -1,4 +1,4 @@
-defmodule SportegicWeb.AthleticProfileControllerTest do
+defmodule SportegicWeb.ProfileControllerTest do
   use SportegicWeb.ConnCase
 
   alias Sportegic.People

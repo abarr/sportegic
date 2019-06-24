@@ -114,6 +114,7 @@ defmodule Sportegic.Accounts do
         {:ok, org}
 
       {:error, msg} ->
+        IO.inspect(msg, label: "TRIPLEX ERROR")
         {:error, msg}
     end
   end

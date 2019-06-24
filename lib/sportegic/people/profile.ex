@@ -1,10 +1,10 @@
-defmodule Sportegic.People.AthleticProfile do
+defmodule Sportegic.People.Profile do
   use Ecto.Schema
   import Ecto.Changeset
   alias Sportegic.People.{ Person }
 
 
-  schema "athletic_profiles" do
+  schema "profiles" do
     field :available, :boolean, default: true
     belongs_to(:person, Person)
 
@@ -12,8 +12,8 @@ defmodule Sportegic.People.AthleticProfile do
   end
 
   @doc false
-  def changeset(athletic_profile, attrs) do
-    athletic_profile
+  def changeset(profile, attrs) do
+    profile
     |> cast(attrs, [:available])
     |> validate_required([:available])
   end

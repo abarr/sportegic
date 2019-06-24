@@ -1,362 +1,105 @@
-Sportegic.Accounts.create_user(%{
-  "email" => "a@t.com",
-  "password" => "password",
-  "verified" => "true"
-})
+Sportegic.Accounts.create_user(%{"email" => "scott.robertson@crusaders.co.nz","password" => "password","verified" => true})
+Sportegic.Accounts.create_user(%{"email" => "colin.mansbridge@crusaders.co.nz","password" => "password","verified" => true})
+Sportegic.Accounts.create_user(%{"email" => "shane.fletcher@crusaders.co.nz","password" => "password","verified" => true})
 
-Sportegic.Accounts.create_user(%{
-  "email" => "g@t.com",
-  "password" => "password",
-  "verified" => "true"
-})
 
-Sportegic.Accounts.create_user(%{
-  "email" => "s@t.com",
-  "password" => "password",
-  "verified" => "true"
-})
-
-Sportegic.Accounts.create_user(%{
-  "email" => "e@t.com",
-  "password" => "password",
-  "verified" => "true"
-})
-
-Sportegic.Accounts.create_organisation(%{
-  "display" => "Collingwood",
-  "name" => "Collingwood",
-  "home_city" => "Collingwood VIC 3066, Australia",
-  "timezone" => "Australia/Melbourne"
-})
-
-Sportegic.Accounts.create_organisation(%{
-  "display" => "Marvel Rugby",
-  "name" => "Marvel Studios",
-  "home_city" => "West Hollywood, CA, USA",
-  "timezone" => "America/Los_Angeles"
-})
+Sportegic.Accounts.create_organisation(
+  %{
+  "display" => "Crusaders",
+  "name" => "Crusaders",
+  "home_city" => "Christchurch, New Zealand",
+  "timezone" => "Pacific/Auckland"
+  }
+)
 
 Sportegic.Accounts.create_organisations_users(%{user_id: 1, organisation_id: 1})
 Sportegic.Accounts.create_organisations_users(%{user_id: 2, organisation_id: 1})
-Sportegic.Accounts.create_organisations_users(%{user_id: 3, organisation_id: 2})
-Sportegic.Accounts.create_organisations_users(%{user_id: 4, organisation_id: 2})
+Sportegic.Accounts.create_organisations_users(%{user_id: 3, organisation_id: 1})
 
-Sportegic.LookupTypes.create_default_lookups("collingwood")
-Sportegic.LookupTypes.create_default_lookup_types("collingwood")
-Sportegic.Users.create_default_roles("collingwood")
-Sportegic.Users.create_default_categories("collingwood")
-Sportegic.Users.create_default_permissions("collingwood")
-Sportegic.Users.create_default_owner_permissions("collingwood")
-Sportegic.Users.create_default_administrator_permissions("collingwood")
-
-Sportegic.LookupTypes.create_default_lookups("marvel_rugby")
-Sportegic.LookupTypes.create_default_lookup_types("marvel_rugby")
-Sportegic.Users.create_default_roles("marvel_rugby")
-Sportegic.Users.create_default_categories("marvel_rugby")
-Sportegic.Users.create_default_permissions("marvel_rugby")
-Sportegic.Users.create_default_owner_permissions("marvel_rugby")
-Sportegic.Users.create_default_administrator_permissions("marvel_rugby")
-
-# Create an account owner
+Sportegic.LookupTypes.create_default_lookups("crusaders")
+Sportegic.LookupTypes.create_default_lookup_types("crusaders")
+Sportegic.Users.create_default_roles("crusaders")
+Sportegic.Users.create_default_categories("crusaders")
+Sportegic.Users.create_default_permissions("crusaders")
+Sportegic.Users.create_default_owner_permissions("crusaders")
+Sportegic.Users.create_default_administrator_permissions("crusaders")
 
 Sportegic.Users.create_user(
   %{
-    firstname: "Andrew",
-    lastname: "Barr",
-    mobile_no: "0411333222",
-    country_code: "+61",
-    user_id: "1",
+    firstname: "Colin",
+    lastname: "Mansbridge",
+    mobile_no: "21219999",
+    country_code: "+64",
+    user_id: "2",
     role_id: "1"
   },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.Users.create_user(
   %{
-    firstname: "George",
-    lastname: "Clooney",
-    mobile_no: "0411222333",
-    country_code: "+61",
-    user_id: "2",
+    firstname: "Scott",
+    lastname: "Robertson",
+    mobile_no: "21212121",
+    country_code: "+64",
+    user_id: "1",
     role_id: "2"
   },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.Users.create_user(
   %{
-    firstname: "Eric",
-    lastname: "Banner",
-    mobile_no: "5553908772",
-    country_code: "+1",
-    user_id: "4",
-    role_id: "2"
-  },
-  "marvel_rugby"
-)
-
-Sportegic.Users.create_user(
-  %{
-    firstname: "Stan",
-    lastname: "Lee",
-    mobile_no: "55539076772",
-    country_code: "+1",
+    firstname: "Shane",
+    lastname: "Fletcher",
+    mobile_no: "27676721",
+    country_code: "+64",
     user_id: "3",
-    role_id: "1"
+    role_id: "2"
   },
-  "marvel_rugby"
-)
-
-# Create some players
-
-Sportegic.People.create_person(
-  %{
-    firstname: "Jaidyn",
-    lastname: "Stephenson",
-    dob: "1999-01-15",
-    email: "jaidyn@collingwood.com",
-    mobile: "+61422333444"
-  },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.People.create_person(
   %{
-    firstname: "Jordan",
-    lastname: "De Goey",
-    dob: "1996-03-15",
-    email: "jordon@collingwood.com",
-    mobile: "+61422444555"
+    firstname: "Michael",
+    lastname: "Alaalatoa",
+    dob: "1991-08-28",
+    email: "michael.alaalatoa@crusaders.co.nz",
+    mobile: "+6423456789"
   },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.People.create_person(
   %{
-    firstname: "Daniel",
-    lastname: "Wells",
-    dob: "1985-02-03",
-    email: "daniel@collingwood.com",
-    mobile: "+61422555666"
+    firstname: "Harry",
+    lastname: "Allan",
+    dob: "1997-05-07",
+    email: "harry.allan@crusaders.co.nz",
+    mobile: "+6423498779"
   },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.People.create_person(
   %{
-    firstname: "Adam",
-    lastname: "Treloar",
-    dob: "1993-03-09",
-    email: "adam@collingwood.com",
-    mobile: "+61422666777"
+    firstname: "Kieran",
+    lastname: "Read",
+    dob: "1985-10-26",
+    email: "kieran.read@crusaders.co.nz",
+    mobile: "+6423908779"
   },
-  "collingwood"
+  "crusaders"
 )
 
 Sportegic.People.create_person(
   %{
-    firstname: "Brodie",
-    lastname: "Grundy",
-    dob: "1994-04-15",
-    email: "brodie@collingwood.com",
-    mobile: "+61422777888"
+    firstname: "Jack",
+    lastname: "Goodhue",
+    dob: "1995-06-13",
+    email: "jack.goodhue@crusaders.co.nz",
+    mobile: "+6429878779"
   },
-  "collingwood"
-)
-
-Sportegic.People.create_person(
-  %{
-    firstname: "Tyson",
-    lastname: "Goldstack",
-    dob: "1987-05-22",
-    email: "tyson@collingwood.com",
-    mobile: "+61422888999"
-  },
-  "collingwood"
-)
-
-Sportegic.People.create_person(
-  %{
-    firstname: "Jamie",
-    lastname: "Elliot",
-    dob: "1992-08-21",
-    email: "jamie@collingwood.com",
-    mobile: "+61422999888"
-  },
-  "collingwood"
-)
-
-#  Create some notes
-
-# #  Note One
-Sportegic.Notes.create_note(
-  %{
-    event_date: DateTime.utc_now(),
-    subject: "Players involved in altercation at training",
-    details:
-      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
-  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-  <li>Aliquam tincidunt mauris eu risus.</li>
-  <li>Vestibulum auctor dapibus neque.</li>
-  </ul>",
-    user_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_type(
-  %{
-    note_id: "1",
-    type_id: "12"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_type(
-  %{
-    note_id: "1",
-    type_id: "14"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "1",
-    person_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "1",
-    person_id: "2"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "1",
-    person_id: "3"
-  },
-  "collingwood"
-)
-
-#  Note Two
-Sportegic.Notes.create_note(
-  %{
-    event_date: DateTime.utc_now(),
-    subject: "Players involved in altercation at training",
-    details:
-      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
-  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-  <li>Aliquam tincidunt mauris eu risus.</li>
-  <li>Vestibulum auctor dapibus neque.</li>
-  </ul>",
-    user_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_type(
-  %{
-    note_id: "2",
-    type_id: "16"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_type(
-  %{
-    note_id: "2",
-    type_id: "15"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "2",
-    person_id: "5"
-  },
-  "collingwood"
-)
-
-#  Note Three
-Sportegic.Notes.create_note(
-  %{
-    event_date: DateTime.utc_now(),
-    subject: "Excellent feedback from school visit",
-    details:
-      "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p><ul>
-  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-  <li>Aliquam tincidunt mauris eu risus.</li>
-  <li>Vestibulum auctor dapibus neque.</li>
-  </ul>",
-    user_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_type(
-  %{
-    note_id: "3",
-    type_id: "14"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "3",
-    person_id: "5"
-  },
-  "collingwood"
-)
-
-Sportegic.Notes.create_note_person(
-  %{
-    note_id: "3",
-    person_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Tasks.create_task(
-  %{
-    action:
-      "<p>This is an action that I would like you to take. Please ensure that you do heaps of tasks</>",
-    due_date: Timex.to_datetime({{2019, 07, 01}, {0, 0, 0}}),
-    completed: false,
-    note_id: "1",
-    user_id: "1",
-    assignee_id: "2"
-  },
-  "collingwood"
-)
-
-Sportegic.Tasks.create_task(
-  %{
-    action: "<p>This is an action that Someone else has asked me to complete</>",
-    due_date: Timex.to_datetime({{2019, 05, 01}, {0, 0, 0}}),
-    completed: false,
-    note_id: "2",
-    user_id: "2",
-    assignee_id: "1"
-  },
-  "collingwood"
-)
-
-Sportegic.Tasks.create_task(
-  %{
-    action: "<p>This is another action that Someone else has asked me to complete</>",
-    due_date: Timex.now(),
-    completed: false,
-    note_id: "1",
-    user_id: "2",
-    assignee_id: "1"
-  },
-  "collingwood"
+  "crusaders"
 )
