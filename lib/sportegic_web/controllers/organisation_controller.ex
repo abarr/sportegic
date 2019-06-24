@@ -14,7 +14,7 @@ defmodule SportegicWeb.OrganisationController do
   def index(%{assigns: %{current_user: user}} = conn, _params) do
     with {:ok, organisations} = Accounts.list_organisations_by_user(user.id) do
       case Enum.count(organisations) do
-        # If this user is not associated with any orgs 
+        # If this user is not associated with any orgs
         0 ->
           conn
           |> put_flash(
@@ -54,7 +54,7 @@ defmodule SportegicWeb.OrganisationController do
 
   def create(conn, %{"organisation" => organisation_params}) do
     user_id = conn.assigns.current_user.id
-    
+
     with {:ok, org} <- Accounts.create_organisation(organisation_params),
          {:ok, _orgs_users} <-
            Accounts.create_organisations_users(%{user_id: user_id, organisation_id: org.id}),

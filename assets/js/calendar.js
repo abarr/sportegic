@@ -29,7 +29,7 @@ let Calendar = {
         const dob = flatpickr('.flatpickr-expiry-date', {
             altInput: true,
             altFormat: "j F , Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "Z",
             wrap: true,
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {
@@ -101,7 +101,7 @@ let Calendar = {
         const expiry_date = flatpickr('#task_due_date', {
             altInput: true,
             altFormat: "F j, Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "Z",
             minDate: "today",
             maxDate: new Date().fp_incr(365)
         });

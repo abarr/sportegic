@@ -1,7 +1,6 @@
 defmodule Sportegic.Notes.Search do
   import Ecto.Query, warn: false
   alias Sportegic.Repo
-  alias Sportegic.Notes.Note
 
   defmacro search_notes_where(search_term) do
     quote do

@@ -1,0 +1,11 @@
+<h1>Show Athletic profile</h1>
+
+<ul>
+
+  <li>
+    <strong>Available:</strong>
+    <%= @athletic_profile.available %>
+  </li>
+
+</ul>
+

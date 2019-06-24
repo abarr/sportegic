@@ -68,17 +68,17 @@ defmodule SportegicWeb.SquadController do
     |> redirect(to: Routes.squad_path(conn, :index))
   end
 
-  def add_members(conn, %{"id" => id, "squad_members" => squad_members} = params, org, _permissions) do
-    
+  def add_members(conn, %{"id" => id, "squad_members" => squad_members}, org, _permissions) do
+
     squad = Squads.get_squad!(id, org)
     case Squads.create_squad_people(squad, squad_members, org) do
       :ok ->
         conn
         |> put_flash(:info, "Squad deleted successfully.")
         |> redirect(to: Routes.squad_path(conn, :show, squad))
-      error ->
+      {:error, msg} ->
         conn
-        |> put_flash(:danger, "Unable to add members")
+        |> put_flash(:danger, "Unable to add members. " <> msg)
         |> redirect(to: Routes.squad_path(conn, :show, squad))
       end
   end
@@ -92,13 +92,13 @@ defmodule SportegicWeb.SquadController do
         |> put_flash(:info, "Squad updated successfully.")
         |> redirect(to: Routes.squad_path(conn, :show, squad))
       error ->
-        IO.inspect(error) 
+        IO.inspect(error)
         squad = Squads.get_squad!(squad_id, org)
         conn
         |> put_flash(:danger, "Unable to remove members")
-        |> redirect(to: Routes.squad_path(conn, :show, squad))  
+        |> redirect(to: Routes.squad_path(conn, :show, squad))
     end
-    
+
   end
 
 end

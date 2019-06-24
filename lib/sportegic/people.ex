@@ -8,6 +8,7 @@ defmodule Sportegic.People do
   alias Sportegic.Repo
   alias Sportegic.People.{Person, Document, Attachment, Visa, InsurancePolicy, Address}
   alias Sportegic.Notes.Note
+  alias Sportegic.People.AthleticProfile
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -54,7 +55,7 @@ defmodule Sportegic.People do
 
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa, :insurance_policy, :addresses, [notes: query]])
+    |> Repo.preload([:document, :visa, :insurance_policy, :addresses, :athletic_profile, [notes: query]])
   end
 
   def get_person_only(id, org) do
@@ -816,5 +817,200 @@ defmodule Sportegic.People do
   """
   def change_address(%Address{} = address) do
     Address.changeset(address, %{})
+  end
+
+
+
+  @doc """
+  Returns the list of athletic_profiles.
+
+  ## Examples
+
+      iex> list_athletic_profiles()
+      [%AthleticProfile{}, ...]
+
+  """
+  def list_athletic_profiles(person, org) do
+    AthleticProfile
+    |> where([a], a.person_id == ^person.id)
+    |> Repo.all( prefix: org)
+
+  end
+
+  @doc """
+  Gets a single athletic_profile.
+
+  Raises `Ecto.NoResultsError` if the Athletic profile does not exist.
+
+  ## Examples
+
+      iex> get_athletic_profile!(123)
+      %AthleticProfile{}
+
+      iex> get_athletic_profile!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_athletic_profile!(id, org), do: Repo.get!(AthleticProfile, id, prefix: org)
+
+  @doc """
+  Creates a athletic_profile.
+
+  ## Examples
+
+      iex> create_athletic_profile(%{field: value})
+      {:ok, %AthleticProfile{}}
+
+      iex> create_athletic_profile(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_athletic_profile(attrs \\ %{}, org) do
+    %AthleticProfile{}
+    |> AthleticProfile.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  @doc """
+  Updates a athletic_profile.
+
+  ## Examples
+
+      iex> update_athletic_profile(athletic_profile, %{field: new_value})
+      {:ok, %AthleticProfile{}}
+
+      iex> update_athletic_profile(athletic_profile, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_athletic_profile(%AthleticProfile{} = athletic_profile, attrs, org) do
+    athletic_profile
+    |> AthleticProfile.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  @doc """
+  Deletes a AthleticProfile.
+
+  ## Examples
+
+      iex> delete_athletic_profile(athletic_profile)
+      {:ok, %AthleticProfile{}}
+
+      iex> delete_athletic_profile(athletic_profile)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_athletic_profile(%AthleticProfile{} = athletic_profile, org) do
+    Repo.delete(athletic_profile, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking athletic_profile changes.
+
+  ## Examples
+
+      iex> change_athletic_profile(athletic_profile)
+      %Ecto.Changeset{source: %AthleticProfile{}}
+
+  """
+  def change_athletic_profile(%AthleticProfile{} = athletic_profile) do
+    AthleticProfile.changeset(athletic_profile, %{})
+  end
+
+  alias Sportegic.People.AthletePosition
+
+  @doc """
+  Returns the list of athlete_positions.
+
+  ## Examples
+
+      iex> list_athlete_positions()
+      [%AthletePosition{}, ...]
+
+  """
+  def list_athlete_positions do
+    Repo.all(AthletePosition)
+  end
+
+  @doc """
+  Gets a single athlete_position.
+
+  Raises `Ecto.NoResultsError` if the Athlete position does not exist.
+
+  ## Examples
+
+      iex> get_athlete_position!(123)
+      %AthletePosition{}
+
+      iex> get_athlete_position!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_athlete_position!(id), do: Repo.get!(AthletePosition, id)
+
+  @doc """
+  Creates a athlete_position.
+
+  ## Examples
+
+      iex> create_athlete_position(%{field: value})
+      {:ok, %AthletePosition{}}
+
+      iex> create_athlete_position(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_athlete_position(attrs \\ %{}) do
+    %AthletePosition{}
+    |> AthletePosition.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a athlete_position.
+
+  ## Examples
+
+      iex> update_athlete_position(athlete_position, %{field: new_value})
+      {:ok, %AthletePosition{}}
+
+      iex> update_athlete_position(athlete_position, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_athlete_position(%AthletePosition{} = athlete_position, attrs) do
+    athlete_position
+    |> AthletePosition.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a AthletePosition.
+
+  ## Examples
+
+      iex> delete_athlete_position(athlete_position)
+      {:ok, %AthletePosition{}}
+
+      iex> delete_athlete_position(athlete_position)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_athlete_position(%AthletePosition{} = athlete_position) do
+    Repo.delete(athlete_position)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking athlete_position changes.
+
+  ## Examples
+
+      iex> change_athlete_position(athlete_position)
+      %Ecto.Changeset{source: %AthletePosition{}}
+
+  """
+  def change_athlete_position(%AthletePosition{} = athlete_position) do
+    AthletePosition.changeset(athlete_position, %{})
   end
 end

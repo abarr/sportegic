@@ -5,7 +5,7 @@ defmodule Sportegic.People.Person do
   import Ecto.Query, only: [from: 2]
   import Ecto.Changeset
 
-  alias Sportegic.People.{Document, Visa, InsurancePolicy, Address}
+  alias Sportegic.People.{Document, Visa, InsurancePolicy, Address, AthleticProfile}
   alias Sportegic.Notes.{Note,NotePerson}
   alias Sportegic.Tasks.{Task,TaskPerson}
   alias Sportegic.Squads.{Squad, SquadPerson}
@@ -21,6 +21,8 @@ defmodule Sportegic.People.Person do
     field(:mobile, :string)
     field(:preferred_name, :string)
     field(:profile_image, Sportegic.People.Avatar.Type)
+
+    has_one(:athletic_profile, AthleticProfile)
 
     has_many(:document, Document)
     has_many(:insurance_policy, InsurancePolicy)

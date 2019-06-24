@@ -36,7 +36,7 @@
             <% end %>
           <% end %>
         </div>
-        <div class="input-field col s12 page">
+        <div class="input-field col s12 page" autocomplete="off">
           <i class="material-icons prefix margin-top-15">looks_3</i>
           <div class="chips chips-autocomplete players"></div>
         </div>

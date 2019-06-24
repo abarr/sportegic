@@ -26,10 +26,12 @@ defmodule SportegicWeb.TaskController do
 
   def new(conn, params, org, _permissions) do
     case Map.has_key?(params, "note_id") do
-      false -> 
+      false ->
+        IO.puts("FALSE")
         changeset = Tasks.change_task(%Task{})
         render(conn, "new.html", changeset: changeset)
       _     ->
+        IO.puts("TRUE")
         note = Notes.get_note_only(params["note_id"], org)
         changeset = Tasks.change_task(%Task{})
         render(conn, "new.html", changeset: changeset, note: note)
@@ -37,7 +39,7 @@ defmodule SportegicWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params} = params, org, _permissions) do
-    
+    IO.inspect(params, label: "Create Task:")
     %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
 
     task_params =
@@ -62,6 +64,7 @@ defmodule SportegicWeb.TaskController do
         |> redirect(to: Routes.task_path(conn, :show, task))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset, label: "CREATE TASK ERROR:")
         render(conn, "new.html", changeset: changeset)
     end
   end
@@ -93,12 +96,12 @@ defmodule SportegicWeb.TaskController do
 
   def complete(conn, %{"id" => id}, org, _permissions) do
     task = Tasks.get_task!(id, org)
-    
+
     task_params = %{}
     |> Map.put("completed", "true")
     |> Map.put("completed_date", DateTime.utc_now())
     |> Map.put("completed_by_id", to_string(conn.assigns.user.id))
-   
+
     case Tasks.update_task(task, task_params, org) do
       {:ok, task} ->
         conn

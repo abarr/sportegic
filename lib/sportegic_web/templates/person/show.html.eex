@@ -77,11 +77,9 @@
                     <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
                   <% end %>
-                  <li class="collection-item valign-wrapper">
-                  <i class="fal fa-running fa-fw fa-lg"></i>&nbspAthletic Profile
-                  <span class="truncate"6><%=  %></span>
-                </li>
-                
+                  <%= link to: Routes.person_athletic_profile_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                    <i class="fal fa-running fa-fw fa-lg"></i> Athletic Profile
+                  <% end %>
               </div> 
             </div>
           </div>

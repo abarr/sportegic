@@ -24,6 +24,10 @@ defmodule Sportegic.LookupTypes.Seeds do
       %{
         name: "Address Types",
         description: "Provides a list of address types that can be recorded"
+      },
+      %{
+        name: "Playing Positions",
+        description: "Provides a list of playing positions for Athlete Profiles"
       }
     ]
   end
@@ -128,6 +132,72 @@ defmodule Sportegic.LookupTypes.Seeds do
         name: "Secondary",
         lookup_id: 6
       }
+    ]
+  end
+
+  def get_default_playing_positions() do
+    [
+      %{
+        name: "Loose Head",
+        lookup_id: 7
+      },
+      %{
+        name: "Hooker",
+        lookup_id: 7
+      },
+      %{
+        name: "Tight Head",
+        lookup_id: 7
+      },
+      %{
+        name: "Left Lock",
+        lookup_id: 7
+      },
+      %{
+        name: "Right Lock",
+        lookup_id: 7
+      },
+      %{
+        name: "Number 6",
+        lookup_id: 7
+      },
+      %{
+        name: "Number 7",
+        lookup_id: 7
+      },
+      %{
+        name: "Number 8",
+        lookup_id: 7
+      },
+      %{
+        name: "Half Back",
+        lookup_id: 7
+      },
+      %{
+        name: "Flyhalf",
+        lookup_id: 7
+      },
+      %{
+        name: "Inside Centre",
+        lookup_id: 7
+      },
+      %{
+        name: "Outside Centre",
+        lookup_id: 7
+      },
+      %{
+        name: "Left Wing",
+        lookup_id: 7
+      },
+      %{
+        name: "Right Wing",
+        lookup_id: 7
+      },
+      %{
+        name: "Fullback",
+        lookup_id: 7
+      }
+
     ]
   end
 end
