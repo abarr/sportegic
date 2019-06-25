@@ -10,7 +10,7 @@
             <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">search</i>
-                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2">
+                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2" autocomplete="off">
                 <label for="autocompleteInput">Search</label>
               </div>
             </div>

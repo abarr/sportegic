@@ -39,7 +39,6 @@ defmodule SportegicWeb.NoteController do
       note_params
       |> only_basic_html()
       |> Map.put("user_id", conn.assigns.user.id)
-      |> Map.put("sentiment", Notes.get_sentiment(note_params))
 
     case Notes.create_note(note_params, org) do
       {:ok, note} ->

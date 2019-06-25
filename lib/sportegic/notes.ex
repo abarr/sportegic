@@ -85,13 +85,20 @@ defmodule Sportegic.Notes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_note(attrs \\ %{}, org) do
+  def create_note(
+    %{:event_date => date,
+      :subject => subject,
+      :details => details,
+      :user_id => u_id}, org), do: create_note(%{"event_date" => date , "subject" => subject, "details" => details, "user_id" => u_id }, org)
+
+  def create_note(%{"subject" => subject, "details" => details } = attrs, org) do
+    sentiment = get_sentiment(subject, details )
+    attrs = Map.put(attrs, "sentiment", sentiment )
     %Note{}
     |> Note.changeset(attrs)
     |> Repo.insert(prefix: org)
   end
-
-  def get_sentiment(%{"subject" => subject, "details" => details}) do
+  def get_sentiment(subject,  details) do
     Sentiment.build_sentiment_score(subject, details)
   end
 
