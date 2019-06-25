@@ -13,13 +13,20 @@
     </div>
 
     <div class="row page remove-bottom-margin">
-      <div class="col s12">
+      <div class="col s12 l10">
         <div class="card z-depth-0 note ">
           <div class="card-content card-info">
             <div class="chip">Loose Head</div>
             <div class="chip">Hooker</div>
           </div>
         </div>
+      </div>
+      <div class="col s12 l2 valign-wrapper">
+        <div class="input-field col s12">
+          <input type="text" id="autocomplete-input" class="autocomplete">
+          <label for="autocomplete-input">Postions</label>
+        </div>
+        <a href="#" class="btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"> Add</a>
       </div>
     </div>
 

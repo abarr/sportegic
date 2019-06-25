@@ -117,6 +117,7 @@
                         'Elixir.SportegicWeb.Plugs.Authenticate',
                         'Elixir.SportegicWeb.Plugs.Session',
                         'Elixir.SportegicWeb.PremissionView',
+                        'Elixir.SportegicWeb.ProfileChannel',
                         'Elixir.SportegicWeb.ProfileController',
                         'Elixir.SportegicWeb.ProfileView',
                         'Elixir.SportegicWeb.RoleController',

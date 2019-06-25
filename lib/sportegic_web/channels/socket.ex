@@ -9,6 +9,7 @@ defmodule SportegicWeb.Socket do
   channel "notes:*", SportegicWeb.NotesSearchChannel
   channel "user_search:*", SportegicWeb.UserSearchChannel
   channel "tags:*", SportegicWeb.TagsSearchChannel
+  channel "profile:*", SportegicWeb.ProfileChannel
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
   # verification, you can put default assigns into
