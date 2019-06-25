@@ -34,7 +34,7 @@
 
 <div>
     <div class="fixed-action-btn">
-      <a  class="btn-floating btn-large blue" href="/role/new">
+      <a  class="btn-floating btn-large blue z-depth-0" href="/role/new">
           <i class="large material-icons">add</i>
       </a>
       

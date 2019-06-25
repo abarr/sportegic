@@ -170,7 +170,7 @@
 <script> window.channel = "true" </script>
 <div>
     <div class="fixed-action-btn ">
-      <%= link to: Routes.note_path(@conn, :edit, @note), class: "btn-floating btn-large grey"  do %>
+      <%= link to: Routes.note_path(@conn, :edit, @note), class: "btn-floating btn-large grey z-depth-0"  do %>
         <i class="large material-icons">edit</i>
       <% end %>
     </div>

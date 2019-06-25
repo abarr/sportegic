@@ -14,20 +14,14 @@
           <tr>
               <th>Name</th>
               <th>Description</th>
-              <th class="right-align">Action</th>
+              
           </tr>
         </thead>
         <tbody>
         <%= for lookup <- @lookups do %>
-          <tr>
+          <tr onclick="go(<%= lookup.id %>)">
             <td> <%= lookup.name %>  </td>
             <td> <%= lookup.description %>  </td>
-            <td class="right-align"> 
-                
-                <%= link to: Routes.lookup_type_path(@conn, :index, lookup), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
-                  <i class="fas fa-list-ul"></i>
-                <% end %>
-            </td>
           </tr>
           <% end %>
         </tbody>
@@ -38,3 +32,8 @@
 </div>
 
 
+<script>
+  function go(id){
+    window.location = "/lookup/" + id + "/type";
+  }
+</script>

@@ -31,7 +31,7 @@
     <%= hidden_input f, :postal_code, [id: "postal_code"] %>
   
   <div class="fixed-action-btn">
-    <button type="submit"  onclick="check_form()" class="btn-floating btn-large green">
+    <button type="submit"  onclick="check_form()" class="btn-floating btn-large green z-depth-0">
       <i class="large material-icons">save</i>
     </button>
   </div>

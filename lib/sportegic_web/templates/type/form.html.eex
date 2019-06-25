@@ -8,16 +8,9 @@
       </div>
     <div>
     <div class="fixed-action-btn">
-      <button type="submit" class="btn-floating btn-large green">
+      <button type="submit" class="btn-floating btn-large green z-depth-0">
         <i class="large material-icons">save</i>
       </button>
-      <ul>
-        <li>
-          <%= link to: Routes.lookup_type_path(@conn, :index, @lookup), class: "btn-floating red lighten-2" do %>
-            <i class="material-icons">arrow_back</i>
-          <% end %>
-        </li>
-      </ul>
     </div>
   </div>
 <% end %>

@@ -53,14 +53,25 @@
                   <th width="15%">Due</th>
                   <th class="hide-on-med-and-down">Assigned to</th>
                   <th>Details</th>
+                  
               </tr>
             </thead>
             <tbody>
               <%= for task <- @tasks_created do %>
                 <tr onclick="go(<%= task.id %>)">
-                  <td width="15%"><%= raw(display_days(days_until(task.due_date))) %></td>
+                  <%= if task.completed do %>
+                    <td class="left" width="15%">
+                      <%= raw(display_status(task.completed)) %>
+                     </td>
+                  <% else %>  
+                    <td class="" width="15%">
+                      <%= raw(display_days(days_until(task.due_date))) %>
+                     </td>
+                  <% end %>
                   <td class="hide-on-med-and-down"><%= task.assignee.firstname <> " " <> task.assignee.lastname  %></td>
                   <td class="truncate"><%= raw(task.action) %></td>
+                  
+
                 </tr>
               <% end %>
             </tbody>
@@ -71,7 +82,7 @@
     
 <div>
     <div class="fixed-action-btn ">
-      <%= link to: Routes.task_path(@conn, :new), class: "btn-floating btn-large blue"  do %>
+      <%= link to: Routes.task_path(@conn, :new), class: "btn-floating btn-large blue z-depth-0"  do %>
         <i class="large material-icons">add</i>
       <% end %>
     </div>

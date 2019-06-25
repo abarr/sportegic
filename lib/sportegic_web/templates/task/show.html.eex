@@ -7,7 +7,7 @@
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
           <h5 class="heading grey-text lighten-2 truncate left">Task</h5>
-          <%= raw(display_status(@task.completed)) %>
+          <div class="right"><%= raw(display_status(@task.completed)) %></div>
         </div>
       </div>
       <div class="divider"></div>
@@ -130,7 +130,7 @@
 <%= if((@conn.assigns.user.id == @task.user.id ) && !@task.completed ) do %>
   <div>
       <div class="fixed-action-btn ">
-        <%= link to: Routes.task_path(@conn, :edit, @task), class: "btn-floating btn-large grey"  do %>
+        <%= link to: Routes.task_path(@conn, :edit, @task), class: "btn-floating btn-large grey z-depth-0"  do %>
           <i class="large material-icons">edit</i>
         <% end %>
       </div>

@@ -180,7 +180,7 @@
 <div>
     <div class="fixed-action-btn">
     
-      <%= link to: Routes.person_path(@conn, :edit, @person), class: "btn-floating btn-large  grey lighten-1" do %>
+      <%= link to: Routes.person_path(@conn, :edit, @person), class: "btn-floating btn-large  grey lighten-1 z-depth-0" do %>
         <i class="large material-icons">edit</i>
       <% end %>
        

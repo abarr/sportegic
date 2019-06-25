@@ -50,7 +50,7 @@
   </div>
   
   <div class="floating-action-btn right-align">
-    <button id="submit" type="submit" class="btn-floating btn-large green" disabled="true">
+    <button id="submit" type="submit" class="btn-floating btn-large green z-depth-0" disabled="true">
       <i class="large material-icons">save</i>
     </button>
   </div>

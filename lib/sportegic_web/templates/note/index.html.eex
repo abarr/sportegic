@@ -73,7 +73,7 @@
 
 <div>
     <div class="fixed-action-btn ">
-      <%= link to: Routes.note_path(@conn, :new), class: "btn-floating btn-large blue"  do %>
+      <%= link to: Routes.note_path(@conn, :new), class: "btn-floating btn-large blue z-depth-0"  do %>
         <i class="large material-icons">add</i>
       <% end %>
     </div>

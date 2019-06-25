@@ -91,10 +91,10 @@ defmodule SportegicWeb.TaskView do
   def display_status(complete) do
     case complete do
       true ->
-        "<span class='new badge green right lighten-2' data-badge-caption='COMPLETED'></span>"
+        "<span class='new badge green  lighten-2' data-badge-caption='COMPLETED'></span>"
 
       _ ->
-        "<span class='new badge red right lighten-2' data-badge-caption='PENDING'></span>"
+        "<span class='new badge red  lighten-2' data-badge-caption='PENDING'></span>"
     end
   end
 

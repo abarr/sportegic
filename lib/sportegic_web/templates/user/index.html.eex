@@ -123,7 +123,7 @@
     <div class="fixed-action-btn">
       
 
-      <%= link to: Routes.user_path(@conn, :invitation), class: "btn-floating btn-large blue" do %>
+      <%= link to: Routes.user_path(@conn, :invitation), class: "btn-floating btn-large blue z-depth-0" do %>
         <i class="large material-icons">add</i>
       <% end %>
       
