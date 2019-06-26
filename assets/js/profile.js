@@ -1,4 +1,44 @@
 let Profile = {
+
+    load_positions(socket){
+
+        let channel = socket.channel("profile:", { token: window.token })
+        channel.join()
+            .receive("ok", resp => { console.log("Joined successfully", resp) })
+            .receive("error", resp => { console.log("Unable to join", resp) })
+
+        channel.push("get_positions", { token: window.token, org: window.org });
+
+        let positions = document.querySelector('.positions');
+        let p = document.getElementById('p');
+        
+        channel.on(`profile:${window.token}`, results => {
+            console.log(results.payload);
+            
+            let i = M.Chips.init(positions, {
+                placeholder: '+Add a position',
+                secondaryPlaceholder: '+Another postions',
+                data: [],
+                autocompleteOptions: {
+                    data: results.payload,
+                    limit: Infinity,
+                    minLength: 1
+                },
+                onChipAdd: function (e, chip) {
+                    channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
+                    
+
+                },
+                onChipDelete: function (e, chip) {
+                    console.log(p.value);
+                }
+            });
+            console.log(i);
+
+        });
+
+        
+    },
     position_search(socket) {
 
         let channel = socket.channel("profile:", { token: window.token })

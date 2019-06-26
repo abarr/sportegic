@@ -24,6 +24,7 @@ import Squads from "./squads"
 // SOCKETS
 import socket from "./socket"
 import Dashboard from "./dashboard";
+import Profile from "./profile";
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);
     if (window.location.pathname == "/dashboard") {
-        Dashboard.create_sentiment_chart(Chart);
+        // Dashboard.create_sentiment_chart(Chart);
     };
 
     if (window.location.pathname == "/rsvp" || window.location.pathname.split("/")[1] == "user") {
@@ -73,6 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
         Notes.people_search(sportegic_socket);
         Notes.notes_search(Vue, sportegic_socket);
     };
+
+    if (window.location.pathname.split("/")[3] == "profile")
+    {
+        let sportegic_socket = socket.connect_socket();
+        Profile.load_positions(sportegic_socket);
+    }
+
     // Check if there are flash messages via global variables and init a toast
     if (window.toast) {
         var toastHTML = '<div class="msg">' + window.toast + '</div>'

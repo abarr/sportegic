@@ -22,8 +22,7 @@ defmodule Sportegic.People.Person do
     field(:preferred_name, :string)
     field(:profile_image, Sportegic.People.Avatar.Type)
 
-    has_one(:athletic_profile, Profile)
-
+    has_one(:profile, Profile)
     has_many(:document, Document)
     has_many(:insurance_policy, InsurancePolicy)
     has_many(:visa, Visa)

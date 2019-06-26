@@ -118,4 +118,61 @@ defmodule Sportegic.PeopleTest do
       assert %Ecto.Changeset{} = People.change_athlete_position(athlete_position)
     end
   end
+
+  describe "profiles_position" do
+    alias Sportegic.People.ProfilePosition
+
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{}
+
+    def profile_position_fixture(attrs \\ %{}) do
+      {:ok, profile_position} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> People.create_profile_position()
+
+      profile_position
+    end
+
+    test "list_profiles_position/0 returns all profiles_position" do
+      profile_position = profile_position_fixture()
+      assert People.list_profiles_position() == [profile_position]
+    end
+
+    test "get_profile_position!/1 returns the profile_position with given id" do
+      profile_position = profile_position_fixture()
+      assert People.get_profile_position!(profile_position.id) == profile_position
+    end
+
+    test "create_profile_position/1 with valid data creates a profile_position" do
+      assert {:ok, %ProfilePosition{} = profile_position} = People.create_profile_position(@valid_attrs)
+    end
+
+    test "create_profile_position/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = People.create_profile_position(@invalid_attrs)
+    end
+
+    test "update_profile_position/2 with valid data updates the profile_position" do
+      profile_position = profile_position_fixture()
+      assert {:ok, %ProfilePosition{} = profile_position} = People.update_profile_position(profile_position, @update_attrs)
+    end
+
+    test "update_profile_position/2 with invalid data returns error changeset" do
+      profile_position = profile_position_fixture()
+      assert {:error, %Ecto.Changeset{}} = People.update_profile_position(profile_position, @invalid_attrs)
+      assert profile_position == People.get_profile_position!(profile_position.id)
+    end
+
+    test "delete_profile_position/1 deletes the profile_position" do
+      profile_position = profile_position_fixture()
+      assert {:ok, %ProfilePosition{}} = People.delete_profile_position(profile_position)
+      assert_raise Ecto.NoResultsError, fn -> People.get_profile_position!(profile_position.id) end
+    end
+
+    test "change_profile_position/1 returns a profile_position changeset" do
+      profile_position = profile_position_fixture()
+      assert %Ecto.Changeset{} = People.change_profile_position(profile_position)
+    end
+  end
 end

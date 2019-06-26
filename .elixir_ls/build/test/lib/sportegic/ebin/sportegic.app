@@ -63,6 +63,7 @@
                         'Elixir.Sportegic.People.InsurancePolicy',
                         'Elixir.Sportegic.People.Person',
                         'Elixir.Sportegic.People.Profile',
+                        'Elixir.Sportegic.People.ProfilePosition',
                         'Elixir.Sportegic.People.Visa',
                         'Elixir.Sportegic.Repo','Elixir.Sportegic.Squads',
                         'Elixir.Sportegic.Squads.Squad',

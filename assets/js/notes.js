@@ -75,6 +75,7 @@ let Notes = {
         let tags = document.querySelector('.tags');
 
         channel.on(`tags:${window.token}`, results => {
+            console.log(results.payload);
             let i = M.Chips.init(tags, {
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',

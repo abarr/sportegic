@@ -11,3 +11,4 @@ defmodule Sportegic.Repo.Migrations.CreatePeopleProfiles do
 
   end
 end
+
