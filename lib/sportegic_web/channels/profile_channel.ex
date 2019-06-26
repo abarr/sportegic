@@ -2,6 +2,7 @@ defmodule SportegicWeb.ProfileChannel do
   use SportegicWeb, :channel
 
   alias Sportegic.LookupTypes
+  alias Sportegic.People
 
 
   def join("profile:", %{"token" => token}, socket) do
@@ -31,9 +32,10 @@ defmodule SportegicWeb.ProfileChannel do
   end
 
   def handle_in("update_positions", params, socket) do
+    IO.puts("Update Postions")
+    IO.inspect(params, label: "PARAMS")
 
-
-
+    People.update_profile_postions(params["id"], params["positions"], params["org"])
 
     broadcast!(socket, "profile_update:#{params["token"]}", %{payload: "Postions sccessfully updated!"})
     {:noreply, socket}

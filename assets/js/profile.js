@@ -25,12 +25,13 @@ let Profile = {
                     minLength: 1
                 },
                 onChipAdd: function (e, chip) {
+                    console.log("Pushing add");
                     channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
-                    
-
+                    console.log("after push")
                 },
                 onChipDelete: function (e, chip) {
-                    console.log(p.value);
+                    console.log("Pushing delete");
+                    channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
                 }
             });
             console.log(i);

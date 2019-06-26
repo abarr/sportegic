@@ -859,12 +859,20 @@ defmodule Sportegic.People do
 
   """
   def get_profile!(id, org) when is_binary(id), do: Repo.get!(Profile, id, prefix: org)
-  def get_profile!(person, org) when is_map(person) do
+  def get_profile(person, org) when is_map(person), do: get_profile(person.id, org)
+  def get_profile(person_id, org) when is_binary(person_id) do
     Profile
-    |> where([p], p.person_id == ^person.id)
+    |> where([p], p.person_id == ^person_id)
     |> Repo.get!(prefix: org)
     |> Repo.preload([:postions])
   end
+
+
+  def update_profile_postions(person_id, _positions, org) do
+    profile = get_profile(person_id, org)
+
+  end
+
 
   @doc """
   Creates a athletic_profile.
@@ -930,10 +938,6 @@ defmodule Sportegic.People do
   def change_profile(%Profile{} = profile) do
     Profile.changeset(profile, %{})
   end
-
-
-
-
 
 
 

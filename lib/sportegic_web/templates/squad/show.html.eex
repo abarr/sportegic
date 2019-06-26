@@ -17,9 +17,7 @@
   <div class="row ">
     <div class="col s12">      
       <div class="row ">
-        
-        
-        <%= form_for @conn, Routes.squad_path(@conn, :add_members, @squad), [as: :squad_members, method: :post], fn f -> %>
+        <%= form_for @conn, Routes.squad_path(@conn, :add_members, @squad), [as: :squad_members, method: :post], fn _f -> %>
           <div class="col s12 valign-wrapper">
             <div class="col s11 top-margin-25">
               <div class="input-field ">
