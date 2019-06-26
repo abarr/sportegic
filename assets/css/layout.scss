@@ -97,6 +97,9 @@ blockquote{
     margin-top: 25px;
 }
 
+.no-top-margin {
+    margin-top: 0px !important;
+}
 
 .padding-collapsible-header{
     padding-left: 32px !important;
@@ -361,7 +364,4 @@ a.card-content:hover{
 input.search.squad{
     border-bottom: none !important;
 }
-
-
-
 

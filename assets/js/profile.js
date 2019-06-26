@@ -3,41 +3,56 @@ let Profile = {
     load_positions(socket){
 
         let channel = socket.channel("profile:", { token: window.token })
+        let positions = document.querySelector('.positions');
+        let p = document.getElementById('p');
+        let player_positions = []
         channel.join()
             .receive("ok", resp => { console.log("Joined successfully", resp) })
             .receive("error", resp => { console.log("Unable to join", resp) })
 
-        channel.push("get_positions", { token: window.token, org: window.org });
-
-        let positions = document.querySelector('.positions');
-        let p = document.getElementById('p');
+        channel.push("get_positions", { token: window.token, org: window.org, person_id: p.value});
         
         channel.on(`profile:${window.token}`, results => {
-            console.log(results.payload);
-            
             let i = M.Chips.init(positions, {
                 placeholder: '+Add a position',
-                secondaryPlaceholder: '+Another postions',
-                data: [],
+                secondaryPlaceholder: '+More',
+                data: results.player_positions,
                 autocompleteOptions: {
-                    data: results.payload,
+                    data: results.all_positions,
                     limit: Infinity,
                     minLength: 1
                 },
                 onChipAdd: function (e, chip) {
-                    console.log("Pushing add");
-                    channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
-                    console.log("after push")
+                    // if( validChipsValues.indexOf(chip.tag) !== -1) return;
+                    let validList = i.options.autocompleteOptions.data;
+                    let len = i.chipsData.length
+                    if(!validList.hasOwnProperty(i.chipsData[len - 1].tag))
+                    {
+                        i.deleteChip(len - 1);
+                    }else{
+                        channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
+                    }
+                    
                 },
                 onChipDelete: function (e, chip) {
-                    console.log("Pushing delete");
                     channel.push("update_positions", { token: window.token, org: window.org, person_id: p.value, positions: i.chipsData });
                 }
             });
-            console.log(i);
+            
 
         });
 
+        channel.on(`profile_update:${window.token}`, results => {
+            var toastHTML = '<div class="msg">' + results.payload + '</div>'
+            switch (results.type) {
+                case "success":
+                    M.toast({ html: toastHTML, displayLength: 4000, classes: "blue lighten-3" })
+                    break;
+                default:
+                    M.toast({ html: toastHTML, displayLength: 4000, classes: "red lighten-3" })
+                    break;
+            }
+        });
         
     },
     position_search(socket) {

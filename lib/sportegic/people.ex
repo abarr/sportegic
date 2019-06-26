@@ -10,6 +10,7 @@ defmodule Sportegic.People do
   alias Sportegic.People.{Person, Document, Attachment, Visa, InsurancePolicy, Address}
   alias Sportegic.Notes.Note
   alias Sportegic.People.{Profile, ProfilePosition}
+  alias Sportegic.LookupTypes.Type
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -57,6 +58,12 @@ defmodule Sportegic.People do
     Person
     |> Repo.get!(id, prefix: org)
     |> Repo.preload([:document, :visa, :insurance_policy, :addresses,[ profile: [:types]], [notes: query]])
+  end
+
+  def get_person_profile!(id, org) do
+    Person
+    |> Repo.get!(id, prefix: org)
+    |> Repo.preload([profile: [:types]])
   end
 
   def get_person_only(id, org) do
@@ -861,16 +868,18 @@ defmodule Sportegic.People do
   def get_profile!(id, org) when is_binary(id), do: Repo.get!(Profile, id, prefix: org)
   def get_profile(person, org) when is_map(person), do: get_profile(person.id, org)
   def get_profile(person_id, org) when is_binary(person_id) do
-    Profile
-    |> where([p], p.person_id == ^person_id)
-    |> Repo.get!(prefix: org)
-    |> Repo.preload([:postions])
+    case People.get_person_profile!(person_id, org) do
+      %{profile: profile } -> profile
+      error -> error
+    end
   end
 
 
-  def update_profile_postions(person_id, _positions, org) do
-    profile = get_profile(person_id, org)
-
+  def update_profile_postions(person_id, positions, org) do
+    People.get_profile(person_id, org)
+    |> People.Profile.changeset(positions)
+    |> Ecto.Changeset.cast_assoc(:types, with: &Type.changeset/2)
+    |> Repo.update(prefix: org)
   end
 
 

@@ -15,11 +15,33 @@ defmodule SportegicWeb.ProfileChannel do
 
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
-  def handle_in("get_positions", %{"token" => token, "org" => org}, socket) do
-    lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
-    # [%{firstname: "", lastname: "", id: 1}, %{...}]
+  # def handle_in("get_positions", %{"token" => token, "org" => org}, socket) do
+  #   lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
+  #   # [%{firstname: "", lastname: "", id: 1}, %{...}]
 
-    payload =
+  #   payload =
+  #     LookupTypes.list_types(lookup, org)
+  #     |> Enum.map(fn x ->
+  #       %{x.name => nil}
+  #     end)
+  #     |> Enum.reduce(&Map.merge/2)
+
+
+  #   broadcast!(socket, "profile:#{token}", %{payload: payload})
+  #   {:noreply, socket}
+  # end
+
+  def handle_in("get_positions", %{"token" => token, "org" => org, "person_id" => person_id}, socket) do
+    person = People.get_person_profile!(person_id, org)
+    player_positions =
+      person.profile.types
+      |> Enum.map(fn x ->
+        %{"tag" => x.name }
+      end)
+
+    lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
+
+    all_positions =
       LookupTypes.list_types(lookup, org)
       |> Enum.map(fn x ->
         %{x.name => nil}
@@ -27,17 +49,26 @@ defmodule SportegicWeb.ProfileChannel do
       |> Enum.reduce(&Map.merge/2)
 
 
-    broadcast!(socket, "profile:#{token}", %{payload: payload})
+    broadcast!(socket, "profile:#{token}", %{all_positions: all_positions, player_positions: player_positions})
     {:noreply, socket}
   end
 
-  def handle_in("update_positions", params, socket) do
-    IO.puts("Update Postions")
-    IO.inspect(params, label: "PARAMS")
+  def handle_in("update_positions", %{"org" => org, "person_id" => person_id, "positions" => positions, "token" => token}, socket) do
+    lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
 
-    People.update_profile_postions(params["id"], params["positions"], params["org"])
+    positions = positions
+    |> Enum.map(fn p ->
+       %{ name: p["tag"], lookup_id: lookup.id}
+    end)
 
-    broadcast!(socket, "profile_update:#{params["token"]}", %{payload: "Postions sccessfully updated!"})
+    case People.update_profile_postions(person_id, %{ types: positions}, org) do
+       {:ok, _profile} ->
+        broadcast!(socket, "profile_update:#{token}", %{type: "success", payload: "Positions sccessfully updated!"})
+       _ ->
+        broadcast!(socket, "profile_update:#{token}", %{type: "success", payload: "There is a problem updating positions. Please call support!"})
+
+    end
+
     {:noreply, socket}
   end
 
