@@ -76,6 +76,9 @@ defmodule Sportegic.LookupTypes do
       |> Enum.concat(Seeds.get_default_notes_tags())
       |> Enum.concat(Seeds.get_default_address_types())
       |> Enum.concat(Seeds.get_default_playing_positions())
+      |> Enum.concat(Seeds.get_default_performance_areas())
+      |> Enum.concat(Seeds.get_default_performance_review_context())
+      |> Enum.concat(Seeds.get_default_performance_rating())
       |> Enum.map(&create_type(&1, org))
 
     {:ok, list}

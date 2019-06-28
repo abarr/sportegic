@@ -28,6 +28,18 @@ defmodule Sportegic.LookupTypes.Seeds do
       %{
         name: "Playing Positions",
         description: "Provides a list of playing positions for Athlete Profiles"
+      }, 
+      %{
+        name: "Performance Areas",
+        description: "Key areas of performance for review"
+      }, 
+      %{
+        name: "Performance Review Type",
+        description: "Context for perfomance review records (e.g. Training or Game)"
+      },
+      %{
+        name: "Performance Rating",
+        description: "Rating values for performance reviews to allow trend reporting"
       }
     ]
   end
@@ -200,4 +212,92 @@ defmodule Sportegic.LookupTypes.Seeds do
 
     ]
   end
+
+  def get_default_performance_areas() do
+    [
+      %{
+        name: "Attack",
+        lookup_id: 8
+      },
+      %{
+        name: "Starter Attack",
+        lookup_id: 8
+      },
+      %{
+        name: "Defence",
+        lookup_id: 8
+      },
+      %{
+        name: "Contact",
+        lookup_id: 8
+      },
+      %{
+        name: "Kicking",
+        lookup_id: 8
+      },
+      %{
+        name: "Lineout",
+        lookup_id: 8
+      },
+      %{
+        name: "Maul",
+        lookup_id: 8
+      },
+      %{
+        name: "Scrum",
+        lookup_id: 8
+      },
+      %{
+        name: "Our Kick Off",
+        lookup_id: 8
+      },
+      %{
+        name: "Their Kick Off",
+        lookup_id: 8
+      },
+      %{
+        name: "Skills",
+        lookup_id: 8
+      },
+      %{
+        name: "Other",
+        lookup_id: 8
+      }
+
+    ]
+  end
+
+  def get_default_performance_review_context() do
+    [
+      %{
+        name: "Training",
+        lookup_id: 9
+      },
+      %{
+        name: "Game",
+        lookup_id: 9
+      }
+    ]
+  end
+  def get_default_performance_rating() do
+      [
+        %{
+          name: "1 - Needs Improvement",
+          lookup_id: 10
+        },
+        %{
+          name: "2 - Meets Minimum Standard",
+          lookup_id: 10
+        },
+        %{
+          name: "3 - Exceeds Minimum",
+          lookup_id: 10
+        },
+        %{
+          name: "4 - Exceeds Expectations",
+          lookup_id: 10
+        }
+      ]
+    end
+
 end

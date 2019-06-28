@@ -7,8 +7,9 @@ defmodule Sportegic.Profiles do
   alias Sportegic.Repo
   alias Sportegic.People
   alias Sportegic.Profiles
-  alias Sportegic.Profiles.{AthleteProfile, PlayingPosition}
+  alias Sportegic.Profiles.{AthleteProfile, PlayingPosition, Performance}
   alias Sportegic.LookupTypes.Type
+  
 
   @doc """
   Returns the list of athletic_profiles.
@@ -52,9 +53,7 @@ defmodule Sportegic.Profiles do
 
   def update_athlete_profile_postions(person_id, positions, org) do
     Profiles.get_athlete_profile(person_id, org)
-    |> IO.inspect
     |> Profiles.AthleteProfile.changeset(positions)
-    |> IO.inspect
     |> Ecto.Changeset.cast_assoc(:types, with: &Type.changeset/2)
     |> Repo.update(prefix: org)
   end
@@ -228,5 +227,110 @@ defmodule Sportegic.Profiles do
   """
   def change_athlete_profile_playing_position(%PlayingPosition{} = athlete_profile_playing_position) do
     PlayingPosition.changeset(athlete_profile_playing_position, %{})
+  end
+
+  
+
+  @doc """
+  Returns the list of performances.
+
+  ## Examples
+
+      iex> list_performances()
+      [%Performance{}, ...]
+
+  """
+  def list_performances(org) do
+    Repo.all(Performance, prefix: org)
+  end
+
+  @doc """
+  Gets a single performance.
+
+  Raises `Ecto.NoResultsError` if the Performance does not exist.
+
+  ## Examples
+
+      iex> get_performance!(123)
+      %Performance{}
+
+      iex> get_performance!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_performance!(id, org), do: Repo.get!(Performance, id, prefix: org)
+
+  def get_performance!(id, org) when is_binary(id), do: Repo.get!(Performance, id, prefix: org)
+  def get_performance(person, org) when is_map(person), do: get_performance(person.athlete_profile.id, org)
+  def get_performance(profile_id, org) when is_binary(profile_id) do
+    case People.get_person_athlete_profile!(profile_id, org) do
+      %{athlete_profile: athlete_profile } -> athlete_profile.performances
+      error -> error
+    end
+  end
+
+  @doc """
+  Creates a performance.
+
+  ## Examples
+
+      iex> create_performance(%{field: value})
+      {:ok, %Performance{}}
+
+      iex> create_performance(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_performance(attrs \\ %{}, org) do
+    %Performance{}
+    |> Performance.changeset(attrs)
+    |> Repo.insert(prefix: org)
+  end
+
+  @doc """
+  Updates a performance.
+
+  ## Examples
+
+      iex> update_performance(performance, %{field: new_value})
+      {:ok, %Performance{}}
+
+      iex> update_performance(performance, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_performance(%Performance{} = performance, attrs, org) do
+    performance
+    |> Performance.changeset(attrs)
+    |> Repo.update(prefix: org)
+  end
+
+  @doc """
+  Deletes a Performance.
+
+  ## Examples
+
+      iex> delete_performance(performance)
+      {:ok, %Performance{}}
+
+      iex> delete_performance(performance)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_performance(%Performance{} = performance, org) do
+    Repo.delete(performance, prefix: org)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking performance changes.
+
+  ## Examples
+
+      iex> change_performance(performance)
+      %Ecto.Changeset{source: %Performance{}}
+
+  """
+  def change_performance(%Performance{} = performance) do
+    Performance.changeset(performance, %{})
   end
 end

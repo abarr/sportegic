@@ -62,7 +62,7 @@ defmodule Sportegic.People do
   def get_person_athlete_profile!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([athlete_profile: [:types]])
+    |> Repo.preload([athlete_profile: [:types, :performances]])
   end
 
   def get_person_only(id, org) do

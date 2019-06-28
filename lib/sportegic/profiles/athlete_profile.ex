@@ -3,7 +3,7 @@ defmodule Sportegic.Profiles.AthleteProfile do
   import Ecto.Changeset
 
   alias Sportegic.People.Person
-  alias Sportegic.Profiles.PlayingPosition
+  alias Sportegic.Profiles.{PlayingPosition, Performance}
   alias Sportegic.LookupTypes.Type
 
 
@@ -11,6 +11,7 @@ defmodule Sportegic.Profiles.AthleteProfile do
     field :available, :boolean, default: true
     belongs_to(:person, Person)
 
+    has_many(:performances, Performance)
     many_to_many(:types, Type, join_through: PlayingPosition, on_replace: :delete)
 
     timestamps(type: :utc_datetime)
