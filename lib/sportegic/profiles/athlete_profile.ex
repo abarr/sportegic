@@ -1,15 +1,17 @@
-defmodule Sportegic.People.Profile do
+defmodule Sportegic.Profiles.AthleteProfile do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Sportegic.People.{ Person, ProfilePosition }
+  alias Sportegic.People.Person
+  alias Sportegic.Profiles.PlayingPosition
   alias Sportegic.LookupTypes.Type
 
 
-  schema "profiles" do
+  schema "athlete_profiles" do
     field :available, :boolean, default: true
     belongs_to(:person, Person)
-    many_to_many(:types, Type, join_through: ProfilePosition, on_replace: :delete)
+
+    many_to_many(:types, Type, join_through: PlayingPosition, on_replace: :delete)
 
     timestamps(type: :utc_datetime)
   end

@@ -2,6 +2,7 @@ defmodule SportegicWeb.ProfileController do
   use SportegicWeb, :controller
 
   alias Sportegic.People
+  alias Sportegic.Profiles
 
 
   # Allows for getting Types by LookupType
@@ -17,7 +18,7 @@ defmodule SportegicWeb.ProfileController do
   end
 
   def index(conn, _params, person, org, _permissions) do
-    profiles = People.list_profiles(person, org)
+    profiles = Profiles.list_athlete_profiles(person, org)
     render(conn, "index.html", profiles: profiles, person: person)
   end
 

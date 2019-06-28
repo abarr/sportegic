@@ -3,6 +3,7 @@ defmodule SportegicWeb.ProfileChannel do
 
   alias Sportegic.LookupTypes
   alias Sportegic.People
+  alias Sportegic.Profiles
 
 
   def join("profile:", %{"token" => token}, socket) do
@@ -13,28 +14,10 @@ defmodule SportegicWeb.ProfileChannel do
     end
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
-  # def handle_in("get_positions", %{"token" => token, "org" => org}, socket) do
-  #   lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
-  #   # [%{firstname: "", lastname: "", id: 1}, %{...}]
-
-  #   payload =
-  #     LookupTypes.list_types(lookup, org)
-  #     |> Enum.map(fn x ->
-  #       %{x.name => nil}
-  #     end)
-  #     |> Enum.reduce(&Map.merge/2)
-
-
-  #   broadcast!(socket, "profile:#{token}", %{payload: payload})
-  #   {:noreply, socket}
-  # end
-
   def handle_in("get_positions", %{"token" => token, "org" => org, "person_id" => person_id}, socket) do
-    person = People.get_person_profile!(person_id, org)
+    person = People.get_person_athlete_profile!(person_id, org)
     player_positions =
-      person.profile.types
+      person.athlete_profile.types
       |> Enum.map(fn x ->
         %{"tag" => x.name }
       end)
@@ -61,7 +44,7 @@ defmodule SportegicWeb.ProfileChannel do
        %{ name: p["tag"], lookup_id: lookup.id}
     end)
 
-    case People.update_profile_postions(person_id, %{ types: positions}, org) do
+    case Profiles.update_athlete_profile_postions(person_id, %{ types: positions}, org) do
        {:ok, _profile} ->
         broadcast!(socket, "profile_update:#{token}", %{type: "success", payload: "Positions sccessfully updated!"})
        _ ->

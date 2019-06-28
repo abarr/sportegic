@@ -2,15 +2,14 @@ defmodule Sportegic.People do
   @moduledoc """
   The People context.
   """
-  alias __MODULE__
   import Ecto.Query, warn: false
   use Timex
   alias Ecto.Multi
   alias Sportegic.Repo
   alias Sportegic.People.{Person, Document, Attachment, Visa, InsurancePolicy, Address}
   alias Sportegic.Notes.Note
-  alias Sportegic.People.{Profile, ProfilePosition}
-  alias Sportegic.LookupTypes.Type
+  alias Sportegic.Profiles
+
 
   defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
 
@@ -57,13 +56,13 @@ defmodule Sportegic.People do
 
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([:document, :visa, :insurance_policy, :addresses,[ profile: [:types]], [notes: query]])
+    |> Repo.preload([:document, :visa, :insurance_policy, :addresses,[ athlete_profile: [:types]], [notes: query]])
   end
 
-  def get_person_profile!(id, org) do
+  def get_person_athlete_profile!(id, org) do
     Person
     |> Repo.get!(id, prefix: org)
-    |> Repo.preload([profile: [:types]])
+    |> Repo.preload([athlete_profile: [:types]])
   end
 
   def get_person_only(id, org) do
@@ -102,7 +101,7 @@ defmodule Sportegic.People do
     |> Person.changeset(attrs)
     |> Repo.insert(prefix: org)
 
-    case People.create_profile(person, org) do
+    case Profiles.create_athlete_profile(person, org) do
       {:ok, _profile} -> {:ok, person}
       error -> error
     end
@@ -833,223 +832,4 @@ defmodule Sportegic.People do
     Address.changeset(address, %{})
   end
 
-
-
-  @doc """
-  Returns the list of athletic_profiles.
-
-  ## Examples
-
-      iex> list_athletic_profiles()
-      [%AthleticProfile{}, ...]
-
-  """
-  def list_profiles(person, org) do
-    Profile
-    |> where([a], a.person_id == ^person.id)
-    |> Repo.all( prefix: org)
-
-  end
-
-  @doc """
-  Gets a single athletic_profile.
-
-  Raises `Ecto.NoResultsError` if the Athletic profile does not exist.
-
-  ## Examples
-
-      iex> get_athletic_profile!(123)
-      %AthleticProfile{}
-
-      iex> get_athletic_profile!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_profile!(id, org) when is_binary(id), do: Repo.get!(Profile, id, prefix: org)
-  def get_profile(person, org) when is_map(person), do: get_profile(person.id, org)
-  def get_profile(person_id, org) when is_binary(person_id) do
-    case People.get_person_profile!(person_id, org) do
-      %{profile: profile } -> profile
-      error -> error
-    end
-  end
-
-
-  def update_profile_postions(person_id, positions, org) do
-    People.get_profile(person_id, org)
-    |> People.Profile.changeset(positions)
-    |> Ecto.Changeset.cast_assoc(:types, with: &Type.changeset/2)
-    |> Repo.update(prefix: org)
-  end
-
-
-  @doc """
-  Creates a athletic_profile.
-
-  ## Examples
-
-      iex> create_athletic_profile(%{field: value})
-      {:ok, %AthleticProfile{}}
-
-      iex> create_athletic_profile(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_profile(person, org) do
-    %Profile{}
-    |> Profile.changeset(%{person_id: person.id})
-    |> Repo.insert(prefix: org)
-  end
-
-  @doc """
-  Updates a athletic_profile.
-
-  ## Examples
-
-      iex> update_athletic_profile(athletic_profile, %{field: new_value})
-      {:ok, %AthleticProfile{}}
-
-      iex> update_athletic_profile(athletic_profile, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_profile(%Profile{} = profile, attrs, org) do
-    profile
-    |> Profile.changeset(attrs)
-    |> Repo.update(prefix: org)
-  end
-
-  @doc """
-  Deletes a AthleticProfile.
-
-  ## Examples
-
-      iex> delete_athletic_profile(athletic_profile)
-      {:ok, %AthleticProfile{}}
-
-      iex> delete_athletic_profile(athletic_profile)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_profile(%Profile{} = profile, org) do
-    Repo.delete(profile, prefix: org)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking athletic_profile changes.
-
-  ## Examples
-
-      iex> change_athletic_profile(athletic_profile)
-      %Ecto.Changeset{source: %AthleticProfile{}}
-
-  """
-  def change_profile(%Profile{} = profile) do
-    Profile.changeset(profile, %{})
-  end
-
-
-
-  @doc """
-  Returns the list of profiles_position.
-
-  ## Examples
-
-      iex> list_profiles_position()
-      [%ProfilePosition{}, ...]
-
-  """
-  def list_profiles_position(person, org) do
-    ProfilePosition
-    |> where([pp], pp.person_id == ^person.id)
-    |> Repo.all(prefix: org)
-  end
-
-
-  @doc """
-  Creates a profile_position.
-
-  ## Examples
-
-      iex> create_profile_position(%{field: value})
-      {:ok, %ProfilePosition{}}
-
-      iex> create_profile_position(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_profile_position(attrs \\ %{}, org) do
-    %ProfilePosition{}
-    |> ProfilePosition.changeset(attrs)
-    |> Repo.insert(prefix: org)
-  end
-
-  def create_profile_position(person, position_name, org) when is_binary(position_name) do
-    case Repo.get_by(Type, %{name: position_name}, prefix: org) do
-      type when is_map(type) ->
-        ProfilePosition.changeset(%ProfilePosition{}, %{
-          profile_id: person.profile.id,
-          type_id: type.id
-        })
-        |> Repo.insert!(prefix: org)
-
-      _ ->
-        {:error, "Position does not exist"}
-    end
-  end
-
-  def create_profile_positions(person, positions_list, org) when is_list(positions_list) do
-    Enum.each(positions_list, &create_profile_position(person, &1, org))
-  end
-
-
-
-
-
-  @doc """
-  Updates a profile_position.
-
-  ## Examples
-
-      iex> update_profile_position(profile_position, %{field: new_value})
-      {:ok, %ProfilePosition{}}
-
-      iex> update_profile_position(profile_position, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_profile_position(%ProfilePosition{} = profile_position, attrs) do
-    profile_position
-    |> ProfilePosition.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a ProfilePosition.
-
-  ## Examples
-
-      iex> delete_profile_position(profile_position)
-      {:ok, %ProfilePosition{}}
-
-      iex> delete_profile_position(profile_position)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_profile_position(%ProfilePosition{} = profile_position) do
-    Repo.delete(profile_position)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking profile_position changes.
-
-  ## Examples
-
-      iex> change_profile_position(profile_position)
-      %Ecto.Changeset{source: %ProfilePosition{}}
-
-  """
-  def change_profile_position(%ProfilePosition{} = profile_position) do
-    ProfilePosition.changeset(profile_position, %{})
-  end
 end
