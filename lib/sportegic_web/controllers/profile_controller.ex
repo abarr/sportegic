@@ -18,9 +18,7 @@ defmodule SportegicWeb.ProfileController do
   end
 
   def index(conn, _params, person, org, _permissions) do
-    
     athlete_profile = Profiles.list_athlete_profiles(person, org)
-    IO.inspect(athlete_profile)
     render(conn, "index.html", athlete_profile: athlete_profile, person: person)
   end
 

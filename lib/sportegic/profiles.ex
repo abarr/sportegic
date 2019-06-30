@@ -8,6 +8,7 @@ defmodule Sportegic.Profiles do
   alias Sportegic.People
   alias Sportegic.Profiles
   alias Sportegic.Profiles.{AthleteProfile, PlayingPosition, Performance}
+  alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Users.User
   
@@ -53,10 +54,25 @@ defmodule Sportegic.Profiles do
 
 
   def update_athlete_profile_postions(person_id, positions, org) do
-    Profiles.get_athlete_profile(person_id, org)
-    |> Profiles.AthleteProfile.changeset(positions)
-    |> Ecto.Changeset.cast_assoc(:types, with: &Type.changeset/2)
-    |> Repo.update(prefix: org)
+    profile = Profiles.get_athlete_profile(person_id, org)
+
+    ids = positions
+    |> Enum.map(fn p -> 
+      LookupTypes.get_type_id_by_name!(p.name, org)
+    end)
+    |> Enum.map(fn id -> 
+      PlayingPosition
+      |> PlayingPosition.changeset(%{profile_id: profile.id, type_id: id})
+    end)
+    |> IO.inspect
+    
+  end
+
+  def load_positions(ids) do
+    case ids || [] do
+      [] -> []
+      ids -> Repo.all from t in Type, where: t.id in ^ids
+    end
   end
 
 

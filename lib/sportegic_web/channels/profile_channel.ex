@@ -37,12 +37,12 @@ defmodule SportegicWeb.ProfileChannel do
   end
 
   def handle_in("update_positions", %{"org" => org, "person_id" => person_id, "positions" => positions, "token" => token}, socket) do
-    lookup = LookupTypes.get_lookup_by_name!("Playing Positions", org)
-
     positions = positions
+    |> IO.inspect(label: "Before:")
     |> Enum.map(fn p ->
-       %{ name: p["tag"], lookup_id: lookup.id}
+       %{ name: p["tag"]}
     end)
+    |> IO.inspect(label: "After:")
 
     case Profiles.update_athlete_profile_postions(person_id, %{ types: positions}, org) do
        {:ok, _profile} ->

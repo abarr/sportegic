@@ -172,6 +172,13 @@ defmodule Sportegic.LookupTypes do
     |> Repo.get_by!([name: name], prefix: org)
   end
 
+  def get_type_id_by_name!(name, org) do
+    Type
+    |> select([t], t.id)
+    |> Repo.get_by!([name: name], prefix: org)
+     
+  end
+
   @doc """
   Creates a type.
 
@@ -203,9 +210,13 @@ defmodule Sportegic.LookupTypes do
 
   """
   def update_type(%Type{} = type, attrs, org) do
+    IO.inspect(attrs)
     type
+    |> IO.inspect
     |> Type.changeset(attrs)
+    |> IO.inspect
     |> Repo.update(prefix: org)
+    |> IO.inspect
   end
 
   @doc """
