@@ -14,14 +14,14 @@ defmodule SportegicWeb.TypeController do
   end
 
   def index(conn, _params, lookup, org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "view:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "view:lookup_permissions", "", permissions) do
       types = LookupTypes.list_types(lookup, org)
       render(conn, "index.html", types: types, lookup: lookup)
     end
   end
 
   def new(conn, _params, lookup, _org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "create:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "create:lookup_permissions", "", permissions) do
         changeset =
         %Type{lookup_id: lookup.id}
         |> LookupTypes.change_type()
@@ -31,7 +31,7 @@ defmodule SportegicWeb.TypeController do
   end
 
   def create(conn, %{"type" => type_params}, lookup, org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "create:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "create:lookup_permissions", "", permissions) do
       type_params =
         type_params
         |> Map.put("lookup_id", lookup.id)
@@ -49,7 +49,7 @@ defmodule SportegicWeb.TypeController do
   end
 
   def edit(conn, %{"id" => id}, lookup, org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "edit:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "edit:lookup_permissions", "", permissions) do
       type = LookupTypes.get_type!(lookup, id, org)
       changeset = LookupTypes.change_type(type)
       render(conn, "edit.html", type: type, changeset: changeset, lookup: lookup)
@@ -57,7 +57,7 @@ defmodule SportegicWeb.TypeController do
   end
 
   def update(conn, %{"id" => id, "type" => type_params}, lookup, org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "edit:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "edit:lookup_permissions", "", permissions) do
       type = LookupTypes.get_type!(lookup, id, org)
 
       case LookupTypes.update_type(type, type_params, org) do

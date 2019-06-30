@@ -12,7 +12,7 @@ defmodule SportegicWeb.LookupController do
   end
 
   def index(conn, _params, org, permissions) do
-    with :ok <- Bodyguard.permit(LookupTypes, "view:loookup_permissions", "", permissions) do
+    with :ok <- Bodyguard.permit(LookupTypes, "view:lookup_permissions", "", permissions) do
       lookups = LookupTypes.list_lookups(org)
       render(conn, "index.html", lookups: lookups)
     end

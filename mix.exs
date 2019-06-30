@@ -4,8 +4,8 @@ defmodule Sportegic.MixProject do
   def project do
     [
       app: :sportegic,
-      version: "0.1.0",
-      elixir: "~> 1.8",
+      version: "0.1.1",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
