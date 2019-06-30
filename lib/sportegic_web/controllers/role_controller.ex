@@ -52,7 +52,6 @@ defmodule SportegicWeb.RoleController do
         |> redirect(to: Routes.role_path(conn, :index))
       else
         {:error, %Ecto.Changeset{} = changeset} ->
-          IO.inspect(changeset)
           render(conn, "new.html", changeset: changeset)
       end
     end
@@ -78,7 +77,6 @@ defmodule SportegicWeb.RoleController do
           |> redirect(to: Routes.role_path(conn, :index))
 
         _ ->
-          IO.inspect(changeset, label: "CHANGESET")
           render(conn, "edit.html",
             role: role,
             changeset: changeset,

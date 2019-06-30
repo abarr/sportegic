@@ -77,7 +77,9 @@ defmodule SportegicWeb.Router do
 
       get "/notes/new", NoteController, :new
 
-      resources "/profile", ProfileController, only: [:index]
+      resources "/profile", ProfileController, only: [:index] do
+        resources "/performance", PerformanceController, only: [:new, :create]
+      end
     end
 
     resources "/notes", NoteController do

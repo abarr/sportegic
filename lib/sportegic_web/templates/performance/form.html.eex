@@ -1,15 +1,58 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, :review %>
-  <%= textarea f, :review %>
-  <%= error_tag f, :review %>
-
-  <div>
-    <%= submit "Save" %>
+<%= form_for @changeset, @action, [id: "performance-form"], fn f -> %>
+  <div class="input-field col s12 m3 flatpickr-performance-date ">
+    <%= text_input f, :performance_date , [ class: "grey-text lighten-2", placeholder: "Performance date", data: [input: "true"]]%>
+    <%= error_tag_sportegic f, :performance_date %>
   </div>
+  <div class="input-field col s12 m3 custom-select"> 
+    <%= select f, :context_id, @review_types, [ required: "true", id: "performance_context_select", class: set_field_class(f, :context_id, ""), required: "true"]%>
+    <%= error_tag_sportegic :context_id %>
+  </div>
+  <div class="input-field col s12 m3"> 
+    <%= select f, :performance_area_id, @area_types, [ required: "true", id: "performance_area_select", class: set_field_class(f, :performance_area_id, ""), required: "true"]%>
+    <%= error_tag_sportegic :performance_area_id %>
+  </div>
+  <div class="input-field col s12 m3"> 
+    <%= select f, :rating_id, @rating_types, [ required: "true", id: "performance_rating_select", class: set_field_class(f, :rating_id, ""), required: "true"]%>
+    <%= error_tag_sportegic :rating_id %>
+  </div>
+
+  <%= hidden_input f, :review , [  required: "true"]%>
+  <div class="input-field col s12 page">
+    <trix-editor input="performance_review" placeholder="Enter your review ..."></trix-editor>
+  </div>
+
+  <div class="fixed-action-btn">
+    <button type="submit" onclick="check_form()" class="btn-floating btn-large green z-depth-0">
+      <i class="large material-icons">save</i>
+    </button>
+  </div>
+  
 <% end %>
+
+<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/trix.css") %>"/>
+<script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/trix.js") %>"></script>
+
+<script>
+  function check_form(){
+   
+    let form = document.getElementById('performance-form');
+      if (form.checkValidity() == false) {
+          let previous_list = form.querySelectorAll(".invalid")
+          for( var item of previous_list){
+                item.classList.remove("invalid")
+          }
+
+          let list = form.querySelectorAll(':invalid');
+          for (var item of list) {
+            if(item.tagName === "SELECT"){
+              item.parentNode.classList += " invalid"
+            }else{
+              item.classList += " invalid"
+            }
+                
+          }
+      }
+  }
+
+  
+  </script>

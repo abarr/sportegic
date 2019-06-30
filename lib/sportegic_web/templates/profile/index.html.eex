@@ -29,7 +29,7 @@
             <div class="row remove-bottom-margin">
                 <div class="col s12 valign-wrapper"> 
                     <h5 class="heading grey-text lighten-2 ">
-                      Athletic Performance
+                      Performance Records
                     </h5>
                     
                   </a>
@@ -39,16 +39,41 @@
           <div class="divider"></div>
         </div>
         <div class="col s12">
-        
-      </div>
-
-
-
-
+          <table class="highlight">
+            <thead>
+              <tr>
+                  <th >Performance Date</th>
+                  <th >Reviewer</th>
+                  <th>Type</th>
+                  <th>Area</th>
+                  <th>Rating</th>
+                  <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for performance <- @athlete_profile.performances do %>
+                <tr >
+                  <td ><%= performance.performance_date %></td>
+                  <td ><%= performance.user.firstname <> " " <> performance.user.lastname  %></td>
+                  <td ><%= performance.context.name %></td>
+                  <td ><%= performance.performance_area.name %></td>
+                  <td ><%= performance.rating.name %></td>
+                  <td ><%= performance.review %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>  
+        </div>
       </div>
     </div>
 
   </div>
 </div>
 
-
+<div>
+    <div class="fixed-action-btn ">
+      <%= link to: Routes.person_profile_performance_path(@conn, :new, @person, @athlete_profile), class: "btn-floating btn-large blue z-depth-0"  do %>
+        <i class="large material-icons">add</i>
+      <% end %>
+    </div>
+</div>

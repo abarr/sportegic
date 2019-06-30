@@ -92,7 +92,6 @@ defmodule SportegicWeb.SquadController do
         |> put_flash(:info, "Squad updated successfully.")
         |> redirect(to: Routes.squad_path(conn, :show, squad))
       error ->
-        IO.inspect(error)
         squad = Squads.get_squad!(squad_id, org)
         conn
         |> put_flash(:danger, "Unable to remove members")

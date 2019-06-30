@@ -4,7 +4,7 @@ defmodule Sportegic.Repo.Migrations.CreatePerformances do
   def change do
     create table(:performances) do
       add :review, :text
-      
+      add :performance_date, :utc_datetime
       add :athlete_profile_id, references(:athlete_profiles, on_delete: :nothing)
       add :user_id, references(:users, on_delete: :nothing)
       add :performance_area_id, references(:types, on_delete: :nothing)

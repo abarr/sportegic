@@ -9,6 +9,7 @@ defmodule Sportegic.Profiles do
   alias Sportegic.Profiles
   alias Sportegic.Profiles.{AthleteProfile, PlayingPosition, Performance}
   alias Sportegic.LookupTypes.Type
+  alias Sportegic.Users.User
   
 
   @doc """
@@ -20,13 +21,13 @@ defmodule Sportegic.Profiles do
       [%AthleticProfile{}, ...]
 
   """
-  def list_athlete_profiles(person, org) do
+  def list_athlete_profiles(%{id: person_id}, org) do
     AthleteProfile
-    |> where([a], a.person_id == ^person.id)
-    |> Repo.all( prefix: org)
-
+    |> Repo.get_by!( [person_id: person_id], prefix: org)
+    |> Repo.preload( [performances: [:user, :context, :performance_area, :rating]])
   end
 
+ 
   @doc """
   Gets a single athletic_profile.
 

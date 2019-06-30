@@ -20,6 +20,7 @@ import Visa from "./visa"
 import Notes from "./notes"
 import Tasks from "./tasks"
 import Squads from "./squads"
+import Performance from "./performance"
 
 // SOCKETS
 import socket from "./socket"
@@ -36,9 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
     Calendar.attachFlatpickrIssuedDate(flatpickr);
     Calendar.attachFlatpickrEventDate(flatpickr);
     Calendar.attachFlatpickrDueDate(flatpickr);
+    Calendar.attachFlatpickrPerformanceDate(flatpickr);
     Document.setupDocumentForm(M);
     Visa.setupVisaForm(M);
     User.setupUserForm(M);
+    Performance.form_setup(M);
 
 
     // Calendar.attachFlatpickrExpiry(flatpickr);
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Notes.notes_search(Vue, sportegic_socket);
     };
 
-    if (window.location.pathname.split("/")[3] == "profile")
+    if (window.location.pathname.split("/")[3] == "profile" && document.getElementById('p'))
     {
         let sportegic_socket = socket.connect_socket();
         Profile.load_positions(sportegic_socket);

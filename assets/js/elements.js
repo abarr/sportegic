@@ -67,12 +67,12 @@ let Elements = {
             }
         });
 
-        let fabs = document.querySelectorAll('.fixed-action-btn');
-        M.FloatingActionButton.init(fabs, {
-            direction: 'left',
-            hoverEnabled: false
+        // let fabs = document.querySelectorAll('.fixed-action-btn');
+        // M.FloatingActionButton.init(fabs, {
+        //     direction: 'left',
+        //     hoverEnabled: false
 
-        });
+        // });
 
         let brand = document.getElementById("fourteen");
         M.CharacterCounter.init(brand);

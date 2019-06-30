@@ -39,7 +39,6 @@ defmodule SportegicWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params} = params, org, _permissions) do
-    IO.inspect(params, label: "Create Task:")
     %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
 
     task_params =
@@ -64,7 +63,6 @@ defmodule SportegicWeb.TaskController do
         |> redirect(to: Routes.task_path(conn, :show, task))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset, label: "CREATE TASK ERROR:")
         render(conn, "new.html", changeset: changeset)
     end
   end
