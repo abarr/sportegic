@@ -10,9 +10,8 @@ defmodule Sportegic.Profiles do
   alias Sportegic.Profiles.{AthleteProfile, AthleteProfilePlayingPosition, Performance}
   alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
-  alias Sportegic.Users.User
   
-
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
   @doc """
   Returns the list of athletic_profiles.
 
@@ -276,8 +275,6 @@ defmodule Sportegic.Profiles do
       ** (Ecto.NoResultsError)
 
   """
-  def get_performance!(id, org), do: Repo.get!(Performance, id, prefix: org)
-
   def get_performance!(id, org) when is_binary(id), do: Repo.get!(Performance, id, prefix: org)
   def get_performance(person, org) when is_map(person), do: get_performance(person.athlete_profile.id, org)
   def get_performance(profile_id, org) when is_binary(profile_id) do

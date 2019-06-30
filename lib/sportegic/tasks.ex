@@ -11,6 +11,7 @@ defmodule Sportegic.Tasks do
   alias Sportegic.People
   alias Sportegic.Users.User
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
   @doc """
   Returns the list of tasks.
 

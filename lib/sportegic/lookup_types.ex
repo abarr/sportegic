@@ -10,6 +10,8 @@ defmodule Sportegic.LookupTypes do
   alias Sportegic.LookupTypes.Seeds
   alias Sportegic.LookupTypes.Type
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
+
   @doc """
   Returns the list of lookups.
 

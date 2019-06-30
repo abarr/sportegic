@@ -8,6 +8,7 @@ defmodule Sportegic.Squads do
   alias Sportegic.Squads.{Squad, SquadPerson}
   alias Sportegic.People.Person
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
   @doc """
   Returns the list of squads.
 

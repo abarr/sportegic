@@ -12,6 +12,7 @@ defmodule Sportegic.Notes do
   alias Sportegic.LookupTypes.Type
   alias Sportegic.People
 
+  defdelegate authorize(action, user, params), to: Sportegic.Users.Authorisation
   @doc """
   Returns the list of notes.
 

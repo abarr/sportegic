@@ -1,7 +1,6 @@
 defmodule Sportegic.Profiles.Performance do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Sportegic.Profiles
   alias Sportegic.Profiles.AthleteProfile
   alias Sportegic.Users.User
   alias Sportegic.LookupTypes.Type

@@ -14,52 +14,58 @@ defmodule SportegicWeb.NoteController do
     apply(__MODULE__, action_name(conn), args)
   end
 
-  def index(conn, _params, org, _permissions) do
-    notes = Notes.list_notes(org)
-    render(conn, "index.html", notes: notes)
-  end
-
-  def new(conn, params, org, _permissions) do
-    case Map.has_key?(params, "person_id") do
-      false ->
-        changeset = Notes.change_note(%Note{})
-        render(conn, "new.html", changeset: changeset)
-
-      _ ->
-        person = People.get_person_only(params["person_id"], org)
-        note = %Note{people: [person], types: []}
-        changeset = Notes.change_note(%Note{})
-        render(conn, "new.html", changeset: changeset, note: note)
+  def index(conn, _params, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "view:note_permissions", "", permissions) do
+      notes = Notes.list_notes(org)
+      render(conn, "index.html", notes: notes)
     end
   end
 
-  def create(conn, %{"note" => note_params}, org, _permissions) do
-    # Sanitize user input
-    note_params =
-      note_params
-      |> only_basic_html()
-      |> Map.put("user_id", conn.assigns.user.id)
+  def new(conn, params, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "create:note_permissions", "", permissions) do
+      case Map.has_key?(params, "person_id") do
+        false ->
+          changeset = Notes.change_note(%Note{})
+          render(conn, "new.html", changeset: changeset)
 
-    case Notes.create_note(note_params, org) do
-      {:ok, note} ->
-        %{"types" => tags_list} = note_params
-        Notes.create_note_types(note, tags_list, org)
+        _ ->
+          person = People.get_person_only(params["person_id"], org)
+          note = %Note{people: [person], types: []}
+          changeset = Notes.change_note(%Note{})
+          render(conn, "new.html", changeset: changeset, note: note)
+      end
+    end
+  end
 
-        case Map.has_key?(note_params, "people") do
-          true ->
-            %{"people" => people_list} = note_params
-            Notes.create_note_people(note, people_list, org)
+  def create(conn, %{"note" => note_params}, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "create:note_permissions", "", permissions) do
+      # Sanitize user input
+      note_params =
+        note_params
+        |> only_basic_html()
+        |> Map.put("user_id", conn.assigns.user.id)
 
-          _ ->
-            nil
-        end
+      case Notes.create_note(note_params, org) do
+        {:ok, note} ->
+          %{"types" => tags_list} = note_params
+          Notes.create_note_types(note, tags_list, org)
 
-        conn
-        |> put_flash(:info, "Note created successfully.")
-        |> redirect(to: Routes.note_path(conn, :show, note))
+          case Map.has_key?(note_params, "people") do
+            true ->
+              %{"people" => people_list} = note_params
+              Notes.create_note_people(note, people_list, org)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+            _ ->
+              nil
+          end
+
+          conn
+          |> put_flash(:info, "Note created successfully.")
+          |> redirect(to: Routes.note_path(conn, :show, note))
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "new.html", changeset: changeset)
+      end
     end
   end
 
@@ -68,40 +74,47 @@ defmodule SportegicWeb.NoteController do
     |> Map.put("details", HtmlSanitizeEx.basic_html(details))
   end
 
-  def show(conn, %{"id" => id}, org, _permissions) do
-    note = Notes.get_note!(id, org)
-    # |> Map.put(:event_date, Timex.to_datetime(note.event_date, "Australia/Brisbane"))
-
-    changeset = Notes.change_comment(%Comment{})
-    render(conn, "show.html", note: note, changeset: changeset)
-  end
-
-  def edit(conn, %{"id" => id}, org, _permissions) do
-    note = Notes.get_note!(id, org)
-    changeset = Notes.change_note(note)
-    render(conn, "edit.html", note: note, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "note" => note_params}, org, _permissions) do
-    note = Notes.get_note!(id, org)
-
-    case Notes.update_note(note, note_params, org) do
-      {:ok, note} ->
-        conn
-        |> put_flash(:info, "Note created successfully.")
-        |> redirect(to: Routes.note_path(conn, :show, note))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", changeset: changeset, note: note)
+  def show(conn, %{"id" => id}, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "view:note_permissions", "", permissions) do
+      note = Notes.get_note!(id, org)
+      
+      changeset = Notes.change_comment(%Comment{})
+      render(conn, "show.html", note: note, changeset: changeset)
     end
   end
 
-  def delete(conn, %{"id" => id}, org) do
-    note = Notes.get_note!(id, org)
-    {:ok, _note} = Notes.delete_note(note, org)
+  def edit(conn, %{"id" => id}, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "edit:note_permissions", "", permissions) do
+      note = Notes.get_note!(id, org)
+      changeset = Notes.change_note(note)
+      render(conn, "edit.html", note: note, changeset: changeset)
+    end
+  end
 
-    conn
-    |> put_flash(:info, "Note deleted successfully.")
-    |> redirect(to: Routes.note_path(conn, :index))
+  def update(conn, %{"id" => id, "note" => note_params}, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "edit:note_permissions", "", permissions) do
+      note = Notes.get_note!(id, org)
+
+      case Notes.update_note(note, note_params, org) do
+        {:ok, note} ->
+          conn
+          |> put_flash(:info, "Note created successfully.")
+          |> redirect(to: Routes.note_path(conn, :show, note))
+
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", changeset: changeset, note: note)
+      end
+    end
+  end
+
+  def delete(conn, %{"id" => id}, org, permissions) do
+    with :ok <- Bodyguard.permit(Notes, "delete:note_permissions", "", permissions) do
+      note = Notes.get_note!(id, org)
+      {:ok, _note} = Notes.delete_note(note, org)
+
+      conn
+      |> put_flash(:info, "Note deleted successfully.")
+      |> redirect(to: Routes.note_path(conn, :index))
+    end
   end
 end

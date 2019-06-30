@@ -17,14 +17,14 @@ defmodule SportegicWeb.PersonController do
   end
 
   def new(conn, _params, _org, permissions) do
-    with :ok <- Bodyguard.permit(People, "create:people_permissions", :person, permissions) do
+    with :ok <- Bodyguard.permit(People, "create:people_permissions", "", permissions) do
       changeset = People.change_person(%Person{})
       render(conn, "new.html", changeset: changeset)
     end
   end
 
   def create(conn, %{"person" => person_params}, org, permissions) do
-    with :ok <- Bodyguard.permit(People, "create:people_permissions", :person, permissions) do
+    with :ok <- Bodyguard.permit(People, "create:people_permissions", "", permissions) do
       case People.create_person(person_params, org) do
         {:ok, person} ->
           conn
@@ -45,7 +45,7 @@ defmodule SportegicWeb.PersonController do
   end
 
   def edit(conn, %{"id" => id}, org, permissions) do
-    with :ok <- Bodyguard.permit(People, "edit:people_permissions", :person, permissions) do
+    with :ok <- Bodyguard.permit(People, "edit:people_permissions", "", permissions) do
       person = People.get_person!(id, org)
       changeset = People.change_person(person)
       render(conn, "edit.html", person: person, changeset: changeset)
@@ -53,7 +53,7 @@ defmodule SportegicWeb.PersonController do
   end
 
   def update(conn, %{"id" => id, "person" => person_params}, org, permissions) do
-    with :ok <- Bodyguard.permit(People, "edit:people_permissions", :person, permissions) do
+    with :ok <- Bodyguard.permit(People, "edit:people_permissions", "", permissions) do
       person = People.get_person!(id, org)
 
       case People.update_person(person, person_params, org) do
@@ -71,7 +71,7 @@ defmodule SportegicWeb.PersonController do
   end
 
   def delete(conn, %{"id" => id}, permissions, org, permissions) do
-    with :ok <- Bodyguard.permit(People, "delete:people_permissions", :person, permissions) do
+    with :ok <- Bodyguard.permit(People, "delete:people_permissions", "", permissions) do
       person = People.get_person!(id, org)
       {:ok, _person} = People.delete_person(person, org)
 
