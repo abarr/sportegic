@@ -63,6 +63,7 @@ defmodule Sportegic.Profiles do
     |> Enum.map(fn id -> 
       PlayingPosition
       |> PlayingPosition.changeset(%{profile_id: profile.id, type_id: id})
+      |> Repo.update(prefix: org)
     end)
     |> IO.inspect
     
