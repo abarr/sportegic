@@ -53,7 +53,7 @@
             <tbody>
               <%= for performance <- @athlete_profile.performances do %>
                 <tr >
-                  <td ><%= performance.performance_date %></td>
+                  <td ><%= readable_date!(performance.performance_date, @conn.assigns.timezone) %></td>
                   <td ><%= performance.user.firstname <> " " <> performance.user.lastname  %></td>
                   <td ><%= performance.context.name %></td>
                   <td ><%= performance.performance_area.name %></td>

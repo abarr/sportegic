@@ -2,8 +2,9 @@ defmodule Sportegic.Profiles.AthleteProfile do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias __MODULE__
   alias Sportegic.People.Person
-  alias Sportegic.Profiles.{PlayingPosition, Performance}
+  alias Sportegic.Profiles.{AthleteProfilePlayingPosition, Performance}
   alias Sportegic.LookupTypes.Type
 
 
@@ -12,7 +13,7 @@ defmodule Sportegic.Profiles.AthleteProfile do
     belongs_to(:person, Person)
 
     has_many(:performances, Performance)
-    many_to_many(:types, Type, join_through: PlayingPosition, on_replace: :delete)
+    many_to_many(:positions, Type, join_through: AthleteProfilePlayingPosition, on_replace: :delete)
 
     timestamps(type: :utc_datetime)
   end
@@ -22,5 +23,12 @@ defmodule Sportegic.Profiles.AthleteProfile do
     profile
     |> cast(attrs, [:available, :person_id])
     |> validate_required([:available, :person_id])
+  end
+
+  def update_positions_changeset(%AthleteProfile{} = profile, positions) do
+    profile
+    |> cast(%{}, [:available, :person_id])
+    |> put_assoc(:positions, positions)
+
   end
 end

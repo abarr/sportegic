@@ -5,6 +5,7 @@ defmodule Sportegic.LookupTypes.Type do
   alias Sportegic.LookupTypes.Lookup
   alias Sportegic.Notes.Note
   alias Sportegic.Notes.NoteType
+  alias Sportegic.Profiles.AthleteProfile
   
   @derive {Jason.Encoder, only: [:name]}
 
@@ -12,9 +13,8 @@ defmodule Sportegic.LookupTypes.Type do
     field(:name, :string)
     belongs_to(:lookup, Lookup)
 
-    # has_many(:document, Document)
-
     many_to_many(:notes, Note, join_through: NoteType)
+    many_to_many(:athlete_profiles, AthleteProfile, join_through: AthleteProfilePlayingPosition, on_replace: :delete)
 
     timestamps(type: :utc_datetime)
   end

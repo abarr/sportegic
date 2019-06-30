@@ -7,7 +7,7 @@ defmodule Sportegic.Profiles do
   alias Sportegic.Repo
   alias Sportegic.People
   alias Sportegic.Profiles
-  alias Sportegic.Profiles.{AthleteProfile, PlayingPosition, Performance}
+  alias Sportegic.Profiles.{AthleteProfile, AthleteProfilePlayingPosition, Performance}
   alias Sportegic.LookupTypes
   alias Sportegic.LookupTypes.Type
   alias Sportegic.Users.User
@@ -53,30 +53,30 @@ defmodule Sportegic.Profiles do
   end
 
 
-  def update_athlete_profile_postions(person_id, positions, org) do
+  def update_athlete_profile_playing_postions(person_id, positions, org) do
     profile = Profiles.get_athlete_profile(person_id, org)
 
     ids = positions
     |> Enum.map(fn p -> 
       LookupTypes.get_type_id_by_name!(p.name, org)
     end)
-    |> Enum.map(fn id -> 
-      PlayingPosition
-      |> PlayingPosition.changeset(%{profile_id: profile.id, type_id: id})
-      |> Repo.update(prefix: org)
-    end)
-    |> IO.inspect
     
-  end
+    positions = Type
+    |> where([t], t.id in ^ids)
+    |> Repo.all(prefix: org)  
 
-  def load_positions(ids) do
-    case ids || [] do
-      [] -> []
-      ids -> Repo.all from t in Type, where: t.id in ^ids
+    with {:ok, _struct} <-
+        profile
+        |> AthleteProfile.update_positions_changeset(positions)
+        |> Repo.update(prefix: org) do
+      {:ok}
+    else
+      error ->
+        error
     end
   end
 
-
+  
   @doc """
   Creates a athletic_profile.
 
@@ -154,7 +154,7 @@ defmodule Sportegic.Profiles do
 
   """
   def list_playing_position(person, org) do
-    PlayingPosition
+    AthleteProfilePlayingPosition
     |> where([pp], pp.person_id == ^person.id)
     |> Repo.all(prefix: org)
   end
@@ -173,15 +173,15 @@ defmodule Sportegic.Profiles do
 
   """
   def create_playing_position(attrs \\ %{}, org) do
-    %PlayingPosition{}
-    |> PlayingPosition.changeset(attrs)
+    %AthleteProfilePlayingPosition{}
+    |> AthleteProfilePlayingPosition.changeset(attrs)
     |> Repo.insert(prefix: org)
   end
 
   def create_playing_position(person, position_name, org) when is_binary(position_name) do
     case Repo.get_by(Type, %{name: position_name}, prefix: org) do
       type when is_map(type) ->
-        PlayingPosition.changeset(%PlayingPosition{}, %{
+        AthleteProfilePlayingPosition.changeset(%AthleteProfilePlayingPosition{}, %{
           athlete_profiles_id: person.athlete_profile.id,
           type_id: type.id
         })
@@ -212,9 +212,9 @@ defmodule Sportegic.Profiles do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_athlete_profile_playing_position(%PlayingPosition{} = athlete_profile_playing_position, attrs) do
+  def update_athlete_profile_playing_position(%AthleteProfilePlayingPosition{} = athlete_profile_playing_position, attrs) do
     athlete_profile_playing_position
-    |> PlayingPosition.changeset(attrs)
+    |> AthleteProfilePlayingPosition.changeset(attrs)
     |> Repo.update()
   end
 
@@ -230,7 +230,7 @@ defmodule Sportegic.Profiles do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_athlete_profile_playing_position(%PlayingPosition{} = athlete_profile_playing_position) do
+  def delete_athlete_profile_playing_position(%AthleteProfilePlayingPosition{} = athlete_profile_playing_position) do
     Repo.delete(athlete_profile_playing_position)
   end
 
@@ -243,8 +243,8 @@ defmodule Sportegic.Profiles do
       %Ecto.Changeset{source: %ProfilePosition{}}
 
   """
-  def change_athlete_profile_playing_position(%PlayingPosition{} = athlete_profile_playing_position) do
-    PlayingPosition.changeset(athlete_profile_playing_position, %{})
+  def change_athlete_profile_playing_position(%AthleteProfilePlayingPosition{} = athlete_profile_playing_position) do
+    AthleteProfilePlayingPosition.changeset(athlete_profile_playing_position, %{})
   end
 
   

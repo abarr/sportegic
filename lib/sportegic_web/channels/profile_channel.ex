@@ -17,7 +17,7 @@ defmodule SportegicWeb.ProfileChannel do
   def handle_in("get_positions", %{"token" => token, "org" => org, "person_id" => person_id}, socket) do
     person = People.get_person_athlete_profile!(person_id, org)
     player_positions =
-      person.athlete_profile.types
+      person.athlete_profile.positions
       |> Enum.map(fn x ->
         %{"tag" => x.name }
       end)
@@ -38,14 +38,13 @@ defmodule SportegicWeb.ProfileChannel do
 
   def handle_in("update_positions", %{"org" => org, "person_id" => person_id, "positions" => positions, "token" => token}, socket) do
     positions = positions
-    |> IO.inspect(label: "Before:")
     |> Enum.map(fn p ->
        %{ name: p["tag"]}
     end)
-    |> IO.inspect(label: "After:")
+    
 
-    case Profiles.update_athlete_profile_postions(person_id, %{ types: positions}, org) do
-       {:ok, _profile} ->
+    case Profiles.update_athlete_profile_playing_postions(person_id, positions, org) do
+       {:ok} ->
         broadcast!(socket, "profile_update:#{token}", %{type: "success", payload: "Positions sccessfully updated!"})
        _ ->
         broadcast!(socket, "profile_update:#{token}", %{type: "success", payload: "There is a problem updating positions. Please call support!"})
