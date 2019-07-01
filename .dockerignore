@@ -1,0 +1,9 @@
+_build/
+deps/
+.git/
+.gitignore
+Makefile
+README*
+test/
+priv/static/
+
