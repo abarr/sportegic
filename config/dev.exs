@@ -52,7 +52,7 @@ config :sportegic, Sportegic.Repo,
 
 config :sportegic, Sportegic.Communication.Mailer, 
   adapter: Swoosh.Adapters.Local,
-  environment: :dev
+  environment: :live
 
 config :arc,
   storage: Arc.Storage.Local
@@ -60,10 +60,10 @@ config :arc,
 config :goth,
   json: "./rel/deployment/gcp_access/key.json" |> Path.expand() |> File.read!()
 
-config :tesla, adapter: Tesla.Mock
+config :tesla, adapter: Tesla.Adapter.Hackney  
 
 config :sportegic, Sportegic.Communication.TwilioVerification,
   base_url: "https://verify.twilio.com/v2/Services/VA4cb85cee4a011aaf5c4d29edc2399cfd/",
-  twilio_api_key: "ACf87062ffec4145ddccccff9ff91b9bb2",
-  twilio_secret_key: "fa115164ff4c8c05dd74b71229941fa7",
-  environment: :dev
+  twilio_api_key: "ACac7881bb3aa9f0bf4ccf9207cb0525cd",
+  twilio_secret_key: "4cd12ff8f4bbc19ab529f67f55d28e9d",
+  environment: :live

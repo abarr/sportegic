@@ -21,9 +21,11 @@ defmodule Sportegic.Communication.TwilioVerification do
     def check(number, code) do
         case Application.get_env(:sportegic, __MODULE__)[:environment] do
             :live -> 
-                __MODULE__.post("VerificationCheck", %{To: number, Code: code} )
+                result = __MODULE__.post("VerificationCheck", %{To: number, Code: code} )
+                IO.inspect(result, label: "VERIFICATION")
+                result
             _ ->
-               {:ok, %Tesla.Env{body: %{"status" => 200}, status: :not_live}}
+               {:ok, %Tesla.Env{body: %{"status" => :not_live}, status: 200}}
         end
     end
 end
