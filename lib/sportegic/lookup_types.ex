@@ -212,13 +212,9 @@ defmodule Sportegic.LookupTypes do
 
   """
   def update_type(%Type{} = type, attrs, org) do
-    IO.inspect(attrs)
     type
-    |> IO.inspect
     |> Type.changeset(attrs)
-    |> IO.inspect
     |> Repo.update(prefix: org)
-    |> IO.inspect
   end
 
   @doc """

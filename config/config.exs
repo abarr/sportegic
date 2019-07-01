@@ -21,11 +21,6 @@ config :phoenix, :json_library, Jason
 
 config :triplex, repo: Sportegic.Repo
 
-config :sportegic, Sportegic.Communication.TwilioVerification,
-  base_url: "https://verify.twilio.com/v2/Services/VA4cb85cee4a011aaf5c4d29edc2399cfd/",
-  twilio_api_key: "ACac7881bb3aa9f0bf4ccf9207cb0525cd",
-  twilio_secret_key: "4cd12ff8f4bbc19ab529f67f55d28e9d"
-
 config :ex_money,
   default_cldr_backend: Sportegic.Cldr
 

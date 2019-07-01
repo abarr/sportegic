@@ -10,10 +10,20 @@ defmodule Sportegic.Communication.TwilioVerification do
     plug Tesla.Middleware.JSON
 
     def send(number) do
-        __MODULE__.post("Verifications", %{Channel: "sms", To: number})
+        case Application.get_env(:sportegic, __MODULE__)[:environment] do
+            :live -> 
+                __MODULE__.post("Verifications", %{Channel: "sms", To: number})
+            _ -> 
+                {:ok, %Tesla.Env{status: :not_live}}
+        end
     end
 
     def check(number, code) do
-        __MODULE__.post("VerificationCheck", %{To: number, Code: code} )
+        case Application.get_env(:sportegic, __MODULE__)[:environment] do
+            :live -> 
+                __MODULE__.post("VerificationCheck", %{To: number, Code: code} )
+            _ ->
+               {:ok, %Tesla.Env{body: %{"status" => 200}, status: :not_live}}
+        end
     end
 end

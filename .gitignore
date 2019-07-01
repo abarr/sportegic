@@ -44,4 +44,6 @@ npm-debug.log
 # Alternatively, you may comment the line below and commit the
 # secrets files as long as you replace their contents by environment
 # variables.
-/config/*.secret.exs
+/rel/deployment/gcp_access/*.env
+cloud_sql_proxy
+/rel/deployment/gcp_access/key.json

@@ -13,9 +13,7 @@ defmodule SportegicWeb.MobileChannel do
   # Channels can be used in a request/response fashion
   # by sending replies to requests from the client
   def handle_in("send_verification", %{"country" => country, "mobile" => mobile}, socket) do
-    if(Mix.env() == :dev) do
-      push(socket, "send_verification", %{status: "ok", mobile: country <> mobile})
-    else
+    
       country = String.trim(country)
       mobile = sanitize_mobile(mobile)
 
@@ -27,38 +25,36 @@ defmodule SportegicWeb.MobileChannel do
       case status do
         201 ->
           %Tesla.Env{body: %{"to" => to}} = response
-          push(socket, "send_verification", %{status: "ok", mobile: to})
-
+            push(socket, "send_verification", %{status: "ok", mobile: to})
+        :not_live ->
+            push(socket, "send_verification", %{status: "ok", mobile: country <> mobile})  
         _ ->
           push(socket, "send_verification", %{status: "error"})
       end
-    end
+    
 
     {:noreply, socket}
   end
 
   def handle_in("check_code", %{"code" => code, "country" => country, "mobile" => mobile}, socket) do
-    if(Mix.env() == :dev) do
-      push(socket, "check_code", %{status: "ok"})
-    else
       country = String.trim(country)
       mobile = sanitize_mobile(mobile)
       code = sanitize_mobile(code)
 
-      {:ok, %Tesla.Env{body: %{"status" => state}, status: status}} =
+      {:ok, %Tesla.Env{body: %{"status" => code}, status: status}} =
         mobile
         |> String.replace_prefix("", country)
         |> Communication.check_verification_code(code)
 
-      case [status, state] do
+      case [code, status] do
         [200, "approved"] ->
-          push(socket, "check_code", %{status: "ok"})
-
+            push(socket, "check_code", %{status: "ok"})
+        [200, :not_live] ->
+            push(socket, "check_code", %{status: "ok"})
         _ ->
-          push(socket, "check_code", %{status: "error"})
+            push(socket, "check_code", %{status: "error"})
       end
-    end
-
+ 
     {:noreply, socket}
   end
 

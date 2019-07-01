@@ -41,10 +41,11 @@ defmodule Sportegic.Communication do
   end
 
   defp generate_url(conn, entity, type) do
-    if Mix.env() == :dev do
-      "http://" <> conn.host <> ":4000/" <> type <> "?token=" <> Token.generate_token(entity)
-    else
-      "https://" <> conn.host <> "/" <> type <> "?token=" <> Token.generate_token(entity)
-    end
+      case Mailer.get_environment() do
+        :live ->
+            "https://" <> conn.host <> "/" <> type <> "?token=" <> Token.generate_token(entity)
+        _ ->
+            "http://" <> conn.host <> ":4000/" <> type <> "?token=" <> Token.generate_token(entity)
+      end
   end
 end
