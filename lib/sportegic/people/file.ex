@@ -5,10 +5,7 @@ defmodule Sportegic.People.File do
   # To add a thumbnail version:
   # @versions [:original, :thumb]
   @versions [:original]
-  @acl :public_read
-
-  def __storage, do: Arc.Storage.Local
-  # def __storage, do: Arc.Storage.GCS
+  @acl :private
 
   # Whitelist file extensions:
   def validate({file, _}) do
@@ -20,9 +17,20 @@ defmodule Sportegic.People.File do
   #   {:convert, "-strip -thumbnail 250x250^ -gravity north -extent 250x240 -format png", :png}
   # end
 
+  def filename(version, {file, scope}) do
+    case scope.document_id || scope.insurance_policy_id || scope.visa_id do
+      id -> 
+        file_name = Path.basename(file.file_name, Path.extname(file.file_name))
+        "#{id}_#{scope.uuid}_#{version}_#{file_name}"
+      _ -> {:error, "No associated ID in scope"}  
+    end
+
+    
+  end
+
   # Override the storage directory:
-  def storage_dir(_version, {_file, _scope}) do
-    "uploads/people/documents/"
+  def storage_dir(_version, {_file, scope}) do
+    "/documents/#{scope.org}"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

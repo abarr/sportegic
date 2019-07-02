@@ -29,7 +29,7 @@ let Calendar = {
         const dob = flatpickr('.flatpickr-expiry-date', {
             altInput: true,
             altFormat: "j F , Y",
-            dateFormat: "Z",
+            dateFormat: "Y-m-d",
             wrap: true,
             allowInput: true,
             onChange: function (selectedDates, dateStr, instance) {

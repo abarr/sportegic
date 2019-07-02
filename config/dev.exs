@@ -54,11 +54,14 @@ config :sportegic, Sportegic.Communication.Mailer,
   adapter: Swoosh.Adapters.Local,
   environment: :live
 
+# config :arc,
+#   storage: Arc.Storage.Local
 config :arc,
-  storage: Arc.Storage.Local
+  storage: Arc.Storage.GCS,
+  bucket: "sportegic-uploads"
 
 config :goth,
-  json: "./rel/deployment/gcp_access/key.json" |> Path.expand() |> File.read!()
+  json: "./rel/deployment/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
 

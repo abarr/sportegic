@@ -6,7 +6,7 @@ defmodule SportegicWeb.NoteView do
 
   def display_image(person) do
     {person.profile_image, person}
-    |> Avatar.url(:thumb)
+    |> Avatar.url(:thumb, signed: true)
     |> img_tag()
   end
 

@@ -4,7 +4,7 @@ defmodule Sportegic.Repo.Migrations.CreateInsurancePolicies do
   def change do
     create table(:insurance_policies) do
       add(:number, :string)
-      add(:expiry_date, :timestamptz)
+      add(:expiry_date, :date)
       add(:issuer, :string)
       add(:additional_info, :string)
       add(:coverage_amount, :money_with_currency)

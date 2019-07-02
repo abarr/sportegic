@@ -44,7 +44,6 @@ defmodule SportegicWeb.MobileChannel do
       {:ok, %Tesla.Env{body: %{"status" => status}, status: code}} =
         mobile
         |> String.replace_prefix("", country)
-        |> IO.inspect
         |> Communication.check_verification_code(code)
 
       case [code, status] do

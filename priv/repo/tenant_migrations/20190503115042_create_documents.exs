@@ -4,7 +4,7 @@ defmodule Sportegic.Repo.Migrations.CreateDocuments do
   def change do
     create table(:documents) do
       add(:number, :string)
-      add(:expiry_date, :timestamptz)
+      add(:expiry_date, :date)
       add(:issuer, :string)
       add(:additional_info, :string)
       add(:type_id, references(:types, on_delete: :nothing))

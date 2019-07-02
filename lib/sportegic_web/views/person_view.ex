@@ -5,7 +5,7 @@ defmodule SportegicWeb.PersonView do
 
   def display_image(person) do
     {person.profile_image, person}
-    |> Avatar.url(:original)
+    |> Avatar.url(:original, signed: true)
     |> img_tag(class: " responsive-img")
   end
 

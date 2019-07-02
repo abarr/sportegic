@@ -48,58 +48,58 @@ Sportegic.Users.create_user(
 
 Sportegic.People.create_person(
   %{
-    firstname: "Reece",
-    lastname: "Hodge",
-    dob: "1994-08-26",
-    email: "reece.hodge@melbournerebels.com.au",
-    mobile: "+610412654987"
+    "firstname" => "Reece",
+    "lastname" => "Hodge",
+    "dob" => "1994-08-26",
+    "email" => "reece.hodge@melbournerebels.com.au",
+    "mobile" => "+610412654987"
   },
   "rebels_rugby"
 )
 
 Sportegic.People.create_person(
   %{
-    firstname: "Angus",
-    lastname: "Cottrell",
-    dob: "1989-11-20",
-    email: "reece.hodge@melbournerebels.com.au",
-    mobile: "+610412987445"
+    "firstname" =>"Angus",
+    "lastname" => "Cottrell",
+    "dob" => "1989-11-20",
+    "email" => "reece.hodge@melbournerebels.com.au",
+    "mobile" => "+610412987445"
   },
   "rebels_rugby"
 )
 
-Sportegic.People.create_person(
-  %{
-    firstname: "Campbell",
-    lastname: "Magnay",
-    dob: "1996-11-10",
-    email: "campbell.magnay@melbournerebels.com.au",
-    mobile: "+610412459760"
-  },
-  "rebels_rugby"
-)
+# Sportegic.People.create_person(
+#   %{
+#     firstname: "Campbell",
+#     lastname: "Magnay",
+#     dob: "1996-11-10",
+#     email: "campbell.magnay@melbournerebels.com.au",
+#     mobile: "+610412459760"
+#   },
+#   "rebels_rugby"
+# )
 
-Sportegic.People.create_person(
-  %{
-    firstname: "Isi",
-    lastname: "Naisarani",
-    dob: "1995-02-14",
-    email: "isi.naisarani@melbournerebels.com.au",
-    mobile: "+610412342450"
-  },
-  "rebels_rugby"
-)
+# Sportegic.People.create_person(
+#   %{
+#     firstname: "Isi",
+#     lastname: "Naisarani",
+#     dob: "1995-02-14",
+#     email: "isi.naisarani@melbournerebels.com.au",
+#     mobile: "+610412342450"
+#   },
+#   "rebels_rugby"
+# )
 
-Sportegic.People.create_person(
-  %{
-    firstname: "Matt",
-    lastname: "Phillip",
-    dob: "1994-03-07",
-    email: "matt.phillip@melbournerebels.com.au",
-    mobile: "+610412098456"
-  },
-  "rebels_rugby"
-)
+# Sportegic.People.create_person(
+#   %{
+#     firstname: "Matt",
+#     lastname: "Phillip",
+#     dob: "1994-03-07",
+#     email: "matt.phillip@melbournerebels.com.au",
+#     mobile: "+610412098456"
+#   },
+#   "rebels_rugby"
+# )
 
 # #  Note One
 Sportegic.Notes.create_note(
@@ -168,7 +168,7 @@ Sportegic.Notes.create_note_type(
 Sportegic.Notes.create_note_person(
   %{
     note_id: "2",
-    person_id: "4"
+    person_id: "2"
   },
   "rebels_rugby"
 )
@@ -176,7 +176,7 @@ Sportegic.Notes.create_note_person(
 Sportegic.Notes.create_note_person(
   %{
     note_id: "2",
-    person_id: "5"
+    person_id: "1"
   },
   "rebels_rugby"
 )

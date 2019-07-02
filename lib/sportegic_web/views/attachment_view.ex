@@ -5,7 +5,7 @@ defmodule SportegicWeb.AttachmentView do
 
     def display_attachment_link(attachment) do
         {attachment.file, attachment}
-        |> File.url()
+        |> File.url(:original, signed: true)
       end
     
 end

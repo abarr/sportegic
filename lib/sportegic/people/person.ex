@@ -16,6 +16,7 @@ defmodule Sportegic.People.Person do
   schema "people" do
     field(:dob, :date)
     field(:email, :string)
+    field(:org, :string)
     field(:firstname, :string)
     field(:lastname, :string)
     field(:middle_names, :string)
@@ -40,13 +41,14 @@ defmodule Sportegic.People.Person do
   @doc false
   def changeset(person, attrs) do
     person
-    |> cast(attrs, [:firstname, :middle_names, :lastname, :dob, :email, :mobile, :preferred_name])
+    |> cast(attrs, [:firstname, :middle_names, :lastname, :dob, :email, :mobile, :preferred_name, :org])
     |> cast_attachments(attrs, [:profile_image])
     |> validate_required([
       :firstname,
       :lastname,
       :email,
-      :mobile
+      :mobile,
+      :org
     ])
     |> validate_required(:dob, message: "Please provide a Date of Birth")
   end

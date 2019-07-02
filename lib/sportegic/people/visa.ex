@@ -26,6 +26,6 @@ defmodule Sportegic.People.Visa do
   def changeset(visa, attrs) do
     visa
     |> cast(attrs, [:expiry_date, :issued_date, :issuer, :additional_info, :number, :type_id, :person_id, :allowed_stay])
-    |> validate_required([:expiry_date, :issued_date, :issuer, :additional_info, :number, :type_id, :person_id])
+    |> validate_required([:expiry_date, :issued_date, :issuer, :number, :type_id, :person_id])
   end
 end

@@ -97,6 +97,7 @@ defmodule Sportegic.People do
 
   """
   def create_person(attrs \\ %{}, org) do
+    attrs = Map.put(attrs, "org", org)
     {:ok, person} = %Person{}
     |> Person.changeset(attrs)
     |> Repo.insert(prefix: org)
@@ -221,16 +222,14 @@ defmodule Sportegic.People do
   end
 
   def create_document_with_attachments(attrs, org) do
-    multi = Multi.new()
-
-    multi
+    Multi.new()
     |> Multi.run(:document, fn _repo, _changes ->
       create_document_without_attachments(attrs, org)
     end)
     |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} ->
       list =
         attrs["attachments"]
-        |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
+        |> Enum.map(fn f -> %{file: f, document_id: document_id, org: org} end)
         |> Enum.map(&create_attachment(&1, org))
 
       {:ok, list}
@@ -282,7 +281,7 @@ defmodule Sportegic.People do
     |> Multi.run(:attachments, fn _repo, %{document: %{id: document_id}} ->
       list =
         attrs["attachments"]
-        |> Enum.map(fn f -> %{file: f, document_id: document_id} end)
+        |> Enum.map(fn f -> %{file: f, document_id: document_id, org: org} end)
         |> Enum.map(&create_attachment(&1, org))
 
       {:ok, list}
@@ -478,11 +477,12 @@ defmodule Sportegic.People do
     %Visa{}
     |> Visa.changeset(attrs)
     |> Repo.insert(prefix: org)
+    
   end
 
   def create_visa_with_attachments(attrs, org) do
     multi = Multi.new()
-
+    
     multi
     |> Multi.run(:visa, fn _repo, _changes ->
       create_visa_without_attachments(attrs, org)
@@ -490,7 +490,7 @@ defmodule Sportegic.People do
     |> Multi.run(:attachments, fn _repo, %{visa: %{id: visa_id}} ->
       list =
         attrs["attachments"]
-        |> Enum.map(fn f -> %{file: f, visa_id: visa_id} end)
+        |> Enum.map(fn f -> %{file: f, visa_id: visa_id, org: org} end)
         |> Enum.map(&create_attachment(&1, org))
 
       {:ok, list}
@@ -642,15 +642,14 @@ defmodule Sportegic.People do
     multi = Multi.new()
 
     multi
-    |> Multi.run(:visa, fn _repo, _changes ->
+    |> Multi.run(:insurance, fn _repo, _changes ->
       create_insurance_policy_without_attachments(attrs, org)
     end)
-    |> Multi.run(:attachments, fn _repo, %{visa: %{id: insurance_policies_id}} ->
+    |> Multi.run(:attachments, fn _repo, %{insurance: %{id: insurance_policy_id}} ->
       list =
         attrs["attachments"]
-        |> Enum.map(fn f -> %{file: f, insurance_policies_id: insurance_policies_id} end)
+        |> Enum.map(fn f -> %{file: f, insurance_policy_id: insurance_policy_id, org: org} end)
         |> Enum.map(&create_attachment(&1, org))
-
       {:ok, list}
     end)
     |> Repo.transaction()

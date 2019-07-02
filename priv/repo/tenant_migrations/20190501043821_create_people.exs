@@ -3,6 +3,7 @@ defmodule Sportegic.Repo.Migrations.CreatePeople do
 
   def change do
     create table(:people) do
+      add(:org, :string)
       add(:firstname, :string)
       add(:middle_names, :string)
       add(:lastname, :string)

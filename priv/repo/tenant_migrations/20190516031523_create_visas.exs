@@ -3,8 +3,8 @@ defmodule Sportegic.Repo.Migrations.CreateVisas do
 
   def change do
     create table(:visas) do
-      add(:expiry_date, :timestamptz)
-      add(:issued_date, :timestamptz)
+      add(:expiry_date, :date)
+      add(:issued_date, :date)
       add(:issuer, :string)
       add(:allowed_stay, :string)
       add(:additional_info, :string)
