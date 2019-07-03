@@ -4,7 +4,7 @@ import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
 import flatpickr from 'flatpickr'
-import Vue from 'vue/dist/vue.esm.browser.min';
+import Vue from 'vue/dist/vue.esm.browser';
 import Chart from 'chart.js';
 
 
