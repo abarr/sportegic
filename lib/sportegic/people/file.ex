@@ -19,13 +19,11 @@ defmodule Sportegic.People.File do
 
   def filename(version, {file, scope}) do
     case scope.document_id || scope.insurance_policy_id || scope.visa_id do
+      nil -> {:error, "No associated ID in scope"}  
       id -> 
         file_name = Path.basename(file.file_name, Path.extname(file.file_name))
         "#{id}_#{scope.uuid}_#{version}_#{file_name}"
-      _ -> {:error, "No associated ID in scope"}  
     end
-
-    
   end
 
   # Override the storage directory:

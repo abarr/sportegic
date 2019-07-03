@@ -83,7 +83,6 @@ let Calendar = {
             onChange: function (selectedDates, dateStr, instance) {
                 if (instance) {
                     let id = document.getElementById("note_event_date");
-                    console.log(instance)
                     id.nextElementSibling.classList.remove("invalid");
                     id.nextElementSibling.classList.remove("validate");
                 }

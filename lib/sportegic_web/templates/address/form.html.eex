@@ -89,7 +89,6 @@ function check_form(){
             /** @type {!HTMLInputElement} */(document.getElementById('address')),
             {types: ['geocode']});
 
-        console.log(address)
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         address.addListener('place_changed', fillInAddress);
@@ -107,9 +106,6 @@ function check_form(){
 
         // Get the place details from the autocomplete object.
         var place = address.getPlace();
-        console.log(place)
-        
-        
         
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.

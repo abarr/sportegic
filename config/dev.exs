@@ -61,7 +61,8 @@ config :arc,
   bucket: "sportegic-uploads"
 
 config :goth,
-  json: "./rel/deployment/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
+  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
+    
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
 

@@ -92,7 +92,6 @@
     let form = document.getElementById('user-edit-form');
       if (form.checkValidity() == false) {
           let previous_list = form.querySelectorAll(".invalid")
-          console.log(previous_list)
           for( var item of previous_list){
               item.classList.remove("invalid")
               item.classList.remove("red-text");
@@ -101,7 +100,6 @@
           }
 
           let list = form.querySelectorAll(':invalid');
-          console.log(list)
           for (var item of list) {
             if(item.nodeName == "SELECT"){
               item.parentElement.children.item(0).classList.remove("grey-text");
