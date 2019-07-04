@@ -2,7 +2,7 @@ use Mix.Config
 
 config :sportegic, SportegicWeb.Endpoint,
   http: [:inet6, port: 4000],
-  url: [host: "sportegic.com", port: 443, scheme: "https"],
+  url: [host: "sportegic.com", port: 80, scheme: "http"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :sportegic, SportegicWeb.Endpoint, server: true
@@ -23,7 +23,7 @@ config :arc,
   storage: Arc.Storage.GCS
 
 config :goth,
-  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
+  json: "./priv/gcp_access/sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
     
 
 
