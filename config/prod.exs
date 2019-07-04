@@ -2,7 +2,7 @@ use Mix.Config
 
 config :sportegic, SportegicWeb.Endpoint,
   http: [:inet6, port: 4000],
-  url: [host: "localhost", port: 4000],
+  url: [host: "sportegic.com", port: 443, scheme: "https"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :sportegic, SportegicWeb.Endpoint, server: true
@@ -21,10 +21,6 @@ config :sportegic, Sportegic.Communication.Mailer,
 
 config :arc,
   storage: Arc.Storage.GCS
-
-config :goth,
-  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
-    
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
 

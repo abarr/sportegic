@@ -1,18 +1,33 @@
 use Mix.Config
 
-# We don't run a server during test. If one is required,
-# you can enable the server option below.
 config :sportegic, SportegicWeb.Endpoint,
-  http: [port: 4002],
-  server: false
+  http: [:inet6, port: 4000],
+  url: [host: "localhost", port: 4000],
+  cache_static_manifest: "priv/static/cache_manifest.json"
 
-# Print only warnings and errors during test
-config :logger, level: :warn
+config :sportegic, SportegicWeb.Endpoint, server: true
 
-# Configure your database
 config :sportegic, Sportegic.Repo,
   username: "postgres",
-  password: "postgres",
-  database: "sportegic_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  database: "sportegic_prod",
+  hostname: "127.0.0.1",
+  pool_size: 15
+
+config :logger, level: :info
+
+config :sportegic, Sportegic.Communication.Mailer,
+  adapter: Swoosh.Adapters.Mailgun,
+  environment: :live
+
+config :arc,
+  storage: Arc.Storage.GCS
+
+config :goth,
+  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
+    
+
+config :tesla, adapter: Tesla.Adapter.Hackney  
+
+config :sportegic, Sportegic.Communication.TwilioVerification,
+  environment: :live  
+
