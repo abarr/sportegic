@@ -31,7 +31,7 @@ config :arc,
   bucket: "sportegic-uploads"
 
 config :goth,
-  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
+  json: "./priv/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
     
 
 # config :goth,

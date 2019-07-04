@@ -1,6 +1,7 @@
 {
   "repository": {},
   "license": "MIT",
+  "description": "Sportegic",
   "scripts": {
     "deploy": "webpack --mode production",
     "watch": "webpack --mode development --watch"
