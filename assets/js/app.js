@@ -4,8 +4,8 @@ import css from "../css/app.css"
 import "phoenix_html"
 import M from "./materialize";
 import flatpickr from 'flatpickr'
-import Vue from 'vue/dist/vue.esm.browser.min';
-import Chart from 'chart.js';
+import Vue from 'vue/dist/vue.esm.browser'; // THIS NEEDS TO BE CHANGED TO PROD VERSION HOWEVER UNKNOWN ERROR - MAYBE REMOVE VUE
+// import Chart from 'chart.js';
 
 
 
@@ -24,7 +24,7 @@ import Performance from "./performance"
 
 // SOCKETS
 import socket from "./socket"
-import Dashboard from "./dashboard";
+// import Dashboard from "./dashboard";
 import Profile from "./profile";
 
 document.addEventListener('DOMContentLoaded', function () {
