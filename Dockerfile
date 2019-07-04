@@ -35,7 +35,7 @@ ENV LANG=C.UTF-8
 
 # Install openssl
 # RUN apt-get update && apt-get install -y openssl
-RUN apk add --update openssl && \
+RUN apk add --update openssl imagemagick && \
     rm -rf /var/cache/apk/*
 
 
