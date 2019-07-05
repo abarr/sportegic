@@ -2,7 +2,7 @@ use Mix.Config
 
 config :sportegic, SportegicWeb.Endpoint,
   http: [:inet6, port: 4000],
-  url: [host: "sportegic.com", port: 80, scheme: "http"],
+  url: [host: "sportegic.com", port: 443, scheme: "https"],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :sportegic, SportegicWeb.Endpoint, server: true
@@ -10,6 +10,7 @@ config :sportegic, SportegicWeb.Endpoint, server: true
 config :sportegic, Sportegic.Repo,
   username: "postgres",
   database: "sportegic_prod",
+  password: "kiM8s5ngsJbfBEps",
   hostname: "127.0.0.1",
   pool_size: 15
 
@@ -22,8 +23,8 @@ config :sportegic, Sportegic.Communication.Mailer,
 config :arc,
   storage: Arc.Storage.GCS
 
-config :goth,
-  json: "./priv/gcp_access/sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
+# config :goth,
+#   json: "./priv/gcp_access/sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
     
 
 

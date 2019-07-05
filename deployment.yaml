@@ -1,0 +1,73 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sportegic
+  labels:
+    app: sportegic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sportegic
+  template:
+    metadata:
+      labels:
+        app: sportegic
+    spec:
+      volumes:
+        - name: cloudsql-instance-credentials-volume
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: storage-credentials-volume
+          secret:
+            secretName: storage-credentials
+      # This section describes the containers that make up the deployment
+      containers:
+        - name: sportegic
+          image: asia.gcr.io/sportegic/sportegic
+          ports:
+            - containerPort: 4000
+          # Set env variables used for Postgres Connection
+          volumeMounts:
+            - name: storage-credentials-volume
+              mountPath: /secrets/cloudstorage
+              readOnly: true
+          env:
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: sportegic-env-variables-prod	
+                  key: SECRET_KEY_BASE
+            - name: MAILGUN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sportegic-env-variables-prod	
+                  key: MAILGUN_API_KEY            
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sportegic-env-variables-prod	
+                  key: PASSWORD
+            - name: TWILIO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sportegic-env-variables-prod	
+                  key: TWILIO_API_KEY
+            - name: TWILIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sportegic-env-variables-prod	
+                  key: TWILIO_SECRET_KEY
+            - name: GOOGLE_STORAGE_CREDENTIALS
+              value: /secrets/cloudstorage/sportegic-storage-credentials-prod.json
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                     "-instances=sportegic:australia-southeast1:sportegic=tcp:5432",
+                    "-credential_file=/secrets/cloudsql/sportegic-sql-credentials-prod.json"]
+          volumeMounts:
+            - name: cloudsql-instance-credentials-volume
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      

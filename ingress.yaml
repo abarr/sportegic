@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sportegic-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: sportegic-static-ip
+    # kubernetes.io/ingress.allow-http: "false"
+    networking.gke.io/managed-certificates: sportegic-ssl
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: sportegic-service
+          servicePort: 80
+      
+
+
+
+          

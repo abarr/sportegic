@@ -1,0 +1,9 @@
+REFERENCE GUIDE: https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress
+
+1. Run the deployment. This will build the container and deploy it to the Cluster 
+    kubectl apply -f deployment.yaml
+2. Run the service creation (Service represent a group of commonly labelled objects e.g. nodes and pods).
+    kubectl apply -f service.yaml
+3. Run the ingress creation, this sets up a Loadbalancer that distributes traffic to the service 
+    kubectl apply -f ingress.yaml    
+        
