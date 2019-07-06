@@ -1,6 +1,6 @@
 # The directory for local storage testing
 /uploads/
-/deployment/
+/deployment/gcp_access/
 
 /.elixir_ls/
 
