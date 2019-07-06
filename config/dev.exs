@@ -59,7 +59,7 @@ config :arc,
 
 
 config :goth,
-  json: "./priv/gcp_access/sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
+  json: "./sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
     
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
