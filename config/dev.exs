@@ -57,10 +57,8 @@ config :sportegic, Sportegic.Communication.Mailer,
 config :arc,
   storage: Arc.Storage.Local
 
-
 config :goth,
   json: "./sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
-    
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
 
