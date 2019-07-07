@@ -58,7 +58,7 @@ config :arc,
   storage: Arc.Storage.Local
 
 config :goth,
-  json: "./sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
+  disabled: true
 
 config :tesla, adapter: Tesla.Adapter.Hackney  
 
