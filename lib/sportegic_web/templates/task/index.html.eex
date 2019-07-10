@@ -35,7 +35,7 @@
               <%= for task <- @tasks_assigned do %>
                 <tr onclick="go(<%= task.id %>)">
                   <td width="15%"><%= raw(display_days(days_until(task.due_date))) %></td>
-                  <td class="hide-on-med-and-down"><%= task.user.firstname <> " " <> task.user.lastname  %></td>
+                  <td class="hide-on-med-and-down"><%= task.user.fullname  %></td>
                   <td class="truncate"><%= raw(task.action) %></td>
                 </tr>
               <% end %>

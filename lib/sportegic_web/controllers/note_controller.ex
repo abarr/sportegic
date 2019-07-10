@@ -98,7 +98,7 @@ defmodule SportegicWeb.NoteController do
       case Notes.update_note(note, note_params, org) do
         {:ok, note} ->
           conn
-          |> put_flash(:info, "Note created successfully.")
+          |> put_flash(:success, "Note updated successfully.")
           |> redirect(to: Routes.note_path(conn, :show, note))
 
         {:error, %Ecto.Changeset{} = changeset} ->

@@ -3,12 +3,14 @@ defmodule Sportegic.Users.User do
   import Ecto.Changeset
   alias Sportegic.Users.{Role}
   alias Sportegic.Notes.{Note, Comment}
+  alias Sportegic.Tasks.Task
 
   @derive {Jason.Encoder, only: [:firstname, :lastname]}
 
   schema "users" do
     field(:firstname, :string)
     field(:lastname, :string)
+    field(:fullname, :string)
     field(:mobile, :string)
     field(:mobile_no, :string)
     field(:country_code, :string)
@@ -18,18 +20,21 @@ defmodule Sportegic.Users.User do
 
     has_many(:comments, Comment)
     has_many(:notes, Note)
+    has_many(:tasks, Task)
 
     timestamps(type: :utc_datetime)
   end
 
   @doc false
   def changeset(user, attrs) do
-    attrs = add_mobile(attrs)  
+    attrs = add_mobile(attrs)
+    attrs = add_fullname(attrs)  
     
     user
     |> cast(attrs, [
       :firstname,
       :lastname,
+      :fullname,
       :mobile,
       :disabled,
       :user_id,
@@ -41,11 +46,8 @@ defmodule Sportegic.Users.User do
   
   end
 
-  
-  
-
-  def add_mobile(attrs) when map_size(attrs) == 0, do: attrs
-  def add_mobile(attrs) do
+  defp add_mobile(attrs) when map_size(attrs) == 0, do: attrs
+  defp add_mobile(attrs) do
     case Map.has_key?(attrs, :mobile_no) || Map.has_key?(attrs, "mobile_no") do
       true -> 
         case Map.has_key?(attrs, :mobile_no) do
@@ -57,6 +59,26 @@ defmodule Sportegic.Users.User do
             mobile = attrs["country_code"] <> attrs["mobile_no"]
             attrs
             |> Map.put("mobile", mobile)
+            
+        end
+      _    -> attrs
+    end
+  end
+
+  defp add_fullname(attrs) when map_size(attrs) == 0, do: attrs
+  defp add_fullname(attrs) do
+    case Map.has_key?(attrs, :firstname) || Map.has_key?(attrs, "firstname") do
+      true -> 
+        IO.puts("TRUE")
+        case Map.has_key?(attrs, :firstname) do
+          true ->
+            attrs
+            |> Map.put(:fullname, attrs.firstname <> " " <> attrs.lastname)
+            
+          _ ->
+            fullname = attrs["firstname"] <> " " <> attrs["lastname"]
+            attrs 
+            |> Map.put("fullname", fullname)
             
         end
       _    -> attrs

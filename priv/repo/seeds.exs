@@ -36,7 +36,7 @@ Sportegic.Users.create_user(
 
 Sportegic.Users.create_user(
   %{
-    firstname: "Andrew ",
+    firstname: "Andrew",
     lastname: "Barr",
     mobile_no: "0413306150",
     country_code: "+61",

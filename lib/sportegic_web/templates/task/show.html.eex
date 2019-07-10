@@ -19,7 +19,7 @@
        <%= raw(time_until_date(days_until(@task.due_date), @task.due_date, @conn.assigns.timezone)) %> 
       </div>  
       <div class="col s12 l6">
-        <blockquote class=" page task-info"><h6>Task created on the <%= readable_date!(@task.inserted_at, @conn.assigns.timezone) %> by <%= @task.user.firstname <> " " <> @task.user.lastname %></h6> </blockquote>  
+        <blockquote class=" page task-info"><h6>Task created on the <%= readable_date!(@task.inserted_at, @conn.assigns.timezone) %> by <%= @task.user.fullname %></h6> </blockquote>  
        </div>   
       
     </div>
@@ -82,7 +82,7 @@
                       <td > <%= readable_date!(@task.note.event_date) %></td>
                       <td class="hide-on-small-only"> <%= readable_date!(@task.note.inserted_at, @conn.assigns.timezone) %> </td>
                       <td> <%= @task.note.subject %> </td>
-                      <td class="hide-on-small-only"> <%=  @task.note.user.firstname <> " " <> @task.note.user.lastname  %> </td>
+                      <td class="hide-on-small-only"> <%=  @task.note.user.fullname  %> </td>
                       <td class="hide-on-small-only">
                         <%= for tag <- @task.note.types do %>
                           <div class="chip truncate">

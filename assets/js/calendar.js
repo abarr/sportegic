@@ -122,13 +122,30 @@ let Calendar = {
         }
     },
     attachFlatpickrDueDate(flatpickr) {
-        const expiry_date = flatpickr('#task_due_date', {
+        const expiry_date = flatpickr('.flatpickr-due-date', {
             altInput: true,
             altFormat: "F j, Y",
             dateFormat: "Z",
-            minDate: "today",
-            maxDate: new Date().fp_incr(365)
+            maxDate: new Date().fp_incr(365),
+            wrap: true,
+            allowInput: true,
+            onChange: function (selectedDates, dateStr, instance) {
+                if (instance) {
+                    let id = document.getElementById("task_due_date");
+                    id.nextElementSibling.classList.remove("invalid");
+                    id.nextElementSibling.classList.remove("validate");
+                }
+            }
         });
+
+        if (document.getElementById("task_due_date")) {
+            let input = document.getElementById("task_due_date");
+            input.classList += " validate";
+            let input_next = input.nextElementSibling;
+            input_next.setAttribute("readonly", "true");
+            input_next.setAttribute("required", "true");
+            input_next.classList += " grey-text lighten-2 validate";
+        }
     }
 }
 

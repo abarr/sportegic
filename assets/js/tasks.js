@@ -1,20 +1,42 @@
 let Tasks = {
-
+    load_assignee() {
+        let assignee_name = document.getElementsByName("task[assignee_name]")[0];
+        console.log(assignee_name.value)
+        let assignee = [];
+        if(assignee_name.value){assignee.push({ tag: assignee_name.value })}
+        console.log(assignee)
+        return assignee;
+    },
     realtime_user_search(socket) {
 
         let channel = socket.channel("user_search:", { token: window.token })
-        let el = document.querySelector('#autocompleteInput');
+        let el = document.querySelector('.assignee_input');
         let user_list = document.getElementById("user_list")
 
-        let search = M.Autocomplete.init(el, {
-            onAutocomplete: function (event) {
-                let user = document.createElement("input");
-                user.setAttribute("name", "task[user]");
-                user.setAttribute("hidden", "true");
-                user.setAttribute("value", event);
-                user_list.appendChild(user);
+        let current_results = "";
+
+        let search = M.Chips.init(el, {
+            placeholder: 'Assign task',
+            secondaryPlaceholder: '',
+            limit: 1,
+            data: Tasks.load_assignee(),
+            autocompleteOptions: {
+                limit: 1
             },
-            data: {}
+            onChipAdd: function (e, chip) {
+                if (Object.entries(current_results).length === 0 && current_results.constructor === Object){
+                    let instance = M.Chips.getInstance(el);
+                    let len = instance.chipsData.length;
+                    instance.deleteChip(len - 1);
+                 }else{
+                    let assignee = document.getElementById('task_assignee_name')
+                    assignee.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
+                 }                
+            },
+            onChipDelete: function (e, chip) {
+                let assignee = document.getElementById('task_assignee_name')
+                assignee.setAttribute("value", "");
+            }
         });
 
         channel.join()
@@ -29,7 +51,7 @@ let Tasks = {
         }
 
         channel.on(`users:${window.token}`, results => {
-            search.updateData(results.payload)
+            el.M_Chips.autocomplete.updateData(results.payload)
         });
 
     },
@@ -49,26 +71,37 @@ let Tasks = {
             .receive("error", resp => { console.log("Unable to join", resp) })
 
         let el = document.querySelector('.players');
+        let current_results = "";
 
         let search = M.Chips.init(el, {
-            placeholder: 'Enter a name',
+            placeholder: '+Person',
             secondaryPlaceholder: '+Person',
             data: Tasks.load_initial_people(),
             autocompleteOptions: {
                 limit: Infinity
             },
             onChipAdd: function (e, chip) {
-                let people_list = document.getElementById('people_list');
 
-                let tag = document.createElement("input");
-                tag.setAttribute("name", "task[people][]");
-                tag.setAttribute("hidden", "true");
-                tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
-                people_list.appendChild(tag);
+                if (Object.entries(current_results).length === 0 && current_results.constructor === Object){
+                    let instance = M.Chips.getInstance(el);
+                    let len = instance.chipsData.length;
+                    instance.deleteChip(len - 1);
+                 }else{
+                    let people_list = document.getElementById('people_list');
+                    let tag = document.createElement("input");
+                    tag.setAttribute("name", "task[people][]");
+                    tag.setAttribute("hidden", "true");
+                    tag.setAttribute("value", chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")));
+                    people_list.appendChild(tag);
+                 }                
             },
             onChipDelete: function (e, chip) {
-                let tag = document.querySelectorAll('input[value="' + chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i")) + '"]');
-                people_list.removeChild(tag[0]);
+                
+                if(document.querySelectorAll('input[value="'+chip.firstChild.data+'"').length > 0)
+                {
+                    let elem = document.querySelectorAll('input[value="' + chip.firstChild.data + '"')[0];
+                    document.getElementById("people_list").removeChild(elem);
+                }
             }
         });
         let input = ""
@@ -81,6 +114,7 @@ let Tasks = {
 
         channel.on(`search:${window.token}`, results => {
             el.M_Chips.autocomplete.updateData(results.payload);
+            current_results = results.payload;
         });
 
     }

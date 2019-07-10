@@ -29,8 +29,16 @@ defmodule Sportegic.Users do
   end
 
   def get_user_by_name(name, org) do
-    [firstname, lastname] = String.split(name, " ")
-    Repo.get_by(User, [firstname: firstname, lastname: lastname], prefix: org)
+    case name do
+      nil -> {:error, "Please enter a valid User"}
+      name when is_binary(name) ->
+        User
+          |> Repo.get_by([fullname: name], prefix: org)
+        
+      error -> 
+        IO.inspect(error, "GET USER BY NAME")
+        {:error, "Please enter a valid User"}
+    end
   end
 
   def create_user(attrs \\ %{}, org) do

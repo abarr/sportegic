@@ -42,7 +42,7 @@
                   <td > {{ note.event_date | moment }}</td>
                   <td class="hide-on-small-only"> {{ note.inserted_at | moment}} </td>
                   <td> {{ note.subject }} </td>
-                  <td class="hide-on-small-only"> {{ note.user.firstname }} {{ note.user.lastname }} </td>
+                  <td class="hide-on-small-only"> {{ note.user.fullname }} </td>
                   <td class="hide-on-small-only">
                       <div class="chip truncate" v-for="tag in note.types">
                         {{tag.name}}

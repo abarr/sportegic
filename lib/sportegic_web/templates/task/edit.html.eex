@@ -5,7 +5,7 @@
     <div class="section heading">
       <div class="row remove-bottom-margin">
         <div class="col s12"> 
-          <%= link to: Routes.task_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+          <%= link to: Routes.task_path(@conn, :show, @task), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
           <h5 class="heading grey-text lighten-2">Edit Task</h5>
@@ -16,8 +16,121 @@
   </div>
   <div class="row page">
     <div class="col s12">
-        <%= render "form.html", Map.put(assigns, :action, Routes.task_path(@conn, :update, @task)) %>
+        
+
+
+        <%= if assigns[:note] do %>
+  <div class="row "></div>
+    <div class="col s12">
+      <div class="card z-depth-0 note">
+        <div class="card-content blue lighten-3 white-text">
+          This task will be linked to the note: <%= @note.subject %> (Created on the <%= readable_date!(@note.inserted_at, @conn.assigns.timezone) %> by <%= @note.user.fullname %>)
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <% end %>
+
+
+<%= form_for @changeset, Routes.task_path(@conn, :update, @task), [id: "task-form"], fn f -> %>
+  <div class="page">
+    <div class="row">
+         
+        <div class="input-field col s12" autocomplete="off">
+          <i class="material-icons prefix margin-top-15">looks_one</i>
+          <div class="chips chips-autocomplete assignee_input"></div>
+          <%= if @conn.assigns.assignee_name do %>  
+            <%= text_input f, :assignee_name , [class: "validate", style: "display: none", required: "true", value: @assignee_name] %>
+          <% else %>
+          <%= text_input f, :assignee_name , [class: "validate", style: "display: none", required: "true"] %>
+          <% end %>
+          <%= error_tag_sportegic f, :assignee_name %>
+        </div>
+        
+        <div class="input-field col s12 flatpickr-due-date">
+          <i class="material-icons prefix">looks_two</i>
+          <%= text_input f, :due_date , [class: set_field_class(f, :due_date, " "), placeholder: "Due date", data: [input: "true"]]%>
+          <%= text_input f, :due_date_msg , [class: set_field_class(f, :due_date, " validate"), style: "display: none"]%>
+          <%= error_tag_sportegic f, :due_date_msg %>
+        </div>
+
+        <div id="people_list">
+          <%= if assigns[:task] do %>
+            <%= for person <- @task.people do %>
+              <input type="text" hidden="true" name="task[people][]" value='<%= person.firstname <> " " <> person.lastname <> " (" <>  readable_date!(person.dob) <> ")" %>'>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="input-field col s12" autocomplete="off">
+          <i class="material-icons prefix margin-top-15">looks_3</i>
+          <div class="chips chips-autocomplete players"></div>
+        </div>
+        
+        
+        <div class="input-field col s12 page">
+          <trix-editor input="task_action" placeholder="Enter your instructions ..."></trix-editor>
+          <%= hidden_input f, :action , [ required: "true", style: "display: none"]%>
+          <%= text_input f, :action_msg , [ class: set_field_class(f, :action, " validate"), style: "display: none"]%>
+          <%= error_tag_sportegic f, :action_msg %>
+        </div>
+        
+        
+      </div>
+      </div>
+    </div> 
+  <div>
+  <div class="fixed-action-btn">
+    <button type="submit" onclick="check_form()" class="btn-floating btn-large green z-depth-0">
+      <i class="large material-icons">save</i>
+    </button>
+  </div>
+<% end %>
+
     </div>
   </div>
 </div>
 <script> window.channel = "true" </script>
+<script>
+
+
+  
+function check_form(){
+
+  let form = document.getElementById('task-form');
+  if (form.checkValidity() == false) {
+      let previous_list = form.querySelectorAll(".invalid")
+      for( var item of previous_list){
+            item.classList.remove("invalid")
+      }
+
+      let list = form.querySelectorAll(':invalid');
+      for (var item of list) {
+        if(item.tagName === "SELECT"){
+          item.parentNode.classList += " invalid"
+        }else{
+          item.classList += " invalid"
+        }   
+      }
+  }
+
+  let assignee = document.querySelector('.assignee_input');
+  if(assignee.M_Chips.chipsData.length == 0){
+    let t = document.getElementById("task_assignee_name");
+    t.setAttribute("required", "true");
+    t.classList.remove("invalid")
+    t.classList += " invalid"
+    let input = document.getElementsByClassName('chips assignee_input');
+    input[0].classList += " invalid"
+  }else{
+    let t = document.getElementById("task_assignee_name");
+    t.classList.remove("invalid")
+    t.removeAttribute("required")
+  }
+
+  
+}
+
+
+</script>

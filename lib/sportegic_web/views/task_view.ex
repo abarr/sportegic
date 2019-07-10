@@ -98,12 +98,11 @@ defmodule SportegicWeb.TaskView do
     end
   end
 
-  def error_tag_sportegic(%{errors: errors = [_ | _]}, field) do
-    if error = errors[field] do
-      {msg, _} = error
-      content_tag(:span, "", [{:data, [error: msg]}, class: " helper-text"])
+  def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
+    if errors[field] do
+      "invalid " <> classes
     else
-      error_tag_sportegic(field)
+      classes
     end
   end
 
@@ -113,12 +112,21 @@ defmodule SportegicWeb.TaskView do
 
   def error_tag_sportegic(field) do
     case field do
-      :expiry_date ->
+      :action_msg ->
         content_tag(:span, "", [
-          {:data, [error: "Please provide an expiry date"]},
+          {:data, [error: "Please provide instructions"]},
           class: "helper-text"
         ])
-
+      :due_date_msg ->
+        content_tag(:span, "", [
+          {:data, [error: "Please nominate a due date"]},
+          class: "helper-text"
+        ])
+      :assignee_name ->
+          content_tag(:span, "", [
+            {:data, [error: "Please assign the task to a User"]},
+            class: "helper-text"
+          ])
       _ ->
         content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
     end
@@ -130,7 +138,9 @@ defmodule SportegicWeb.TaskView do
     end
   end
 
-  def set_field_class(_form, _field, classes), do: classes
+  def set_field_class(_form, _field, classes) do
+    classes
+  end 
 
   def sanitize_html_to_text(text) do
     text

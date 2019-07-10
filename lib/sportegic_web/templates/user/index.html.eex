@@ -38,7 +38,7 @@
                 <tbody>
                 <%= for user <- @users do %>
                   <tr >
-                    <td> <%= user.firstname <> " " <> user.lastname %>  </td>
+                    <td> <%= user.fullname %>  </td>
                     <td> <%= user.mobile %> </td>
                     <td> <%= user.role.name %> </td>
                     <td class="left-align"> 

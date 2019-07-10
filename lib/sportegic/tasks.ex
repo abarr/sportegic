@@ -3,7 +3,8 @@ defmodule Sportegic.Tasks do
   The Tasks context.
   """
   use Timex
-
+  alias __MODULE__
+  alias Ecto.Changeset
   import Ecto.Query, warn: false
   alias Sportegic.Repo
   alias Sportegic.Tasks.TaskPerson
@@ -135,7 +136,15 @@ defmodule Sportegic.Tasks do
   def update_task(%Task{} = task, attrs, org) do
     task
     |> Task.changeset(attrs)
+    |> Changeset.put_assoc(:people, Tasks.get_updated_people_tags(attrs["people"], org))
     |> Repo.update(prefix: org)
+  end
+
+  def get_updated_people_tags(nil, _org), do: []
+
+  def get_updated_people_tags(updated_people, org) when is_list(updated_people) do
+    updated_people
+    |> Enum.map(&People.get_person_by_name_dob(&1, org))
   end
 
   @doc """
@@ -165,6 +174,10 @@ defmodule Sportegic.Tasks do
   """
   def change_task(%Task{} = task) do
     Task.changeset(task, %{})
+  end
+
+  def change_task(%Task{} = task, attrs) do
+    Task.changeset(task, attrs)
   end
 
   @doc """
@@ -209,21 +222,26 @@ defmodule Sportegic.Tasks do
 
   """
   def create_task_person(task, person_text, org) when is_binary(person_text) do
+    IO.puts("ADDING TASK PERSON")
     case People.get_person_by_name_dob(person_text, org) do
       person when is_map(person) ->
         TaskPerson.changeset(%TaskPerson{}, %{
           task_id: task.id,
           person_id: person.id
         })
-        |> Repo.insert!(prefix: org)
-
+        |> Repo.insert(prefix: org)
       _ ->
         {:error, "error"}
     end
   end
 
   def create_task_person(task, people_list, org) when is_list(people_list) do
-    Enum.each(people_list, &create_task_person(task, &1, org))
+    case Enum.empty?(people_list) do
+      true -> :ok
+      _ ->
+        Enum.each(people_list, &create_task_person(task, &1, org))
+        :ok
+    end
   end
 
   @doc """

@@ -5,6 +5,7 @@ defmodule Sportegic.Repo.Migrations.CreateProfiles do
     create table(:users) do
       add(:firstname, :string)
       add(:lastname, :string)
+      add(:fullname, :string)
       add(:mobile, :string)
       add(:mobile_no, :string)
       add(:country_code, :string)

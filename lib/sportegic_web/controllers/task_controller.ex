@@ -41,33 +41,37 @@ defmodule SportegicWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params} = params, org, permissions) do
-    with :ok <- Bodyguard.permit(Tasks, "create:task_permissions", "", permissions) do  
-      %{id: user_id} = Users.get_user_by_name(task_params["user"], org)
+    with :ok <- Bodyguard.permit(Tasks, "create:task_permissions", "", permissions),  
+      %{id: user_id} <- Users.get_user_by_name(task_params["assignee_name"], org) do
+       
+      case task_params
+            |> Map.put("note_id", params["note_id"])
+            |> Map.put("user_id", conn.assigns.user.id)
+            |> Map.put("assignee_id", Integer.to_string(user_id))
+            |> Tasks.create_task(org) do
 
-      task_params =
-        task_params
-        |> Map.put("note_id", params["note_id"])
-        |> Map.put("user_id", conn.assigns.user.id)
-        |> Map.put("assignee_id", user_id)
-
-      case Tasks.create_task(task_params, org) do
-        {:ok, task} ->
-          case Map.has_key?(task_params, "people") do
-            true ->
-              %{"people" => people_list} = task_params
-              Tasks.create_task_person(task, people_list, org)
-
-            _ ->
-              nil
-          end
-
+        {:ok, task} -> 
+          task_params = Map.put_new(task_params, "people", [])
+          task
+          |> Tasks.create_task_person(task_params["people"], org)
+          
           conn
           |> put_flash(:info, "Task created successfully.")
-          |> redirect(to: Routes.task_path(conn, :show, task))
-
+          |> redirect(to: Routes.task_path(conn, :show, task))  
+        
         {:error, %Ecto.Changeset{} = changeset} ->
-          render(conn, "new.html", changeset: changeset)
+          render(conn, "new.html", changeset: changeset, assignee_name: task_params["assignee_name"])  
       end
+    else
+      {:error, :unauthorized} ->
+        conn
+        |> put_flash(:danger, "You are not authorised to enter this section of the site!")
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+      {:error, msg} ->
+        conn
+        |> put_flash(:danger, msg)
+        |> redirect(to: Routes.task_path(conn, :new))
+
     end
   end
 
@@ -82,14 +86,15 @@ defmodule SportegicWeb.TaskController do
     with :ok <- Bodyguard.permit(Tasks, "edit:task_permissions", "", permissions) do  
       task = Tasks.get_task!(id, org)
       changeset = Tasks.change_task(task)
-      render(conn, "edit.html", task: task, changeset: changeset)
+      render(conn, "edit.html", task: task, changeset: changeset, assignee_name: task.assignee.fullname)
     end
   end
 
   def update(conn, %{"id" => id, "task" => task_params}, org, permissions) do
     with :ok <- Bodyguard.permit(Tasks, "edit:task_permissions", "", permissions) do  
       task = Tasks.get_task!(id, org)
-
+      task_params = Map.put_new(task_params, "people", [])
+      
       case Tasks.update_task(task, task_params, org) do
         {:ok, task} ->
           conn
@@ -133,4 +138,5 @@ defmodule SportegicWeb.TaskController do
       |> redirect(to: Routes.task_path(conn, :index))
     end
   end
+
 end
