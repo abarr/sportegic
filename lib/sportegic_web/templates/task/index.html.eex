@@ -3,7 +3,7 @@
     <div class="section heading">
       <div class="row remove-bottom-margin">
         <div class="col s12"> 
-          <h5 class="heading grey-text lighten-2">Tasks</h5>
+          <h5 class="heading ">Tasks</h5>
         </div>
       </div>
       <div class="divider"></div>
@@ -20,7 +20,7 @@
       
     </div>
 
-    <div  id="assigned" class="row page wait-for-icons">
+    <div  id="assigned" class="row page wait-for-icons remove-padding-top">
       <div class="row page">
         <div class="col s12">
           <table class="highlight">
@@ -29,14 +29,22 @@
                   <th width="15%">Due</th>
                   <th class="hide-on-med-and-down">Created by</th>
                   <th>Details</th>
+                  <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <%= for task <- @tasks_assigned do %>
                 <tr onclick="go(<%= task.id %>)">
-                  <td width="15%"><%= raw(display_days(days_until(task.due_date))) %></td>
+                  <td width="15%">
+                    <%= if task.completed do %>
+                      <%= readable_date!(task.due_date, @conn.assigns.timezone) %> 
+                    <% else %>
+                      <%= raw(display_days(days_until(task.due_date))) %>
+                    <% end %>
+                  </td>
                   <td class="hide-on-med-and-down"><%= task.user.fullname  %></td>
                   <td class="truncate"><%= raw(task.action) %></td>
+                  <td><%= raw(display_status(task.completed)) %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -44,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div  id="created" class="row page wait-for-icons">
+    <div  id="created" class="row page wait-for-icons remove-padding-top">
       <div class="row page">
         <div class="col s12">
           <table class="highlight">
@@ -53,24 +61,25 @@
                   <th width="15%">Due</th>
                   <th class="hide-on-med-and-down">Assigned to</th>
                   <th>Details</th>
+                  <th>Status</th>
                   
               </tr>
             </thead>
             <tbody>
               <%= for task <- @tasks_created do %>
                 <tr onclick="go(<%= task.id %>)">
-                  <%= if task.completed do %>
-                    <td class="left" width="15%">
-                      <%= raw(display_status(task.completed)) %>
-                     </td>
-                  <% else %>  
+                   
                     <td class="" width="15%">
-                      <%= raw(display_days(days_until(task.due_date))) %>
+                        <%= if task.completed do %>
+                        <%= readable_date!(task.due_date, @conn.assigns.timezone) %> 
+                      <% else %>
+                        <%= raw(display_days(days_until(task.due_date))) %>
+                      <% end %>
                      </td>
-                  <% end %>
+                  
                   <td class="hide-on-med-and-down"><%= task.assignee.firstname <> " " <> task.assignee.lastname  %></td>
                   <td class="truncate"><%= raw(task.action) %></td>
-                  
+                  <td><%= raw(display_status(task.completed)) %></td>
 
                 </tr>
               <% end %>

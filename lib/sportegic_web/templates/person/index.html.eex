@@ -1,7 +1,7 @@
 <div class="row page">
     <div class="col s12">
         <div class="section heading">
-            <h5 class="heading grey-text lighten-2">People</h5>
+            <h5 class="heading ">People</h5>
         </div>
         <div class="divider"></div>
     </div>
@@ -10,7 +10,7 @@
             <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">search</i>
-                <input type="text" id="autocompleteInput" class="autocomplete grey-text lighten-2" autocomplete="off">
+                <input type="text" id="autocompleteInput" class="autocomplete " autocomplete="off">
                 <label for="autocompleteInput">Search</label>
               </div>
             </div>

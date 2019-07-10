@@ -6,7 +6,7 @@
           <%= link to: Routes.person_path(@conn, :show, @person), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
-          <h5 class="heading grey-text lighten-2"> <%= @person.firstname <> " " <> @person.lastname %> - Visas </h5>
+          <h5 class="heading "> <%= @person.firstname <> " " <> @person.lastname %> - Visas </h5>
         </div>
       </div>
       <div class="divider"></div>

@@ -90,14 +90,14 @@ defmodule SportegicWeb.NoteView do
         case n do
           1 ->
             "<div class=\"col s4 l2 center task-border\">
-              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
-              <span class=\"align-center grey-text lighten-2\">#{days} day</span>
+              <span class=\"task-label \">Due in:</span><br>
+              <span class=\"align-center \">#{days} day</span>
             </div>"
 
           _ ->
             "<div class=\"col s4 l2 center task-border\">
-              <span class=\"task-label grey-text lighten-2\">Due in:</span><br>
-              <span class=\"align-center grey-text lighten-2\">#{days} days</span>
+              <span class=\"task-label \">Due in:</span><br>
+              <span class=\"align-center \">#{days} days</span>
             </div>"
         end
     end
@@ -119,12 +119,21 @@ defmodule SportegicWeb.NoteView do
 
   def error_tag_sportegic(field) do
     case field do
-      :expiry_date ->
+      :tag ->
         content_tag(:span, "", [
-          {:data, [error: "Please provide an expiry date"]},
+          {:data, [error: "Please tag the note"]},
           class: "helper-text"
         ])
-
+      :details_msg ->
+        content_tag(:span, "", [
+          {:data, [error: "Please provide details"]},
+          class: "helper-text"
+        ])  
+      :subject ->
+        content_tag(:span, "", [
+          {:data, [error: "Please provide a short subject line"]},
+          class: "helper-text"
+        ])      
       _ ->
         content_tag(:span, "", [{:data, [error: "This field is invalid"]}, class: "helper-text"])
     end
@@ -133,10 +142,14 @@ defmodule SportegicWeb.NoteView do
   def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
       "invalid " <> classes
+    else
+      classes
     end
   end
 
-  def set_field_class(_form, _field, classes), do: classes
+  def set_field_class(_form, _field, classes) do
+    classes
+  end 
 
   def sanitize_html_to_text(text) do
     text

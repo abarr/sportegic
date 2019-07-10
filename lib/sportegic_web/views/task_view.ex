@@ -77,12 +77,12 @@ defmodule SportegicWeb.TaskView do
         case n do
           1 ->
             "<div class=\"\">
-              <span class=\"grey-text lighten-2\">Due in #{days} day</span>
+              <span class=\"\">Due in #{days} day</span>
             </div>"
 
           _ ->
             "<div class=\"\">
-              <span class=\"grey-text lighten-2\">Due in #{days} days</span>
+              <span class=\"\">Due in #{days} days</span>
             </div>"
         end
     end
@@ -98,14 +98,7 @@ defmodule SportegicWeb.TaskView do
     end
   end
 
-  def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
-    if errors[field] do
-      "invalid " <> classes
-    else
-      classes
-    end
-  end
-
+  
   def error_tag_sportegic(_form, field) do
     error_tag_sportegic(field)
   end
@@ -135,6 +128,8 @@ defmodule SportegicWeb.TaskView do
   def set_field_class(%{errors: errors = [_ | _]}, field, classes) do
     if errors[field] do
       "invalid " <> classes
+    else
+      classes
     end
   end
 

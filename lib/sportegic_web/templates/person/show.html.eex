@@ -8,7 +8,7 @@
                 <%= link to: Routes.person_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
                   <i class="far fa-chevron-left fa-lg"></i>
               <% end %>
-                  <h5 class="heading grey-text lighten-2"> Profile</h5>
+                  <h5 class="heading "> Profile</h5>
                 </a>
               </div>
             </div>
@@ -55,7 +55,7 @@
                   <i class="fal fa-mobile-android fa-fw fa-lg"></i>&nbsp
                   <span class="truncate"6><%= @person.mobile %></span>
                 </li>
-                <%= link to: Routes.person_address_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                <%= link to: Routes.person_address_path(@conn, :index, @person), class: "collection-item " do %>  
                     <i class="fal fa-map-marked fa-lg fa-fw"></i>&nbspAddresses
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.addresses) %>
                   <% end %>
@@ -65,19 +65,19 @@
             <div class="col s12 xl4 wait-for-icons">
               <div class="collection ">
                 <div class="collection-item "><h5>Information</h5></div>
-                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item grey-text lighten-2" do %>  
+                  <%= link to: Routes.person_document_path(@conn, :index, @person), class: "truncate collection-item " do %>  
                     <i class="fal fa-file fa-fw fa-lg"></i> Documents
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.document) %> </span> 
                   <% end %>
-                  <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                  <%= link to: Routes.person_visa_path(@conn, :index, @person), class: "collection-item " do %>  
                     <i class="fal fa-passport fa-fw fa-lg"></i> Visas
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.visa) %> </span> 
                   <% end %>
-                  <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                  <%= link to: Routes.person_insurance_policy_path(@conn, :index, @person), class: "collection-item " do %>  
                     <i class="fal fa-user-injured fa-fw fa-lg"></i> Insurance
                     <span class="new badge grey lighten-1 white-text " data-badge-caption=""> <%= Enum.count(@person.insurance_policy) %> </span> 
                   <% end %>
-                  <%= link to: Routes.person_profile_path(@conn, :index, @person), class: "collection-item grey-text lighten-2" do %>  
+                  <%= link to: Routes.person_profile_path(@conn, :index, @person), class: "collection-item " do %>  
                     <i class="fal fa-running fa-fw fa-lg"></i> Athlete Profile
                   <% end %>
               </div> 
@@ -90,7 +90,7 @@
                   <div class="section heading">
                     <div class="row remove-bottom-margin">
                         <div class="col s12 valign-wrapper"> 
-                            <h5 class="heading grey-text lighten-2 ">
+                            <h5 class="heading  ">
                               Recent Notes <%= if Enum.count(@person.notes) > 0 do %> (last 3) <% end %>
                             </h5>
                             

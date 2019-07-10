@@ -6,7 +6,7 @@ let User = {
 
         let role_dropdown_input = document.getElementsByClassName("select-dropdown");
         [].forEach.call(role_dropdown_input, function (el) {
-            el.classList += " grey-text lighten-2"
+            el.classList += " "
         });
 
     },

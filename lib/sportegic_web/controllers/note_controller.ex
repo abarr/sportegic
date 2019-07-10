@@ -37,7 +37,7 @@ defmodule SportegicWeb.NoteController do
     end
   end
 
-  def create(conn, %{"note" => note_params}, org, permissions) do
+  def create(conn, %{"note" => note_params} = params, org, permissions) do
     with :ok <- Bodyguard.permit(Notes, "create:note_permissions", "", permissions) do
       # Sanitize user input
       note_params =
@@ -64,7 +64,7 @@ defmodule SportegicWeb.NoteController do
           |> redirect(to: Routes.note_path(conn, :show, note))
 
         {:error, %Ecto.Changeset{} = changeset} ->
-          render(conn, "new.html", changeset: changeset)
+          render(conn, "new.html", changeset: changeset, tags_list: note_params["types"], people_list: note_params["people"])
       end
     end
   end

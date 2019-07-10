@@ -2,21 +2,21 @@
   <div class="row">
     <div class="input-field col s12 grey-text lighten-1">
       <%= label f, :name, "Organisation Name" %>
-      <%= text_input f, :name, [ class: "validate grey-text lighten-2", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
+      <%= text_input f, :name, [ class: "validate ", required: "true", type: "text", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"]%>
       <%= error_tag f, :name %>
       <span class="helper-text" data-error="Please provide full account name"></span>
     </div>
     <div class="input-field col s12 no-bottom-margin">
       <%= label f, :display, "Common Name e.g. Bulls", [for: "fourteen"] %>
-      <%= text_input f, :display, [class: "validate grey-text lighten-2", required: "true", data: [length: "14"], id: "fourteen", maxlength: "14", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
+      <%= text_input f, :display, [class: "validate ", required: "true", data: [length: "14"], id: "fourteen", maxlength: "14", pattern: "^[_A-z0-9]*((-|\s|'|!)*[_A-z0-9])*$"] %>
       <%= error_tag f, :display %>
       <span class="helper-text" data-error="A short name commonly used"></span>
     </div>
-    <div class="input-field col s12 grey-text grey-text lighten-2 ">
+    <div class="input-field col s12 ">
           <%= text_input f, :city, [id: "address", placeholder: "Enter Home City/Suburb", style: "color: #9c9a9a;"] %>
           <label for="address"></label>
     </div>
-    <div id="msg" class="hide input-field col s12 grey-text lighten-2 left valign-wrapper">
+    <div id="msg" class="hide input-field col s12 left valign-wrapper">
       <div class="row">
         <div class="col s2">
           <div class="preloader-wrapper small active right-align">

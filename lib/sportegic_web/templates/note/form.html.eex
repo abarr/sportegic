@@ -22,6 +22,13 @@
               <% end %>
             <% end %>
         <% end %>
+        <%= if assigns[:people_list] do %>
+          <%= if Enum.count(assigns.people_list) > 0 do %>
+            <%= for people <- @people_list do %>
+              <input type="text" hidden="true" name="note[people][]" value="<%= people %>">
+            <% end %>
+          <% end %>
+        <% end %>
         
         </div>
         <div class="input-field col s12">
@@ -36,6 +43,13 @@
             <% end %>
           <% end %>
         <% end %>
+        <%= if assigns[:tags_list] do %>
+          <%= if Enum.count(assigns.tags_list) > 0 do %>
+            <%= for tag <- @tags_list do %>
+              <input type="text" hidden="true" name="note[types][]" value="<%= tag %>">
+            <% end %>
+          <% end %>
+        <% end %>
         </div>
         <div class="input-field col s12">
           <i class="material-icons prefix margin-top-15">looks_4</i>
@@ -44,9 +58,12 @@
           <%= error_tag_sportegic f, :tag %>
         </div>
         
-        <%= hidden_input f, :details , [  required: "true"]%>
+        
         <div class="input-field col s12 page">
           <trix-editor input="note_details" placeholder="Enter your notes ..."></trix-editor>
+          <%= hidden_input f, :details , [  required: "true"]%>
+          <%= text_input f, :details_msg , [ class: set_field_class(f, :details, " validate"), style: "display: none"]%>
+          <%= error_tag_sportegic f, :details_msg %>
         </div>
             
       </div>

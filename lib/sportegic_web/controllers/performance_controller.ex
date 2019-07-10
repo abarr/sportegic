@@ -36,7 +36,7 @@ defmodule SportegicWeb.PerformanceController do
 
       area_types = [[key: "Performance Area", value: "", disabled: "true", selected: "true"] | area_types]
       review_types = [[key: "Review Type", value: "", disabled: "true", selected: "true"] | review_types]
-      rating_types = [[key: "Rating", value: "", disabled: "true", selected: "true", class: "grey-text lighten-2"] | rating_types]
+      rating_types = [[key: "Rating", value: "", disabled: "true", selected: "true", class: ""] | rating_types]
 
       render(conn, "new.html", 
         changeset: changeset, 

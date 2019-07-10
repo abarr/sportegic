@@ -3,11 +3,11 @@
     <div class="section heading">
       <div class="row remove-bottom-margin">
         <div class="col s12"> 
-          <%= link to: NavigationHistory.last_path(@conn, 1), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
+          <%= link to: Routes.note_path(@conn, :index), class: "margin-right waves-effect waves-light btn-small left grey lighten-2 z-depth-0" do %>
             <i class="far fa-chevron-left fa-lg"></i>
           <% end %>
           <span class="truncate"> 
-            <h5 class="heading grey-text lighten-2  left">Note: <%= @note.subject %> </h5>
+            <h5 class="heading left">Note: <%= @note.subject %> </h5>
           </span>
         </div>
         
@@ -18,16 +18,16 @@
   <div class="row page">
     <div class="col s12">
       <div class="row">
-        <blockquote class="page no-bottom-margin col s12 ">
-        <h6>Note created on the <%= readable_date!(@note.inserted_at, @conn.assigns.timezone) %> by <%= @note.user.fullname %>. The event happened on <%= readable_date!(@note.event_date, @conn.assigns.timezone) %></h6> 
-        </blockquote>  
+        <div class="page top-margin-25 col s12 ">
+        Note created on the <%= readable_date!(@note.inserted_at, @conn.assigns.timezone) %> by <%= @note.user.fullname %>. The event happened on <%= readable_date!(@note.event_date, @conn.assigns.timezone) %>
+        </div>  
       </div>
     </div>
     <div class="row remove-bottom-margin">
       <div class="col s12">
         <div class="card z-depth-0 note">
-          <div class="card-content ">
-              <h6 class="card-title">Details</h6>
+          <div class="card-content card-info">
+              <h6 class="">Details</h6>
               <p >
                 <%= raw(@note.details) %>
               </p> 
@@ -79,22 +79,24 @@
               <table class="highlight" >
                 <thead>
                   <tr >
-                      <th>Status</th>
+                     
                       <th>Due Date</th>
                       <th class="hide-on-small-only">Owner</th>
                       <th>Assignee</th>
                       <th class="hide-on-small-only">Action</th>
+                      <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                 <%= if Enum.count(@note.tasks) > 0 do %>
                   <%= for task <- @note.tasks do  %>
-                    <tr onclick="go(<%= task.id %>)">
-                      <td class="left"><%= raw(display_status(task.completed)) %></td>
+                    <tr  onclick="go(<%= task.id %>)">
+                     
                       <td ><%= readable_date!(task.due_date, @conn.assigns.timezone) %>  </td>
                       <td class="hide-on-small-only"> <%= task.user.fullname %> </td>
                       <td> <%= task.assignee.firstname <> " " <> task.assignee.lastname %> </td>
                       <td class="hide-on-small-only"> <%= raw(task.action) %> </td>
+                      <td class="left"><%= raw(display_status(task.completed)) %></td>
                     </tr>
                   <% end %>
                     <tr>

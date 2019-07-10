@@ -1,7 +1,7 @@
 <div class="row page remove-bottom-margin">
     <div class="col s12">
         <div class="section heading">
-            <h5 class="heading grey-text lighten-2">Users</h5>
+            <h5 class="heading ">Users</h5>
         </div>
         <div class="divider"></div>
     </div>
@@ -20,7 +20,7 @@
             <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">filter_list</i>
-                <input type="text" id="autocompleteInput" onkeyup="userFilter()" class="autocomplete grey-text lighten-2">
+                <input type="text" id="autocompleteInput" onkeyup="userFilter()" class="autocomplete ">
                 <label for="autocompleteInput">Filter Users </label>
               </div>
             </div>
@@ -70,7 +70,7 @@
               <div class="row search-row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">filter_list</i>
-                <input type="text" id="autocompleteInputInvitation" onkeyup="invitationFilter()" class="autocomplete grey-text lighten-2">
+                <input type="text" id="autocompleteInputInvitation" onkeyup="invitationFilter()" class="autocomplete ">
                 <label for="autocompleteInputInvitation">Filter Invitations </label>
               </div>
             </div>

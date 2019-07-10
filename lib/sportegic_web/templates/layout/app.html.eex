@@ -38,30 +38,30 @@
             <div class="row ">
                   <div class="col s12 center-align">
                     <a href="#" data-target="slide-out" class="left small-screen-menu-triggers  sidenav-trigger  grey-text"><i class="fas fa-bars fa-2x fa-fw"></i></a>
-                    <a href="#" class="small-screen-logo center-align grey-text lighten-2"><%= organisation_name(@conn.assigns.organisation) %></a>
-                    <a id="profile" class='right small-screen-menu-triggers sidenav-trigger dropdown-trigger grey-text lighten-2 center-align' href='#' data-target='profileDropdown'><i class="material-icons ">account_circle</i> </a>
+                    <a href="#" class="small-screen-logo center-align "><%= organisation_name(@conn.assigns.organisation) %></a>
+                    <a id="profile" class='right small-screen-menu-triggers sidenav-trigger dropdown-trigger  center-align' href='#' data-target='profileDropdown'><i class="material-icons ">account_circle</i> </a>
                     <!-- Profile Dropdown Structure -->
                     <ul id='profileDropdown' class='dropdown-content'>
                       <%= if Enum.count(@conn.assigns.current_user.organisations) > 1 do %>
-                        <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
+                        <li class=""><a class=" li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
                       <% end %>
-                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
+                      <li class=""><a class=" li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
                       <li class="divider li-dropdown-custom" ></li>
-                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/logout">Logout</a></li>
+                      <li class=""><a class=" li-dropdown-custom center-align" href="/logout">Logout</a></li>
                     </ul>
                   </div>
                 </div>
           
           </div>
 
-          <nav class="white z-depth-0 hide-on-med-and-down">
+          <nav class="white z-depth-0 hide-on-med-and-down ">
             <div class="nav-wrapper ">
 
-                <ul id="nav-mobile" class="right">
-                  <li><a href="" class="valign-wrapper grey-text lighten-2"> <i class="material-icons left"> inbox</i> Inbox</i></a></li>
+                <ul id="nav-mobile" class="right grey-text">
+                  <li><a href="" class="valign-wrapper "> <i class="material-icons left"> inbox</i> Inbox</i></a></li>
                   <!-- Profile Dropdown Trigger -->
-                  <li class="">
-                    <a id="profile-large" class='li-custom dropdown-trigger grey-text lighten-2 valign-wrapper' href='#' data-target='profileDropdownLarge'>
+                  <li class="grey-text">
+                    <a id="profile-large" class='li-custom dropdown-trigger  valign-wrapper' href='#' data-target='profileDropdownLarge'>
                     <i class="material-icons left">account_circle</i> 
                     <%= @conn.assigns.user.firstname %> 
                     <i class="material-icons right">expand_more</i> 
@@ -69,20 +69,20 @@
                     <!-- Profile Dropdown Structure -->
                     <ul id='profileDropdownLarge' class='dropdown-content z-depth-0'>
                       <%= if Enum.count(@conn.assigns.current_user.organisations) > 1 do %>
-                        <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
+                        <li class=""><a class=" li-dropdown-custom center-align" href="/organisation">Switch Organisation</a></li>
                       <% end %>
-                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
+                      <li class=""><a class=" li-dropdown-custom center-align" href="/organisation/new">Create Organisation</a></li>
                       <li class="red lighten-3"><a class="white-text li-dropdown-custom center-align" href="/logout">Logout</a></li>
                     </ul>
                   
                   </li>
                   <li>
                     <!-- Lang Dropdown Trigger -->
-                    <a id="enDropdown" class='dropdown-trigger grey-text lighten-2 li-language' href='#' data-target='lang'>En</a>
+                    <a id="enDropdown" class='dropdown-trigger  li-language' href='#' data-target='lang'>En</a>
                     <!-- Lang Dropdown Structure -->
                     <ul id='lang' class='dropdown-content z-depth-0'>
                       
-                      <li class=""><a class="grey-text lighten-2 li-dropdown-custom center-align" href="#!">Fr</a></li>
+                      <li class=""><a class=" li-dropdown-custom center-align" href="#!">Fr</a></li>
                     </ul>
                   
                   </li>
@@ -95,52 +95,52 @@
       <%# SIDE NAV %>
       <ul id="slide-out" class="sidenav sidenav-fixed z-depth-0 sidenav-custom wait-for-icons">
         <li class="logo">
-          <a href="/dashboard" class=" grey-text lighten-2"><h4><%= organisation_name(@conn.assigns.organisation) %></h4></a>
+          <a href="/dashboard" class=""><h4><%= organisation_name(@conn.assigns.organisation) %></h4></a>
         </li>
-        <li class="menu" id="dashboard"><a class="grey-text lighten-2" href="/dashboard"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
+        <li class="menu" id="dashboard"><a class="" href="/dashboard"><i class="far fa-chart-line fa-lg fa-fw"></i> Dashboard</a></li>
         <li class="menu" id="person">
-          <%= link to: Routes.person_path(@conn, :index), class: "grey-text lighten-2" do %>
+          <%= link to: Routes.person_path(@conn, :index), class: "" do %>
             <i class="fal fa-user-astronaut fa-lg fa-fw"></i> People
           <% end %>
         </li>
-        <%# <li class="menu" id="performance"><a class="grey-text lighten-2" href="#"><i class="fal fa-clipboard-user fa-lg fa-fw"></i> Performance</a></li>
-        <li class="menu" id="recruitment"><a class="grey-text lighten-2" href="#"><i class="fal fa-child fa-lg fa-fw"></i> Recruitment</a></li> %>
-        <li class="menu" id="squads"><a class="grey-text lighten-2" href="/squads"><i class="fal fa-users-class fa-lg fa-fw"></i> Squads</a></li>
-        <li class="menu" id="notes"><a class="grey-text lighten-2" href="/notes"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
+        <%# <li class="menu" id="performance"><a class="" href="#"><i class="fal fa-clipboard-user fa-lg fa-fw"></i> Performance</a></li>
+        <li class="menu" id="recruitment"><a class="" href="#"><i class="fal fa-child fa-lg fa-fw"></i> Recruitment</a></li> %>
+        <li class="menu" id="squads"><a class="" href="/squads"><i class="fal fa-users-class fa-lg fa-fw"></i> Squads</a></li>
+        <li class="menu" id="notes"><a class="" href="/notes"><i class="far fa-comment-alt-lines fa-lg fa-fw"></i> Notes</a></li>
         <li class="menu" id="tasks">
-          <a class="grey-text lighten-2" href="/tasks">
+          <a class="" href="/tasks">
             <i class="far fa-list-alt fa-lg fa-fw"></i> Tasks<%= show_overdue_tasks(@conn) %>
           </a>
         </li>
         
         <li class="">
           <ul class="collapsible collapsible-accordion ">
-            <li >
-              <a id="administration"  class="collapsible-header grey-text lighten-2 padding-collapsible-header"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration<i class="material-icons right">expand_more</i></a>
+            <li class="menu">
+              <a id="administration"  class="collapsible-header  padding-collapsible-header"><i class="fal fa-sliders-h-square fa-lg fa-fw"></i> Administration<i class="material-icons right">expand_more</i></a>
               <div class="collapsible-body">
                 <ul>
                   <%# <li >
-                    <a id="my_profile" class="menu grey-text lighten-2 padding-collapsible-body" href="#">
+                    <a id="my_profile" class="menu  padding-collapsible-body" href="#">
                       <i class="far fa-chevron-right fa-xs fa-fw"></i> My profile
                     </a>
                   </li> %>
                   <%= if Enum.member?(@conn.assigns.permissions, "view:role_permissions")  do %>
                   <li >
-                    <a id="role" class="menu grey-text lighten-2 padding-collapsible-body" href="/role">
+                    <a id="role" class="menu  padding-collapsible-body" href="/role">
                       <i class="far fa-chevron-right fa-xs fa-fw"></i> Roles
                     </a>
                   </li>
                   <% end %>
                   <%= if Enum.member?(@conn.assigns.permissions, "view:user_permissions")  do %>
                   <li >
-                    <a id="user" class="menu grey-text lighten-2 padding-collapsible-body" href="/user">
+                    <a id="user" class="menu  padding-collapsible-body" href="/user">
                       <i class="far fa-chevron-right fa-xs fa-fw"></i> Users
                     </a>
                   </li>
                   <% end %>
                   <%# <%= if Enum.member?(@conn.assigns.permissions, "view:role_permissions")  do %> 
                   <li >
-                    <a id="lookup" class="menu grey-text lighten-2 padding-collapsible-body" href="/lookup">
+                    <a id="lookup" class="menu  padding-collapsible-body" href="/lookup">
                       <i class="far fa-chevron-right fa-xs fa-fw"></i> Lookup Data
                     </a>
                   </li>
@@ -155,7 +155,7 @@
     </div>
     </div>  
     </header>
-    <main role="main" class="grey-text lighten-2">
+    <main role="main" class="">
       <%= render @view_module, @view_template, assigns %>
     </main>
 

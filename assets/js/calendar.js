@@ -20,7 +20,7 @@ let Calendar = {
             let input = document.getElementById("person_dob").nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
-            input.classList += " grey-text lighten-2 validate";
+            input.classList += " validate";
         }
     },
     attachFlatpickrExpiryDate(flatpickr, path) {
@@ -45,7 +45,7 @@ let Calendar = {
             let input = document.getElementById(id).nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
-            input.classList += " grey-text lighten-2 validate";
+            input.classList += " validate";
         }
     },
     attachFlatpickrIssuedDate(flatpickr) {
@@ -68,7 +68,7 @@ let Calendar = {
             let input = document.getElementById("visa_issued_date").nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
-            input.classList += " grey-text lighten-2 validate";
+            input.classList += " validate";
         }
     },
     attachFlatpickrEventDate(flatpickr) {
@@ -93,7 +93,7 @@ let Calendar = {
             let input = document.getElementById("note_event_date").nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
-            input.classList += " grey-text lighten-2 validate";
+            input.classList += " validate";
         }
     },
     attachFlatpickrPerformanceDate(flatpickr) {
@@ -118,7 +118,7 @@ let Calendar = {
             let input = document.getElementById("note_event_date").nextElementSibling;
             input.setAttribute("readonly", "true");
             input.setAttribute("required", "true");
-            input.classList += " grey-text lighten-2 validate";
+            input.classList += " validate";
         }
     },
     attachFlatpickrDueDate(flatpickr) {
@@ -144,7 +144,7 @@ let Calendar = {
             let input_next = input.nextElementSibling;
             input_next.setAttribute("readonly", "true");
             input_next.setAttribute("required", "true");
-            input_next.classList += " grey-text lighten-2 validate";
+            input_next.classList += " validate";
         }
     }
 }

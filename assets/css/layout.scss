@@ -1,4 +1,6 @@
-
+html{
+    color: #656566 !important;
+}
 
 header, main {
       padding-left: 300px;
@@ -9,6 +11,18 @@ header, main {
       header, main {
         padding-left: 0;
     }     
+}
+
+ul li a{
+    color: grey;
+}
+
+li.menu a{
+    color: grey;
+}
+
+.collection a.collection-item{
+    color: grey;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */

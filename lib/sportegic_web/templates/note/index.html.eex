@@ -1,7 +1,7 @@
 <div class="row page">
   <div class="col s12">
         <div class="section heading">
-            <h5 class="heading grey-text lighten-2">Notes</h5>
+            <h5 class="heading">Notes</h5>
         </div>
         <div class="divider"></div>
     </div>
@@ -10,7 +10,7 @@
         
         <div class="col s12">
           <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s12 top-margin-25">
               <i class="material-icons prefix">search</i>
               <input id="icon_prefix" type="text" class="validate" v-model="search" v-on:keyup="searchNotes">
               <label for="icon_prefix">Search all notes</label>
@@ -42,7 +42,7 @@
                   <td > {{ note.event_date | moment }}</td>
                   <td class="hide-on-small-only"> {{ note.inserted_at | moment}} </td>
                   <td> {{ note.subject }} </td>
-                  <td class="hide-on-small-only"> {{ note.user.fullname }} </td>
+                  <td class="hide-on-small-only"> {{ note.user.firstname }} {{ note.user.lastname }} </td>
                   <td class="hide-on-small-only">
                       <div class="chip truncate" v-for="tag in note.types">
                         {{tag.name}}

@@ -1,6 +1,6 @@
 <%= form_for @changeset, @action, [id: "performance-form"], fn f -> %>
   <div class="input-field col s12 m3 flatpickr-performance-date ">
-    <%= text_input f, :performance_date , [ class: "grey-text lighten-2", placeholder: "Performance date", data: [input: "true"]]%>
+    <%= text_input f, :performance_date , [ class: "", placeholder: "Performance date", data: [input: "true"]]%>
     <%= error_tag_sportegic f, :performance_date %>
   </div>
   <div class="input-field col s12 m3 custom-select"> 
