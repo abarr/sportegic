@@ -23,5 +23,7 @@ defmodule Sportegic.Accounts.Organisation do
     organisation
     |> cast(attrs, [:name, :display, :prefix, :home_city, :timezone])
     |> validate_required([:name, :display, :home_city, :prefix, :timezone])
+    |> unique_constraint(:prefix)
+    |> unique_constraint(:name)
   end
 end

@@ -72,11 +72,21 @@ defmodule SportegicWeb.OrganisationController do
       |> redirect(to: Routes.organisation_path(conn, :index))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
+        changeset = changeset
+        |> Ecto.Changeset.delete_change(:home_city)
+        |> Ecto.Changeset.delete_change(:timezone)
+        |> IO.inspect
+
+        msg = handle_error(changeset.errors)
         conn
-        |> put_flash(:danger, "Something has gone terribly wrong. Please contact support")
+        |> put_flash(:danger, msg)
         |> render("new.html", changeset: changeset)
     end
   end
+
+  defp handle_error([{:prefix, { _message, _ }}]), do: "An Organisation with this name (Or similar) exists"
+  defp handle_error(_all), do: "Something has gone wrong, please contact support"
+
 
   def show(conn, %{"id" => id}) do
     organisation = Accounts.get_organisation!(id)

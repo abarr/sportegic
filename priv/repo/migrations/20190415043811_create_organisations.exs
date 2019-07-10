@@ -11,5 +11,8 @@ defmodule Sportegic.Repo.Migrations.CreateOrganisations do
 
       timestamps(type: :timestamptz)
     end
+
+    create unique_index(:organisations, [:prefix])
+    create unique_index(:organisations, [:name])
   end
 end

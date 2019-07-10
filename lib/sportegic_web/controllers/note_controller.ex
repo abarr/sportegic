@@ -37,7 +37,7 @@ defmodule SportegicWeb.NoteController do
     end
   end
 
-  def create(conn, %{"note" => note_params} = params, org, permissions) do
+  def create(conn, %{"note" => note_params}, org, permissions) do
     with :ok <- Bodyguard.permit(Notes, "create:note_permissions", "", permissions) do
       # Sanitize user input
       note_params =

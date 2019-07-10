@@ -3,7 +3,7 @@
     <div class="card z-depth-0 card-register">
         <div class="card-content">
             <div class="card-title center-align">
-                <h5>SPORTEGIC</h5>
+                <a href="/dashboard" class="grey-text darken-2"><h5>SPORTEGIC</h5></a>
                 <h6>CONFIRMATION</h6>
             </div>
              <p>Thanks you. We have sent instructions to your email address. If you 
