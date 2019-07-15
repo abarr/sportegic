@@ -10,3 +10,20 @@ REFERENCE GUIDE: https://cloud.google.com/kubernetes-engine/docs/how-to/load-bal
   
 For the ingress to work you need to have a static IP and a certificate (I created a certificate on DNSimple and uplodaed the keys). 
 
+
+RELEASE UPDATE
+
+Create a new image
+gcloud builds submit --substitutions=_TAG=latest
+
+If you need to update the DB go into the Workloads and edit the replicas to 0 (Zero) so that the DB is disconnected
+
+Connect to the SQL instance
+./cloud_sql_proxy -instances=sportegic:australia-southeast1:sportegic=tcp:5432 -credential_file=./deployment/gcp_access/sportegic-sql-credentials-prod.json &
+
+Run the ecto update using
+
+MIX_ENV=prod mix ecto.migrate
+(It does not matter if you get Goth errors)
+
+kubectl apply -f deployment.yaml
