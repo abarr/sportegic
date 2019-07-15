@@ -35,6 +35,7 @@ defmodule SportegicWeb.TypeController do
       type_params =
         type_params
         |> Map.put("lookup_id", lookup.id)
+        |> Map.put("key", build_tag_key(type_params["name"]) <> "_" <> lookup.key)
 
       case LookupTypes.create_type(type_params, org) do
         {:ok, _type} ->
@@ -60,6 +61,10 @@ defmodule SportegicWeb.TypeController do
     with :ok <- Bodyguard.permit(LookupTypes, "edit:lookup_permissions", "", permissions) do
       type = LookupTypes.get_type!(lookup, id, org)
 
+      type_params =
+        type_params
+        |> Map.put("key", build_tag_key(type_params["name"]) <> "_" <> lookup.key)
+
       case LookupTypes.update_type(type, type_params, org) do
         {:ok, _type} ->
           conn
@@ -70,6 +75,13 @@ defmodule SportegicWeb.TypeController do
           render(conn, "edit.html", type: type, changeset: changeset, lookup: lookup)
       end
     end
+  end
+
+  def build_tag_key(name) do
+    name
+    |> String.replace(" ", "_")
+    |> String.downcase()
+    
   end
 
 end

@@ -57,7 +57,7 @@ defmodule Sportegic.Profiles do
 
     ids = positions
     |> Enum.map(fn p -> 
-      LookupTypes.get_type_id_by_name!(p.name, org)
+      LookupTypes.get_type_id_by_key!(Profiles.build_tag_key(p.name), org)
     end)
     
     positions = Type
@@ -75,6 +75,12 @@ defmodule Sportegic.Profiles do
     end
   end
 
+  def build_tag_key(name) do
+    name
+    |> String.replace(" ", "_")
+    |> String.downcase()
+    |> String.replace_suffix("", "_playing_positions")
+  end
   
   @doc """
   Creates a athletic_profile.
@@ -191,19 +197,9 @@ defmodule Sportegic.Profiles do
     end
   end
 
-  def build_tag_key(name) do
-    name
-    |> String.replace(" ", "_")
-    |> String.downcase()
-    |> String.replace_suffix("", "_playing_positions")
-  end
-
   def create_athlete_profile_positions(person, positions_list, org) when is_list(positions_list) do
     Enum.each(positions_list, &create_playing_position(person, &1, org))
   end
-
-
-
 
 
   @doc """

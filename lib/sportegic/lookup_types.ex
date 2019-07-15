@@ -174,10 +174,10 @@ defmodule Sportegic.LookupTypes do
     |> Repo.get_by!([key: key], prefix: org)
   end
 
-  def get_type_id_by_name!(name, org) do
+  def get_type_id_by_key!(key, org) do
     Type
     |> select([t], t.id)
-    |> Repo.get_by!([name: name], prefix: org)
+    |> Repo.get_by!([key: key], prefix: org)
      
   end
 

@@ -7,7 +7,7 @@
       <%= error_tag_sportegic f, :name %>
     </div>
     <div class="input-field col s12 m6 l6"> 
-      <i class="material-icons prefix">looks_one</i>
+      <i class="material-icons prefix">looks_two</i>
       <%= label f, :description %>
       <%= text_input f, :description, [ automcomplete: "off", class: "validate ", required: "true", type: "text"]%>
       <%= error_tag_sportegic f, :description %>
