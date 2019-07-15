@@ -178,7 +178,7 @@ defmodule Sportegic.Profiles do
   end
 
   def create_playing_position(person, position_name, org) when is_binary(position_name) do
-    case Repo.get_by(Type, %{name: position_name}, prefix: org) do
+    case Repo.get_by(Type, %{key: Profiles.build_tag_key(position_name)}, prefix: org) do
       type when is_map(type) ->
         AthleteProfilePlayingPosition.changeset(%AthleteProfilePlayingPosition{}, %{
           athlete_profiles_id: person.athlete_profile.id,
@@ -189,6 +189,13 @@ defmodule Sportegic.Profiles do
       _ ->
         {:error, "Position does not exist"}
     end
+  end
+
+  def build_tag_key(name) do
+    name
+    |> String.replace(" ", "_")
+    |> String.downcase()
+    |> String.replace_suffix("", "_playing_positions")
   end
 
   def create_athlete_profile_positions(person, positions_list, org) when is_list(positions_list) do

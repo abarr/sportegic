@@ -199,7 +199,7 @@ defmodule Sportegic.Notes do
   end
 
   def create_note_type(note, tag_text, org) when is_binary(tag_text) do
-    case Repo.get_by(Type, %{name: tag_text}, prefix: org) do
+    case Repo.get_by(Type, %{key: Notes.build_tag_key(tag_text)}, prefix: org) do
       type when is_map(type) ->
         NoteType.changeset(%NoteType{}, %{
           note_id: note.id,
@@ -218,6 +218,13 @@ defmodule Sportegic.Notes do
 
   def create_note_people(note, people_list, org) when is_list(people_list) do
     Enum.each(people_list, &create_note_person(note, &1, org))
+  end
+
+  def build_tag_key(name) do
+    name
+    |> String.replace(" ", "_")
+    |> String.downcase()
+    |> String.replace_suffix("", "_note_tags")
   end
 
   @doc """
@@ -239,7 +246,7 @@ defmodule Sportegic.Notes do
   end
 
   def get_updated_note_tags(updated_tags, org) when is_list(updated_tags) do
-    Enum.map(updated_tags, &LookupTypes.get_type_by_name!(&1, org))
+    Enum.map(updated_tags, &LookupTypes.get_type_by_key!(Notes.build_tag_key(&1), org))
   end
 
   def get_updated_people_tags(nil, _org), do: []

@@ -169,9 +169,9 @@ defmodule Sportegic.LookupTypes do
     |> Repo.get!(id, prefix: org)
   end
 
-  def get_type_by_name!(name, org) when is_binary(name) do
+  def get_type_by_key!(key, org) when is_binary(key) do
     Type
-    |> Repo.get_by!([name: name], prefix: org)
+    |> Repo.get_by!([key: key], prefix: org)
   end
 
   def get_type_id_by_name!(name, org) do

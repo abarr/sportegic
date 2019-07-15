@@ -10,6 +10,7 @@ defmodule Sportegic.LookupTypes.Type do
 
   schema "types" do
     field(:name, :string)
+    field(:key, :string)
     belongs_to(:lookup, Lookup)
 
     many_to_many(:notes, Note, join_through: NoteType)
@@ -20,7 +21,7 @@ defmodule Sportegic.LookupTypes.Type do
   @doc false
   def changeset(type, attrs) do
     type
-    |> cast(attrs, [:name, :lookup_id])
+    |> cast(attrs, [:name, :lookup_id, :key])
     |> validate_required([:name, :lookup_id])
   end
 end

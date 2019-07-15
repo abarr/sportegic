@@ -6,6 +6,7 @@ defmodule Sportegic.LookupTypes.Lookup do
 
   schema "lookups" do
     field(:name, :string)
+    field(:key, :string)
     field(:description, :string)
     has_many(:types, Type)
 
@@ -15,7 +16,7 @@ defmodule Sportegic.LookupTypes.Lookup do
   @doc false
   def changeset(lookup, attrs) do
     lookup
-    |> cast(attrs, [:name, :description])
+    |> cast(attrs, [:name, :description, :key])
     |> validate_required([:name, :description])
   end
 end
