@@ -11,10 +11,15 @@ defmodule Sportegic.Application do
       # Start the Ecto repository
       Sportegic.Repo,
       # Start the endpoint when the application starts
-      SportegicWeb.Endpoint
+      SportegicWeb.Endpoint,
       # Starts a worker by calling: Sportegic.Worker.start_link(arg)
       # {Sportegic.Worker, arg},
+
+      %{ id: "hourly", start: {SchedEx, :run_every, [fn -> IO.puts "It is the top of the hour" end, "*/5 * * * *"]} }
     ]
+
+    
+
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
