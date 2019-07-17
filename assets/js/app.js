@@ -7,6 +7,8 @@ import flatpickr from 'flatpickr'
 import Vue from 'vue/dist/vue.esm.browser'; // THIS NEEDS TO BE CHANGED TO PROD VERSION HOWEVER UNKNOWN ERROR - MAYBE REMOVE VUE
 // import Chart from 'chart.js';
 
+import IMask from 'imask';
+
 
 
 // CUSTOM
@@ -42,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
     User.setupUserForm(M);
     Performance.form_setup(M);
 
+    
 
     // Calendar.attachFlatpickrExpiry(flatpickr);
     // Calendar.attachFlatpickrDueDate(flatpickr);

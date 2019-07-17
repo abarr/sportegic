@@ -35,7 +35,7 @@
         </div>
         <div class="input-field col s12 m4 l4">
           <%= label f, :mobile, "Mobile/Cell" %>
-          <%= text_input f, :mobile, [ class: set_field_class(f, :mobile, " validate"), autocomplete: "off", pattern: "[+][0-9]{1,15}$", required: "true", type: "tel"] %>
+          <%= text_input f, :mobile, [ class: set_field_class(f, :mobile, " validate"), autocomplete: "off", required: "true", type: "tel"] %>
           <%= error_tag_sportegic f, :mobile %>
           
         </div>

@@ -97,7 +97,10 @@ defmodule Sportegic.People do
 
   """
   def create_person(attrs \\ %{}, org) do
-    attrs = Map.put(attrs, "org", org)
+    attrs = attrs
+    |> Map.put("org", org)
+    |> Map.put("mobile", String.replace(attrs["mobile"], " ", ""))
+
     {:ok, person} = %Person{}
     |> Person.changeset(attrs)
     |> Repo.insert(prefix: org)
