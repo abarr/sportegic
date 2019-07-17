@@ -67,6 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
         People.realtime_search(sportegic_socket)
     };
 
+    if (window.location.pathname == "/person/new") {
+        let mobile = document.getElementById('person_mobile');
+        let maskOptions = {
+            mask: '+00 0000000000000'
+          };
+        let mask = IMask(mobile, maskOptions);
+    };
+
+    
+
     if (window.location.pathname.split("/")[1] == "squads")
     {
         let sportegic_socket = socket.connect_socket();

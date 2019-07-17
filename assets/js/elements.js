@@ -82,14 +82,7 @@ let Elements = {
 
         let r_id = document.getElementById('user_role_id');
         M.FormSelect.init(r_id, {});
-
         
-        let mobile = document.getElementById('person_mobile');
-        
-        let maskOptions = {
-            mask: '+00 0000000000000'
-          };
-        let mask = IMask(mobile, maskOptions);
     }
 }
 
