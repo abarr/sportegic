@@ -49,14 +49,14 @@ defmodule Sportegic.Tasks do
 
     query =
       from(t in Task,
-        join: u in User,
-        on: u.id == ^id,
+        where: t.assignee_id == ^id,
         where: t.due_date < ^today,
         where: t.completed == false,
         select: {t.id}
       )
-
-    Repo.aggregate(query, :count, :id, prefix: org)
+    query
+    |> Repo.aggregate(:count, :id, prefix: org)
+    |> IO.inspect
   end
 
   def count_tasks_due_today(id, org) do
