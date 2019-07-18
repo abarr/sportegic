@@ -19,6 +19,7 @@ config :sportegic, Sportegic.Communication.Mailer,
   
 config :arc,
   bucket: "sportegic-uploads"
+  
 
 config :goth,
   json: google_credentials |> File.read!
