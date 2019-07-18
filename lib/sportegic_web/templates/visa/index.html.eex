@@ -45,7 +45,7 @@
               </td>
               <td class="truncate"><%= visa.additional_info %></td>
               <td class="right-align"> 
-                <%= link to: Routes.person_visa_path(@conn, :edit, @person, visa ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1" do %>
+                <%= link to: Routes.person_visa_path(@conn, :edit, @person, visa ), class: "btn-floating btn-small waves-effect waves-light grey z-depth-0 lighten-1 margin-right" do %>
                   <i class="material-icons">edit</i>
                 <% end %>
                 <%= link [ to: Routes.person_visa_path(@conn, :delete, @person, visa ), method: :delete,  class: "btn-floating btn-small waves-effect waves-light red z-depth-0 lighten-2"] do %>
