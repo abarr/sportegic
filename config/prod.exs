@@ -23,13 +23,8 @@ config :sportegic, Sportegic.Communication.Mailer,
 config :arc,
   storage: Arc.Storage.GCS
 
-# config :goth,
-#   json: "./priv/gcp_access/sportegic-storage-credentials-prod.json" |> Path.expand() |> File.read!()
-    
-
-
-config :tesla, adapter: Tesla.Adapter.Hackney  
+config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :sportegic, Sportegic.Communication.TwilioVerification,
-  environment: :live  
+  environment: :live
 

@@ -23,11 +23,11 @@ config :arc,
   storage: Arc.Storage.GCS
 
 config :goth,
-  json: "./priv/gcp_access/sportegic-6d8daa6d5003.json" |> Path.expand() |> File.read!()
-    
+  disabled: true
 
-config :tesla, adapter: Tesla.Adapter.Hackney  
+
+config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :sportegic, Sportegic.Communication.TwilioVerification,
-  environment: :live  
+  environment: :live
 
