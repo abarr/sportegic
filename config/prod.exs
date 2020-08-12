@@ -10,7 +10,7 @@ config :sportegic, SportegicWeb.Endpoint, server: true
 config :sportegic, Sportegic.Repo,
   username: "postgres",
   database: "sportegic_prod",
-  password: "kiM8s5ngsJbfBEps",
+  password: "",
   hostname: "127.0.0.1",
   pool_size: 15
 
@@ -27,4 +27,3 @@ config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :sportegic, Sportegic.Communication.TwilioVerification,
   environment: :live
-
