@@ -21,8 +21,6 @@ config :phoenix, :json_library, Jason
 
 config :triplex, repo: Sportegic.Repo
 
-config :ex_money,
-  default_cldr_backend: Sportegic.Cldr
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

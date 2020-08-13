@@ -7,7 +7,7 @@ defmodule Sportegic.Repo.Migrations.CreateInsurancePolicies do
       add(:expiry_date, :date)
       add(:issuer, :string)
       add(:additional_info, :string)
-      add(:coverage_amount, :money_with_currency)
+      add(:coverage_amount, :string)
       add(:type_id, references(:types, on_delete: :nothing))
       add(:person_id, references(:people, on_delete: :delete_all))
 

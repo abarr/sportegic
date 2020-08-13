@@ -8,7 +8,7 @@ defmodule Sportegic.People.InsurancePolicy do
 
   schema "insurance_policies" do
     field(:additional_info, :string)
-    field(:coverage_amount, Money.Ecto.Composite.Type)
+    field(:coverage_amount, :string)
     field(:expiry_date, :date)
     field(:issuer, :string)
     field(:number, :string)

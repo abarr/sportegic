@@ -55,7 +55,6 @@ defmodule Sportegic.MixProject do
       {:arc_ecto, "~> 0.11.1"},
       {:arc_gcs, "~> 0.1.0"},
       {:poison, "~> 3.0"},
-      {:ex_money, "~> 3.4"},
       {:html_sanitize_ex, "~> 1.3.0"},
       {:navigation_history, "~> 0.0"},
       {:veritaserum, "~> 0.2.0"},
