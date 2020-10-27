@@ -50,7 +50,7 @@ config :sportegic, Sportegic.Repo,
   hostname: "localhost",
   pool_size: 10
 
-config :sportegic, Sportegic.Communication.Mailer, 
+config :sportegic, Sportegic.Communication.Mailer,
   adapter: Swoosh.Adapters.Local,
   environment: :live
 
@@ -60,10 +60,10 @@ config :arc,
 config :goth,
   disabled: true
 
-config :tesla, adapter: Tesla.Adapter.Hackney  
+config :tesla, adapter: Tesla.Adapter.Hackney
 
 config :sportegic, Sportegic.Communication.TwilioVerification,
-  base_url: "https://verify.twilio.com/v2/Services/VA4cb85cee4a011aaf5c4d29edc2399cfd/",
-  twilio_api_key: "ACac7881bb3aa9f0bf4ccf9207cb0525cd",
-  twilio_secret_key: "4cd12ff8f4bbc19ab529f67f55d28e9d",
+  base_url: "",
+  twilio_api_key: "",
+  twilio_secret_key: "",
   environment: :live
