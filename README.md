@@ -1,2 +1,2 @@
-# Sportegic
+# Sportegic - RETIRED
 
